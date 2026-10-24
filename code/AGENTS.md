@@ -7,12 +7,20 @@
 
 ## 目录与命名
 - 科目目录：`lib/`（数据结构）、`co/`、`os/`、`net/`、`boss/`（四门学完后再启动）
-- 关卡目录：`<科目>/<两位序号>-<英文主题>/`，例如 `os/04-scheduler/`；序号即学习顺序
+- 关卡目录：`<科目>/<两位序号>-<英文主题>/`，例如 `os/04-scheduler/`；序号即学习顺序；66 个关卡目录已全部建好
 - 每个关卡目录包含：
-  - 源码 `*.c` / `*.h`
-  - `Makefile`：至少提供 `make`（编译）、`make test`（跑真题用例）、`make clean`
-  - `tests/`：真题数据与期望输出
-  - `NOTES.md`：用户自己写的复盘（学到了什么、踩了什么坑）+「概念卡片」一节（`LEVELS.md` 中该关列出的卡片），AI 只提醒、不代写
+  - `mine/<YYYY-MM-DD>-<说明>/`：用户的每次尝试各占一个目录（同一关可多次重写），用 `./new.sh` 创建，AI 不在这里写实现
+  - `answer/`：标准答案，含带注释的代码、`README.md` 讲解（思路、考点、易错点、概念卡片参考）、命令行实验记录 `experiments.md`
+  - `tests/<程序名>/<用例>.in` 与 `.out`：真题输入与标准输出，所有尝试和答案共用
+  - `NOTES.md`：用户自己写的复盘，按尝试分节 + 「概念卡片」一节，AI 只提醒、不代写
+  - `CMakeLists.txt`：一行 `lab_level()`；复用其他关卡时写 `lab_level(DEPS lib/04-queue)`，规则详见 `cmake/lab.cmake` 文件头
+
+## 构建与测试（CMake，用 CLion 打开 `code/`）
+- 每次尝试、`answer/` 各自独立编译：含 `main` 的 `.c` 各成一个程序，其余 `.c` 合成该单元的公共库
+- 程序名：`<科目><关卡号>_<尝试名或 answer>_<入口文件名>`，例如 `lib02_2027-03-12-first_linklist_test`
+- 测试：入口文件名以 `_test` 结尾的程序按退出码判定；`tests/<程序名>/` 下的用例逐个比对输出；CTest 标签 `mine` / `answer` / 科目 / 关卡号可筛选
+- 跨关依赖默认取依赖关卡中日期最新且有代码的尝试，一次都没写过就用 `answer/`；所有关卡自动依赖 `lib/00-warmup` 的 `test.h`
+- 新建尝试后在 CLion 中重新加载 CMake 项目，才会出现新的运行目标
 
 ## 每关闭环（AI 按此节奏引导）
 1. **学**：指出对应的王道章节，明确考纲模型与约定
@@ -29,5 +37,6 @@
 - 注释用中文，解释"为什么"，并标注对应的考纲概念
 
 ## 环境
-- macOS arm64；已有 `clang`、`make`、`lldb`、`python3`、`tcpdump`、`nm`、`otool`；**没有** `gdb`、`cmake`
+- macOS arm64；已有 `clang`、`make`、`lldb`、`python3`、`tcpdump`、`nm`、`otool`；**没有** `gdb`
+- 终端里没有 `cmake`，用 CLion 自带的：`/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/`（含 `cmake`、`ctest`），Ninja 在 `/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja`
 - 调试用 `lldb`；需要 Linux 专属接口（如 `epoll`、`/proc`）时，先与用户讨论是否引入 Linux 容器

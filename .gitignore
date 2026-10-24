@@ -5,12 +5,16 @@
 __pycache__/
 *.pyc
 
-# C 编译产物
+# C 编译产物（tests/ 里的 *.out 是真题标准答案，不能忽略）
 *.o
-*.out
+a.out
 *.a
 *.dSYM/
 build/
+
+# CLion
+.idea/
+cmake-build-*/
 
 # 本地 Agent 编排记录（不纳入版本管理）
 gem/.agents/
