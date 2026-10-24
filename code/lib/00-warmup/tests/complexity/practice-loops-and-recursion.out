@@ -1,0 +1,10 @@
+square n=10 count=100
+square n=100 count=10000
+square n=1000 count=1000000
+triangle n=10 count=55
+triangle n=100 count=5050
+triangle n=1000 count=500500
+halve n=8 count=24
+halve n=10 count=34
+halve n=100 count=672
+halve n=1000 count=9976
