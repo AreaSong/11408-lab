@@ -9,7 +9,7 @@ import re
 import unittest
 from pathlib import Path
 
-WORKSPACE_ROOT = Path("/Users/as/Ai-Project/project/gemini-postgraduate-prompts")
+WORKSPACE_ROOT = Path(__file__).resolve().parent.parent  # 相对定位到 gem/，避免仓库搬迁或改名后失效
 
 SUBJECTS = [
     ("数学一", "数学一-指令.md", "数学一-考点库.md"),

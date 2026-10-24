@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# C 编译产物
+*.o
+*.out
+*.a
+*.dSYM/
+build/
+
+# 本地 Agent 编排记录（不纳入版本管理）
+.agents/
