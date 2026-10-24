@@ -13,4 +13,4 @@ __pycache__/
 build/
 
 # 本地 Agent 编排记录（不纳入版本管理）
-.agents/
+gem/.agents/
