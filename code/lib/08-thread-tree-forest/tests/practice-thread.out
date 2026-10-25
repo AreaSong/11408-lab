@@ -1,0 +1,35 @@
+thread n=5 inorder=DBEAC
+step 1 visit=D pre=^ ltag=1 left=^ fix=head
+step 2 visit=B pre=D ltag=0 left=D fix=D>B
+step 3 visit=E pre=B ltag=1 left=B fix=B child
+step 4 visit=A pre=E ltag=0 left=B fix=E>A
+step 5 visit=C pre=A ltag=1 left=A fix=A child
+close last=C right=^
+node D ltag=1 left=^ rtag=1 right=B in_pred=- in_succ=B
+node B ltag=0 left=D rtag=0 right=E in_pred=D in_succ=E
+node E ltag=1 left=B rtag=1 right=A in_pred=B in_succ=A
+node A ltag=0 left=B rtag=0 right=C in_pred=E in_succ=C
+node C ltag=1 left=A rtag=1 right=^ in_pred=A in_succ=-
+head ltag=0 left=A rtag=1 right=C
+walk=DBEAC
+check=ok
+plain_null=2
+thread n=5 inorder=DBEAC
+step 1 visit=D pre=^ ltag=1 left=^ fix=head
+step 2 visit=B pre=D ltag=0 left=D fix=D>B
+step 3 visit=E pre=B ltag=1 left=B fix=B child
+step 4 visit=A pre=E ltag=0 left=B fix=E>A
+step 5 visit=C pre=A ltag=1 left=A fix=A child
+close last=C right=^
+node D ltag=1 left=^ rtag=1 right=B in_pred=- in_succ=B
+node B ltag=0 left=D rtag=0 right=E in_pred=D in_succ=E
+node E ltag=1 left=B rtag=1 right=A in_pred=B in_succ=A
+node A ltag=0 left=B rtag=0 right=C in_pred=E in_succ=C
+node C ltag=1 left=A rtag=1 right=^ in_pred=A in_succ=-
+head ltag=0 left=A rtag=1 right=C
+walk=DBEAC
+check=ok
+plain_null=2
+ask B pred=D succ=E
+thread n=0 inorder=-
+head ltag=0 left=^ rtag=1 right=^

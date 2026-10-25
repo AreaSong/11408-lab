@@ -1,0 +1,11 @@
+exam 2017-4
+case right link=A#B#C## pre=ABC in=ABC equal=1 no_left=1 no_right=0 nonleaf=2
+flags nonleaf_deg1=1 nonleaf_deg2=0 all_deg1=0 all_deg2=0
+case left link=ABC#### pre=ABC in=CBA equal=0 no_left=0 no_right=1 nonleaf=2
+flags nonleaf_deg1=1 nonleaf_deg2=0 all_deg1=0 all_deg2=0
+case both link=AB##C## pre=ABC in=BAC equal=0 no_left=0 no_right=0 nonleaf=1
+flags nonleaf_deg1=0 nonleaf_deg2=1 all_deg1=0 all_deg2=0
+case one link=A## pre=A in=A equal=1 no_left=1 no_right=1 nonleaf=0
+flags nonleaf_deg1=1 nonleaf_deg2=1 all_deg1=0 all_deg2=0
+note all_deg1=0 because a leaf has degree 0
+pick=B

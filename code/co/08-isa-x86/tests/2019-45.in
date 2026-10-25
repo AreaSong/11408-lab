@@ -1,0 +1,5 @@
+reloff 00401025H 5 00401000H 32 D6 FF FF FF
+jump jle
+jump call
+jump jmp
+jump ret

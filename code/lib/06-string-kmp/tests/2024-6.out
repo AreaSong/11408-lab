@@ -1,0 +1,44 @@
+nextval base=0 pat=aabaab m=6
+rule equal=nextval[next[j]] unequal=next[j]
+j=0 ch=a next=-1 same=0 via=sentinel nextval=-1 slide=1
+j=1 ch=a next=0 same=1 via=nextval[0] nextval=-1 slide=2
+j=2 ch=b next=1 same=0 via=next nextval=1 slide=1
+j=3 ch=a next=0 same=1 via=nextval[0] nextval=-1 slide=4
+j=4 ch=a next=1 same=1 via=nextval[1] nextval=-1 slide=5
+j=5 ch=b next=2 same=1 via=nextval[2] nextval=1 slide=4
+row_next -1 0 1 0 1 2
+row_nextval -1 -1 1 -1 -1 1
+slide_next 1 1 1 3 3 3
+max_next=3 j=3 ch=a
+slide_nextval 1 2 1 4 5 4
+max_nextval=5 j=4 ch=a
+build init i=0 j=-1 nextval[0]=-1
+build take i=0 j=-1 why=sentinel -> i=1 j=0 same=1 src=0 nextval[1]=-1
+build take i=1 j=0 why=eq ch=a -> i=2 j=1 same=0 src=- nextval[2]=1
+build back i=2 j=1 via=nextval[1]=-1
+build take i=2 j=-1 why=sentinel -> i=3 j=0 same=1 src=0 nextval[3]=-1
+build take i=3 j=0 why=eq ch=a -> i=4 j=1 same=1 src=1 nextval[4]=-1
+build take i=4 j=1 why=eq ch=a -> i=5 j=2 same=1 src=2 nextval[5]=1
+build done
+nextval base=1 pat=aabaab m=6
+rule equal=nextval[next[j]] unequal=next[j]
+j=1 ch=a next=0 same=0 via=sentinel nextval=0 slide=1
+j=2 ch=a next=1 same=1 via=nextval[1] nextval=0 slide=2
+j=3 ch=b next=2 same=0 via=next nextval=2 slide=1
+j=4 ch=a next=1 same=1 via=nextval[1] nextval=0 slide=4
+j=5 ch=a next=2 same=1 via=nextval[2] nextval=0 slide=5
+j=6 ch=b next=3 same=1 via=nextval[3] nextval=2 slide=4
+row_next 0 1 2 1 2 3
+row_nextval 0 0 2 0 0 2
+slide_next 1 1 1 3 3 3
+max_next=3 j=4 ch=a
+slide_nextval 1 2 1 4 5 4
+max_nextval=5 j=5 ch=a
+build init i=1 j=0 nextval[1]=0
+build take i=1 j=0 why=sentinel -> i=2 j=1 same=1 src=1 nextval[2]=0
+build take i=2 j=1 why=eq ch=a -> i=3 j=2 same=0 src=- nextval[3]=2
+build back i=3 j=2 via=nextval[2]=0
+build take i=3 j=0 why=sentinel -> i=4 j=1 same=1 src=1 nextval[4]=0
+build take i=4 j=1 why=eq ch=a -> i=5 j=2 same=1 src=2 nextval[5]=0
+build take i=5 j=2 why=eq ch=a -> i=6 j=3 same=1 src=3 nextval[6]=2
+build done

@@ -1,0 +1,22 @@
+exam 2009-6
+forest A(B,C) D(E,F,G) H(I,J(K)) L(M(N),O(P)) Q R S
+grand A C class=parent iii=0
+grand A E class=uncle iii=0
+grand A H class=sibling iii=0
+grand D F class=parent iii=0
+grand D I class=uncle iii=0
+grand D L class=sibling iii=0
+grand E G class=sibling iii=0
+grand H J class=parent iii=0
+grand H M class=uncle iii=0
+grand H Q class=sibling iii=0
+grand I K class=uncle iii=0
+grand L N class=other iii=0
+grand L O class=parent iii=0
+grand L R class=sibling iii=0
+grand M P class=uncle iii=0
+grand Q S class=sibling iii=0
+counter N P grand=0 iii=1
+stats total=16 parent=4 sibling=6 uncle=5 other=1 iii=0
+option A=only_II B=I_and_II C=I_and_III D=all
+pick=B

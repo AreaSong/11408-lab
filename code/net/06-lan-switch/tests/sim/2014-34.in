@@ -1,0 +1,9 @@
+dev switch SW
+host a1 00-e1-d5-00-23-a1
+host b1 00-e1-d5-00-23-b1
+host c1 00-e1-d5-00-23-c1
+link a1 SW
+link b1 SW
+link c1 SW
+send a1 00-e1-d5-00-23-c1
+send c1 00-e1-d5-00-23-a1

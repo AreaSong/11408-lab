@@ -1,0 +1,16 @@
+problem=exam year=2022
+thread T1=A,E,F
+thread T2=B,C,D
+sem AC=0
+sem CE=0
+step=1 who=T1 op=work sem=- value=- state=run wake=- note=A
+step=2 who=T1 op=V sem=AC value=1 state=inc wake=- note=-
+step=3 who=T1 op=P sem=CE value=-1 state=block wake=- note=-
+step=4 who=T2 op=work sem=- value=- state=run wake=- note=B
+step=5 who=T2 op=P sem=AC value=0 state=run wake=- note=-
+step=6 who=T2 op=work sem=- value=- state=run wake=- note=C
+step=7 who=T2 op=V sem=CE value=0 state=wake wake=T1 note=-
+step=8 who=T1 op=work sem=- value=- state=run wake=- note=E
+step=9 who=T1 op=work sem=- value=- state=run wake=- note=F
+step=10 who=T2 op=work sem=- value=- state=run wake=- note=D
+summary order=A,B,C,E,F,D check=yes deadlock=no

@@ -1,0 +1,9 @@
+region=interrupt event=exit want=yes switch=defer
+after leave switch=now
+region=user-cs event=slice want=yes switch=now
+region=kernel-cs event=higher want=yes switch=defer
+after leave switch=now
+region=atomic event=block want=yes switch=defer
+after leave switch=now
+region=interrupt event=return want=yes switch=now
+region=user-cs event=exit want=yes switch=now

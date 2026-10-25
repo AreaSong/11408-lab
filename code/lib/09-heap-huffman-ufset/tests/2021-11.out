@@ -1,0 +1,52 @@
+exam 2021-11
+insert max
+push 6
+place 6
+sift 1
+heap 6
+push 9
+place 6 9
+sift 2
+swap 2 1
+now 9 6
+heap 9 6
+push 1
+place 9 6 1
+sift 3
+heap 9 6 1
+push 5
+place 9 6 1 5
+sift 4
+heap 9 6 1 5
+push 8
+place 9 6 1 5 8
+sift 5
+swap 5 2
+now 9 8 1 5 6
+heap 9 8 1 5 6
+push 4
+place 9 8 1 5 6 4
+sift 6
+swap 6 3
+now 9 8 4 5 6 1
+heap 9 8 4 5 6 1
+push 7
+place 9 8 4 5 6 1 7
+sift 7
+swap 7 3
+now 9 8 7 5 6 1 4
+heap 9 8 7 5 6 1 4
+build max
+start 6 9 1 5 8 4 7
+sift 3
+swap 3 7
+now 6 9 7 5 8 4 1
+sift 2
+sift 1
+swap 1 2
+now 9 6 7 5 8 4 1
+swap 2 5
+now 9 8 7 5 6 4 1
+heap 9 8 7 5 6 4 1
+option A=9,8,7,6,5,4,1 B=9,8,7,5,6,1,4 C=9,8,7,5,6,4,1 D=9,6,7,5,8,4,1
+pick=B

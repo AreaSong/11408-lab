@@ -1,0 +1,37 @@
+algo=nf
+hole start=0 size=30
+hole start=1000 size=100
+hole start=2000 size=50
+alloc A size=40 result=ok at=1000 from=1000 hole=100 left=60 internal=0
+alloc B size=20 result=ok at=1040 from=1040 hole=60 left=40 internal=0
+show algo=nf order=address-asc holes=3 free=120 largest=50 cursor=1060
+0 30
+1060 40
+2000 50
+jobs=2
+A 1000 40
+B 1040 20
+algo=ff
+hole start=0 size=30
+hole start=1000 size=100
+hole start=2000 size=50
+alloc A size=40 result=ok at=1000 from=1000 hole=100 left=60 internal=0
+alloc B size=20 result=ok at=0 from=0 hole=30 left=10 internal=0
+show algo=ff order=address-asc holes=3 free=120 largest=60 cursor=-
+20 10
+1040 60
+2000 50
+jobs=2
+B 0 20
+A 1000 40
+algo=nf
+hole start=0 size=100
+hole start=500 size=10
+alloc C size=100 result=ok at=0 from=0 hole=100 left=0 internal=0
+free C at=0 size=100 merge=none
+alloc D size=50 result=ok at=0 from=0 hole=100 left=50 internal=0
+show algo=nf order=address-asc holes=2 free=60 largest=50 cursor=50
+50 50
+500 10
+jobs=1
+D 0 50

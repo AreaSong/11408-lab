@@ -1,0 +1,39 @@
+problem=rw kind=writer-cut
+sem rmutex=1
+sem wmutex=1
+sem file=1
+sem r=1
+step=1 who=R0 op=P sem=r value=0 state=run wake=- note=-
+step=2 who=R0 op=P sem=rmutex value=0 state=run wake=- note=-
+step=3 who=R0 op=count sem=- value=1 state=run wake=- note=readcount
+step=4 who=R0 op=P sem=file value=0 state=run wake=- note=-
+step=5 who=R0 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=6 who=R0 op=V sem=r value=1 state=inc wake=- note=-
+step=7 who=R0 op=work sem=- value=- state=run wake=- note=read
+step=8 who=W0 op=P sem=wmutex value=0 state=run wake=- note=-
+step=9 who=W0 op=count sem=- value=1 state=run wake=- note=writecount
+step=10 who=W0 op=P sem=r value=0 state=run wake=- note=-
+step=11 who=W0 op=V sem=wmutex value=1 state=inc wake=- note=-
+step=12 who=W0 op=P sem=file value=-1 state=block wake=- note=-
+step=13 who=R1 op=P sem=r value=-1 state=block wake=- note=-
+step=14 who=R0 op=P sem=rmutex value=0 state=run wake=- note=-
+step=15 who=R0 op=count sem=- value=0 state=run wake=- note=readcount
+step=16 who=R0 op=V sem=file value=0 state=wake wake=W0 note=-
+step=17 who=R0 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=18 who=W0 op=work sem=- value=- state=run wake=- note=write
+step=19 who=W0 op=V sem=file value=1 state=inc wake=- note=-
+step=20 who=W0 op=P sem=wmutex value=0 state=run wake=- note=-
+step=21 who=W0 op=count sem=- value=0 state=run wake=- note=writecount
+step=22 who=W0 op=V sem=r value=0 state=wake wake=R1 note=-
+step=23 who=W0 op=V sem=wmutex value=1 state=inc wake=- note=-
+step=24 who=R1 op=P sem=rmutex value=0 state=run wake=- note=-
+step=25 who=R1 op=count sem=- value=1 state=run wake=- note=readcount
+step=26 who=R1 op=P sem=file value=0 state=run wake=- note=-
+step=27 who=R1 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=28 who=R1 op=V sem=r value=1 state=inc wake=- note=-
+step=29 who=R1 op=work sem=- value=- state=run wake=- note=read
+step=30 who=R1 op=P sem=rmutex value=0 state=run wake=- note=-
+step=31 who=R1 op=count sem=- value=0 state=run wake=- note=readcount
+step=32 who=R1 op=V sem=file value=1 state=inc wake=- note=-
+step=33 who=R1 op=V sem=rmutex value=1 state=inc wake=- note=-
+summary second=block max_read=1 deadlock=no

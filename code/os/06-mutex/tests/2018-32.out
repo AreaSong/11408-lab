@@ -1,0 +1,10 @@
+algo=peterson progress=yes mutex=yes bounded=yes yield=no
+algo=swap progress=yes mutex=yes bounded=no yield=no
+algo=record progress=yes mutex=yes bounded=yes yield=yes
+algo=tsl progress=yes mutex=yes bounded=no yield=no
+algo=integer progress=yes mutex=yes bounded=no yield=no
+yield-peterson false
+yield-swap false
+yield-sem true
+yield-tsl false
+yield-integer false

@@ -1,0 +1,21 @@
+algo nf
+hole 0 30
+hole 1000 100
+hole 2000 50
+alloc A 40
+alloc B 20
+show
+algo ff
+hole 0 30
+hole 1000 100
+hole 2000 50
+alloc A 40
+alloc B 20
+show
+algo nf
+hole 0 100
+hole 500 10
+alloc C 100
+free C
+alloc D 50
+show

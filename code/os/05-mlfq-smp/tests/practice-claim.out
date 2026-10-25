@@ -1,0 +1,64 @@
+exit-can true
+create-can true
+user-cs-cannot false
+return-can true
+kernel-cs-cannot true
+interrupt-cannot true
+atomic-cannot true
+switch-pc true
+switch-stack true
+switch-ptbr true
+switch-only-ptbr false
+prio-insert-on true
+prio-select-o1 true
+prio-insert-o1 false
+ult-each-tcb false
+klt-os-schedule true
+slice-always-switch false
+nope unknown
+when slice schedule=yes switch=if-other
+saved ptbr when=process
+thread ult sched=lib switch=user ptbr=no
+smp private queue=per-cpu balance=steal migrate=less
+mlfq new q0 slice=double demote=expire last=rr
+rule fresh-slice reset-used
+idle process prio=lowest always=ready avg=no
+way preempt slice=yes higher=yes yield=yes
+way nonpreempt slice=no higher=no yield=yes
+when exit schedule=yes
+when block schedule=yes
+when slice schedule=yes switch=if-other
+when higher schedule=yes
+when create schedule=yes
+when return schedule=yes
+when user-cs schedule=yes
+when interrupt schedule=defer
+when kernel-cs schedule=defer
+when atomic schedule=defer
+idle process prio=lowest always=ready avg=no
+saved pc where=pcb
+saved psw where=pcb
+saved gpr where=pcb
+saved stack where=pcb
+saved ptbr when=process
+saved code where=memory update=no
+thread klt sched=os switch=kernel ptbr=same-process
+thread ult sched=lib switch=user ptbr=no
+thread same-proc ptbr=no tlb=keep
+smp shared queue=one balance=idle-pull migrate=more
+smp private queue=per-cpu balance=steal migrate=less
+smp hard pin=yes migrate=no
+queue prio-list insert=O(n) select=O(1)
+mlfq new q0 slice=double demote=expire last=rr
+mlfq preempt higher-only fresh-slice=yes
+mlfq starve boost=off long-job=maybe
+rule fresh-slice reset-used
+rule same-queue no-preempt
+rule boundary finish-before-demote
+rule rr-join new-then-expired
+rule block no-demote
+rule idle not-in-avg
+rule wait turn-service-io
+rule gantt half-open
+rule balance ready-only
+rule migrate on-cpu-change

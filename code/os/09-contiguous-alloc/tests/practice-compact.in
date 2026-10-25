@@ -1,0 +1,11 @@
+memory ff 100
+alloc A 20
+alloc B 30
+alloc C 10
+free B
+show
+bind static
+compact
+bind dynamic
+compact
+show

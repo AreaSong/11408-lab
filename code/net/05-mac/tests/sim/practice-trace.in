@@ -1,0 +1,2 @@
+trace csma stations 3 frames 1 length 4
+trace token stations 3 frames 1 length 4 walk 1

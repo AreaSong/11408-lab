@@ -1,0 +1,27 @@
+problem=smoke kind=combo
+offers=1,2,3,1
+sem glue=0
+sem paper=0
+sem tobacco=0
+sem finish=0
+step=1 who=agent op=V sem=glue value=1 state=inc wake=- note=-
+step=2 who=agent op=P sem=finish value=-1 state=block wake=- note=-
+step=3 who=glue op=P sem=glue value=0 state=run wake=- note=-
+step=4 who=glue op=work sem=- value=- state=run wake=- note=glue
+step=5 who=glue op=V sem=finish value=0 state=wake wake=agent note=-
+step=6 who=agent op=V sem=paper value=1 state=inc wake=- note=-
+step=7 who=agent op=P sem=finish value=-1 state=block wake=- note=-
+step=8 who=glue op=P sem=glue value=-1 state=block wake=- note=-
+step=9 who=paper op=P sem=paper value=0 state=run wake=- note=-
+step=10 who=paper op=work sem=- value=- state=run wake=- note=paper
+step=11 who=paper op=V sem=finish value=0 state=wake wake=agent note=-
+step=12 who=agent op=V sem=tobacco value=1 state=inc wake=- note=-
+step=13 who=agent op=P sem=finish value=-1 state=block wake=- note=-
+step=14 who=tobacco op=P sem=tobacco value=0 state=run wake=- note=-
+step=15 who=tobacco op=work sem=- value=- state=run wake=- note=tobacco
+step=16 who=tobacco op=V sem=finish value=0 state=wake wake=agent note=-
+step=17 who=agent op=V sem=glue value=0 state=wake wake=glue note=-
+step=18 who=agent op=P sem=finish value=-1 state=block wake=- note=-
+step=19 who=glue op=work sem=- value=- state=run wake=- note=glue
+step=20 who=glue op=V sem=finish value=0 state=wake wake=agent note=-
+summary smoked=4 mismatch=no deadlock=no

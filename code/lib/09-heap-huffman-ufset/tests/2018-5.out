@@ -1,0 +1,23 @@
+exam 2018-5
+huff n=6
+leaf a=6 b=3 c=8 d=2 e=10 f=4
+pick d:2 + b:3 -> #7:5
+pick f:4 + #7:5 -> #8:9
+pick a:6 + c:8 -> #9:14
+pick #8:9 + e:10 -> #10:19
+pick #9:14 + #10:19 -> #11:33
+code a=00 len=2
+code b=1011 len=4
+code c=01 len=2
+code d=1010 len=4
+code e=11 len=2
+code f=100 len=3
+wpl=80
+inside=80
+total=33
+avg=2.42
+nodes=11
+degree1=0
+prefix=ok
+option A=00,1011,01,1010,11,100 B=00,100,110,000,0010,01 C=10,1011,11,0011,00,010 D=0011,10,11,0010,01,000
+pick=A

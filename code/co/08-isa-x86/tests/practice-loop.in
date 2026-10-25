@@ -1,0 +1,12 @@
+x86
+mov eax, 0
+mov ecx, 1
+again:
+cmp ecx, 3
+jg done
+add eax, ecx
+add ecx, 1
+jmp again
+done:
+mov eax, eax
+.

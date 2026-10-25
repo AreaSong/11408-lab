@@ -1,0 +1,7 @@
+pc produced=20 consumed=20 sum=210 overflow=no
+rw reads=6 writes=4 overlap=no
+phi scheme=limit eaten=10 bad=no
+phi scheme=odd eaten=10 bad=no
+smoke smoked=6 glue=2 paper=2 tobacco=2
+plant watered=5 within=yes bad=no
+bowl eaten=5 within=yes bad=no

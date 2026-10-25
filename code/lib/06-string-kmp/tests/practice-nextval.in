@@ -1,0 +1,7 @@
+nextval 1 aa
+nextval 1 aaaab
+nextval 0 aaaab
+nextval 1 ababaa
+nextval 1 abc
+kmp 1 aaabaaaab aaaab
+kmpval 1 aaabaaaab aaaab

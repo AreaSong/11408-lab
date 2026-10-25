@@ -1,0 +1,18 @@
+demo=tsl algo=tsl
+step=1 who=0 op=try action=enter turn=0 flag=0,0 lock=1 in=0
+step=2 who=1 op=try action=spin turn=0 flag=0,0 lock=1 in=0
+step=3 who=0 op=leave action=leave turn=0 flag=0,0 lock=0 in=-
+step=4 who=1 op=try action=enter turn=0 flag=0,0 lock=1 in=1
+seen both=no
+algo=tsl progress=yes mutex=yes bounded=no yield=no
+demo=swap algo=swap
+step=1 who=0 op=try action=enter turn=0 flag=0,0 lock=1 in=0
+step=2 who=1 op=try action=spin turn=0 flag=0,0 lock=1 in=0
+step=3 who=0 op=leave action=leave turn=0 flag=0,0 lock=0 in=-
+step=4 who=1 op=try action=enter turn=0 flag=0,0 lock=1 in=1
+seen both=no
+algo=swap progress=yes mutex=yes bounded=no yield=no
+tsl-wake-blocked false
+tsl-no-yield-cpu true
+tsl-yield-wait false
+tsl-cli-loop false

@@ -1,0 +1,13 @@
+min h=4
+h=1 recur=1 build=1 height=1 avl=yes bf1=0/0
+h=2 recur=2 build=2 height=2 avl=yes bf1=1/1
+h=3 recur=4 build=4 height=3 avl=yes bf1=2/2
+h=4 recur=7 build=7 height=4 avl=yes bf1=4/4
+tree 5[1](3[1](2[1](1[0],#),4[0]),7[1](6[0],#))
+min h=6
+h=1 recur=1 build=1 height=1 avl=yes bf1=0/0
+h=2 recur=2 build=2 height=2 avl=yes bf1=1/1
+h=3 recur=4 build=4 height=3 avl=yes bf1=2/2
+h=4 recur=7 build=7 height=4 avl=yes bf1=4/4
+h=5 recur=12 build=12 height=5 avl=yes bf1=7/7
+h=6 recur=20 build=20 height=6 avl=yes bf1=12/12

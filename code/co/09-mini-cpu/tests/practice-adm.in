@@ -1,0 +1,8 @@
+prog
+adm 1
+hlt
+end
+r0 6
+r1 10
+10 4
+end

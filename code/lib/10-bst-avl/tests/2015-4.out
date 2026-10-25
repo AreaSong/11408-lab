@@ -1,0 +1,28 @@
+exam 2015-4
+pair
+insert 1
+tree 1[0]
+insert 2
+tree 1[1](2[0],#)
+inorder 2 1
+order=desc height_ok=yes
+root_degree=1
+min=1 leaf=no
+max=2 left=no
+triple
+insert 3
+tree 3[0]
+insert 1
+tree 3[-1](#,1[0])
+insert 2
+pivot 3 bf=-2 child=1 childbf=1 kind=RL
+unbal 3[-2](#,1[1](2[0],#))
+half 3[-2](#,2[-1](#,1[0]))
+balanced 2[0](3[0],1[0])
+tree 2[0](3[0],1[0])
+inorder 3 2 1
+order=desc height_ok=yes
+last=2 leaf=no
+max=3 left=no
+option A=root_degree_2 B=min_is_leaf C=last_is_leaf D=max_no_left
+pick=D

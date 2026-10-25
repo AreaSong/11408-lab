@@ -1,0 +1,4 @@
+compare q=2 affinity=none
+shared migrations=3 makespan=6
+private-off migrations=0 makespan=8
+private-balance migrations=1 makespan=6

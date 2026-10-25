@@ -1,0 +1,9 @@
+exam 2020-9
+load 9 7 8
+inorder 7 9 8
+bst=no
+complete=yes
+sequential=yes
+second=8 at=3 layer=2
+option A=I,II B=II,III C=I,II,IV D=I,III,IV
+pick=C

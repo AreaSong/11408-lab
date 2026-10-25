@@ -1,0 +1,15 @@
+run smp shared 2 off none
+A 0 4 -
+B 0 4 -
+C 0 4 -
+end
+run smp private 2 off none
+A 0 4 -
+B 0 4 -
+C 0 4 -
+end
+run smp private 2 balance none
+A 0 4 -
+B 0 4 -
+C 0 4 -
+end

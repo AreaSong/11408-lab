@@ -1,0 +1,8 @@
+algo bf
+hole 20 40
+hole 500 80
+hole 1000 100
+hole 200 200
+show
+release 60 140
+show

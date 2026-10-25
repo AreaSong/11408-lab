@@ -1,0 +1,15 @@
+exam 2011-5
+pre=1234 post=4321 count=8
+tree 1 shape=1(,2(,3(,4))) in=1234
+tree 2 shape=1(,2(,3(4,))) in=1243
+tree 3 shape=1(,2(3(,4),)) in=1342
+tree 4 shape=1(,2(3(4,),)) in=1432
+tree 5 shape=1(2(,3(,4)),) in=2341
+tree 6 shape=1(2(,3(4,)),) in=2431
+tree 7 shape=1(2(3(,4),),) in=3421
+tree 8 shape=1(2(3(4,),),) in=4321
+option A in=1234 hit=1
+option B in=2341 hit=1
+option C in=3241 hit=0
+option D in=4321 hit=1
+pick=C

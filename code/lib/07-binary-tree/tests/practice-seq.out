@@ -1,0 +1,27 @@
+seq n=3 last=7 waste=4
+base1 child=2i,2i+1 parent=i/2
+base0 child=2i+1,2i+2 parent=(i-1)/2
+note 2022-41 base0 empty=-1
+i1=1 ch=A parent1=- left1=2:# right1=3:B level=1
+i0=0 parent0=- left0=1:# right0=2:B
+i1=3 ch=B parent1=1:A left1=6:# right1=7:C level=2
+i0=2 parent0=0:A left0=5:# right0=6:C
+i1=7 ch=C parent1=3:B left1=- right1=- level=3
+i0=6 parent0=2:B left0=- right0=-
+linked pre=ABC in=ABC post=CBA
+seq n=5 last=5 waste=0
+base1 child=2i,2i+1 parent=i/2
+base0 child=2i+1,2i+2 parent=(i-1)/2
+note 2022-41 base0 empty=-1
+i1=1 ch=A parent1=- left1=2:B right1=3:C level=1
+i0=0 parent0=- left0=1:B right0=2:C
+i1=2 ch=B parent1=1:A left1=4:D right1=5:E level=2
+i0=1 parent0=0:A left0=3:D right0=4:E
+i1=3 ch=C parent1=1:A left1=- right1=- level=2
+i0=2 parent0=0:A left0=- right0=-
+i1=4 ch=D parent1=2:B left1=- right1=- level=3
+i0=3 parent0=1:B left0=- right0=-
+i1=5 ch=E parent1=2:B left1=- right1=- level=3
+i0=4 parent0=1:B left0=- right0=-
+linked pre=ABDEC in=DBEAC post=DEBCA
+fail hole

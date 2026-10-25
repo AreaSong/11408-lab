@@ -1,0 +1,2 @@
+frame dst 00-11-22-33-44-55 src aa-bb-cc-dd-ee-ff type 0x0800 bytes 46 vlan 10
+frame dst 00-11-22-33-44-55 src aa-bb-cc-dd-ee-ff type 0x0800 data 68 69 vlan 100 pri 3

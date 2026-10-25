@@ -1,0 +1,41 @@
+round 1
+isolated=-
+work0=0,0,0
+stuck work=0,0,0
+deadlock=yes removed=- left=P0 P1 P2
+abort who=P1 cost=1 avail=0,1,0
+round 2
+isolated=P1
+work0=0,1,0
+who work request alloc next
+P0 0,1,0 0,1,0 1,0,0 1,1,0
+P2 1,1,0 1,0,0 0,0,1 1,1,1
+deadlock=no removed=P0 P2 left=-
+result recovered=yes aborted=P1
+round 1
+isolated=-
+work0=0,0,0
+stuck work=0,0,0
+deadlock=yes removed=- left=P0 P1 P2
+abort who=P0 cost=2 avail=1,0,0
+round 2
+isolated=P0
+work0=1,0,0
+who work request alloc next
+P2 1,0,0 1,0,0 0,0,1 1,0,1
+P1 1,0,1 0,0,1 0,1,0 1,1,1
+deadlock=no removed=P2 P1 left=-
+result recovered=yes aborted=P0
+round 1
+isolated=-
+work0=0
+stuck work=0
+deadlock=yes removed=- left=P0 P1
+abort who=P1 cost=100 avail=1
+round 2
+isolated=P1
+work0=1
+who work request alloc next
+P0 1 1 0 1
+deadlock=no removed=P0 left=-
+result recovered=yes aborted=P1

@@ -1,0 +1,5 @@
+run mlfq 3 1
+P1 0 4
+P2 1 2
+P3 3 1
+end

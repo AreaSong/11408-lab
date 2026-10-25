@@ -1,0 +1,36 @@
+memory=55 algo=bf
+show algo=bf order=size-asc holes=1 free=55 largest=55 cursor=-
+0 55
+jobs=0
+alloc A size=15 result=ok at=0 from=0 hole=55 left=40 internal=0
+show algo=bf order=size-asc holes=1 free=40 largest=40 cursor=-
+15 40
+jobs=1
+A 0 15
+alloc B size=30 result=ok at=15 from=15 hole=40 left=10 internal=0
+show algo=bf order=size-asc holes=1 free=10 largest=10 cursor=-
+45 10
+jobs=2
+A 0 15
+B 15 30
+free A at=0 size=15 merge=none
+show algo=bf order=size-asc holes=2 free=25 largest=15 cursor=-
+45 10
+0 15
+jobs=1
+B 15 30
+alloc C size=8 result=ok at=45 from=45 hole=10 left=2 internal=0
+show algo=bf order=size-asc holes=2 free=17 largest=15 cursor=-
+53 2
+0 15
+jobs=2
+B 15 30
+C 45 8
+alloc D size=6 result=ok at=0 from=0 hole=15 left=9 internal=0
+show algo=bf order=size-asc holes=2 free=11 largest=9 cursor=-
+53 2
+6 9
+jobs=3
+D 0 6
+B 15 30
+C 45 8

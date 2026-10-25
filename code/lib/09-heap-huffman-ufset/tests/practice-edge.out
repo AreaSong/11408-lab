@@ -1,0 +1,54 @@
+build max
+start 1 3 3
+sift 1
+swap 1 2
+now 3 1 3
+heap 3 1 3
+build min
+start 7
+heap 7
+insert max
+push 6
+place 6
+sift 1
+heap 6
+push 9
+place 6 9
+sift 2
+swap 2 1
+now 9 6
+heap 9 6
+push 1
+place 9 6 1
+sift 3
+heap 9 6 1
+push max
+push 10
+place 9 8 7 10
+sift 4
+swap 4 2
+now 9 10 7 8
+swap 2 1
+now 10 9 7 8
+heap 10 9 7 8
+pop min
+pop 4
+heap -
+huff n=1
+leaf a=1
+code a=- len=0
+wpl=0
+inside=0
+total=1
+avg=0.00
+nodes=1
+degree1=0
+prefix=ok
+prefix=ok
+prefix=bad 110 1100
+text=afeefgd
+same=yes
+same=no
+fail heap
+fail format
+fail unknown nope

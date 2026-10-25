@@ -1,0 +1,13 @@
+dev switch SW
+dev hub Hub
+host H2 00-00-00-00-00-22
+host H1 00-00-00-00-00-11
+host H3 00-00-00-00-00-33
+host H4 00-00-00-00-00-44
+link H2 SW
+link H1 SW
+link Hub SW
+link H3 Hub
+link H4 Hub
+send H2 00-00-00-00-00-44
+send H4 00-00-00-00-00-22

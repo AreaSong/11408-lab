@@ -1,0 +1,26 @@
+claim exit-can
+claim create-can
+claim user-cs-cannot
+claim return-can
+claim kernel-cs-cannot
+claim interrupt-cannot
+claim atomic-cannot
+claim switch-pc
+claim switch-stack
+claim switch-ptbr
+claim switch-only-ptbr
+claim prio-insert-on
+claim prio-select-o1
+claim prio-insert-o1
+claim ult-each-tcb
+claim klt-os-schedule
+claim slice-always-switch
+claim nope
+when slice
+saved ptbr
+thread ult
+smp private
+mlfq new
+rule fresh-slice
+idle process
+card

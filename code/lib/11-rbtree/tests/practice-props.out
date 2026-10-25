@@ -1,0 +1,95 @@
+judge 2[B](1[R],3[R])
+node 1 R L=1 R=1 bh=1
+node 3 R L=1 R=1 bh=1
+node 2 B L=1 R=1 bh=1
+bst=yes
+color=yes
+root=black
+nil=black
+redred=yes
+bh=yes
+bh_value=1
+rb=yes
+judge 1[R]
+node 1 R L=1 R=1 bh=1
+bst=yes
+color=yes
+root=red
+nil=black
+redred=yes
+bh=yes
+bh_value=1
+rb=no
+judge 2[B](1[R](0[R],#),3[R])
+node 0 R L=1 R=1 bh=1
+node 1 R L=1 R=1 bh=1
+node 3 R L=1 R=1 bh=1
+node 2 B L=1 R=1 bh=1
+bst=yes
+color=yes
+root=black
+nil=black
+redred=no
+pair 1 0
+bh=yes
+bh_value=1
+rb=no
+judge 2[B](1[B],3[R])
+node 1 B L=1 R=1 bh=1
+node 3 R L=1 R=1 bh=1
+node 2 B L=2 R=1 bh=bad
+bst=yes
+color=yes
+root=black
+nil=black
+redred=yes
+bh=no
+rb=no
+judge 2[B](3[B],4[B])
+node 3 B L=1 R=1 bh=1
+node 4 B L=1 R=1 bh=1
+node 2 B L=2 R=2 bh=2
+bst=no
+color=yes
+root=black
+nil=black
+redred=yes
+bh=yes
+bh_value=2
+rb=no
+judge #
+bst=yes
+color=yes
+root=none
+nil=black
+redred=yes
+bh=yes
+bh_value=0
+rb=yes
+judge 3[B](2[B](1[B],#),#)
+node 1 B L=1 R=1 bh=1
+node 2 B L=2 R=1 bh=bad
+node 3 B L=bad R=1 bh=bad
+bst=yes
+color=yes
+root=black
+nil=black
+redred=yes
+bh=no
+rb=no
+judge 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+node 1 B L=1 R=1 bh=1
+node 3 B L=1 R=1 bh=1
+node 5 R L=1 R=1 bh=1
+node 7 R L=1 R=1 bh=1
+node 6 B L=1 R=1 bh=1
+node 4 R L=2 R=2 bh=2
+node 2 B L=2 R=2 bh=2
+bst=yes
+color=yes
+root=black
+nil=black
+redred=yes
+bh=yes
+bh_value=2
+rb=yes

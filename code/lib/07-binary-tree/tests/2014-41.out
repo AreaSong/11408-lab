@@ -1,0 +1,21 @@
+exam 2014-41
+tree sample
+rule path_edge root=0 level root=1 use=edge
+inner weight=4 edge=0
+inner weight=2 edge=1
+leaf weight=5 edge=2 level=3 add=10
+leaf weight=1 edge=2 level=3 add=2
+leaf weight=3 edge=1 level=2 add=3
+wpl=15
+tree single
+rule path_edge root=0 level root=1 use=edge
+leaf weight=7 edge=0 level=1 add=0
+wpl=0
+tree ignore_inner
+rule path_edge root=0 level root=1 use=edge
+inner weight=100 edge=0
+inner weight=2 edge=1
+leaf weight=5 edge=2 level=3 add=10
+leaf weight=1 edge=2 level=3 add=2
+leaf weight=3 edge=1 level=2 add=3
+wpl=15

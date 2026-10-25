@@ -1,0 +1,3 @@
+tool=sem saved=yes blocks-when=negative needs-mutex=no
+tool=cond saved=no blocks-when=wait needs-mutex=yes
+tool=monitor saved=inside blocks-when=condition needs-mutex=hidden

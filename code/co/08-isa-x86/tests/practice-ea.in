@@ -1,0 +1,6 @@
+operand direct 2000H 3000H
+operand indirect 2000H 3000H 4000H
+operand base 1000H 20H ABCDH
+operand rel 2002H 6 99
+operand reg 1234H
+operand imm 7

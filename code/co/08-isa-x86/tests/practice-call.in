@@ -1,0 +1,14 @@
+x86
+mov esp, 8192
+push 7
+call foo
+jmp end
+foo:
+push ebp
+mov ebp, esp
+mov eax, dword ptr [ebp+8]
+pop ebp
+ret
+end:
+mov eax, eax
+.

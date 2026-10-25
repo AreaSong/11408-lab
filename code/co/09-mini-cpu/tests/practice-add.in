@@ -1,0 +1,9 @@
+prog
+lda 8
+add 9
+sta 10
+hlt
+end
+8 7
+9 5
+end

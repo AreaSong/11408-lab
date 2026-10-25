@@ -1,0 +1,22 @@
+exam 2013-6
+leaf 2
+before 5(3(2,4),7(6,#))
+case leaf
+mid 5(3(#,4),7(6,#))
+after 5(3(2,4),7(6,#))
+same=yes
+one 7
+before 5(3(2,4),7(6,#))
+case left
+mid 5(3(2,4),6)
+after 5(3(2,4),6(#,7))
+same=no
+two 3
+before 5(3(2,4),7(6,#))
+case two
+pred 2
+mid 5(2(#,4),7(6,#))
+after 5(2(#,4(3,#)),7(6,#))
+same=no
+option A=I,III B=I,IV C=II,III D=II,IV
+pick=C

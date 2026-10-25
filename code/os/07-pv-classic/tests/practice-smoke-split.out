@@ -1,0 +1,18 @@
+problem=smoke kind=split
+sem tobacco=0
+sem paper=0
+sem glue=0
+sem finish=0
+step=1 who=agent op=V sem=tobacco value=1 state=inc wake=- note=-
+step=2 who=paper op=P sem=tobacco value=0 state=run wake=- note=-
+step=3 who=agent op=V sem=paper value=1 state=inc wake=- note=-
+step=4 who=tobacco op=P sem=paper value=0 state=run wake=- note=-
+step=5 who=glue op=P sem=tobacco value=-1 state=block wake=- note=-
+step=6 who=paper op=P sem=glue value=-1 state=block wake=- note=-
+step=7 who=tobacco op=P sem=glue value=-2 state=block wake=- note=-
+step=8 who=agent op=P sem=finish value=-1 state=block wake=- note=-
+summary smoked=0 mismatch=yes deadlock=yes
+wait who=agent sem=finish holder=-
+wait who=glue sem=tobacco holder=paper
+wait who=paper sem=glue holder=-
+wait who=tobacco sem=glue holder=-

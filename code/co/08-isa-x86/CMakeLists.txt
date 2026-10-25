@@ -3,3 +3,5 @@ cmake_minimum_required(VERSION 3.20)
 project(isa_x86 C)
 
 enable_testing()
+
+add_subdirectory(answer)

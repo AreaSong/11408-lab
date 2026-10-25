@@ -1,0 +1,12 @@
+base=3000 limit=500
+logical=400 base=3000 limit=500 result=ok physical=3400
+logical=499 base=3000 limit=500 result=ok physical=3499
+logical=500 base=3000 limit=500 result=bound
+logical=600 base=3000 limit=500 result=bound
+logical=0 base=3000 limit=500 result=ok physical=3000
+low=3000 high=3499
+physical=3000 low=3000 high=3499 result=ok
+physical=3400 low=3000 high=3499 result=ok
+physical=3499 low=3000 high=3499 result=ok
+physical=3500 low=3000 high=3499 result=bound
+physical=2999 low=3000 high=3499 result=bound

@@ -1,0 +1,107 @@
+next base=1 pat=aba m=3
+j=1 ch=a prefix=- ell=- next=0
+j=2 ch=b prefix=a ell=0 next=1
+j=3 ch=a prefix=ab ell=0 next=1
+pm 0 0 1
+row 0 1 1
+map next[1]=0 next[j]=pm[j-1]+1
+build init i=1 j=0 next[1]=0
+build take i=1 j=0 why=sentinel -> i=2 j=1 next[2]=1
+build back i=2 j=1 ch=b other=a -> j=0
+build take i=2 j=0 why=sentinel -> i=3 j=1 next[3]=1
+build done
+next base=1 pat=a m=1
+j=1 ch=a prefix=- ell=- next=0
+pm 0
+row 0
+map next[1]=0 next[j]=pm[j-1]+1
+build init i=1 j=0 next[1]=0
+build done
+next base=0 pat=a m=1
+j=0 ch=a prefix=- ell=- next=-1
+pm 0
+row -1
+map next[0]=-1 next[j]=pm[j]
+build init i=0 j=-1 next[0]=-1
+build done
+next base=1 pat=abaabc m=6
+j=1 ch=a prefix=- ell=- next=0
+j=2 ch=b prefix=a ell=0 next=1
+j=3 ch=a prefix=ab ell=0 next=1
+j=4 ch=a prefix=aba ell=1 next=2
+j=5 ch=b prefix=abaa ell=1 next=2
+j=6 ch=c prefix=abaab ell=2 next=3
+pm 0 0 1 1 2 0
+row 0 1 1 2 2 3
+map next[1]=0 next[j]=pm[j-1]+1
+build init i=1 j=0 next[1]=0
+build take i=1 j=0 why=sentinel -> i=2 j=1 next[2]=1
+build back i=2 j=1 ch=b other=a -> j=0
+build take i=2 j=0 why=sentinel -> i=3 j=1 next[3]=1
+build take i=3 j=1 why=eq ch=a -> i=4 j=2 next[4]=2
+build back i=4 j=2 ch=a other=b -> j=1
+build take i=4 j=1 why=eq ch=a -> i=5 j=2 next[5]=2
+build take i=5 j=2 why=eq ch=b -> i=6 j=3 next[6]=3
+build done
+next base=0 pat=abaabc m=6
+j=0 ch=a prefix=- ell=- next=-1
+j=1 ch=b prefix=a ell=0 next=0
+j=2 ch=a prefix=ab ell=0 next=0
+j=3 ch=a prefix=aba ell=1 next=1
+j=4 ch=b prefix=abaa ell=1 next=1
+j=5 ch=c prefix=abaab ell=2 next=2
+pm 0 0 1 1 2 0
+row -1 0 0 1 1 2
+map next[0]=-1 next[j]=pm[j]
+build init i=0 j=-1 next[0]=-1
+build take i=0 j=-1 why=sentinel -> i=1 j=0 next[1]=0
+build back i=1 j=0 ch=b other=a -> j=-1
+build take i=1 j=-1 why=sentinel -> i=2 j=0 next[2]=0
+build take i=2 j=0 why=eq ch=a -> i=3 j=1 next[3]=1
+build back i=3 j=1 ch=a other=b -> j=0
+build take i=3 j=0 why=eq ch=a -> i=4 j=1 next[4]=1
+build take i=4 j=1 why=eq ch=b -> i=5 j=2 next[5]=2
+build done
+next base=1 pat=abaabcac m=8
+j=1 ch=a prefix=- ell=- next=0
+j=2 ch=b prefix=a ell=0 next=1
+j=3 ch=a prefix=ab ell=0 next=1
+j=4 ch=a prefix=aba ell=1 next=2
+j=5 ch=b prefix=abaa ell=1 next=2
+j=6 ch=c prefix=abaab ell=2 next=3
+j=7 ch=a prefix=abaabc ell=0 next=1
+j=8 ch=c prefix=abaabca ell=1 next=2
+pm 0 0 1 1 2 0 1 0
+row 0 1 1 2 2 3 1 2
+map next[1]=0 next[j]=pm[j-1]+1
+build init i=1 j=0 next[1]=0
+build take i=1 j=0 why=sentinel -> i=2 j=1 next[2]=1
+build back i=2 j=1 ch=b other=a -> j=0
+build take i=2 j=0 why=sentinel -> i=3 j=1 next[3]=1
+build take i=3 j=1 why=eq ch=a -> i=4 j=2 next[4]=2
+build back i=4 j=2 ch=a other=b -> j=1
+build take i=4 j=1 why=eq ch=a -> i=5 j=2 next[5]=2
+build take i=5 j=2 why=eq ch=b -> i=6 j=3 next[6]=3
+build back i=6 j=3 ch=c other=a -> j=1
+build back i=6 j=1 ch=c other=a -> j=0
+build take i=6 j=0 why=sentinel -> i=7 j=1 next[7]=1
+build take i=7 j=1 why=eq ch=a -> i=8 j=2 next[8]=2
+build done
+next base=1 pat=ababaa m=6
+j=1 ch=a prefix=- ell=- next=0
+j=2 ch=b prefix=a ell=0 next=1
+j=3 ch=a prefix=ab ell=0 next=1
+j=4 ch=b prefix=aba ell=1 next=2
+j=5 ch=a prefix=abab ell=2 next=3
+j=6 ch=a prefix=ababa ell=3 next=4
+pm 0 0 1 2 3 1
+row 0 1 1 2 3 4
+map next[1]=0 next[j]=pm[j-1]+1
+build init i=1 j=0 next[1]=0
+build take i=1 j=0 why=sentinel -> i=2 j=1 next[2]=1
+build back i=2 j=1 ch=b other=a -> j=0
+build take i=2 j=0 why=sentinel -> i=3 j=1 next[3]=1
+build take i=3 j=1 why=eq ch=a -> i=4 j=2 next[4]=2
+build take i=4 j=2 why=eq ch=b -> i=5 j=3 next[5]=3
+build take i=5 j=3 why=eq ch=a -> i=6 j=4 next[6]=4
+build done

@@ -1,0 +1,3 @@
+open 1000 9
+send client 4000
+close client

@@ -1,0 +1,7 @@
+home 10.0.0.8 agent 10.0.0.1
+foreign 30.0.0.1
+cn 20.0.0.2
+send hi
+away
+send hi
+reply

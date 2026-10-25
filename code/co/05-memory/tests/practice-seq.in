@@ -1,0 +1,2 @@
+seq 4 200 ns 50 ns 4 4
+seq 2 200 ns 50 ns 4 4

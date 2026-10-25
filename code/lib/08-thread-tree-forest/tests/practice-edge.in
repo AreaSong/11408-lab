@@ -1,0 +1,9 @@
+thread AB#
+thread AA###
+forest A(B,B)
+forest A(
+bin ab ac
+edges 3 5
+height 1 4
+degree 2:3
+post ab##c## b

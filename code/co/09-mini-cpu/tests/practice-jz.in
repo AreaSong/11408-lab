@@ -1,0 +1,10 @@
+prog
+lda 8
+add 9
+jz 4
+sta 10
+hlt
+end
+8 1
+9 -1
+end

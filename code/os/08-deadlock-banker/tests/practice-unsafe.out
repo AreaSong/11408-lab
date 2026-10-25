@@ -1,0 +1,30 @@
+loaded n=3 m=1 base=0 avail=0
+need
+P0 2
+P1 2
+P2 2
+safety
+algo=safety rule=smallest
+work0=0
+stuck work=0
+result safe=no order=- left=P0 P1 P2
+reduce
+algo=reduce rule=smallest
+isolated=-
+work0=0
+who work request alloc next
+P0 0 0 1 1
+P1 1 0 1 2
+P2 2 0 1 3
+result deadlock=no removed=P0 P1 P2 left=-
+safety
+algo=safety rule=smallest
+work0=0
+stuck work=0
+result safe=no order=- left=P0 P1 P2
+reduce
+algo=reduce rule=smallest
+isolated=-
+work0=0
+stuck work=0
+result deadlock=yes removed=- left=P0 P1 P2

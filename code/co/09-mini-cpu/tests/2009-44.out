@@ -1,0 +1,24 @@
+【2009-44】ADD (R1), R0
+功能：(R0)+((R1)) 写入 (R1) 所指主存，不写回寄存器 R1
+取指和译码 4 个节拍
+取指 C1 (PC)->MAR | 题干已给出 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | PC+1 不走内总线 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | 这一拍取出的是指令 | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | 译码不占用内总线 | 无 | 内总线驱动 0 个
+执行阶段方案一，主存操作数先单独锁进 A
+访存 C5 (R1)->MAR | 先送间接地址 | R1out MARin | 内总线驱动 1 个
+访存 C6 M(MAR)->MDR | 这一拍取出的是数据 | MemR MDRinE | 内总线驱动 0 个
+执行 C7 (MDR)->A | 先锁存主存操作数 | MDRout Ain | 内总线驱动 1 个
+执行 C8 (A)+(R0)->AC | R0 单独上内总线 | R0out Add ACin | 内总线驱动 1 个
+写回 C9 (AC)->MDR | 结果离开 ALU | ACout MDRin | 内总线驱动 1 个
+访存 C10 (MDR)->M(MAR) | MAR 仍是 (R1)，写回主存 | MDRoutE MemW | 内总线驱动 0 个
+方案一：6 个时钟周期，冲突 0 次
+执行阶段方案二，读主存的同时把 R0 送进 A
+访存 C5 (R1)->MAR | 先送间接地址 | R1out MARin | 内总线驱动 1 个
+访存 C6 M(MAR)->MDR (R0)->A | 数据总线与内总线同时 | MemR MDRinE R0out Ain | 内总线驱动 1 个
+执行 C7 (MDR)+(A)->AC | A 里已经是 R0 | MDRout Add ACin | 内总线驱动 1 个
+写回 C8 (AC)->MDR | 结果离开 ALU | ACout MDRin | 内总线驱动 1 个
+访存 C9 (MDR)->M(MAR) | MAR 仍是 (R1)，写回主存 | MDRoutE MemW | 内总线驱动 0 个
+方案二：5 个时钟周期，冲突 0 次
+反例：同一拍 R1out 和 R0out，内总线驱动 2 个，冲突
+结果：6 个时钟周期或 5 个时钟周期

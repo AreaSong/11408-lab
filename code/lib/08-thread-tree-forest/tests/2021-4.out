@@ -1,0 +1,48 @@
+exam 2021-4
+forest n=7 trees=3 kind=forest
+parent i=1 data=a parent=-
+parent i=2 data=b parent=a
+parent i=3 data=d parent=a
+parent i=4 data=c parent=-
+parent i=5 data=e parent=c
+parent i=6 data=g parent=c
+parent i=7 data=f parent=-
+child a: b d
+child b: -
+child d: -
+child c: e g
+child e: -
+child g: -
+child f: -
+cs a child=b sibling=c
+cs b child=- sibling=d
+cs d child=- sibling=-
+cs c child=e sibling=f
+cs e child=- sibling=g
+cs g child=- sibling=-
+cs f child=- sibling=-
+shape a(b,d) c(e,g) f
+bin a left=b right=c
+bin b left=- right=d
+bin d left=- right=-
+bin c left=e right=f
+bin e left=- right=g
+bin g left=- right=-
+bin f left=- right=-
+tree 1 root=a pre=abd post=bda
+tree 2 root=c pre=ceg post=egc
+tree 3 root=f pre=f post=f
+forest_pre=abdcegf
+forest_in=bdaegcf
+bin_pre=abdcegf
+bin_in=bdaegcf
+bin_post=dbgefca
+bin_level=abcdefg
+match_pre=1 match_in=1
+leaves=5 left_null=5 bin_leaf=3 deg1=2 right_null=3
+right_formula=3
+root_sibling=c
+check post=dbgefca trees=3
+hit_post=1 hit_trees=1
+option A=1 B=2 C=3 D=4
+pick=C

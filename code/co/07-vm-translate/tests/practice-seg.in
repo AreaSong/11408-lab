@@ -1,0 +1,5 @@
+seg 8000H 100H 20H
+seg 8000H 100H 100H
+segpage 4096 4 1 10H 1 0AH
+segpage 4096 4 4 10H 1 0AH
+segpage 4096 4 2 10H 0 0

@@ -1,0 +1,16 @@
+algo ff
+hole 0 120
+hole 1000 200
+hole 2000 120
+alloc A 100
+alloc B 100
+alloc C 150
+show
+algo bf
+hole 0 120
+hole 1000 200
+hole 2000 120
+alloc A 100
+alloc B 100
+alloc C 150
+show

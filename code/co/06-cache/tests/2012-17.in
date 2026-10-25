@@ -1,0 +1,12 @@
+trace word 16 1 4 2 lru through alloc
+10
+R 0
+R 4
+R 8
+R 2
+R 0
+R 6
+R 8
+R 6
+R 4
+R 8

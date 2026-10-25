@@ -1,0 +1,5 @@
+algo=reduce rule=smallest
+isolated=P4
+work0=0,0,0
+stuck work=0,0,0
+result deadlock=yes removed=- left=P1 P2 P3

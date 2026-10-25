@@ -1,0 +1,17 @@
+algo=mlfq levels=1 q=1 quantum=1 idle=yes
+trace
+0 admit P1 q0
+0 schedule reason=arrive from=- to=P1 switch=yes q=0 slice=1
+1 schedule reason=exit from=P1 to=idle switch=yes
+3 admit P2 q0
+3 schedule reason=arrive from=idle to=P2 switch=yes q=0 slice=1
+4 schedule reason=exit from=P2 to=idle switch=yes
+gantt
+0-1 P1
+1-3 idle
+3-4 P2
+table
+name arrive service start finish turn wait response level
+P1 0 1 0 1 1 0 0 0
+P2 3 1 3 4 1 0 0 0
+avg turn=1/1 wait=0/1

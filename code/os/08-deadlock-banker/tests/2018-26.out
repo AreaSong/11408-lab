@@ -1,0 +1,11 @@
+loaded n=3 m=1 base=1 avail=1
+need
+P1 2
+P2 2
+P3 1
+algo=safety rule=smallest
+work0=1
+who work need alloc next finish
+P3 1 1 0 1 true
+stuck work=1
+result safe=no order=- left=P1 P2

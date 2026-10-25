@@ -1,0 +1,2 @@
+detect dist 2 km speed 200000 km/s
+goodput frame 1518 B data 1500 B ack 64 B bw 10 Mbps dist 2 km speed 200000 km/s

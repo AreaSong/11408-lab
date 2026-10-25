@@ -1,0 +1,26 @@
+exam 2025-5
+huff n=7
+leaf A=2 B=3 C=4 D=6 E=8 F=10 G=11
+pick A:2 + B:3 -> #8:5
+pick C:4 + #8:5 -> #9:9
+pick D:6 + E:8 -> #10:14
+pick #9:9 + F:10 -> #11:19
+pick G:11 + #10:14 -> #12:25
+pick #11:19 + #12:25 -> #13:44
+code A=0010 len=4
+code B=0011 len=4
+code C=000 len=3
+code D=110 len=3
+code E=111 len=3
+code F=01 len=2
+code G=10 len=2
+wpl=116
+inside=116
+total=44
+avg=2.64
+nodes=13
+degree1=0
+prefix=ok
+long3=5
+option A=2 B=3 C=4 D=5
+pick=D

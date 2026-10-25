@@ -1,0 +1,3 @@
+seq A # B # # # C
+seq A B C D E
+seq A # # B

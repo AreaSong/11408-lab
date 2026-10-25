@@ -1,0 +1,26 @@
+【2015-44】指令字与执行节拍
+操作码 7 位，最多 128 条指令
+inc R1：(R1)+1->R1
+OP=1 保留=0 Rd=1 M1=0 Rs1=0 M2=0 Rs2=0 机器码 0240H
+shl R2, R1：(R1) 左移 1 位 ->R2
+OP=2 保留=0 Rd=2 M1=0 Rs1=1 M2=0 Rs2=0 机器码 0488H
+sub R3, (R1), R2：((R1))-(R2)->R3
+OP=3 保留=0 Rd=3 M1=1 Rs1=1 M2=0 Rs2=2 机器码 06EAH
+图 a 标号按题图顺序，后面是该信号在题干里的含义
+1=0（控制端取 0）
+2=mov（SR 直送）
+3=mova（ALU 直送 A）
+4=left（SR 左移）
+5=read（主存读）
+6=sub（ALU 减法）
+7=mov（SR 直送）
+8=SRout（SR 的三态门）
+sub R1, R3, (R2) 的执行阶段
+执行 C1 (R2)->MAR | 间接地址 | R2out MARin | 内总线驱动 1 个
+执行 C2 M(MAR)->MDR (R3)->T | 读主存的同时送减数 | MemR MDRinE R3out Tin | 内总线驱动 1 个
+执行 C3 (MDR)-(T)->SR | 主存数减 R3 | MDRout sub SRin | 内总线驱动 1 个
+写回 C4 (SR)->R1 | 经三态门写回 | SRout R1in | 内总线驱动 1 个
+inc R1 的执行阶段
+执行 C1 (R1)+1->SR | 单操作数不必先占用 T | R1out inc SRin | 内总线驱动 1 个
+写回 C2 (SR)->R1 | 经三态门写回 | SRout R1in | 内总线驱动 1 个
+结果：128 条；0240H 0488H 06EAH；sub 4 个时钟周期；inc 2 个时钟周期

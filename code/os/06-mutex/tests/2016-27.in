@@ -1,0 +1,6 @@
+demo tsl
+demo swap
+claim tsl-wake-blocked
+claim tsl-no-yield-cpu
+claim tsl-yield-wait
+claim tsl-cli-loop

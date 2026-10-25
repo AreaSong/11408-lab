@@ -1,0 +1,21 @@
+exam 2021-5
+huff n=5
+leaf A=10 B=12 C=16 D=21 E=30
+pick A:10 + B:12 -> #6:22
+pick C:16 + D:21 -> #7:37
+pick #6:22 + E:30 -> #8:52
+pick #7:37 + #8:52 -> #9:89
+code A=100 len=3
+code B=101 len=3
+code C=00 len=2
+code D=01 len=2
+code E=11 len=2
+wpl=200
+inside=200
+total=89
+avg=2.25
+nodes=9
+degree1=0
+prefix=ok
+option A=89 B=200 C=208 D=289
+pick=B

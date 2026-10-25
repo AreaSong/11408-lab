@@ -1,0 +1,14 @@
+algo=single
+step=1 who=0 op=try action=enter turn=0 flag=0,0 lock=0 in=0
+step=2 who=0 op=leave action=leave turn=1 flag=0,0 lock=0 in=-
+step=3 who=1 op=try action=enter turn=1 flag=0,0 lock=0 in=1
+step=4 who=1 op=leave action=leave turn=0 flag=0,0 lock=0 in=-
+step=5 who=0 op=try action=enter turn=0 flag=0,0 lock=0 in=0
+seen both=no
+algo=check-after
+step=1 who=0 op=try action=flag turn=0 flag=1,0 lock=0 in=-
+step=2 who=0 op=try action=enter turn=0 flag=1,0 lock=0 in=0
+step=3 who=0 op=leave action=leave turn=0 flag=0,0 lock=0 in=-
+step=4 who=1 op=try action=flag turn=0 flag=0,1 lock=0 in=-
+step=5 who=1 op=try action=enter turn=0 flag=0,1 lock=0 in=1
+seen both=no

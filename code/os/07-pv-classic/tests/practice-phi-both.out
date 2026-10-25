@@ -1,0 +1,43 @@
+problem=phi kind=both n=5
+sem chop0=1
+sem chop1=1
+sem chop2=1
+sem chop3=1
+sem chop4=1
+sem pick=1
+step=1 who=P0 op=P sem=pick value=0 state=run wake=- note=-
+step=2 who=P0 op=P sem=chop0 value=0 state=run wake=- note=-
+step=3 who=P0 op=P sem=chop1 value=0 state=run wake=- note=-
+step=4 who=P0 op=V sem=pick value=1 state=inc wake=- note=-
+step=5 who=P0 op=work sem=- value=- state=run wake=- note=eat
+step=6 who=P0 op=V sem=chop0 value=1 state=inc wake=- note=-
+step=7 who=P0 op=V sem=chop1 value=1 state=inc wake=- note=-
+step=8 who=P1 op=P sem=pick value=0 state=run wake=- note=-
+step=9 who=P1 op=P sem=chop1 value=0 state=run wake=- note=-
+step=10 who=P1 op=P sem=chop2 value=0 state=run wake=- note=-
+step=11 who=P1 op=V sem=pick value=1 state=inc wake=- note=-
+step=12 who=P1 op=work sem=- value=- state=run wake=- note=eat
+step=13 who=P1 op=V sem=chop1 value=1 state=inc wake=- note=-
+step=14 who=P1 op=V sem=chop2 value=1 state=inc wake=- note=-
+step=15 who=P2 op=P sem=pick value=0 state=run wake=- note=-
+step=16 who=P2 op=P sem=chop2 value=0 state=run wake=- note=-
+step=17 who=P2 op=P sem=chop3 value=0 state=run wake=- note=-
+step=18 who=P2 op=V sem=pick value=1 state=inc wake=- note=-
+step=19 who=P2 op=work sem=- value=- state=run wake=- note=eat
+step=20 who=P2 op=V sem=chop2 value=1 state=inc wake=- note=-
+step=21 who=P2 op=V sem=chop3 value=1 state=inc wake=- note=-
+step=22 who=P3 op=P sem=pick value=0 state=run wake=- note=-
+step=23 who=P3 op=P sem=chop3 value=0 state=run wake=- note=-
+step=24 who=P3 op=P sem=chop4 value=0 state=run wake=- note=-
+step=25 who=P3 op=V sem=pick value=1 state=inc wake=- note=-
+step=26 who=P3 op=work sem=- value=- state=run wake=- note=eat
+step=27 who=P3 op=V sem=chop3 value=1 state=inc wake=- note=-
+step=28 who=P3 op=V sem=chop4 value=1 state=inc wake=- note=-
+step=29 who=P4 op=P sem=pick value=0 state=run wake=- note=-
+step=30 who=P4 op=P sem=chop4 value=0 state=run wake=- note=-
+step=31 who=P4 op=P sem=chop0 value=0 state=run wake=- note=-
+step=32 who=P4 op=V sem=pick value=1 state=inc wake=- note=-
+step=33 who=P4 op=work sem=- value=- state=run wake=- note=eat
+step=34 who=P4 op=V sem=chop4 value=1 state=inc wake=- note=-
+step=35 who=P4 op=V sem=chop0 value=1 state=inc wake=- note=-
+summary meals=5 deadlock=no

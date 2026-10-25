@@ -1,0 +1,9 @@
+exam 2013-42
+half_level do=2 for=1 repeat=2 while=3
+half=220/100 dec=2.20
+seq do while for repeat
+seq=210/100 dec=2.10
+for_root for(do,while(repeat,#))
+for_root=200/100 dec=2.00
+repeat_root repeat(do(#,for),while)
+repeat_root=200/100 dec=2.00

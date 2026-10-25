@@ -1,0 +1,6 @@
+home 10.0.0.8 agent 10.0.0.1
+colocated 30.0.0.50
+cn 20.0.0.2
+away
+send hi
+reply

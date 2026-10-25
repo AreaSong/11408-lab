@@ -1,0 +1,9 @@
+fail format
+fail dup
+fail range
+fail range
+fail unknown exam 1999-1
+fail format
+fail format
+fail format
+fail unknown nope

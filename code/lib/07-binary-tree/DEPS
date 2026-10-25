@@ -1,2 +1,4 @@
-lib/03-stack
-lib/04-queue
+# 非递归遍历压的是结点编号。链栈和链队列的 LNode、link_* 重名，不能一起链进来。
+lib/03-stack sqstack.h sqstack.c
+# 层次遍历用牺牲一格的循环队列。元素同样是编号：这两关的栈和队列都只存 int。
+lib/04-queue cycq.h cycq.c

@@ -1,0 +1,45 @@
+topk k=3 heap=min
+push 5
+place 5
+sift 1
+heap 5
+push 1
+place 5 1
+sift 2
+swap 2 1
+now 1 5
+heap 1 5
+push 9
+place 1 5 9
+sift 3
+heap 1 5 9
+replace 3
+place 3 5 9
+sift 1
+heap 3 5 9
+replace 7
+place 7 5 9
+sift 1
+swap 1 2
+now 5 7 9
+heap 5 7 9
+replace 8
+place 8 7 9
+sift 1
+swap 1 2
+now 7 8 9
+heap 7 8 9
+skip 2
+skip 6
+largest 9 8 7
+topk k=1 heap=min
+push 4
+place 4
+sift 1
+heap 4
+replace 9
+place 9
+sift 1
+heap 9
+skip 2
+largest 9

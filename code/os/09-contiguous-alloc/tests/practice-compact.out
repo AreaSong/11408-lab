@@ -1,0 +1,23 @@
+memory=100 algo=ff
+alloc A size=20 result=ok at=0 from=0 hole=100 left=80 internal=0
+alloc B size=30 result=ok at=20 from=20 hole=80 left=50 internal=0
+alloc C size=10 result=ok at=50 from=50 hole=50 left=40 internal=0
+free B at=20 size=30 merge=none
+show algo=ff order=address-asc holes=2 free=70 largest=40 cursor=-
+20 30
+60 40
+jobs=2
+A 0 20
+C 50 10
+bind=static
+compact result=fail reason=static
+bind=dynamic
+compact result=ok reloc=dynamic
+A 0 20 -> 0
+C 50 10 -> 20
+free 30 70
+show algo=ff order=address-asc holes=1 free=70 largest=70 cursor=-
+30 70
+jobs=2
+A 0 20
+C 20 10

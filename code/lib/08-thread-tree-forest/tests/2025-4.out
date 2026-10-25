@@ -1,0 +1,7 @@
+exam 2025-4
+caseA complete_two root_deg=1
+caseB trees=3 binary_roots=1
+caseC n0=1 branch=2
+caseD root_op_after_children=1
+option A=no_deg1 B=forest_to_one C=branch_lt_leaf D=root_first_op
+pick=B

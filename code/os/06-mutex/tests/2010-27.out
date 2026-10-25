@@ -1,0 +1,20 @@
+demo=peterson-tie algo=peterson
+step=1 who=0 op=try action=flag turn=0 flag=1,0 lock=0 in=-
+step=2 who=1 op=try action=flag turn=0 flag=1,1 lock=0 in=-
+step=3 who=1 op=try action=yield turn=0 flag=1,1 lock=0 in=-
+step=4 who=0 op=try action=yield turn=1 flag=1,1 lock=0 in=-
+step=5 who=0 op=try action=spin turn=1 flag=1,1 lock=0 in=-
+step=6 who=1 op=try action=enter turn=1 flag=1,1 lock=0 in=1
+seen both=no
+algo=peterson progress=yes mutex=yes bounded=yes yield=no
+demo=peterson-alt algo=peterson
+step=1 who=0 op=try action=flag turn=0 flag=1,0 lock=0 in=-
+step=2 who=1 op=try action=flag turn=0 flag=1,1 lock=0 in=-
+step=3 who=0 op=try action=yield turn=1 flag=1,1 lock=0 in=-
+step=4 who=1 op=try action=yield turn=0 flag=1,1 lock=0 in=-
+step=5 who=1 op=try action=spin turn=0 flag=1,1 lock=0 in=-
+step=6 who=0 op=try action=enter turn=0 flag=1,1 lock=0 in=0
+seen both=no
+algo=peterson progress=yes mutex=yes bounded=yes yield=no
+peterson-mutex true
+peterson-starve false

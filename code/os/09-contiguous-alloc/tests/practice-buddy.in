@@ -1,0 +1,20 @@
+buddy 16
+balloc A 3
+bfree A
+bshow
+buddy 16
+balloc A 4
+balloc B 4
+balloc C 4
+balloc D 4
+bfree B
+bfree C
+bshow
+memory ff 16
+alloc A 4
+alloc B 4
+alloc C 4
+alloc D 4
+free B
+free C
+show

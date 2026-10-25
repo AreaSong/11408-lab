@@ -1,0 +1,8 @@
+exam 2011-6
+noright n=2011 n0=116
+branch=1895
+right_null=branch+1=1896
+with_right=n0-1=115
+option A=115 B=116 C=1895 D=1896
+trap_A=with_right trap_B=leaves trap_C=branch
+pick=D

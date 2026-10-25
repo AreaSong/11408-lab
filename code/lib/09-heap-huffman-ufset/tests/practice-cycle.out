@@ -1,0 +1,18 @@
+cycle n=4
+edge 1 2 add
+edge 2 3 add
+edge 3 4 add
+cycle=no
+components 1
+cycle n=4
+edge 1 2 add
+edge 2 3 add
+edge 3 1 cycle
+edge 1 4 add
+cycle=yes
+components 1
+cycle n=4
+edge 1 2 add
+edge 3 4 add
+cycle=no
+components 2

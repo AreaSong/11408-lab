@@ -1,0 +1,12 @@
+count -2
+count 0
+integer 2
+integer 0
+sem 1
+P A
+P B
+P C
+V A
+V B
+V Z
+end

@@ -1,0 +1,25 @@
+algo=smp mode=shared cpus=2 q=2 balance=shared affinity=hard
+migrations=0
+cpu0
+0-2 A
+2-4 B
+4-6 A
+cpu1
+0-6 idle
+table
+name arrive service affinity start finish moves cpus
+A 0 4 0 0 6 0 0,0
+B 0 2 0 2 4 0 0
+makespan=6
+algo=smp mode=shared cpus=2 q=2 balance=shared affinity=soft
+migrations=1
+cpu0
+0-4 A
+cpu1
+0-2 B
+2-4 idle
+table
+name arrive service affinity start finish moves cpus
+A 0 4 0 0 4 0 0,0
+B 0 2 0 0 2 1 1
+makespan=4

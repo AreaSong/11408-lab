@@ -1,0 +1,8 @@
+route 202.118.1.0/25 dev E1
+route 202.118.1.128/25 dev E2
+route 202.118.3.2/32 via 202.118.2.2 dev L0
+default via 202.118.2.2 dev L0
+lookup 202.118.1.10
+lookup 202.118.1.200
+lookup 202.118.3.2
+lookup 8.8.8.8

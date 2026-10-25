@@ -1,0 +1,8 @@
+run smp shared 2 off hard
+A 0 4 0
+B 0 2 0
+end
+run smp shared 2 off soft
+A 0 4 0
+B 0 2 0
+end

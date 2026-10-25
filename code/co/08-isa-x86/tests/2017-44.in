@@ -1,0 +1,7 @@
+span 00401020H 0040107FH
+iset 1 3 2 1
+x86
+mov eax, 0
+mov ecx, 0xFFFFFFFF
+cmp eax, ecx
+.

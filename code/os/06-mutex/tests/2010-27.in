@@ -1,0 +1,4 @@
+demo peterson-tie
+demo peterson-alt
+claim peterson-mutex
+claim peterson-starve

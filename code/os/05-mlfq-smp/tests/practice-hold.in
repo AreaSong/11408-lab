@@ -1,0 +1,6 @@
+hold interrupt exit
+hold user-cs slice
+hold kernel-cs higher
+hold atomic block
+hold interrupt return
+hold user-cs exit

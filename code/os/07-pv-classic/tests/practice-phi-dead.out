@@ -1,0 +1,22 @@
+problem=phi kind=dead n=5
+sem chop0=1
+sem chop1=1
+sem chop2=1
+sem chop3=1
+sem chop4=1
+step=1 who=P0 op=P sem=chop0 value=0 state=run wake=- note=-
+step=2 who=P1 op=P sem=chop1 value=0 state=run wake=- note=-
+step=3 who=P2 op=P sem=chop2 value=0 state=run wake=- note=-
+step=4 who=P3 op=P sem=chop3 value=0 state=run wake=- note=-
+step=5 who=P4 op=P sem=chop4 value=0 state=run wake=- note=-
+step=6 who=P0 op=P sem=chop1 value=-1 state=block wake=- note=-
+step=7 who=P1 op=P sem=chop2 value=-1 state=block wake=- note=-
+step=8 who=P2 op=P sem=chop3 value=-1 state=block wake=- note=-
+step=9 who=P3 op=P sem=chop4 value=-1 state=block wake=- note=-
+step=10 who=P4 op=P sem=chop0 value=-1 state=block wake=- note=-
+summary meals=0 deadlock=yes
+wait who=P0 sem=chop1 holder=P1
+wait who=P1 sem=chop2 holder=P2
+wait who=P2 sem=chop3 holder=P3
+wait who=P3 sem=chop4 holder=P4
+wait who=P4 sem=chop0 holder=P0

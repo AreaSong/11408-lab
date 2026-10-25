@@ -1,0 +1,9 @@
+lock=tsl n=1000 expect=2000 got=2000 ok=yes
+lock=swap n=1000 expect=2000 got=2000 ok=yes
+lock=mutex n=800 expect=1600 got=1600 ok=yes
+lock=sem n=800 expect=1600 got=1600 ok=yes
+peterson mode=fence n=1000 expect=2000 got=2000 bad=0 ok=yes
+bench lock=spin cs=short n=1000 expect=2000 got=2000 ok=yes
+bench lock=block cs=short n=1000 expect=2000 got=2000 ok=yes
+bench lock=spin cs=long n=40 expect=80 got=80 ok=yes
+bench lock=block cs=long n=40 expect=80 got=80 ok=yes

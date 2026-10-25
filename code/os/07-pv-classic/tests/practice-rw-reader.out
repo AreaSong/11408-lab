@@ -1,0 +1,23 @@
+problem=rw kind=reader-cut
+sem rmutex=1
+sem wmutex=1
+step=1 who=R0 op=P sem=rmutex value=0 state=run wake=- note=-
+step=2 who=R0 op=count sem=- value=1 state=run wake=- note=readcount
+step=3 who=R0 op=P sem=wmutex value=0 state=run wake=- note=-
+step=4 who=R0 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=5 who=R0 op=work sem=- value=- state=run wake=- note=read
+step=6 who=W0 op=P sem=wmutex value=-1 state=block wake=- note=-
+step=7 who=R1 op=P sem=rmutex value=0 state=run wake=- note=-
+step=8 who=R1 op=count sem=- value=2 state=run wake=- note=readcount
+step=9 who=R1 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=10 who=R1 op=work sem=- value=- state=run wake=- note=read
+step=11 who=R0 op=P sem=rmutex value=0 state=run wake=- note=-
+step=12 who=R0 op=count sem=- value=1 state=run wake=- note=readcount
+step=13 who=R0 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=14 who=R1 op=P sem=rmutex value=0 state=run wake=- note=-
+step=15 who=R1 op=count sem=- value=0 state=run wake=- note=readcount
+step=16 who=R1 op=V sem=wmutex value=0 state=wake wake=W0 note=-
+step=17 who=R1 op=V sem=rmutex value=1 state=inc wake=- note=-
+step=18 who=W0 op=work sem=- value=- state=run wake=- note=write
+step=19 who=W0 op=V sem=wmutex value=1 state=inc wake=- note=-
+summary second=enter max_read=2 deadlock=no

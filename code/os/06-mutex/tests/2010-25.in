@@ -1,0 +1,8 @@
+count 1
+sem 3
+P A
+P B
+end
+claim value-1-available
+claim value-1-waiters
+claim value-1-has-waiter

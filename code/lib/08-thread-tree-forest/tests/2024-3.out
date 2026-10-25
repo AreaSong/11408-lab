@@ -1,0 +1,22 @@
+exam 2024-3
+thread n=5 inorder=abpvq
+step 1 visit=a pre=^ ltag=1 left=^ fix=head
+step 2 visit=b pre=a ltag=1 left=a fix=a child
+step 3 visit=p pre=b ltag=0 left=b fix=b>p
+step 4 visit=v pre=p ltag=0 left=a fix=p>v
+step 5 visit=q pre=v ltag=1 left=v fix=v child
+close last=q right=^
+node a ltag=1 left=^ rtag=0 right=p in_pred=- in_succ=b
+node b ltag=1 left=a rtag=1 right=p in_pred=a in_succ=p
+node p ltag=0 left=b rtag=1 right=v in_pred=b in_succ=v
+node v ltag=0 left=a rtag=0 right=q in_pred=p in_succ=q
+node q ltag=1 left=v rtag=1 right=^ in_pred=v in_succ=-
+head ltag=0 left=v rtag=1 right=q
+walk=abpvq
+check=ok
+plain_null=2
+ask v pred=p succ=q
+p=p p_left=1 p_right=0 q=q q_left=0 q_right=0
+two_child_ok=1
+option A=p_no_right_q_no_left B=q_has_left C=p_has_right D=both_have
+pick=A

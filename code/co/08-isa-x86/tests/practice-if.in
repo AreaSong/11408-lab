@@ -1,0 +1,8 @@
+x86
+mov eax, 5
+cmp eax, 3
+jle skip
+mov eax, 9
+skip:
+mov eax, eax
+.

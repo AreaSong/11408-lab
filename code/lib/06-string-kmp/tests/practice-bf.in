@@ -1,0 +1,4 @@
+bf xabc abc
+kmp 1 xabc abc
+bf ababc abc
+kmp 1 abc abc

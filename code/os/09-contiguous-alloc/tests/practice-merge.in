@@ -1,0 +1,22 @@
+algo ff
+hole 0 10
+release 10 10
+show
+algo ff
+hole 20 10
+release 10 10
+show
+algo ff
+hole 0 10
+hole 20 10
+release 10 10
+show
+algo ff
+hole 0 10
+hole 30 10
+release 15 10
+show
+algo ff
+hole 0 10
+hole 10 5
+show

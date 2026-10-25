@@ -1,0 +1,46 @@
+exam 2019-2
+forest n=7 trees=1 kind=tree
+parent i=1 data=A parent=-
+parent i=2 data=B parent=A
+parent i=3 data=E parent=B
+parent i=4 data=F parent=B
+parent i=5 data=G parent=B
+parent i=6 data=C parent=A
+parent i=7 data=D parent=A
+child A: B C D
+child B: E F G
+child E: -
+child F: -
+child G: -
+child C: -
+child D: -
+cs A child=B sibling=-
+cs B child=E sibling=C
+cs E child=- sibling=F
+cs F child=- sibling=G
+cs G child=- sibling=-
+cs C child=- sibling=D
+cs D child=- sibling=-
+shape A(B(E,F,G),C,D)
+bin A left=B right=-
+bin B left=E right=C
+bin E left=- right=F
+bin F left=- right=G
+bin G left=- right=-
+bin C left=- right=D
+bin D left=- right=-
+tree 1 root=A pre=ABEFGCD post=EFGBCDA
+forest_pre=ABEFGCD
+forest_in=EFGBCDA
+bin_pre=ABEFGCD
+bin_in=EFGBCDA
+bin_post=GFEDCBA
+bin_level=ABECFDG
+match_pre=1 match_in=1
+leaves=5 left_null=5 bin_leaf=2 deg1=4 right_null=3
+right_formula=3
+root_sibling=-
+postroot=EFGBCDA
+eq_pre=0 eq_in=1 eq_post=0 eq_level=0
+option A=pre B=in C=post D=level
+pick=B

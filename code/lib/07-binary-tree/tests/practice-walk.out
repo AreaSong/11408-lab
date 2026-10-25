@@ -1,0 +1,112 @@
+link ok n=5 root=A
+shape n=5 n0=3 n1=0 n2=2 null=6 height=3 width=2 complete=1
+pre=ABDEC in=DBEAC post=DEBCA
+check n0=n2+1 ok=1
+pre_eq_in=0 no_left=0 no_right=0 nonleaf=2 nonleaf_deg1=0 nonleaf_deg2=1 all_deg1=0 all_deg2=0
+seq1 1:A 2:B 3:C 4:D 5:E waste=0
+rec_pre enter A
+rec_pre visit A
+rec_pre enter B
+rec_pre visit B
+rec_pre enter D
+rec_pre visit D
+rec_pre leave D
+rec_pre enter E
+rec_pre visit E
+rec_pre leave E
+rec_pre leave B
+rec_pre enter C
+rec_pre visit C
+rec_pre leave C
+rec_pre leave A
+rec_pre ABDEC
+rec_in enter A
+rec_in enter B
+rec_in enter D
+rec_in visit D
+rec_in leave D
+rec_in visit B
+rec_in enter E
+rec_in visit E
+rec_in leave E
+rec_in leave B
+rec_in visit A
+rec_in enter C
+rec_in visit C
+rec_in leave C
+rec_in leave A
+rec_in DBEAC
+rec_post enter A
+rec_post enter B
+rec_post enter D
+rec_post visit D
+rec_post leave D
+rec_post enter E
+rec_post visit E
+rec_post leave E
+rec_post visit B
+rec_post leave B
+rec_post enter C
+rec_post visit C
+rec_post leave C
+rec_post visit A
+rec_post leave A
+rec_post DEBCA
+pre_stack
+pre step=1 id=1 pop=A visit=A push=C,B stack=[5:C 2:B]
+pre step=2 id=2 pop=B visit=B push=E,D stack=[5:C 4:E 3:D]
+pre step=3 id=3 pop=D visit=D push=- stack=[5:C 4:E]
+pre step=4 id=4 pop=E visit=E push=- stack=[5:C]
+pre step=5 id=5 pop=C visit=C push=- stack=[]
+pre ABDEC
+in_stack
+in step=1 op=push id=1 ch=A stack=[1:A]
+in step=2 op=push id=2 ch=B stack=[1:A 2:B]
+in step=3 op=push id=3 ch=D stack=[1:A 2:B 3:D]
+in step=4 op=visit id=3 ch=D stack=[1:A 2:B]
+in step=5 op=visit id=2 ch=B stack=[1:A]
+in step=6 op=push id=4 ch=E stack=[1:A 4:E]
+in step=7 op=visit id=4 ch=E stack=[1:A]
+in step=8 op=visit id=1 ch=A stack=[]
+in step=9 op=push id=5 ch=C stack=[5:C]
+in step=10 op=visit id=5 ch=C stack=[]
+in DBEAC
+post_stack
+post step=1 op=push id=1 ch=A stack=[1:A]
+post step=2 op=push id=2 ch=B stack=[1:A 2:B]
+post step=3 op=push id=3 ch=D stack=[1:A 2:B 3:D]
+post step=4 op=visit id=3 ch=D stack=[1:A 2:B]
+post step=5 op=push id=4 ch=E stack=[1:A 2:B 4:E]
+post step=6 op=visit id=4 ch=E stack=[1:A 2:B]
+post step=7 op=visit id=2 ch=B stack=[1:A]
+post step=8 op=push id=5 ch=C stack=[1:A 5:C]
+post step=9 op=visit id=5 ch=C stack=[1:A]
+post step=10 op=visit id=1 ch=A stack=[]
+post DEBCA
+level_queue
+level layer=1 deq=1:A queue=[2:B 5:C]
+level layer=2 deq=2:B queue=[5:C 3:D 4:E]
+level layer=2 deq=5:C queue=[3:D 4:E]
+level layer=3 deq=3:D queue=[4:E]
+level layer=3 deq=4:E queue=[]
+level ABCDE
+width=2
+complete_scan
+complete deq=1:A seen_null=0 queue=[2:B 5:C]
+complete deq=2:B seen_null=0 queue=[5:C 3:D 4:E]
+complete deq=5:C seen_null=0 queue=[3:D 4:E 0:# 0:#]
+complete deq=3:D seen_null=0 queue=[4:E 0:# 0:# 0:# 0:#]
+complete deq=4:E seen_null=0 queue=[0:# 0:# 0:# 0:# 0:# 0:#]
+complete deq=null seen_null=1 queue=[0:# 0:# 0:# 0:# 0:#]
+complete deq=null seen_null=1 queue=[0:# 0:# 0:# 0:#]
+complete deq=null seen_null=1 queue=[0:# 0:# 0:#]
+complete deq=null seen_null=1 queue=[0:# 0:#]
+complete deq=null seen_null=1 queue=[0:#]
+complete deq=null seen_null=1 queue=[]
+complete=1
+link ok n=4 root=A
+shape n=4 n0=2 n1=1 n2=1 null=5 height=3 width=2 complete=0
+pre=ABEC in=BEAC post=EBCA
+check n0=n2+1 ok=1
+pre_eq_in=0 no_left=0 no_right=0 nonleaf=2 nonleaf_deg1=0 nonleaf_deg2=0 all_deg1=0 all_deg2=0
+seq1 1:A 2:B 3:C 4:# 5:E waste=1

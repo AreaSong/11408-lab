@@ -1,0 +1,6 @@
+exam 2016-5
+edges n=25 e=15
+trees=n-e=10
+one_tree_edges=24
+option A=8 B=9 C=10 D=11
+pick=C

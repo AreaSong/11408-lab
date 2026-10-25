@@ -1,0 +1,15 @@
+dev router R
+dev switch S
+dev switch Dev1
+dev hub Dev2
+host H1 02-00-00-00-00-01
+host H2 02-00-00-00-00-02
+host H3 02-00-00-00-00-03
+link R S
+link S Dev1
+link H1 Dev1
+link Dev1 Dev2
+link H2 Dev2
+link H3 Dev2
+share H1 H2
+share H2 H3

@@ -1,0 +1,48 @@
+problem=order kind=right cap=1
+sem empty=1
+sem full=0
+sem mutex=1
+step=1 who=C op=P sem=full value=-1 state=block wake=- note=-
+step=2 who=P op=P sem=empty value=0 state=run wake=- note=-
+step=3 who=P op=P sem=mutex value=0 state=run wake=- note=-
+step=4 who=P op=work sem=- value=- state=run wake=- note=put
+step=5 who=P op=V sem=mutex value=1 state=inc wake=- note=-
+step=6 who=P op=V sem=full value=0 state=wake wake=C note=-
+step=7 who=C op=P sem=mutex value=0 state=run wake=- note=-
+step=8 who=C op=work sem=- value=- state=run wake=- note=get
+step=9 who=C op=V sem=mutex value=1 state=inc wake=- note=-
+step=10 who=C op=V sem=empty value=1 state=inc wake=- note=-
+summary produced=1 consumed=1 deadlock=no
+problem=order kind=wrong cap=1
+sem empty=1
+sem full=0
+sem mutex=1
+step=1 who=C op=P sem=mutex value=0 state=run wake=- note=-
+step=2 who=C op=P sem=full value=-1 state=block wake=- note=-
+step=3 who=P op=P sem=mutex value=-1 state=block wake=- note=-
+summary produced=0 consumed=0 deadlock=yes
+wait who=C sem=full holder=-
+wait who=P sem=mutex holder=C
+problem=order kind=wrong-full cap=1
+sem empty=0
+sem full=1
+sem mutex=1
+step=1 who=P op=P sem=mutex value=0 state=run wake=- note=-
+step=2 who=P op=P sem=empty value=-1 state=block wake=- note=-
+step=3 who=C op=P sem=mutex value=-1 state=block wake=- note=-
+summary produced=0 consumed=0 deadlock=yes
+wait who=P sem=empty holder=-
+wait who=C sem=mutex holder=P
+problem=order kind=plant
+open=3
+sem pits=0
+sem empty=3
+sem mutex=1
+sem water=0
+step=1 who=jia op=P sem=mutex value=0 state=run wake=- note=-
+step=2 who=jia op=P sem=pits value=-1 state=block wake=- note=-
+step=3 who=yi op=P sem=empty value=2 state=run wake=- note=-
+step=4 who=yi op=P sem=mutex value=-1 state=block wake=- note=-
+summary deadlock=yes
+wait who=jia sem=pits holder=-
+wait who=yi sem=mutex holder=jia

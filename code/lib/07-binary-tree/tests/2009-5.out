@@ -1,0 +1,10 @@
+exam 2009-5
+most level=6 leaves=8
+width=32 branch=24
+short=39
+tall=1 full=63 child_min=47 child_max=48 tall_min=110 tall_max=111
+min_nodes=39 max_nodes=111
+option A=39 B=52 C=111 D=119
+trap_A=min_nodes
+trap_D=127-8
+pick=C

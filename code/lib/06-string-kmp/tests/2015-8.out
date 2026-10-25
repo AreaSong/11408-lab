@@ -1,0 +1,78 @@
+kmp base=0 mode=next text=abaabaabacacaabaabcc pat=abaabc n=20 m=6
+next -1 0 0 1 1 2
+cmp k=1 i=0 j=0 S=a T=a eq=1
+cmp k=2 i=1 j=1 S=b T=b eq=1
+cmp k=3 i=2 j=2 S=a T=a eq=1
+cmp k=4 i=3 j=3 S=a T=a eq=1
+cmp k=5 i=4 j=4 S=b T=b eq=1
+cmp k=6 i=5 j=5 S=a T=c eq=0
+first_miss i=5 j=5 next_i=5 next_j=2
+jump i=5 from=5 to=2 slide=3
+cmp k=7 i=5 j=2 S=a T=a eq=1
+cmp k=8 i=6 j=3 S=a T=a eq=1
+cmp k=9 i=7 j=4 S=b T=b eq=1
+cmp k=10 i=8 j=5 S=a T=c eq=0
+jump i=8 from=5 to=2 slide=3
+cmp k=11 i=8 j=2 S=a T=a eq=1
+cmp k=12 i=9 j=3 S=c T=a eq=0
+jump i=9 from=3 to=1 slide=2
+cmp k=13 i=9 j=1 S=c T=b eq=0
+jump i=9 from=1 to=0 slide=1
+cmp k=14 i=9 j=0 S=c T=a eq=0
+jump i=9 from=0 to=-1 slide=1
+pass i=9 j=-1 -> i=10 j=0
+cmp k=15 i=10 j=0 S=a T=a eq=1
+cmp k=16 i=11 j=1 S=c T=b eq=0
+jump i=11 from=1 to=0 slide=1
+cmp k=17 i=11 j=0 S=c T=a eq=0
+jump i=11 from=0 to=-1 slide=1
+pass i=11 j=-1 -> i=12 j=0
+cmp k=18 i=12 j=0 S=a T=a eq=1
+cmp k=19 i=13 j=1 S=a T=b eq=0
+jump i=13 from=1 to=0 slide=1
+cmp k=20 i=13 j=0 S=a T=a eq=1
+cmp k=21 i=14 j=1 S=b T=b eq=1
+cmp k=22 i=15 j=2 S=a T=a eq=1
+cmp k=23 i=16 j=3 S=a T=a eq=1
+cmp k=24 i=17 j=4 S=b T=b eq=1
+cmp k=25 i=18 j=5 S=c T=c eq=1
+found pos=13 compares=25
+kmp base=1 mode=next text=abaabaabacacaabaabcc pat=abaabc n=20 m=6
+next 0 1 1 2 2 3
+cmp k=1 i=1 j=1 S=a T=a eq=1
+cmp k=2 i=2 j=2 S=b T=b eq=1
+cmp k=3 i=3 j=3 S=a T=a eq=1
+cmp k=4 i=4 j=4 S=a T=a eq=1
+cmp k=5 i=5 j=5 S=b T=b eq=1
+cmp k=6 i=6 j=6 S=a T=c eq=0
+first_miss i=6 j=6 next_i=6 next_j=3
+jump i=6 from=6 to=3 slide=3
+cmp k=7 i=6 j=3 S=a T=a eq=1
+cmp k=8 i=7 j=4 S=a T=a eq=1
+cmp k=9 i=8 j=5 S=b T=b eq=1
+cmp k=10 i=9 j=6 S=a T=c eq=0
+jump i=9 from=6 to=3 slide=3
+cmp k=11 i=9 j=3 S=a T=a eq=1
+cmp k=12 i=10 j=4 S=c T=a eq=0
+jump i=10 from=4 to=2 slide=2
+cmp k=13 i=10 j=2 S=c T=b eq=0
+jump i=10 from=2 to=1 slide=1
+cmp k=14 i=10 j=1 S=c T=a eq=0
+jump i=10 from=1 to=0 slide=1
+pass i=10 j=0 -> i=11 j=1
+cmp k=15 i=11 j=1 S=a T=a eq=1
+cmp k=16 i=12 j=2 S=c T=b eq=0
+jump i=12 from=2 to=1 slide=1
+cmp k=17 i=12 j=1 S=c T=a eq=0
+jump i=12 from=1 to=0 slide=1
+pass i=12 j=0 -> i=13 j=1
+cmp k=18 i=13 j=1 S=a T=a eq=1
+cmp k=19 i=14 j=2 S=a T=b eq=0
+jump i=14 from=2 to=1 slide=1
+cmp k=20 i=14 j=1 S=a T=a eq=1
+cmp k=21 i=15 j=2 S=b T=b eq=1
+cmp k=22 i=16 j=3 S=a T=a eq=1
+cmp k=23 i=17 j=4 S=a T=a eq=1
+cmp k=24 i=18 j=5 S=b T=b eq=1
+cmp k=25 i=19 j=6 S=c T=c eq=1
+found pos=14 compares=25

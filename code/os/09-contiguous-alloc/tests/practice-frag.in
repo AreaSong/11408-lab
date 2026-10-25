@@ -1,0 +1,17 @@
+fixed
+slot 0 50
+slot 50 50
+fput A 20
+fput B 20
+fput C 60
+fshow
+single 100
+sput A 20
+sput B 10
+memory ff 100
+alloc A 20
+alloc B 20
+alloc C 20
+free B
+alloc D 50
+show

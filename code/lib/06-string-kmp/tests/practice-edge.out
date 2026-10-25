@@ -1,0 +1,39 @@
+fail base 2
+fail char pat
+fail base 3
+fail long base
+fail long pat
+fail long text
+kmp base=0 mode=next text=ababa pat=abc n=5 m=3
+next -1 0 0
+cmp k=1 i=0 j=0 S=a T=a eq=1
+cmp k=2 i=1 j=1 S=b T=b eq=1
+cmp k=3 i=2 j=2 S=a T=c eq=0
+first_miss i=2 j=2 next_i=2 next_j=0
+jump i=2 from=2 to=0 slide=2
+cmp k=4 i=2 j=0 S=a T=a eq=1
+cmp k=5 i=3 j=1 S=b T=b eq=1
+cmp k=6 i=4 j=2 S=a T=c eq=0
+jump i=4 from=2 to=0 slide=2
+cmp k=7 i=4 j=0 S=a T=a eq=1
+fail pos=-1 compares=7
+bf base=1 text=ababa pat=abc n=5 m=3
+cmp k=1 i=1 j=1 S=a T=a eq=1
+cmp k=2 i=2 j=2 S=b T=b eq=1
+cmp k=3 i=3 j=3 S=a T=c eq=0
+back i=3 j=3 -> i=2 j=1
+cmp k=4 i=2 j=1 S=b T=a eq=0
+back i=2 j=1 -> i=3 j=1
+cmp k=5 i=3 j=1 S=a T=a eq=1
+cmp k=6 i=4 j=2 S=b T=b eq=1
+cmp k=7 i=5 j=3 S=a T=c eq=0
+back i=5 j=3 -> i=4 j=1
+cmp k=8 i=4 j=1 S=b T=a eq=0
+back i=4 j=1 -> i=5 j=1
+cmp k=9 i=5 j=1 S=a T=a eq=1
+fail pos=0 compares=9
+fail unknown foo
+kmp base=1 mode=nextval text=aa pat=a n=2 m=1
+nextval 0
+cmp k=1 i=1 j=1 S=a T=a eq=1
+found pos=1 compares=1

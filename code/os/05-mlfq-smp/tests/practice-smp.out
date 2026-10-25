@@ -1,0 +1,47 @@
+algo=smp mode=shared cpus=2 q=2 balance=shared affinity=none
+migrations=3
+cpu0
+0-2 A
+2-4 C
+4-6 B
+cpu1
+0-2 B
+2-4 A
+4-6 C
+table
+name arrive service affinity start finish moves cpus
+A 0 4 - 0 4 1 0,1
+B 0 4 - 0 6 1 1,0
+C 0 4 - 2 6 1 0,1
+makespan=6
+algo=smp mode=private cpus=2 q=2 balance=off affinity=none
+migrations=0
+cpu0
+0-2 A
+2-4 C
+4-6 A
+6-8 C
+cpu1
+0-4 B
+4-8 idle
+table
+name arrive service affinity start finish moves cpus
+A 0 4 - 0 6 0 0,0
+B 0 4 - 0 4 0 1,1
+C 0 4 - 2 8 0 0,0
+makespan=8
+algo=smp mode=private cpus=2 q=2 balance=pull affinity=none
+migrations=1
+cpu0
+0-2 A
+2-4 C
+4-6 A
+cpu1
+0-4 B
+4-6 C
+table
+name arrive service affinity start finish moves cpus
+A 0 4 - 0 6 0 0,0
+B 0 4 - 0 4 0 1,1
+C 0 4 - 2 6 1 0,1
+makespan=6

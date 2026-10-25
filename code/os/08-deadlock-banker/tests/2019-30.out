@@ -1,0 +1,4 @@
+deprive-recover true
+prevent-ensures true
+banker-detects false
+deadlock-two-block true

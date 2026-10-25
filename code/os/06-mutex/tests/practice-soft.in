@@ -1,0 +1,7 @@
+demo single-idle
+demo check-first
+demo check-after
+demo peterson-alone
+claim single-progress
+claim check-first-mutex
+claim check-after-progress

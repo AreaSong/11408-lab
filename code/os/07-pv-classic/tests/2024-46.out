@@ -1,0 +1,23 @@
+problem=exam year=2024 part=1
+critical=yes reason=both-write-B
+problem=exam year=2024 part=2
+mutex=none
+sem empty=1
+sem full=0
+step=1 who=P1 op=P sem=empty value=0 state=run wake=- note=-
+step=2 who=P1 op=work sem=- value=- state=run wake=- note=C1
+step=3 who=P1 op=V sem=full value=1 state=inc wake=- note=-
+step=4 who=P2 op=P sem=full value=0 state=run wake=- note=-
+step=5 who=P2 op=work sem=- value=- state=run wake=- note=C2
+step=6 who=P2 op=V sem=empty value=1 state=inc wake=- note=-
+summary order=C1,C2 deadlock=no
+problem=exam year=2024 part=3
+sync=none
+sem mutex=1
+step=1 who=P1 op=P sem=mutex value=0 state=run wake=- note=-
+step=2 who=P1 op=work sem=- value=- state=run wake=- note=C3
+step=3 who=P1 op=V sem=mutex value=1 state=inc wake=- note=-
+step=4 who=P2 op=P sem=mutex value=0 state=run wake=- note=-
+step=5 who=P2 op=work sem=- value=- state=run wake=- note=C3
+step=6 who=P2 op=V sem=mutex value=1 state=inc wake=- note=-
+summary order=C3,C3 deadlock=no

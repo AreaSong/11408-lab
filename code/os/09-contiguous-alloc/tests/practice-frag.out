@@ -1,0 +1,24 @@
+fixed
+slot start=0 size=50
+slot start=50 size=50
+fput A need=20 result=ok slot=0 size=50 internal=30 sum=30
+fput B need=20 result=ok slot=50 size=50 internal=30 sum=60
+fput C need=60 result=fail reason=no-partition sum=60 external=0
+fshow slots=2 sum=60 external=0
+0 50 A internal=30
+50 50 B internal=30
+single user=100
+sput A need=20 result=ok internal=80 external=0
+sput B need=10 result=fail reason=busy
+memory=100 algo=ff
+alloc A size=20 result=ok at=0 from=0 hole=100 left=80 internal=0
+alloc B size=20 result=ok at=20 from=20 hole=80 left=60 internal=0
+alloc C size=20 result=ok at=40 from=40 hole=60 left=40 internal=0
+free B at=20 size=20 merge=none
+alloc D size=50 result=fail free=60 largest=40 external=60
+show algo=ff order=address-asc holes=2 free=60 largest=40 cursor=-
+20 20
+60 40
+jobs=2
+A 0 20
+C 40 20

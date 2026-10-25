@@ -1,0 +1,29 @@
+cond mutex share=no break=hard
+cond hold name=request-and-hold break=allocate-all
+cond nopreempt release=voluntary break=preempt
+cond cycle chain=wait-for break=ordered-request
+strategy prevent when=before ensure=yes info=none
+strategy avoid when=on-request banker=yes info=max
+strategy detect when=after graph=yes info=no-max then=recover
+relation safe implies=no-deadlock
+relation unsafe implies=maybe-deadlock
+relation deadlock means=all-blocked-in-set
+relation starve means=one-waits others-run
+rule tie safety=smallest-index
+rule tie recover=min-cost then-smallest
+rule need formula=max-alloc
+rule request checks=need,avail,safe
+rule cycle one-instance=deadlock-iff
+rule cycle many-instance=necessary-only
+rule least formula=sum(k-1)+1
+unsafe-is-dead false
+safe-no-dead true
+banker-avoid true
+banker-break-hold false
+order-break-cycle true
+all-break-hold true
+preempt-break-nopreempt true
+break-mutex-hard true
+cycle-one-iff true
+cycle-many-enough false
+starve-is-dead false

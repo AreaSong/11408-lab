@@ -1,0 +1,5 @@
+route 192.1.1.0/24 dev E0
+route 192.1.6.0/23 via 10.1.1.2 dev L0
+route 192.1.5.0/24 via 10.1.1.10 dev L1
+lookup 192.1.7.211
+ttl 64 hops 3

@@ -1,0 +1,59 @@
+problem=exam year=2025 trees=4
+bucket=none
+sem pits=3
+sem empty=0
+sem water=0
+sem mutex=1
+step=1 who=jia op=P sem=pits value=2 state=run wake=- note=-
+step=2 who=jia op=P sem=mutex value=0 state=run wake=- note=-
+step=3 who=jia op=work sem=- value=- state=run wake=- note=dig
+step=4 who=jia op=V sem=mutex value=1 state=inc wake=- note=-
+step=5 who=jia op=V sem=empty value=1 state=inc wake=- note=-
+step=6 who=jia op=P sem=pits value=1 state=run wake=- note=-
+step=7 who=jia op=P sem=mutex value=0 state=run wake=- note=-
+step=8 who=jia op=work sem=- value=- state=run wake=- note=dig
+step=9 who=jia op=V sem=mutex value=1 state=inc wake=- note=-
+step=10 who=jia op=V sem=empty value=2 state=inc wake=- note=-
+step=11 who=jia op=P sem=pits value=0 state=run wake=- note=-
+step=12 who=jia op=P sem=mutex value=0 state=run wake=- note=-
+step=13 who=jia op=work sem=- value=- state=run wake=- note=dig
+step=14 who=jia op=V sem=mutex value=1 state=inc wake=- note=-
+step=15 who=jia op=V sem=empty value=3 state=inc wake=- note=-
+step=16 who=jia op=P sem=pits value=-1 state=block wake=- note=-
+step=17 who=yi op=P sem=empty value=2 state=run wake=- note=-
+step=18 who=yi op=P sem=mutex value=0 state=run wake=- note=-
+step=19 who=yi op=work sem=- value=- state=run wake=- note=fill
+step=20 who=yi op=V sem=mutex value=1 state=inc wake=- note=-
+step=21 who=yi op=V sem=pits value=0 state=wake wake=jia note=-
+step=22 who=jia op=P sem=mutex value=0 state=run wake=- note=-
+step=23 who=jia op=work sem=- value=- state=run wake=- note=dig
+step=24 who=jia op=V sem=mutex value=1 state=inc wake=- note=-
+step=25 who=jia op=V sem=empty value=3 state=inc wake=- note=-
+step=26 who=yi op=V sem=water value=1 state=inc wake=- note=-
+step=27 who=yi op=P sem=empty value=2 state=run wake=- note=-
+step=28 who=yi op=P sem=mutex value=0 state=run wake=- note=-
+step=29 who=yi op=work sem=- value=- state=run wake=- note=fill
+step=30 who=yi op=V sem=mutex value=1 state=inc wake=- note=-
+step=31 who=yi op=V sem=pits value=1 state=inc wake=- note=-
+step=32 who=yi op=V sem=water value=2 state=inc wake=- note=-
+step=33 who=yi op=P sem=empty value=1 state=run wake=- note=-
+step=34 who=yi op=P sem=mutex value=0 state=run wake=- note=-
+step=35 who=yi op=work sem=- value=- state=run wake=- note=fill
+step=36 who=yi op=V sem=mutex value=1 state=inc wake=- note=-
+step=37 who=yi op=V sem=pits value=2 state=inc wake=- note=-
+step=38 who=yi op=V sem=water value=3 state=inc wake=- note=-
+step=39 who=yi op=P sem=empty value=0 state=run wake=- note=-
+step=40 who=yi op=P sem=mutex value=0 state=run wake=- note=-
+step=41 who=yi op=work sem=- value=- state=run wake=- note=fill
+step=42 who=yi op=V sem=mutex value=1 state=inc wake=- note=-
+step=43 who=yi op=V sem=pits value=3 state=inc wake=- note=-
+step=44 who=yi op=V sem=water value=4 state=inc wake=- note=-
+step=45 who=bing op=P sem=water value=3 state=run wake=- note=-
+step=46 who=bing op=work sem=- value=- state=run wake=- note=pour
+step=47 who=bing op=P sem=water value=2 state=run wake=- note=-
+step=48 who=bing op=work sem=- value=- state=run wake=- note=pour
+step=49 who=bing op=P sem=water value=1 state=run wake=- note=-
+step=50 who=bing op=work sem=- value=- state=run wake=- note=pour
+step=51 who=bing op=P sem=water value=0 state=run wake=- note=-
+step=52 who=bing op=work sem=- value=- state=run wake=- note=pour
+summary watered=4 max_open=3 deadlock=no

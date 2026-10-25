@@ -1,0 +1,63 @@
+avl
+insert 30
+tree 30[0]
+insert 20
+tree 30[1](20[0],#)
+insert 10
+pivot 30 bf=2 child=20 childbf=1 kind=LL
+unbal 30[2](20[1](10[0],#),#)
+balanced 20[0](10[0],30[0])
+tree 20[0](10[0],30[0])
+avl
+insert 10
+tree 10[0]
+insert 20
+tree 10[-1](#,20[0])
+insert 30
+pivot 10 bf=-2 child=20 childbf=-1 kind=RR
+unbal 10[-2](#,20[-1](#,30[0]))
+balanced 20[0](10[0],30[0])
+tree 20[0](10[0],30[0])
+avl
+insert 30
+tree 30[0]
+insert 10
+tree 30[1](10[0],#)
+insert 20
+pivot 30 bf=2 child=10 childbf=-1 kind=LR
+unbal 30[2](10[-1](#,20[0]),#)
+half 30[2](20[1](10[0],#),#)
+balanced 20[0](10[0],30[0])
+tree 20[0](10[0],30[0])
+avl
+insert 10
+tree 10[0]
+insert 30
+tree 10[-1](#,30[0])
+insert 20
+pivot 10 bf=-2 child=30 childbf=1 kind=RL
+unbal 10[-2](#,30[1](20[0],#))
+half 10[-2](#,20[-1](#,30[0]))
+balanced 20[0](10[0],30[0])
+tree 20[0](10[0],30[0])
+avldel 5
+before 4[1](2[0](1[0],3[0]),5[0])
+case leaf
+pivot 4 bf=2 child=2 childbf=0 kind=LL
+unbal 4[2](2[0](1[0],3[0]),#)
+balanced 2[-1](1[0],4[1](3[0],#))
+after 2[-1](1[0],4[1](3[0],#))
+avlback 2
+before 1[-1](#,2[0])
+case leaf
+mid 1[0]
+insert 2
+after 1[-1](#,2[0])
+same=yes
+avlback 1
+before 1[-1](#,2[0])
+case right
+mid 2[0]
+insert 1
+after 2[1](1[0],#)
+same=no

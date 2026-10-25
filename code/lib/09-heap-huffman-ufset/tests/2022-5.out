@@ -1,0 +1,28 @@
+exam 2022-5
+huff n=6
+leaf A=3 B=4 C=5 D=6 E=8 F=10
+pick A:3 + B:4 -> #7:7
+pick C:5 + D:6 -> #8:11
+pick #7:7 + E:8 -> #9:15
+pick F:10 + #8:11 -> #10:21
+pick #9:15 + #10:21 -> #11:36
+code A=000 len=3
+code B=001 len=3
+code C=110 len=3
+code D=111 len=3
+code E=01 len=2
+code F=10 len=2
+wpl=90
+inside=90
+total=36
+avg=2.50
+nodes=11
+degree1=0
+prefix=ok
+t1_nodes=11
+t1_height=3
+t2_nodes=15
+t2_height=3
+same_layer=3,4
+option A=same_nodes B=t1_taller C=diff_freq_diff_layer D=fixed_same_layer
+pick=D

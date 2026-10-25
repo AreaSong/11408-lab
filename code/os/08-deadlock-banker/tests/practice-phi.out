@@ -1,0 +1,55 @@
+mode=classic n=5 breaks=none
+take P0 stick=0
+take P1 stick=1
+take P2 stick=2
+take P3 stick=3
+take P4 stick=4
+wait P0 stick=1 holder=P1
+wait P1 stick=2 holder=P2
+wait P2 stick=3 holder=P3
+wait P3 stick=4 holder=P4
+wait P4 stick=0 holder=P0
+result deadlock=yes mutex=yes hold=yes nopreempt=yes cycle=yes
+mode=order n=5 breaks=cycle
+take P0 stick=0
+take P1 stick=1
+take P2 stick=2
+take P3 stick=3
+wait P4 stick=0 holder=P0
+wait P0 stick=1 holder=P1
+wait P1 stick=2 holder=P2
+wait P2 stick=3 holder=P3
+take P3 stick=4
+eat P3
+wait P4 stick=0 holder=P0
+wait P0 stick=1 holder=P1
+wait P1 stick=2 holder=P2
+take P2 stick=3
+eat P2
+wait P4 stick=0 holder=P0
+wait P0 stick=1 holder=P1
+take P1 stick=2
+eat P1
+wait P4 stick=0 holder=P0
+take P0 stick=1
+eat P0
+take P4 stick=0
+take P4 stick=4
+eat P4
+result deadlock=no mutex=yes hold=yes nopreempt=yes cycle=no
+mode=all n=5 breaks=hold
+take P0 stick=0,1
+deny P1 stick=1,2
+take P2 stick=2,3
+deny P3 stick=3,4
+deny P4 stick=4,0
+eat P0
+eat P2
+take P1 stick=1,2
+take P3 stick=3,4
+deny P4 stick=4,0
+eat P1
+eat P3
+take P4 stick=4,0
+eat P4
+result deadlock=no mutex=yes hold=no nopreempt=yes cycle=no

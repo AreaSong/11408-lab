@@ -1,0 +1,17 @@
+exam 2022-3
+pair pre=qp### inorder=pq
+adj p q parent=1 right_child=0 sibling=0 grand=0
+sibling_adjacent=0
+pair pre=p#q## inorder=pq
+adj p q parent=0 right_child=1 sibling=0 grand=0
+sibling_adjacent=0
+pair pre=fp##q## inorder=pfq
+adj p f parent=1 right_child=0 sibling=0 grand=0
+adj f q parent=0 right_child=1 sibling=0 grand=0
+sibling_adjacent=0
+pair pre=qx#p### inorder=xpq
+adj x p parent=0 right_child=1 sibling=0 grand=0
+adj p q parent=0 right_child=0 sibling=0 grand=1
+sibling_adjacent=0
+option A=only_I B=only_III C=II_and_III D=II_and_IV
+pick=B

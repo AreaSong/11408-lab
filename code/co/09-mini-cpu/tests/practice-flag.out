@@ -1,0 +1,43 @@
+模型：16 位字，按字编址，主存 256 字。取指 (PC)+1。单总线同一拍至多 1 个 out
+【装入】
+M[0] LDA 8 编码 1008H
+M[1] ADD 9 编码 3009H
+M[2] STA 10 编码 200AH
+M[3] HLT 编码 7000H
+初值 M[8]=32767(7FFFH)
+初值 M[9]=1(0001H)
+【执行】
+取指 C1 (PC)->MAR | PC=0 MAR=0 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | MDR=1008H PC=1 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | IR=LDA 8 | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | IR=LDA 8 | 无 | 内总线驱动 0 个
+执行 C5 (IR的地址)->MAR | MAR=8 | IRout MARin | 内总线驱动 1 个
+访存 C6 M(MAR)->MDR | MDR=32767(7FFFH) | MemR MDRinE | 内总线驱动 0 个
+写回 C7 (MDR)->ACC | MDR=32767(7FFFH) | MDRout ACCin | 内总线驱动 1 个
+状态 PC=1 ACC=32767(7FFFH) R0=0 R1=0 R2=0 R3=0 ZF=0 SF=0 CF=0 OF=0 本条访存=2次
+取指 C1 (PC)->MAR | PC=1 MAR=1 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | MDR=3009H PC=2 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | IR=ADD 9 | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | IR=ADD 9 | 无 | 内总线驱动 0 个
+执行 C5 (IR的地址)->MAR | MAR=9 | IRout MARin | 内总线驱动 1 个
+访存 C6 M(MAR)->MDR | MDR=1(0001H) | MemR MDRinE | 内总线驱动 0 个
+执行 C7 (MDR)->A | MDR=1(0001H) | MDRout Ain | 内总线驱动 1 个
+写回 C8 (A)+(ACC)->ACC | A=1 ACC旧=32767 和=32768(8000H) | ACCout Add ACin | 内总线驱动 1 个
+状态 PC=2 ACC=32768(8000H) R0=0 R1=0 R2=0 R3=0 ZF=0 SF=1 CF=0 OF=1 本条访存=2次
+取指 C1 (PC)->MAR | PC=2 MAR=2 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | MDR=200AH PC=3 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | IR=STA 10 | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | IR=STA 10 | 无 | 内总线驱动 0 个
+执行 C5 (IR的地址)->MAR | MAR=10 | IRout MARin | 内总线驱动 1 个
+访存 C6 (ACC)->MDR | MDR=32768(8000H) | ACCout MDRin | 内总线驱动 1 个
+访存 C7 (MDR)->M(MAR) | 写主存，走数据总线 | MDRoutE MemW | 内总线驱动 0 个
+状态 PC=3 ACC=32768(8000H) R0=0 R1=0 R2=0 R3=0 ZF=0 SF=1 CF=0 OF=1 本条访存=2次
+取指 C1 (PC)->MAR | PC=3 MAR=3 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | MDR=7000H PC=4 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | IR=HLT | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | IR=HLT | 无 | 内总线驱动 0 个
+执行 C5 停机 | 不再取下一条 | 无 | 内总线驱动 0 个
+状态 PC=4 ACC=32768(8000H) R0=0 R1=0 R2=0 R3=0 ZF=0 SF=1 CF=0 OF=1 本条访存=1次
+【写回的单元】
+M[10]=32768(8000H)
+结果：ACC=32768(8000H) 访存=7次 冲突=0次

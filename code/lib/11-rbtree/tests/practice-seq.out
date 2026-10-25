@@ -1,0 +1,39 @@
+rb
+insert 1
+root 1 B
+tree 1[B]
+ok bh=1 reds=0 height=1 spins=0
+insert 2
+tree 1[B](#,2[R])
+ok bh=1 reds=1 height=2 spins=0
+insert 3
+uncle # B kind=RR
+recolor parent 2 B grand 1 R
+rotate 1 left
+tree 2[B](1[R],3[R])
+ok bh=1 reds=2 height=2 spins=1
+insert 4
+uncle 1 R kind=recolor
+recolor parent 3 B uncle 1 B grand 2 R
+root 2 B
+tree 2[B](1[B],3[B](#,4[R]))
+ok bh=2 reds=1 height=3 spins=0
+insert 5
+uncle # B kind=RR
+recolor parent 4 B grand 3 R
+rotate 3 left
+tree 2[B](1[B],4[B](3[R],5[R]))
+ok bh=2 reds=2 height=3 spins=1
+insert 6
+uncle 3 R kind=recolor
+recolor parent 5 B uncle 3 B grand 4 R
+tree 2[B](1[B],4[R](3[B],5[B](#,6[R])))
+ok bh=2 reds=2 height=4 spins=0
+insert 7
+uncle # B kind=RR
+recolor parent 6 B grand 5 R
+rotate 5 left
+tree 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+ok bh=2 reds=3 height=4 spins=1
+inorder 1 2 3 4 5 6 7
+done n=7 reds=3 height=4 bh=2

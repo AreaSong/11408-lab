@@ -1,0 +1,47 @@
+del 7
+before 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+case leaf
+remove 7 color=R
+after 2[B](1[B],4[R](3[B],6[B](5[R],#)))
+ok bh=2 reds=2 height=4 spins=0
+del 3
+before 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+case leaf
+remove 3 color=B
+fix case=4 side=L sib=6
+recolor sib 6 R parent 4 B far 7 B
+rotate 4 left
+after 2[B](1[B],6[R](4[B](#,5[R]),7[B]))
+ok bh=2 reds=2 height=4 spins=1
+del 4
+before 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+case two
+succ 5
+remove 5 color=R
+after 2[B](1[B],5[R](3[B],6[B](#,7[R])))
+ok bh=2 reds=2 height=4 spins=0
+del 1
+before 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+case leaf
+remove 1 color=B
+fix case=1 side=L sib=4
+recolor sib 4 B parent 2 R
+rotate 2 left
+fix case=2 side=L sib=3
+recolor sib 3 R
+absorb 2 B
+after 4[B](2[B](#,3[R]),6[B](5[R],7[R]))
+ok bh=2 reds=3 height=3 spins=1
+del 2
+before 2[B](1[R],3[R])
+case two
+succ 3
+remove 3 color=R
+after 3[B](1[R],#)
+ok bh=1 reds=1 height=2 spins=0
+del 9
+before 2[B](1[R],3[R])
+missing
+del 1
+before #
+missing

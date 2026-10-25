@@ -1,0 +1,33 @@
+exam 2017-41
+tree first
+paren ( deep=2 op=+
+leaf a deep=3
+op + deep=2
+leaf b deep=3
+paren ) deep=2 op=+
+op * deep=1
+paren ( deep=2 op=*
+leaf c deep=3
+op * deep=2
+paren ( deep=3 op=-
+op - deep=3
+leaf d deep=4
+paren ) deep=3 op=-
+paren ) deep=2 op=*
+infix (a+b)*(c*(-d))
+tree second
+paren ( deep=2 op=*
+leaf a deep=3
+op * deep=2
+leaf b deep=3
+paren ) deep=2 op=*
+op + deep=1
+paren ( deep=2 op=-
+op - deep=2
+paren ( deep=3 op=-
+leaf c deep=4
+op - deep=3
+leaf d deep=4
+paren ) deep=3 op=-
+paren ) deep=2 op=-
+infix (a*b)+(-(c-d))

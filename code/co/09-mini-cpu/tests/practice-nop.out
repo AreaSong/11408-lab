@@ -1,0 +1,20 @@
+模型：16 位字，按字编址，主存 256 字。取指 (PC)+1。单总线同一拍至多 1 个 out
+【装入】
+M[0] NOP 编码 0000H
+M[1] HLT 编码 7000H
+【执行】
+取指 C1 (PC)->MAR | PC=0 MAR=0 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | MDR=0000H PC=1 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | IR=NOP | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | IR=NOP | 无 | 内总线驱动 0 个
+执行 C5 空操作 | 取指已经把 PC 加 1 | 无 | 内总线驱动 0 个
+状态 PC=1 ACC=0(0000H) R0=0 R1=0 R2=0 R3=0 ZF=0 SF=0 CF=0 OF=0 本条访存=1次
+取指 C1 (PC)->MAR | PC=1 MAR=1 | PCout MARin | 内总线驱动 1 个
+取指 C2 M(MAR)->MDR (PC)+1->PC | MDR=7000H PC=2 | MemR MDRinE PC+1 | 内总线驱动 0 个
+取指 C3 (MDR)->IR | IR=HLT | MDRout IRin | 内总线驱动 1 个
+译码 C4 OP(IR)->CU | IR=HLT | 无 | 内总线驱动 0 个
+执行 C5 停机 | 不再取下一条 | 无 | 内总线驱动 0 个
+状态 PC=2 ACC=0(0000H) R0=0 R1=0 R2=0 R3=0 ZF=0 SF=0 CF=0 OF=0 本条访存=1次
+【写回的单元】
+无
+结果：ACC=0(0000H) 访存=2次 冲突=0次

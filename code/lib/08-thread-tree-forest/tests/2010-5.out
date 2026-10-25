@@ -1,0 +1,8 @@
+exam 2010-5
+degree n1=10 n2=1 n3=10 n4=20
+sum_deg=122
+n0=1+0*n1+1*n2+2*n3+3*n4=82
+branch_nodes=41 n=123 edges=122
+option A=41 B=82 C=113 D=122
+trap_A=branch_nodes trap_D=edges
+pick=B

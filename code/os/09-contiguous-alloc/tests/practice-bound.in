@@ -1,0 +1,12 @@
+base 3000 500
+logical 400
+logical 499
+logical 500
+logical 600
+logical 0
+bounds 3000 3499
+physical 3000
+physical 3400
+physical 3499
+physical 3500
+physical 2999

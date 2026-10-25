@@ -1,0 +1,28 @@
+split root=A left=DBE right=CF
+split root=B left=D right=E
+split root=D left=- right=-
+split root=E left=- right=-
+split root=C left=- right=F
+split root=F left=- right=-
+built n=6 root=A
+shape n=6 n0=3 n1=1 n2=2 null=7 height=3 width=3 complete=0
+pre=ABDECF in=DBEACF post=DEBFCA
+check n0=n2+1 ok=1
+pre_eq_in=0 no_left=0 no_right=0 nonleaf=3 nonleaf_deg1=0 nonleaf_deg2=0 all_deg1=0 all_deg2=0
+seq1 1:A 2:B 3:C 4:D 5:E 6:# 7:F waste=1
+split root=A left=DBE right=CF
+split root=B left=D right=E
+split root=D left=- right=-
+split root=E left=- right=-
+split root=C left=- right=F
+split root=F left=- right=-
+built n=6 root=A
+prepost pre=AB post=BA count=2
+tree 1 shape=A(,B) in=AB
+tree 2 shape=A(B,) in=BA
+unique=0
+prepost pre=ABC post=BCA count=1
+tree 1 shape=A(B,C) in=BAC
+unique=1
+fail mismatch
+fail set

@@ -1,0 +1,34 @@
+bf base=1 text=xabc pat=abc n=4 m=3
+cmp k=1 i=1 j=1 S=x T=a eq=0
+back i=1 j=1 -> i=2 j=1
+cmp k=2 i=2 j=1 S=a T=a eq=1
+cmp k=3 i=3 j=2 S=b T=b eq=1
+cmp k=4 i=4 j=3 S=c T=c eq=1
+found pos=2 compares=4
+kmp base=1 mode=next text=xabc pat=abc n=4 m=3
+next 0 1 1
+cmp k=1 i=1 j=1 S=x T=a eq=0
+first_miss i=1 j=1 next_i=1 next_j=0
+jump i=1 from=1 to=0 slide=1
+pass i=1 j=0 -> i=2 j=1
+cmp k=2 i=2 j=1 S=a T=a eq=1
+cmp k=3 i=3 j=2 S=b T=b eq=1
+cmp k=4 i=4 j=3 S=c T=c eq=1
+found pos=2 compares=4
+bf base=1 text=ababc pat=abc n=5 m=3
+cmp k=1 i=1 j=1 S=a T=a eq=1
+cmp k=2 i=2 j=2 S=b T=b eq=1
+cmp k=3 i=3 j=3 S=a T=c eq=0
+back i=3 j=3 -> i=2 j=1
+cmp k=4 i=2 j=1 S=b T=a eq=0
+back i=2 j=1 -> i=3 j=1
+cmp k=5 i=3 j=1 S=a T=a eq=1
+cmp k=6 i=4 j=2 S=b T=b eq=1
+cmp k=7 i=5 j=3 S=c T=c eq=1
+found pos=3 compares=7
+kmp base=1 mode=next text=abc pat=abc n=3 m=3
+next 0 1 1
+cmp k=1 i=1 j=1 S=a T=a eq=1
+cmp k=2 i=2 j=2 S=b T=b eq=1
+cmp k=3 i=3 j=3 S=c T=c eq=1
+found pos=1 compares=3

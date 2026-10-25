@@ -1,0 +1,9 @@
+exam 2024-7
+tree 10(#,30(20(#,25),#))
+k1=10 k2=30 k3=20 sample=25
+A=no
+B=no
+C=no
+D=yes
+option A=X<K1 B=X>K2 C=K1<X<K3 D=K3<X<K2
+pick=D

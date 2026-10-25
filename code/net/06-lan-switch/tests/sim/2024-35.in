@@ -1,0 +1,16 @@
+dev switch SW
+host H1 00-3E-C2-39-12-B5 192.168.3.91
+host H2 00-18-A2-3B-36-21 192.168.3.81
+host H3 00-E5-78-4A-09-B2 192.168.3.125
+host H4 02-00-00-00-00-04
+host H5 02-00-00-00-00-05
+host H6 00-08-6E-05-A7-82 192.168.3.129
+host H7 02-00-00-00-00-07
+link H1 SW vlan 1
+link H2 SW vlan 1
+link H3 SW vlan 1
+link H4 SW vlan 1
+link H5 SW vlan 2
+link H6 SW vlan 3
+link H7 SW vlan 3
+send H4 ff-ff-ff-ff-ff-ff

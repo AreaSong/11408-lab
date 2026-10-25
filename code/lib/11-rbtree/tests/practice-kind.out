@@ -1,0 +1,66 @@
+rb
+insert 30
+root 30 B
+tree 30[B]
+ok bh=1 reds=0 height=1 spins=0
+insert 20
+tree 30[B](20[R],#)
+ok bh=1 reds=1 height=2 spins=0
+insert 10
+uncle # B kind=LL
+recolor parent 20 B grand 30 R
+rotate 30 right
+tree 20[B](10[R],30[R])
+ok bh=1 reds=2 height=2 spins=1
+inorder 10 20 30
+done n=3 reds=2 height=2 bh=1
+rb
+insert 10
+root 10 B
+tree 10[B]
+ok bh=1 reds=0 height=1 spins=0
+insert 20
+tree 10[B](#,20[R])
+ok bh=1 reds=1 height=2 spins=0
+insert 30
+uncle # B kind=RR
+recolor parent 20 B grand 10 R
+rotate 10 left
+tree 20[B](10[R],30[R])
+ok bh=1 reds=2 height=2 spins=1
+inorder 10 20 30
+done n=3 reds=2 height=2 bh=1
+rb
+insert 30
+root 30 B
+tree 30[B]
+ok bh=1 reds=0 height=1 spins=0
+insert 10
+tree 30[B](10[R],#)
+ok bh=1 reds=1 height=2 spins=0
+insert 20
+uncle # B kind=LR
+rotate 10 left
+recolor parent 20 B grand 30 R
+rotate 30 right
+tree 20[B](10[R],30[R])
+ok bh=1 reds=2 height=2 spins=2
+inorder 10 20 30
+done n=3 reds=2 height=2 bh=1
+rb
+insert 10
+root 10 B
+tree 10[B]
+ok bh=1 reds=0 height=1 spins=0
+insert 30
+tree 10[B](#,30[R])
+ok bh=1 reds=1 height=2 spins=0
+insert 20
+uncle # B kind=RL
+rotate 30 right
+recolor parent 20 B grand 10 R
+rotate 10 left
+tree 20[B](10[R],30[R])
+ok bh=1 reds=2 height=2 spins=2
+inorder 10 20 30
+done n=3 reds=2 height=2 bh=1

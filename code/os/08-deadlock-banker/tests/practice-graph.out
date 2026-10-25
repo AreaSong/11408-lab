@@ -1,0 +1,13 @@
+algo=reduce rule=smallest
+isolated=-
+work0=0,0,0
+stuck work=0,0,0
+result deadlock=yes removed=- left=P0 P1 P2
+algo=reduce rule=smallest
+isolated=-
+work0=0,0
+who work request alloc next
+P2 0,0 0,0 1,0 1,0
+P1 1,0 1,0 0,1 1,1
+P0 1,1 0,1 1,0 2,1
+result deadlock=no removed=P2 P1 P0 left=-

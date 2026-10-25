@@ -1,0 +1,29 @@
+algo=ff
+hole start=0 size=120
+hole start=1000 size=200
+hole start=2000 size=120
+alloc A size=100 result=ok at=0 from=0 hole=120 left=20 internal=0
+alloc B size=100 result=ok at=1000 from=1000 hole=200 left=100 internal=0
+alloc C size=150 result=fail free=240 largest=120 external=240
+show algo=ff order=address-asc holes=3 free=240 largest=120 cursor=-
+100 20
+1100 100
+2000 120
+jobs=2
+A 0 100
+B 1000 100
+algo=bf
+hole start=0 size=120
+hole start=1000 size=200
+hole start=2000 size=120
+alloc A size=100 result=ok at=0 from=0 hole=120 left=20 internal=0
+alloc B size=100 result=ok at=2000 from=2000 hole=120 left=20 internal=0
+alloc C size=150 result=ok at=1000 from=1000 hole=200 left=50 internal=0
+show algo=bf order=size-asc holes=3 free=90 largest=50 cursor=-
+100 20
+2100 20
+1150 50
+jobs=3
+A 0 100
+C 1000 150
+B 2000 100

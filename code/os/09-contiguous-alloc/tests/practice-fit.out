@@ -1,0 +1,56 @@
+algo=ff
+hole start=0 size=100
+hole start=1000 size=500
+hole start=2000 size=200
+hole start=3000 size=300
+hole start=4000 size=600
+alloc A size=212 result=ok at=1000 from=1000 hole=500 left=288 internal=0
+alloc B size=117 result=ok at=1212 from=1212 hole=288 left=171 internal=0
+alloc C size=526 result=ok at=4000 from=4000 hole=600 left=74 internal=0
+show algo=ff order=address-asc holes=5 free=845 largest=300 cursor=-
+0 100
+1329 171
+2000 200
+3000 300
+4526 74
+jobs=3
+A 1000 212
+B 1212 117
+C 4000 526
+algo=bf
+hole start=0 size=100
+hole start=1000 size=500
+hole start=2000 size=200
+hole start=3000 size=300
+hole start=4000 size=600
+alloc A size=212 result=ok at=3000 from=3000 hole=300 left=88 internal=0
+alloc B size=117 result=ok at=2000 from=2000 hole=200 left=83 internal=0
+alloc C size=526 result=ok at=4000 from=4000 hole=600 left=74 internal=0
+show algo=bf order=size-asc holes=5 free=845 largest=500 cursor=-
+4526 74
+2117 83
+3212 88
+0 100
+1000 500
+jobs=3
+B 2000 117
+A 3000 212
+C 4000 526
+algo=wf
+hole start=0 size=100
+hole start=1000 size=500
+hole start=2000 size=200
+hole start=3000 size=300
+hole start=4000 size=600
+alloc A size=212 result=ok at=4000 from=4000 hole=600 left=388 internal=0
+alloc B size=117 result=ok at=1000 from=1000 hole=500 left=383 internal=0
+alloc C size=526 result=fail free=1371 largest=388 external=1371
+show algo=wf order=size-desc holes=5 free=1371 largest=388 cursor=-
+4212 388
+1117 383
+3000 300
+2000 200
+0 100
+jobs=2
+B 1000 117
+A 4000 212

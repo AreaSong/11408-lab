@@ -1,0 +1,14 @@
+play single
+try 0
+leave 0
+try 1
+leave 1
+try 0
+end
+play check-after
+try 0
+try 0
+leave 0
+try 1
+try 1
+end

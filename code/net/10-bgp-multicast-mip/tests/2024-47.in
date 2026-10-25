@@ -1,0 +1,11 @@
+session R44 4 R13 1
+session R13 1 R14 1
+session R13 1 R15 1
+offer R14 136.5.16.0/20 via R11 igp 1 path 2 8 19
+offer R14 136.5.16.0/20 via R12 igp 2 path 3 7 11 19
+offer R14 136.5.16.0/20 via R13 igp 2 path 4 10 19
+pick R14 136.5.16.0/20
+offer R15 136.5.16.0/20 via R11 igp 2 path 2 8 19
+offer R15 136.5.16.0/20 via R12 igp 2 path 3 7 11 19
+offer R15 136.5.16.0/20 via R13 igp 1 path 4 10 19
+pick R15 136.5.16.0/20

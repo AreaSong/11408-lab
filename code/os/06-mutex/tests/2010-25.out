@@ -1,0 +1,7 @@
+value=1 available=1 waiters=0
+sem init=3 value=3 available=3 waiters=0 queue=-
+P A value=2 available=2 waiters=0 queue=- state=run who=-
+P B value=1 available=1 waiters=0 queue=- state=run who=-
+value-1-available true
+value-1-waiters true
+value-1-has-waiter false

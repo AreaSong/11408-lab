@@ -1,0 +1,43 @@
+exam 2020-4
+forest n=6 trees=2 kind=forest
+parent i=1 data=a parent=-
+parent i=2 data=b parent=a
+parent i=3 data=c parent=-
+parent i=4 data=d parent=c
+parent i=5 data=e parent=c
+parent i=6 data=f parent=e
+child a: b
+child b: -
+child c: d e
+child d: -
+child e: f
+child f: -
+cs a child=b sibling=c
+cs b child=- sibling=-
+cs c child=d sibling=-
+cs d child=- sibling=e
+cs e child=f sibling=-
+cs f child=- sibling=-
+shape a(b) c(d,e(f))
+bin a left=b right=c
+bin b left=- right=-
+bin c left=d right=-
+bin d left=- right=e
+bin e left=f right=-
+bin f left=- right=-
+tree 1 root=a pre=ab post=ba
+tree 2 root=c pre=cdef post=dfec
+forest_pre=abcdef
+forest_in=badfec
+bin_pre=abcdef
+bin_in=badfec
+bin_post=bfedca
+bin_level=abcdef
+match_pre=1 match_in=1
+leaves=3 left_null=3 bin_leaf=2 deg1=3 right_null=4
+right_formula=4
+root_sibling=c
+check post=bfedca trees=2
+hit_post=1 hit_trees=1
+option A=badfec B=bdfeca C=bfedca D=fedcba
+pick=C

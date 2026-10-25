@@ -1,0 +1,10 @@
+wait A empty queue=A state=block
+wait B empty queue=A,B state=block
+signal C empty queue=B wake=A state=wake
+signal D empty queue=- wake=B state=wake
+signal E full queue=- wake=- state=lost
+cond-wait-block true
+cond-wait-mutex false
+cond-wait-wake false
+cond-wait-by-value false
+signal-kept false

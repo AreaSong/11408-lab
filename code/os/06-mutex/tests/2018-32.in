@@ -1,0 +1,10 @@
+rule peterson
+rule swap
+rule record
+rule tsl
+rule integer
+claim yield-peterson
+claim yield-swap
+claim yield-sem
+claim yield-tsl
+claim yield-integer

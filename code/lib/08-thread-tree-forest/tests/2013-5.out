@@ -1,0 +1,12 @@
+exam 2013-5
+post n=5 order=bcyxa
+node b ltag=1 left=- rtag=1 right=c
+node c ltag=1 left=b rtag=1 right=y
+node y ltag=0 left=b rtag=0 right=c
+node x ltag=1 left=y rtag=1 right=a
+node a ltag=0 left=y rtag=0 right=x
+ask x leaf=1 left_sibling=y parent=a
+left_thread=y right_thread=a
+y_leftmost=b y_rightmost=c
+option A=parent B=leftmost C=sibling D=rightmost
+pick=A

@@ -1,0 +1,20 @@
+card
+space logical=from-0-per-process physical=real-cell
+load absolute=compile static=once-at-load dynamic=each-access
+protect base-limit=logical-lt-limit-then-add bounds=low-le-phys-le-high
+single internal=yes external=no jobs=1
+fixed internal=yes external=no jobs=many
+dynamic internal=no external=yes jobs=many
+ff order=address-asc from=head
+bf order=size-asc from=head tie=low-address
+wf order=size-desc from=head tie=low-address
+nf order=address-asc from=last-picked include-remainder
+buddy merge=equal-and-aligned
+compact needs=dynamic
+overlay who=same-job
+swap who=whole-process
+share va=may-differ pa=one
+exam 2009-26 answer=A
+exam 2011-30 answer=B note=compile-module
+exam 2019-32 answer=C
+exam 2024-27 answer=A

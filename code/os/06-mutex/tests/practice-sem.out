@@ -1,0 +1,11 @@
+value=-2 available=0 waiters=2
+value=0 available=0 waiters=0
+integer value=2 action=dec next=1 yield=no
+integer value=0 action=spin next=0 yield=no
+sem init=1 value=1 available=1 waiters=0 queue=-
+P A value=0 available=0 waiters=0 queue=- state=run who=-
+P B value=-1 available=0 waiters=1 queue=B state=block who=B
+P C value=-2 available=0 waiters=2 queue=B,C state=block who=C
+V A value=-1 available=0 waiters=1 queue=C state=wake who=B
+V B value=0 available=0 waiters=0 queue=- state=wake who=C
+V Z value=1 available=1 waiters=0 queue=- state=inc who=-

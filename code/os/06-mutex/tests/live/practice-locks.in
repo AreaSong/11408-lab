@@ -1,0 +1,6 @@
+check tsl 1000
+check swap 1000
+check mutex 800
+check sem 800
+check peterson 1000
+check bench

@@ -1,0 +1,10 @@
+exam 2011-4
+cbt n=768
+base1 child=2i,2i+1 parent=i/2 level=floor(log2 i)+1
+even_n1=1 odd_n1=0
+n1=1 n0=384 n2=383 height=10
+last_branch=384 leaves=384
+bottom=257 parents=129 prev_leaves=127 leaf_sum=384
+option A=257 B=258 C=384 D=385
+trap_A=bottom_only
+pick=C

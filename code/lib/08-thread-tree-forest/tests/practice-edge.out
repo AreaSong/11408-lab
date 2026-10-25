@@ -1,0 +1,22 @@
+fail short
+fail dup
+fail dup
+fail format
+fail mismatch
+edges n=3 e=5
+status=reject trees=-2
+height k=1 n=4 leaf_height=1
+full h=3 max=3
+full h=4 max=4
+min=4
+degree n2=3
+sum_deg=6
+n0=1+1*n2=4
+branch_nodes=3 n=7 edges=6
+post n=3 order=bca
+node b ltag=1 left=- rtag=1 right=c
+node c ltag=1 left=b rtag=1 right=a
+node a ltag=0 left=b rtag=0 right=c
+ask b leaf=1 left_sibling=- parent=a
+left_thread=- right_thread=c
+y_leftmost=- y_rightmost=-

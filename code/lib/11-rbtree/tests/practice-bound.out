@@ -1,0 +1,39 @@
+bound
+tree 2[B](1[B],4[R](3[B],6[B](5[R],7[R])))
+n=7
+height=4
+bh=2
+long=4
+short=2
+twice=yes
+two_h=16
+cap=64
+lt=yes
+le=yes
+reds=3
+bound
+tree 1[B]
+n=1
+height=1
+bh=1
+long=1
+short=1
+twice=yes
+two_h=2
+cap=4
+lt=yes
+le=yes
+reds=0
+bound
+tree #
+n=0
+height=0
+bh=0
+long=0
+short=0
+twice=yes
+two_h=1
+cap=1
+lt=no
+le=yes
+reds=0

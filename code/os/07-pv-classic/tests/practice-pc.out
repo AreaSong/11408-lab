@@ -1,0 +1,35 @@
+problem=pc cap=2 items=3
+sem empty=2
+sem full=0
+sem mutex=1
+step=1 who=P op=P sem=empty value=1 state=run wake=- note=-
+step=2 who=P op=P sem=mutex value=0 state=run wake=- note=-
+step=3 who=P op=work sem=- value=- state=run wake=- note=put
+step=4 who=P op=V sem=mutex value=1 state=inc wake=- note=-
+step=5 who=P op=V sem=full value=1 state=inc wake=- note=-
+step=6 who=P op=P sem=empty value=0 state=run wake=- note=-
+step=7 who=P op=P sem=mutex value=0 state=run wake=- note=-
+step=8 who=P op=work sem=- value=- state=run wake=- note=put
+step=9 who=P op=V sem=mutex value=1 state=inc wake=- note=-
+step=10 who=P op=V sem=full value=2 state=inc wake=- note=-
+step=11 who=P op=P sem=empty value=-1 state=block wake=- note=-
+step=12 who=C op=P sem=full value=1 state=run wake=- note=-
+step=13 who=C op=P sem=mutex value=0 state=run wake=- note=-
+step=14 who=C op=work sem=- value=- state=run wake=- note=get
+step=15 who=C op=V sem=mutex value=1 state=inc wake=- note=-
+step=16 who=C op=V sem=empty value=0 state=wake wake=P note=-
+step=17 who=P op=P sem=mutex value=0 state=run wake=- note=-
+step=18 who=P op=work sem=- value=- state=run wake=- note=put
+step=19 who=P op=V sem=mutex value=1 state=inc wake=- note=-
+step=20 who=P op=V sem=full value=2 state=inc wake=- note=-
+step=21 who=C op=P sem=full value=1 state=run wake=- note=-
+step=22 who=C op=P sem=mutex value=0 state=run wake=- note=-
+step=23 who=C op=work sem=- value=- state=run wake=- note=get
+step=24 who=C op=V sem=mutex value=1 state=inc wake=- note=-
+step=25 who=C op=V sem=empty value=1 state=inc wake=- note=-
+step=26 who=C op=P sem=full value=0 state=run wake=- note=-
+step=27 who=C op=P sem=mutex value=0 state=run wake=- note=-
+step=28 who=C op=work sem=- value=- state=run wake=- note=get
+step=29 who=C op=V sem=mutex value=1 state=inc wake=- note=-
+step=30 who=C op=V sem=empty value=2 state=inc wake=- note=-
+summary produced=3 consumed=3 deadlock=no

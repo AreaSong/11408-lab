@@ -1,0 +1,12 @@
+memory bf 55
+show
+alloc A 15
+show
+alloc B 30
+show
+free A
+show
+alloc C 8
+show
+alloc D 6
+show

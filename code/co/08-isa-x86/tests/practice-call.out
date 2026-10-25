@@ -1,0 +1,24 @@
+【汇编执行】
+玩具机按 32 位 Intel 语法执行，栈向低地址增长。每条指令占 4 字节，只为了给 call 一个返回地址；真题里的 x86 指令是变长的
+0x00401000  mov esp, 8192
+    esp=0x2000
+0x00401004  push 7
+    esp=0x1FFC，Mem[0x1FFC]=0x7
+0x00401008  call foo
+    压入返回地址 0x0040100C，esp=0x1FF8，进入 0x00401010
+0x00401010  push ebp
+    esp=0x1FF4，Mem[0x1FF4]=0x0
+0x00401014  mov ebp, esp
+    ebp=0x1FF4
+0x00401018  mov eax, dword ptr [ebp+8]
+    eax=Mem[0x1FFC]=0x7
+0x0040101C  pop ebp
+    ebp=0x0，esp=0x1FF8
+0x00401020  ret
+    返回 0x0040100C，esp=0x1FFC
+0x0040100C  jmp end
+    转到 0x00401024
+0x00401024  mov eax, eax
+    eax=0x7
+结果：eax=0x7（7），ZF=0，SF=0，CF=0，OF=0
+结构：过程调用

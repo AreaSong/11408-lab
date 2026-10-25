@@ -1,0 +1,2 @@
+kind=process rounds=3 token=A ok=yes
+kind=thread rounds=3 token=A ok=yes

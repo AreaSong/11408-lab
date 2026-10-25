@@ -1,0 +1,23 @@
+exam 2014-4
+figure a(b(d(e),x),c)
+thread n=6 inorder=edbxac
+step 1 visit=e pre=^ ltag=1 left=^ fix=head
+step 2 visit=d pre=e ltag=0 left=e fix=e>d
+step 3 visit=b pre=d ltag=0 left=d fix=d>b
+step 4 visit=x pre=b ltag=1 left=b fix=b child
+step 5 visit=a pre=x ltag=0 left=b fix=x>a
+step 6 visit=c pre=a ltag=1 left=a fix=a child
+close last=c right=^
+node e ltag=1 left=^ rtag=1 right=d in_pred=- in_succ=d
+node d ltag=0 left=e rtag=1 right=b in_pred=e in_succ=b
+node b ltag=0 left=d rtag=0 right=x in_pred=d in_succ=x
+node x ltag=1 left=b rtag=1 right=a in_pred=b in_succ=a
+node a ltag=0 left=b rtag=0 right=c in_pred=x in_succ=c
+node c ltag=1 left=a rtag=1 right=^ in_pred=a in_succ=-
+head ltag=0 left=a rtag=1 right=c
+walk=edbxac
+check=ok
+plain_null=2
+ask x pred=b succ=a
+option A=e,c B=e,a C=d,c D=b,a
+pick=D

@@ -1,0 +1,12 @@
+card
+claim unsafe-is-dead
+claim safe-no-dead
+claim banker-avoid
+claim banker-break-hold
+claim order-break-cycle
+claim all-break-hold
+claim preempt-break-nopreempt
+claim break-mutex-hard
+claim cycle-one-iff
+claim cycle-many-enough
+claim starve-is-dead

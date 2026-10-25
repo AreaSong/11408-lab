@@ -1,0 +1,5 @@
+split byte 28 64 8 1
+cap 28 8 64 1 through lru
+map byte 64 8 1 444
+map byte 64 8 1 1348
+loop both read 28 256 256 4 320 64 8 1 lru through alloc

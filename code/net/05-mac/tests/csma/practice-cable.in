@@ -1,0 +1,2 @@
+frame bw 10 Mbps dist 2500 m speed 200000 km/s
+reach frame 64 B bw 10 Mbps speed 200000 km/s

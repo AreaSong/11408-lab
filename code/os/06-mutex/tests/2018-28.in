@@ -1,0 +1,12 @@
+cond
+wait A empty
+wait B empty
+signal C empty
+signal D empty
+signal E full
+end
+claim cond-wait-block
+claim cond-wait-mutex
+claim cond-wait-wake
+claim cond-wait-by-value
+claim signal-kept

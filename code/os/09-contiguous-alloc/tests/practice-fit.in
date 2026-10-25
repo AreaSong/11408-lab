@@ -1,0 +1,30 @@
+algo ff
+hole 0 100
+hole 1000 500
+hole 2000 200
+hole 3000 300
+hole 4000 600
+alloc A 212
+alloc B 117
+alloc C 526
+show
+algo bf
+hole 0 100
+hole 1000 500
+hole 2000 200
+hole 3000 300
+hole 4000 600
+alloc A 212
+alloc B 117
+alloc C 526
+show
+algo wf
+hole 0 100
+hole 1000 500
+hole 2000 200
+hole 3000 300
+hole 4000 600
+alloc A 212
+alloc B 117
+alloc C 526
+show

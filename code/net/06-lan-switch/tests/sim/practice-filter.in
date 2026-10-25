@@ -1,0 +1,11 @@
+dev switch SW
+dev hub Hub
+host a 02-00-00-00-00-0a
+host b 02-00-00-00-00-0b
+host c 02-00-00-00-00-0c
+link Hub SW
+link c SW
+link a Hub
+link b Hub
+send a 02-00-00-00-00-0b
+send b 02-00-00-00-00-0a

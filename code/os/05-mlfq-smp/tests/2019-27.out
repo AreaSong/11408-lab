@@ -1,0 +1,20 @@
+algo=fb2 q0=rr:10 q1=sjf idle=yes
+trace
+0 admit P1 q0
+0 admit P2 q0
+0 schedule reason=arrive from=- to=P1 switch=yes q=0 slice=10
+10 demote P1 q0->q1
+10 schedule reason=slice from=P1 to=P2 switch=yes q=0 slice=10
+20 demote P2 q0->q1
+20 schedule reason=slice from=P2 to=P2 switch=no q=1 slice=0
+30 schedule reason=exit from=P2 to=P1 switch=yes q=1 slice=0
+50 schedule reason=exit from=P1 to=idle switch=yes
+gantt
+0-10 P1
+10-30 P2
+30-50 P1
+table
+name arrive service start finish turn wait response level
+P1 0 30 0 50 50 20 0 1
+P2 0 20 10 30 30 10 10 1
+avg turn=40/1 wait=15/1

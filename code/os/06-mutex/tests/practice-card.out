@@ -1,0 +1,30 @@
+sync direct cooperate=yes
+mutex indirect resource=yes
+principle progress idle-enter
+principle mutex one-in-cs
+principle bounded finite-overtake
+principle yield block-not-spin
+algo=single progress=no mutex=yes bounded=yes yield=no
+algo=check-first progress=yes mutex=no bounded=no yield=no
+algo=check-after progress=no mutex=yes bounded=no yield=no
+algo=peterson progress=yes mutex=yes bounded=yes yield=no
+algo=tsl progress=yes mutex=yes bounded=no yield=no
+algo=swap progress=yes mutex=yes bounded=no yield=no
+algo=integer progress=yes mutex=yes bounded=no yield=no
+algo=record progress=yes mutex=yes bounded=yes yield=yes
+mask interrupt cpu=one user=no multi=no
+sem positive available=value waiters=0
+sem zero available=0 waiters=0
+sem negative available=0 waiters=abs
+sem p dec block-if-lt0
+sem v inc wake-if-le0
+cond wait block=yes queue=insert release=monitor
+cond signal wake=head lost=if-empty
+cond mesa while=yes hoare=if
+monitor enter slots=one data=inside call=process
+sync direct cooperate=yes
+principle yield block-not-spin
+mask interrupt cpu=one user=no multi=no
+sem v inc wake-if-le0
+cond mesa while=yes hoare=if
+monitor enter slots=one data=inside call=process

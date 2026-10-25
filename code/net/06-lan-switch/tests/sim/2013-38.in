@@ -1,0 +1,3 @@
+delay cut bw 100 Mbps
+delay store bw 100 Mbps frame 64 B
+delay store bw 100 Mbps frame 1518 B

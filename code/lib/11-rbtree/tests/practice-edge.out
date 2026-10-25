@@ -1,0 +1,16 @@
+rb
+inorder
+done n=0 reds=0 height=0 bh=0
+fail dup
+fail format
+fail format
+fail format
+fail format
+fail format
+fail format
+fail format
+del 1
+before #
+missing
+fail unknown
+fail range

@@ -1,0 +1,24 @@
+trace byte 16 4 2 1 lru back alloc
+4
+W 0
+R 0
+W 0
+R 8
+trace byte 16 4 2 1 lru through noalloc
+4
+W 0
+R 0
+W 0
+R 8
+trace byte 16 4 2 1 lru back noalloc
+4
+W 0
+R 0
+W 0
+R 8
+trace byte 16 4 2 1 lru through alloc
+4
+W 0
+R 0
+W 0
+R 8
