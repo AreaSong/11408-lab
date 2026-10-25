@@ -1,0 +1,3 @@
+pc=0 instr=cli class=privileged trap=yes actor=hypervisor effect=if=0
+pc=1 instr=popf class=sensitive trap=no actor=guest effect=missed
+traps=1 missed=1 if=0 halted=0 stopped=end

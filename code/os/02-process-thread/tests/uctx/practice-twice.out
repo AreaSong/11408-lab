@@ -1,0 +1,10 @@
+1 who=A
+2 who=B
+3 who=A
+4 who=B
+kernel-threads=1 switch=user
+1 who=A
+2 who=B
+3 who=A
+4 who=B
+kernel-threads=1 switch=user

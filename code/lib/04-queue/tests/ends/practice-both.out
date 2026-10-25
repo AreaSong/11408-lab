@@ -1,0 +1,25 @@
+init front=0 rear=0 cap=6 max=5 empty_when=front==rear full_when=(rear+1)%6==front cells=[_ _ _ _ _ _]
+enq-r e=1 front=0->0 rear=0->1 count=1 full=0 cells=[1 _ _ _ _ _]
+ok enq-r e=1 count=1
+enq-r e=2 front=0->0 rear=1->2 count=2 full=0 cells=[1 2 _ _ _ _]
+ok enq-r e=2 count=2
+enq-f e=9 front=0->5 rear=2->2 count=3 full=0 cells=[1 2 _ _ _ 9]
+ok enq-f e=9 count=3
+deq-r e=2 front=5->5 rear=2->1 count=2 full=0 cells=[1 _ _ _ _ 9]
+ok deq-r e=2 count=2
+state front=5 rear=1 count=2 full=0 empty=0 formula=(1-5+6)%6=2 cells=[1 _ _ _ _ 9]
+enq-r e=3 front=5->5 rear=1->2 count=3 full=0 cells=[1 3 _ _ _ 9]
+ok enq-r e=3 count=3
+enq-r e=4 front=5->5 rear=2->3 count=4 full=0 cells=[1 3 4 _ _ 9]
+ok enq-r e=4 count=4
+enq-r e=5 front=5->5 rear=3->4 count=5 full=1 cells=[1 3 4 5 _ 9]
+ok enq-r e=5 count=5
+fail enq-r full front=5 rear=4 cond=(rear+1)%6==front
+state front=5 rear=4 count=5 full=1 empty=0 formula=(4-5+6)%6=5 cells=[1 3 4 5 _ 9]
+fail enq-r full front=5 rear=4 cond=(rear+1)%6==front
+fail enq-f full front=5 rear=4 cond=(rear+1)%6==front
+deq-f e=9 front=5->0 rear=4->4 count=4 full=0 cells=[1 3 4 5 _ _]
+ok deq-f e=9 count=4
+deq-r e=5 front=0->0 rear=4->3 count=3 full=0 cells=[1 3 4 _ _ _]
+ok deq-r e=5 count=3
+state front=0 rear=3 count=3 full=0 empty=0 formula=(3-0+6)%6=3 cells=[1 3 4 _ _ _]

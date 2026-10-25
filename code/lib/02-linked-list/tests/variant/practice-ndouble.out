@@ -1,0 +1,42 @@
+empty=1 cond=L->next==NULL next=NULL prior=NULL
+new data=10
+pred pos=0
+link s->next=NULL
+skip p->next->prior
+link s->prior=p
+link p->next=s
+ok insert i=1 e=10 length=1 empty=0 [10] links=ok
+new data=30
+pred pos=1
+link s->next=NULL
+skip p->next->prior
+link s->prior=p
+link p->next=s
+ok insert i=2 e=30 length=2 empty=0 [10 30] links=ok
+new data=20
+pred pos=1
+link s->next=30
+link p->next->prior=s
+link s->prior=p
+link p->next=s
+ok insert i=2 e=20 length=3 empty=0 [10 20 30] links=ok
+pred pos=2
+unlink e=30
+link p->next=NULL
+skip q->next->prior
+ok delete i=3 e=30 length=2 empty=0 [10 20] links=ok
+walk pos=1 data=10
+ok get i=1 value=10
+scan pos=1 data=10
+ok find e=10 pos=1
+pred pos=0
+unlink e=10
+link p->next=20
+link q->next->prior=p
+ok delete i=1 e=10 length=1 empty=0 [20] links=ok
+pred pos=0
+unlink e=20
+link p->next=NULL
+skip q->next->prior
+ok delete i=1 e=20 length=0 empty=1 [] links=ok
+empty=1 cond=L->next==NULL next=NULL prior=NULL

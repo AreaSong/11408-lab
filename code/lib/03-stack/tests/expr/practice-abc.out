@@ -1,0 +1,24 @@
+case post expr=a+b*c
+scan=a do=out op=[] post=a depth=0
+scan=+ do=push op=[+] post=a depth=1
+scan=b do=out op=[+] post=ab depth=1
+scan=* do=push op=[+ *] post=ab depth=2
+scan=c do=out op=[+ *] post=abc depth=2
+scan=end do=pop op=[+] post=abc* depth=1
+scan=end do=pop op=[] post=abc*+ depth=0
+postfix=abc*+
+max_depth=2
+status=ok
+case post expr=(a+b)*c
+scan=( do=push op=[(] post= depth=1
+scan=a do=out op=[(] post=a depth=1
+scan=+ do=push op=[( +] post=a depth=2
+scan=b do=out op=[( +] post=ab depth=2
+scan=) do=pop op=[(] post=ab+ depth=1
+scan=) do=drop op=[] post=ab+ depth=0
+scan=* do=push op=[*] post=ab+ depth=1
+scan=c do=out op=[*] post=ab+c depth=1
+scan=end do=pop op=[] post=ab+c* depth=0
+postfix=ab+c*
+max_depth=2
+status=ok

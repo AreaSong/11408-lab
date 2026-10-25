@@ -1,0 +1,9 @@
+4
+enq 1
+enq 2
+deq
+enq 3
+enq 4
+state
+enq 5
+state

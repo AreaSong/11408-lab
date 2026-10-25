@@ -1,0 +1,6 @@
+pick fcfs at=2
+ready J1 J2 J3
+chosen J1
+pick sjf at=2
+ready J1 J2 J3
+chosen J3

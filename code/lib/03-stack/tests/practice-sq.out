@@ -1,0 +1,35 @@
+kind=sq top=-1 cap=8 empty_when=top==-1 full_when=top==7
+ok empty=1
+push e=10 top=-1->0 stack=[10]
+ok push e=10 size=1 stack=[10]
+push e=20 top=0->1 stack=[10 20]
+ok push e=20 size=2 stack=[10 20]
+ok top e=20 top=1
+ok size=2 top=1
+pop e=20 top=1->0 stack=[10]
+ok pop e=20 size=1 stack=[10]
+pop e=10 top=0->-1 stack=[]
+ok pop e=10 size=0 stack=[]
+fail pop empty top=-1
+push e=1 top=-1->0 stack=[1]
+ok push e=1 size=1 stack=[1]
+push e=2 top=0->1 stack=[1 2]
+ok push e=2 size=2 stack=[1 2]
+push e=3 top=1->2 stack=[1 2 3]
+ok push e=3 size=3 stack=[1 2 3]
+push e=4 top=2->3 stack=[1 2 3 4]
+ok push e=4 size=4 stack=[1 2 3 4]
+push e=5 top=3->4 stack=[1 2 3 4 5]
+ok push e=5 size=5 stack=[1 2 3 4 5]
+push e=6 top=4->5 stack=[1 2 3 4 5 6]
+ok push e=6 size=6 stack=[1 2 3 4 5 6]
+push e=7 top=5->6 stack=[1 2 3 4 5 6 7]
+ok push e=7 size=7 stack=[1 2 3 4 5 6 7]
+push e=8 top=6->7 stack=[1 2 3 4 5 6 7 8]
+ok push e=8 size=8 stack=[1 2 3 4 5 6 7 8]
+fail push full e=9 top=7
+pop e=8 top=7->6 stack=[1 2 3 4 5 6 7]
+ok pop e=8 size=7 stack=[1 2 3 4 5 6 7]
+push e=9 top=6->7 stack=[1 2 3 4 5 6 7 9]
+ok push e=9 size=8 stack=[1 2 3 4 5 6 7 9]
+ok empty=0

@@ -1,0 +1,18 @@
+1 from=user to=kernel switch=yes what=trap
+2 from=kernel to=fs switch=no what=call
+3 from=kernel to=user switch=yes what=return
+switches=2 messages=0 calls=1
+1 from=user to=kernel switch=yes what=send
+2 from=kernel to=file-server switch=yes what=forward
+3 from=file-server to=kernel switch=yes what=reply
+4 from=kernel to=user switch=yes what=deliver
+switches=4 messages=2 calls=0
+1 from=user to=kernel switch=yes what=trap
+2 from=syscall-layer to=fs-layer switch=no what=call
+3 from=fs-layer to=device-layer switch=no what=call
+4 from=kernel to=user switch=yes what=return
+switches=2 messages=0 calls=2
+1 from=user to=libos switch=no what=call
+2 from=libos to=exokernel switch=yes what=check-raw
+3 from=exokernel to=libos switch=yes what=return
+switches=2 messages=0 calls=1

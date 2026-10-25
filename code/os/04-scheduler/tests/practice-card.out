@@ -1,0 +1,30 @@
+level job en=high queue=backup move=in freq=low
+level mid en=medium queue=suspend move=swap freq=mid
+level low en=low queue=ready move=cpu freq=high
+goal batch focus=turn,throughput,cpu
+goal interactive focus=response
+goal realtime focus=deadline
+metric turn formula=finish-arrive
+metric weight formula=turn/service bound=ge1
+metric wait formula=turn-service-io note=pure-cpu
+metric response formula=first-start-arrive
+metric ratio formula=(wait+service)/service
+algo fcfs preempt=no starve=no favor=long scope=both
+algo sjf preempt=no starve=yes favor=short scope=both
+algo srtn preempt=yes starve=yes favor=remain scope=process
+algo hrrn preempt=no starve=no favor=balance scope=both
+algo rr preempt=yes starve=no favor=response scope=process
+algo prio preempt=either starve=static favor=urgent scope=both
+rule rr-join new-then-expired
+rule tie earlier-arrive-then-input
+rule srtn-tie keep-running
+rule prio-tie keep-running
+rule sjf-default non-preempt
+rule hrrn-equal fcfs
+rule gantt half-open
+rule switch not-service
+level low en=low queue=ready move=cpu freq=high
+metric ratio formula=(wait+service)/service
+algo hrrn preempt=no starve=no favor=balance scope=both
+rule rr-join new-then-expired
+hrrn-both true

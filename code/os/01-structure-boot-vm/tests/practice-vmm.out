@@ -1,0 +1,2 @@
+type1 where=hardware host=no performance=high migrate=hard privilege=highest
+type2 where=host-os host=yes performance=lower migrate=easy privilege=above-guest

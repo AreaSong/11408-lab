@@ -1,0 +1,9 @@
+bytes=512
+code=446
+table=64
+signature=55aa ok=yes
+entry0 status=80 type=83 lba=2048 sectors=102400 active=yes used=yes
+entry1 status=00 type=07 lba=104448 sectors=204800 active=no used=yes
+entry2 status=00 type=00 lba=0 sectors=0 active=no used=no
+entry3 status=00 type=00 lba=0 sectors=0 active=no used=no
+active-count=1

@@ -1,0 +1,5 @@
+create A
+dispatch A
+yield A
+dispatch A
+exit A

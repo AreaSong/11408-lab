@@ -1,0 +1,4 @@
+code shared=yes
+open-file shared=yes
+global shared=yes
+stack-pointer shared=no

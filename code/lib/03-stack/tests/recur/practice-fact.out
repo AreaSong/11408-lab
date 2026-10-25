@@ -1,0 +1,20 @@
+case n=3
+call n=3 depth=1 stack=[3]
+call n=2 depth=2 stack=[3 2]
+call n=1 depth=3 stack=[3 2 1]
+ret n=1 value=1 depth=2 stack=[3 2]
+ret n=2 value=2 depth=1 stack=[3]
+ret n=3 value=6 depth=0 stack=[]
+max_depth=3 result=6
+case n=5
+call n=5 depth=1 stack=[5]
+call n=4 depth=2 stack=[5 4]
+call n=3 depth=3 stack=[5 4 3]
+call n=2 depth=4 stack=[5 4 3 2]
+call n=1 depth=5 stack=[5 4 3 2 1]
+ret n=1 value=1 depth=4 stack=[5 4 3 2]
+ret n=2 value=2 depth=3 stack=[5 4 3]
+ret n=3 value=6 depth=2 stack=[5 4]
+ret n=4 value=24 depth=1 stack=[5]
+ret n=5 value=120 depth=0 stack=[]
+max_depth=5 result=120

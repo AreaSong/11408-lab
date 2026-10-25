@@ -1,0 +1,5 @@
+run prio-np large switch 1
+P1 -30 12 10
+P2 -15 24 30
+P3 -18 36 20
+end

@@ -1,0 +1,11 @@
+init front=0 rear=0 cap=8 max=7 empty_when=front==rear full_when=(rear+1)%8==front cells=[_ _ _ _ _ _ _ _]
+fail deq empty front=0 rear=0 cond=front==rear
+fail head empty
+fail tail empty
+ok empty=1 front=0 rear=0 cond=front==rear
+ok size=0 front=0 rear=0 formula=(0-0+8)%8=0
+enq e=1 front=0 rear=0->1 count=1 full=0 cells=[1 _ _ _ _ _ _ _]
+ok enq e=1 count=1 formula=(1-0+8)%8=1
+deq e=1 front=0->1 rear=1 count=0 full=0 cells=[_ _ _ _ _ _ _ _]
+ok deq e=1 count=0 formula=(1-1+8)%8=0
+fail deq empty front=1 rear=1 cond=front==rear

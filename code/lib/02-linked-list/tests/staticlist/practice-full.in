@@ -1,0 +1,14 @@
+insert 1 1
+insert 2 2
+insert 3 3
+insert 4 4
+insert 5 5
+insert 6 6
+insert 7 7
+insert 8 8
+insert 1 100
+delete 1
+insert 1 100
+get 1
+insert 0 1
+delete 9

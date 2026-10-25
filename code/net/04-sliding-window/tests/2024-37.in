@@ -1,0 +1,11 @@
+proto sr bits 3
+send
+drop 1
+arrive 0
+ack 0
+send
+arrive 2
+ack 2
+arrive 3
+loseack 3
+timeout 1

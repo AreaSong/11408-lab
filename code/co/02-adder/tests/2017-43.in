@@ -1,0 +1,4 @@
+wrap unsigned 0
+wrap int 0
+fits int 4294967295
+fits int 2147483647

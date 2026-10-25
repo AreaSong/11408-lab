@@ -1,0 +1,3 @@
+io-end from=blocked to=ready class=wakeup wakeup=yes block=no
+leave-cs from=blocked to=ready class=wakeup wakeup=yes block=no
+timeslice from=running to=ready class=preempt wakeup=no block=no

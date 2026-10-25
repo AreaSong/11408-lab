@@ -1,0 +1,3 @@
+share address-space
+share stack
+share fd

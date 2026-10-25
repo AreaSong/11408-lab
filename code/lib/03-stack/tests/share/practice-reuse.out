@@ -1,0 +1,24 @@
+init top1=-1 top2=8 max=8 full_when=top1+1==top2 cells=[_ _ _ _ _ _ _ _]
+push stack=1 e=1 top1=-1->0 top2=8->8 full=0 cells=[1 _ _ _ _ _ _ _]
+ok push stack=1 e=1 size1=1 size2=0
+push stack=1 e=2 top1=0->1 top2=8->8 full=0 cells=[1 2 _ _ _ _ _ _]
+ok push stack=1 e=2 size1=2 size2=0
+push stack=1 e=3 top1=1->2 top2=8->8 full=0 cells=[1 2 3 _ _ _ _ _]
+ok push stack=1 e=3 size1=3 size2=0
+push stack=1 e=4 top1=2->3 top2=8->8 full=0 cells=[1 2 3 4 _ _ _ _]
+ok push stack=1 e=4 size1=4 size2=0
+push stack=2 e=8 top1=3->3 top2=8->7 full=0 cells=[1 2 3 4 _ _ _ 8]
+ok push stack=2 e=8 size1=4 size2=1
+push stack=2 e=7 top1=3->3 top2=7->6 full=0 cells=[1 2 3 4 _ _ 7 8]
+ok push stack=2 e=7 size1=4 size2=2
+push stack=2 e=6 top1=3->3 top2=6->5 full=0 cells=[1 2 3 4 _ 6 7 8]
+ok push stack=2 e=6 size1=4 size2=3
+push stack=2 e=5 top1=3->3 top2=5->4 full=1 cells=[1 2 3 4 5 6 7 8]
+ok push stack=2 e=5 size1=4 size2=4
+state top1=3 top2=4 full=1 size1=4 size2=4 cells=[1 2 3 4 5 6 7 8]
+fail push full stack=1 e=9 top1=3 top2=4 cond=top1+1==top2
+pop stack=2 e=5 top1=3->3 top2=4->5 full=0 cells=[1 2 3 4 _ 6 7 8]
+ok pop stack=2 e=5 size1=4 size2=3
+push stack=1 e=9 top1=3->4 top2=5->5 full=1 cells=[1 2 3 4 9 6 7 8]
+ok push stack=1 e=9 size1=5 size2=3
+state top1=4 top2=5 full=1 size1=5 size2=3 cells=[1 2 3 4 9 6 7 8]

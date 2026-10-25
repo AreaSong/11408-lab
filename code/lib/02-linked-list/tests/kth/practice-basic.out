@@ -1,0 +1,35 @@
+case n=5 k=2
+ahead count=1 p=1
+ahead count=2 p=2
+sync q=2 p=3
+sync q=3 p=4
+sync q=4 p=5
+value=4
+return=1
+list=[1 2 3 4 5]
+case n=5 k=1
+ahead count=1 p=1
+sync q=2 p=2
+sync q=3 p=3
+sync q=4 p=4
+sync q=5 p=5
+value=5
+return=1
+list=[1 2 3 4 5]
+case n=5 k=5
+ahead count=1 p=1
+ahead count=2 p=2
+ahead count=3 p=3
+ahead count=4 p=4
+ahead count=5 p=5
+value=1
+return=1
+list=[1 2 3 4 5]
+case n=5 k=6
+ahead count=1 p=1
+ahead count=2 p=2
+ahead count=3 p=3
+ahead count=4 p=4
+ahead count=5 p=5
+return=0
+list=[1 2 3 4 5]

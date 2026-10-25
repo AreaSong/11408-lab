@@ -1,0 +1,15 @@
+init front==rear head next=NULL empty_when=front==rear
+new data=1 next=NULL
+link rear->next=new rear=1
+ok enq e=1 count=1 q=[1]
+new data=2 next=NULL
+link rear->next=new rear=2
+ok enq e=2 count=2 q=[1 2]
+ok head e=1
+ok size=2 q=[1 2]
+unlink e=1 last=0 rear=2
+ok deq e=1 count=1 q=[2]
+ok empty=0 cond=front==rear
+unlink e=2 last=1 rear=head
+ok deq e=2 count=0 q=[]
+ok empty=1 cond=front==rear

@@ -1,0 +1,10 @@
+case n=0
+call n=0 depth=1 stack=[0]
+ret n=0 value=1 depth=0 stack=[]
+max_depth=1 result=1
+case n=1
+call n=1 depth=1 stack=[1]
+ret n=1 value=1 depth=0 stack=[]
+max_depth=1 result=1
+case n=21
+fail n=21

@@ -1,0 +1,7 @@
+entity program
+entity process
+entity thread
+model many-one
+model one-one
+model many-many
+fields

@@ -1,0 +1,15 @@
+claim fcfs-starve
+claim sjf-starve
+claim srtn-starve
+claim hrrn-starve
+claim rr-starve
+claim static-prio-starve
+claim sjf-preempt
+claim srtn-preempt
+claim hrrn-preempt
+claim rr-preempt
+claim sjf-always-min
+claim same-arrive-sjf-min
+claim rr-big-fcfs
+claim weight-ge-one
+claim rr-new-first

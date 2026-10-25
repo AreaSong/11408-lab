@@ -1,0 +1,5 @@
+mix cmp int -1 unsigned 1
+mix cmp ushort 65535 int -1
+mix cmp unsigned 65535 int -1
+mix sub int -1 unsigned 1
+wrap unsigned 5

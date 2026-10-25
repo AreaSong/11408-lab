@@ -1,0 +1,48 @@
+【混合比较】卷面 int 是 32 位
+左边 int 真值 -1，机器数 FFFF FFFFH
+右边 unsigned 真值 1，机器数 0000 0001H
+左边已经是 int，不再提升，机器数 FFFF FFFFH
+右边已经是 unsigned，不再提升，机器数 0000 0001H
+通常算术转换后的类型是 unsigned
+int 和 unsigned 等级相同。有一边是 unsigned 时，int 转成 unsigned，位不动
+左边 -1 转成无符号 4294967295
+按无符号比较：4294967295 和 1
+结果：左边大于右边
+【混合比较】卷面 int 是 32 位
+左边 unsigned short 真值 65535，机器数 FFFFH
+右边 int 真值 -1，机器数 FFFF FFFFH
+左边 unsigned short 提升成 int。32 位 int 装得下它的全部取值
+提升前 FFFFH，提升后 0000 FFFFH
+最高位原来是 1。按数值提升时高位补 0；符号扩展才会把这个 1 复制到高位
+右边已经是 int，不再提升，机器数 FFFF FFFFH
+通常算术转换后的类型是 int
+两边提升之后都是 int，不用再转成 unsigned
+按补码比较：65535 和 -1
+结果：左边大于右边
+【混合比较】卷面 int 是 32 位
+左边 unsigned 真值 65535，机器数 0000 FFFFH
+右边 int 真值 -1，机器数 FFFF FFFFH
+左边已经是 unsigned，不再提升，机器数 0000 FFFFH
+右边已经是 int，不再提升，机器数 FFFF FFFFH
+通常算术转换后的类型是 unsigned
+int 和 unsigned 等级相同。有一边是 unsigned 时，int 转成 unsigned，位不动
+右边 -1 转成无符号 4294967295
+按无符号比较：65535 和 4294967295
+结果：左边小于右边
+【混合运算】卷面 int 是 32 位
+左边 int 真值 -1，机器数 FFFF FFFFH
+右边 unsigned 真值 1，机器数 0000 0001H
+左边已经是 int，不再提升，机器数 FFFF FFFFH
+右边已经是 unsigned，不再提升，机器数 0000 0001H
+通常算术转换后的类型是 unsigned
+int 和 unsigned 等级相同。有一边是 unsigned 时，int 转成 unsigned，位不动
+左边 -1 转成无符号 4294967295
+按 unsigned 做减法，进位链与 alu 相同，这里只写转换后的低 32 位
+机器数 FFFF FFFEH，ZF=0，SF=1，CF=0，OF=0
+结果类型是 unsigned。若再赋给 int，位不动，补码是 -2
+结果：FFFF FFFEH，无符号 4294967294
+【unsigned 的 n-1】n 的机器数 0000 0005H
+n-1 按模 2^32 做减法，机器数 0000 0004H，无符号值 4
+i 从 0 开始。0 ≤ n-1 在无符号比较里总是成立
+i 加到 n 时条件不再成立，循环会停
+结果：不会死循环，n-1=4

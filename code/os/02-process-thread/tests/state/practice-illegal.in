@@ -1,0 +1,10 @@
+create A
+create B
+dispatch A
+block A io
+dispatch A
+dispatch B
+wakeup A
+preempt B
+exit B
+revoke A

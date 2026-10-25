@@ -1,0 +1,14 @@
+cdouble
+empty
+insert 1 10
+insert 2 30
+insert 2 20
+delete 2
+get 2
+find 30
+find 20
+delete 1
+delete 1
+empty
+head 5
+insert 0 1

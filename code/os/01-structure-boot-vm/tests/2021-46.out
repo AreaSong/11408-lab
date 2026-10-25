@@ -1,0 +1,6 @@
+order=firmware-disk-boot-part-boot-os-init
+prep=physical-format-partition-logical-format-install
+sector=physical-format
+root=logical-format
+partition-table=partition
+inode-table=logical-format

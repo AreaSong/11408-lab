@@ -1,0 +1,15 @@
+fcfs-starve false
+sjf-starve true
+srtn-starve true
+hrrn-starve false
+rr-starve false
+static-prio-starve true
+sjf-preempt false
+srtn-preempt true
+hrrn-preempt false
+rr-preempt true
+sjf-always-min false
+same-arrive-sjf-min true
+rr-big-fcfs true
+weight-ge-one true
+rr-new-first true

@@ -1,0 +1,5 @@
+align C008 le
+int a=273
+char b
+short c
+end

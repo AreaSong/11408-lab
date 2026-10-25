@@ -1,0 +1,18 @@
+case judge cap=6 end1=0 end2=0
+real empty=1 full=0 count=0
+A empty=1 full=0 match=1
+B empty=1 full=0 match=1
+C empty=0 full=0 match=0
+D empty=0 full=0 match=0
+case judge cap=6 end1=0 end2=5
+real empty=0 full=1 count=5
+A empty=0 full=1 match=1
+B empty=0 full=0 match=0
+C empty=0 full=1 match=1
+D empty=1 full=0 match=0
+case judge cap=6 end1=2 end2=4
+real empty=0 full=0 count=2
+A empty=0 full=0 match=1
+B empty=0 full=0 match=1
+C empty=0 full=0 match=1
+D empty=0 full=0 match=1

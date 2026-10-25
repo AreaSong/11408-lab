@@ -1,0 +1,9 @@
+bytes=512
+code=446
+table=64
+signature=0000 ok=no
+entry0 status=00 type=07 lba=63 sectors=1000 active=no used=yes
+entry1 status=00 type=00 lba=0 sectors=0 active=no used=no
+entry2 status=00 type=00 lba=0 sectors=0 active=no used=no
+entry3 status=00 type=00 lba=0 sectors=0 active=no used=no
+active-count=0

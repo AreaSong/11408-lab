@@ -1,0 +1,7 @@
+init 6
+init 8
+elem 6 0 5
+elem 6 0 0
+elem 5 0 3
+elem 8 3 1
+init 1

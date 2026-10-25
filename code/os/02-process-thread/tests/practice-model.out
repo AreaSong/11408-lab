@@ -1,0 +1,7 @@
+program static=yes resource=no schedule=no
+process static=no resource=yes schedule=no
+thread static=no resource=no schedule=yes
+many-one user=n kernel=1 tcb=process switch=user parallel=no block-all=yes
+one-one user=n kernel=n tcb=thread switch=kernel parallel=yes block-all=no
+many-many user=n kernel=m tcb=partial switch=both parallel=yes block-all=no
+fields id=pid,uid cpu=pc,regs,psw,sp schedule=state,priority,event control=code,data,files,links

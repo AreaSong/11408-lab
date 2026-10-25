@@ -1,0 +1,8 @@
+init rows=3 cols=3 nnz=0
+keep=rows,cols
+drop=nonzero_rows,nonzero_cols
+set i=2 j=2 v=4 nnz=1
+fail set order i=1 j=1
+fail set zero
+get i=2 j=2 val=4 scans=1
+fail set range i=0 j=1

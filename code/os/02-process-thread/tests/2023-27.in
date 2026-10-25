@@ -1,0 +1,4 @@
+event keyboard
+event page-fault
+event yield
+event sem-wait

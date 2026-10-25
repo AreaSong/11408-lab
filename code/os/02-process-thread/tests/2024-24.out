@@ -1,0 +1,4 @@
+kill-children false
+free-device true
+free-pcb true
+free-memory true

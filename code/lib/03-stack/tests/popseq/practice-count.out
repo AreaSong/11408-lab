@@ -1,0 +1,7 @@
+case count n=1
+count=1 catalan=1 match=1
+case count n=5
+count=42 catalan=42 match=1
+case count n=6
+count=132 catalan=132 match=1
+fail n=0

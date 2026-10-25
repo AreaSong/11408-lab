@@ -1,0 +1,4 @@
+bandk n=5 k=0 i=1 j=1 back=0
+bandk n=5 k=5 i=3 j=2 back=5
+bandk n=5 k=12 i=5 j=5 back=12
+fail bandk n=5 k=13

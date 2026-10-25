@@ -1,0 +1,4 @@
+align 2020FE00 le find 34
+short x1
+int x2=12340000H
+end

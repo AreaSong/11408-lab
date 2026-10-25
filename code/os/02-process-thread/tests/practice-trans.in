@@ -1,0 +1,11 @@
+trans ready running
+trans running ready
+trans running blocked
+trans blocked ready
+trans blocked running
+trans ready blocked
+trans new ready
+trans new running
+trans running terminated
+trans ready terminated
+trans terminated ready

@@ -1,0 +1,13 @@
+push 1 1
+push 1 2
+push 1 3
+push 1 4
+push 2 8
+push 2 7
+push 2 6
+push 2 5
+state
+push 1 9
+pop 2
+push 1 9
+state

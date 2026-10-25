@@ -1,0 +1,5 @@
+1 pid=A event=create from=- to=ready ok=yes why=ok via=new ready=A blocked=- running=-
+2 pid=A event=dispatch from=ready to=running ok=yes why=ok via=- ready=- blocked=- running=A
+3 pid=A event=yield from=running to=ready ok=yes why=ok via=- ready=A blocked=- running=-
+4 pid=A event=dispatch from=ready to=running ok=yes why=ok via=- ready=- blocked=- running=A
+5 pid=A event=exit from=running to=terminated ok=yes why=ok via=- ready=- blocked=- running=-

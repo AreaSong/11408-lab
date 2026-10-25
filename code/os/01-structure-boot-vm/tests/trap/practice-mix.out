@@ -1,0 +1,6 @@
+pc=0 instr=mov class=normal trap=no actor=guest effect=execute
+pc=1 instr=cli class=privileged trap=yes actor=hypervisor effect=if=0
+pc=2 instr=in class=privileged trap=yes actor=hypervisor effect=port-read
+pc=3 instr=iret class=privileged trap=yes actor=hypervisor effect=guest-return
+pc=4 instr=hlt class=privileged trap=yes actor=hypervisor effect=halt=1
+traps=4 missed=0 if=0 halted=1 stopped=halt

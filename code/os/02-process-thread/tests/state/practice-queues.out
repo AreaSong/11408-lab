@@ -1,0 +1,11 @@
+1 pid=A event=create from=- to=ready ok=yes why=ok via=new ready=A blocked=- running=-
+2 pid=B event=create from=- to=ready ok=yes why=ok via=new ready=A+B blocked=- running=-
+3 pid=C event=create from=- to=ready ok=yes why=ok via=new ready=A+B+C blocked=- running=-
+4 pid=A event=dispatch from=ready to=running ok=yes why=ok via=- ready=B+C blocked=- running=A
+5 pid=A event=block from=running to=blocked ok=yes why=ok via=- ready=B+C blocked=io:A running=-
+6 pid=B event=dispatch from=ready to=running ok=yes why=ok via=- ready=C blocked=io:A running=B
+7 pid=B event=block from=running to=blocked ok=yes why=ok via=- ready=C blocked=io:A+B running=-
+8 pid=C event=dispatch from=ready to=running ok=yes why=ok via=- ready=- blocked=io:A+B running=C
+9 pid=C event=block from=running to=blocked ok=yes why=ok via=- ready=- blocked=io:A+B,disk:C running=-
+10 pid=A event=wakeup from=blocked to=ready ok=yes why=ok via=- ready=A blocked=io:B,disk:C running=-
+11 pid=B event=revoke from=blocked to=terminated ok=yes why=ok via=- ready=A blocked=disk:C running=-

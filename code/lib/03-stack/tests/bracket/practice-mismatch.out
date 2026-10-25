@@ -1,0 +1,25 @@
+case cap=8 expr=([)]
+scan=( push stack=[ ( ] depth=1
+scan=[ push stack=[ ( [ ] depth=2
+scan=) mismatch top=[ expect=]
+max_depth=2 overflow=0 status=mismatch
+case cap=8 expr=(()
+scan=( push stack=[ ( ] depth=1
+scan=( push stack=[ ( ( ] depth=2
+scan=) pop=( stack=[ ( ] depth=1
+unclosed stack=[ ( ]
+max_depth=2 overflow=0 status=unclosed
+case cap=1 expr=()[]{}
+scan=( push stack=[ ( ] depth=1
+scan=) pop=( stack=[] depth=0
+scan=[ push stack=[ [ ] depth=1
+scan=] pop=[ stack=[] depth=0
+scan={ push stack=[ { ] depth=1
+scan=} pop={ stack=[] depth=0
+max_depth=1 overflow=0 status=ok
+case cap=1 expr=(())
+scan=( push stack=[ ( ] depth=1
+scan=( reject depth=2 cap=1
+max_depth=2 overflow=1 status=overflow
+case cap=0 expr=abc
+fail cap=0

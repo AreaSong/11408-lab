@@ -1,0 +1,10 @@
+proto gbn bits 3 window 5
+send
+arrive 0
+ack 0
+arrive 1
+ack 1
+drop 2
+arrive 3
+arrive 4
+timeout

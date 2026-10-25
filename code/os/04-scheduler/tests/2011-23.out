@@ -1,0 +1,4 @@
+fcfs-short-nostarve false
+hrrn-short-nostarve true
+rr-short-nostarve false
+sjf-short-nostarve false

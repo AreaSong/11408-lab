@@ -1,0 +1,23 @@
+init front==rear head next=NULL empty_when=front==rear
+new data=7 next=NULL
+link rear->next=new rear=7
+ok enq e=7 count=1 q=[7]
+unlink e=7 last=1 rear=head
+ok deq e=7 count=0 q=[]
+new data=8 next=NULL
+link rear->next=new rear=8
+ok enq e=8 count=1 q=[8]
+new data=9 next=NULL
+link rear->next=new rear=9
+ok enq e=9 count=2 q=[8 9]
+unlink e=8 last=0 rear=9
+ok deq e=8 count=1 q=[9]
+unlink e=9 last=1 rear=head
+ok deq e=9 count=0 q=[]
+new data=10 next=NULL
+link rear->next=new rear=10
+ok enq e=10 count=1 q=[10]
+ok size=1 q=[10]
+unlink e=10 last=1 rear=head
+ok deq e=10 count=0 q=[]
+fail deq empty cond=front==rear

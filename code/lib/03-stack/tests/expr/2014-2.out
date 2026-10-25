@@ -1,0 +1,25 @@
+case post expr=a/b+(c*d-e*f)/g
+scan=a do=out op=[] post=a depth=0
+scan=/ do=push op=[/] post=a depth=1
+scan=b do=out op=[/] post=ab depth=1
+scan=+ do=pop op=[] post=ab/ depth=0
+scan=+ do=push op=[+] post=ab/ depth=1
+scan=( do=push op=[+ (] post=ab/ depth=2
+scan=c do=out op=[+ (] post=ab/c depth=2
+scan=* do=push op=[+ ( *] post=ab/c depth=3
+scan=d do=out op=[+ ( *] post=ab/cd depth=3
+scan=- do=pop op=[+ (] post=ab/cd* depth=2
+scan=- do=push op=[+ ( -] post=ab/cd* depth=3
+scan=e do=out op=[+ ( -] post=ab/cd*e depth=3
+scan=* do=push op=[+ ( - *] post=ab/cd*e depth=4
+scan=f do=out op=[+ ( - *] post=ab/cd*ef depth=4
+scan=) do=pop op=[+ ( -] post=ab/cd*ef* depth=3
+scan=) do=pop op=[+ (] post=ab/cd*ef*- depth=2
+scan=) do=drop op=[+] post=ab/cd*ef*- depth=1
+scan=/ do=push op=[+ /] post=ab/cd*ef*- depth=2
+scan=g do=out op=[+ /] post=ab/cd*ef*-g depth=2
+scan=end do=pop op=[+] post=ab/cd*ef*-g/ depth=1
+scan=end do=pop op=[] post=ab/cd*ef*-g/+ depth=0
+postfix=ab/cd*ef*-g/+
+max_depth=4
+status=ok

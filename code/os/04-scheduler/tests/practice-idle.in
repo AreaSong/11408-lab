@@ -1,0 +1,4 @@
+run fcfs
+P1 0 2
+P2 5 3
+end

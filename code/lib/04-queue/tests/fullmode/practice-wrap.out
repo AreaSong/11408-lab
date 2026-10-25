@@ -1,0 +1,36 @@
+init cap=4
+sacrifice max=3 empty=front==rear full=(rear+1)%4==front
+size max=4 empty=count==0 full=count==4
+tag max=4 empty=front==rear&&tag==0 full=front==rear&&tag==1
+enq e=1
+sacrifice front=0->0 rear=0->1 count=1 full=0
+size front=0->0 rear=0->1 count=1 full=0
+tag front=0->0 rear=0->1 tag=0->1 count=1 full=0 raw=1
+enq e=2
+sacrifice front=0->0 rear=1->2 count=2 full=0
+size front=0->0 rear=1->2 count=2 full=0
+tag front=0->0 rear=1->2 tag=1->1 count=2 full=0 raw=2
+deq
+sacrifice e=1 front=0->1 rear=2->2 count=1 full=0
+size e=1 front=0->1 rear=2->2 count=1 full=0
+tag e=1 front=0->1 rear=2->2 tag=1->0 count=1 full=0 raw=1
+enq e=3
+sacrifice front=1->1 rear=2->3 count=2 full=0
+size front=1->1 rear=2->3 count=2 full=0
+tag front=1->1 rear=2->3 tag=0->1 count=2 full=0 raw=2
+enq e=4
+sacrifice front=1->1 rear=3->0 count=3 full=1
+size front=1->1 rear=3->0 count=3 full=0
+tag front=1->1 rear=3->0 tag=1->1 count=3 full=0 raw=3
+state
+sacrifice front=1 rear=0 count=3 full=1 empty=0 cells=[_ 2 3 4]
+size front=1 rear=0 count=3 full=0 empty=0 cells=[_ 2 3 4]
+tag front=1 rear=0 tag=1 count=3 full=0 empty=0 raw=3 cells=[_ 2 3 4]
+enq e=5
+sacrifice fail full front=1 rear=0
+size front=1->1 rear=0->1 count=4 full=1
+tag front=1->1 rear=0->1 tag=1->1 count=4 full=1 raw=0
+state
+sacrifice front=1 rear=0 count=3 full=1 empty=0 cells=[_ 2 3 4]
+size front=1 rear=1 count=4 full=1 empty=0 cells=[5 2 3 4]
+tag front=1 rear=1 tag=1 count=4 full=1 empty=0 raw=0 cells=[5 2 3 4]

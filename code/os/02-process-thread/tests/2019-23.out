@@ -1,0 +1,4 @@
+klt-os-schedule true
+ult-each-tcb false
+ult-switch-faster true
+ult-without-klt true

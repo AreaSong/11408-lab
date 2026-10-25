@@ -1,0 +1,15 @@
+circle
+empty
+head 1
+head 2
+tail 3
+insert 2 8
+delete 4
+find 1
+find 9
+get 2
+delete 1
+delete 1
+delete 1
+empty
+delete 1

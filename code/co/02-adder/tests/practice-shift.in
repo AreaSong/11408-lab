@@ -1,0 +1,4 @@
+shift logic r 8 0b11011000 1
+shift arith r 8 0b11011000 1
+shift arith l 8 64 1
+shift logic l 8 64 1

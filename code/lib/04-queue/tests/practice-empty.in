@@ -1,0 +1,8 @@
+deq
+head
+tail
+empty
+size
+enq 1
+deq
+deq

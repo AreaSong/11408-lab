@@ -1,0 +1,48 @@
+algo=hrrn q=0 switch=0 order=none
+trace
+ready 0 ratio P1=1/1 P2=1/1 -> P1
+ready 10 ratio P2=6/1 -> P2
+gantt
+0-10 P1
+10-12 P2
+table
+name arrive service prio start finish turn weight wait response
+P1 0 10 0 0 10 10 1/1 0 0
+P2 0 2 0 10 12 12 6/1 10 10
+avg turn=11/1 weight=7/2 wait=5/1
+algo=sjf q=0 switch=0 order=none
+trace
+ready 0 service P1=10 P2=2 -> P2
+ready 2 service P1=10 -> P1
+gantt
+0-2 P2
+2-12 P1
+table
+name arrive service prio start finish turn weight wait response
+P1 0 10 0 2 12 12 6/5 2 2
+P2 0 2 0 0 2 2 1/1 0 0
+avg turn=7/1 weight=11/10 wait=1/1
+algo=srtn q=0 switch=0 order=none
+trace
+ready 0 remain P1=4 -> P1
+ready 4 remain P2=2 -> P2
+gantt
+0-4 P1
+4-6 P2
+table
+name arrive service prio start finish turn weight wait response
+P1 0 4 0 0 4 4 1/1 0 0
+P2 2 2 0 4 6 4 2/1 2 2
+avg turn=4/1 weight=3/2 wait=1/1
+algo=prio-p q=0 switch=0 order=large
+trace
+ready 0 prio P1=5 -> P1
+ready 4 prio P2=5 -> P2
+gantt
+0-4 P1
+4-5 P2
+table
+name arrive service prio start finish turn weight wait response
+P1 0 4 5 0 4 4 1/1 0 0
+P2 1 1 5 4 5 4 4/1 3 3
+avg turn=4/1 weight=5/2 wait=3/2

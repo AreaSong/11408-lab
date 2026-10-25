@@ -1,0 +1,5 @@
+parent=1 child=2 isolated=yes
+exit=7 replaced=yes
+mode=nolf count=8
+mode=line count=6
+mode=flush count=6

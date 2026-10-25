@@ -1,0 +1,4 @@
+event p-wait
+event mem-fail
+event start-io
+event preempt

@@ -1,0 +1,4 @@
+claim os-on-vm
+claim many-vm
+claim vmm-same-privilege
+claim multi-isa

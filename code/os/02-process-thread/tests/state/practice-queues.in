@@ -1,0 +1,11 @@
+create A
+create B
+create C
+dispatch A
+block A io
+dispatch B
+block B io
+dispatch C
+block C disk
+wakeup A
+revoke B

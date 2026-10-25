@@ -1,0 +1,4 @@
+claim fcfs-short-nostarve
+claim hrrn-short-nostarve
+claim rr-short-nostarve
+claim sjf-short-nostarve

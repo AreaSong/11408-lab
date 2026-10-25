@@ -1,0 +1,50 @@
+new index=1 data=1
+pred pos=0 index=0
+link node[1].next=-1
+link node[0].next=1
+ok insert i=1 e=1 length=1 spare=2 [1]
+new index=2 data=2
+pred pos=1 index=1
+link node[2].next=-1
+link node[1].next=2
+ok insert i=2 e=2 length=2 spare=3 [1 2]
+new index=3 data=3
+pred pos=2 index=2
+link node[3].next=-1
+link node[2].next=3
+ok insert i=3 e=3 length=3 spare=4 [1 2 3]
+new index=4 data=4
+pred pos=3 index=3
+link node[4].next=-1
+link node[3].next=4
+ok insert i=4 e=4 length=4 spare=5 [1 2 3 4]
+new index=5 data=5
+pred pos=4 index=4
+link node[5].next=-1
+link node[4].next=5
+ok insert i=5 e=5 length=5 spare=6 [1 2 3 4 5]
+new index=6 data=6
+pred pos=5 index=5
+link node[6].next=-1
+link node[5].next=6
+ok insert i=6 e=6 length=6 spare=7 [1 2 3 4 5 6]
+new index=7 data=7
+pred pos=6 index=6
+link node[7].next=-1
+link node[6].next=7
+ok insert i=7 e=7 length=7 spare=-1 [1 2 3 4 5 6 7]
+fail insert full i=8 e=8
+fail insert full i=1 e=100
+pred pos=0 index=0
+unlink index=1 e=1
+recycle index=1 spare=1
+ok delete i=1 e=1 length=6 spare=1 [2 3 4 5 6 7]
+new index=1 data=100
+pred pos=0 index=0
+link node[1].next=2
+link node[0].next=1
+ok insert i=1 e=100 length=7 spare=-1 [100 2 3 4 5 6 7]
+walk pos=1 index=1 data=100
+ok get i=1 value=100
+fail insert i=0 e=1
+fail delete i=9

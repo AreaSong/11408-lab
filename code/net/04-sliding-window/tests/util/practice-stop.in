@@ -1,0 +1,3 @@
+rate stop window 1 frame 1000 bit bw 10 kbps prop 200 ms ack 0 B
+need gbn frame 1000 bit bw 10 kbps prop 200 ms ack 0 B util 100
+limit stop bits 1

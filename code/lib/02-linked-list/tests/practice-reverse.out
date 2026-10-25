@@ -1,0 +1,22 @@
+skip empty
+ok reverse length=0 []
+new data=7
+link s->next=NULL
+link tail->next=7
+ok tail e=7 length=1 [7]
+new tail=7
+ok reverse length=1 [7]
+new data=8
+link s->next=NULL
+link tail->next=8
+ok tail e=8 length=2 [7 8]
+new data=9
+link s->next=NULL
+link tail->next=9
+ok tail e=9 length=3 [7 8 9]
+new tail=7
+pick 8
+pick 9
+ok reverse length=3 [9 8 7]
+fail insert i=0 e=1
+fail delete i=5

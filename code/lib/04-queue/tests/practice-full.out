@@ -1,0 +1,22 @@
+init front=0 rear=0 cap=8 max=7 empty_when=front==rear full_when=(rear+1)%8==front cells=[_ _ _ _ _ _ _ _]
+enq e=1 front=0 rear=0->1 count=1 full=0 cells=[1 _ _ _ _ _ _ _]
+ok enq e=1 count=1 formula=(1-0+8)%8=1
+enq e=2 front=0 rear=1->2 count=2 full=0 cells=[1 2 _ _ _ _ _ _]
+ok enq e=2 count=2 formula=(2-0+8)%8=2
+enq e=3 front=0 rear=2->3 count=3 full=0 cells=[1 2 3 _ _ _ _ _]
+ok enq e=3 count=3 formula=(3-0+8)%8=3
+enq e=4 front=0 rear=3->4 count=4 full=0 cells=[1 2 3 4 _ _ _ _]
+ok enq e=4 count=4 formula=(4-0+8)%8=4
+enq e=5 front=0 rear=4->5 count=5 full=0 cells=[1 2 3 4 5 _ _ _]
+ok enq e=5 count=5 formula=(5-0+8)%8=5
+enq e=6 front=0 rear=5->6 count=6 full=0 cells=[1 2 3 4 5 6 _ _]
+ok enq e=6 count=6 formula=(6-0+8)%8=6
+enq e=7 front=0 rear=6->7 count=7 full=1 cells=[1 2 3 4 5 6 7 _]
+ok enq e=7 count=7 formula=(7-0+8)%8=7
+fail enq full e=8 front=0 rear=7 cond=(rear+1)%8==front
+deq e=1 front=0->1 rear=7 count=6 full=0 cells=[_ 2 3 4 5 6 7 _]
+ok deq e=1 count=6 formula=(7-1+8)%8=6
+enq e=9 front=1 rear=7->0 count=7 full=1 cells=[_ 2 3 4 5 6 7 9]
+ok enq e=9 count=7 formula=(0-1+8)%8=7
+ok tail e=9 index=7 rear=0
+state front=1 rear=0 count=7 full=1 empty=0 formula=(0-1+8)%8=7 cells=[_ 2 3 4 5 6 7 9]

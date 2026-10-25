@@ -1,0 +1,10 @@
+enq 7
+deq
+enq 8
+enq 9
+deq
+deq
+enq 10
+size
+deq
+deq

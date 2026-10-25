@@ -1,0 +1,5 @@
+parity even 1011001
+parity odd 1011001
+parity check even 10110010
+parity check even 11110010
+parity check even 11100010

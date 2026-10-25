@@ -1,0 +1,13 @@
+init top1=-1 top2=8 max=8 full_when=top1+1==top2 cells=[_ _ _ _ _ _ _ _]
+ok empty stack=1 empty=1 top1=-1 cond=top1==-1
+ok empty stack=2 empty=1 top2=8 cond=top2==8
+fail pop empty stack=1 top1=-1 top2=8
+fail pop empty stack=2 top1=-1 top2=8
+push stack=2 e=4 top1=-1->-1 top2=8->7 full=0 cells=[_ _ _ _ _ _ _ 4]
+ok push stack=2 e=4 size1=0 size2=1
+push stack=2 e=3 top1=-1->-1 top2=7->6 full=0 cells=[_ _ _ _ _ _ 3 4]
+ok push stack=2 e=3 size1=0 size2=2
+ok top stack=2 e=3 top2=6
+fail top empty stack=1
+state top1=-1 top2=6 full=0 size1=0 size2=2 cells=[_ _ _ _ _ _ 3 4]
+fail stack=3

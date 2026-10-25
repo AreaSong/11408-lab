@@ -1,0 +1,5 @@
+verify lower 4
+verify band 5
+verify tri-lower 3
+verify upper-row 12
+verify upper-col 4

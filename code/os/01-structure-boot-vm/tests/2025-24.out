@@ -1,0 +1,4 @@
+os-on-vm true
+many-vm true
+vmm-same-privilege false
+multi-isa true

@@ -1,0 +1,4 @@
+alu sub 8 134u 246u
+alu add 8 134u 246u
+read s 8 86H
+read s 8 90H

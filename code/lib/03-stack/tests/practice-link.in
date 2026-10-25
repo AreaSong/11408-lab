@@ -1,0 +1,11 @@
+link
+empty
+push 1
+push 2
+pop
+push 3
+top
+size
+pop
+pop
+pop

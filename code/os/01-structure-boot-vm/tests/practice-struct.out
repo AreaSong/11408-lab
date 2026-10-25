@@ -1,0 +1,7 @@
+layered calls=adjacent skip=no debug=easy efficiency=low
+modular calls=any skip=yes debug=hard load=dynamic
+monolithic place=kernel calls=direct performance=high crash=whole
+micro place=user ipc=message performance=low crash=service
+exo resource=raw abstract=libos mapping=less consistency=low
+hybrid example=xnu micro=mach place=mixed
+linux kind=monolithic module=in-kernel ipc=call

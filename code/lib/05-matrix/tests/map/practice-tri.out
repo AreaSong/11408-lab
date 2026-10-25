@@ -1,0 +1,7 @@
+k tri-lower n=4 i=3 j=2 si=3 sj=2 swap=0 const=0 prefix=3 inner=1 index=4
+k tri-lower n=4 i=1 j=3 si=1 sj=3 swap=0 const=1 prefix=10 inner=0 index=10
+k tri-upper n=4 i=2 j=4 si=2 sj=4 swap=0 const=0 prefix=4 inner=2 index=6
+k tri-upper n=4 i=3 j=1 si=3 sj=1 swap=0 const=1 prefix=10 inner=0 index=10
+k lower n=4 i=1 j=3 si=3 sj=1 swap=1 const=0 prefix=3 inner=0 index=3
+k band n=5 i=1 j=1 si=1 sj=1 swap=0 const=0 prefix=-1 inner=1 index=0
+fail k band n=5 i=1 j=3

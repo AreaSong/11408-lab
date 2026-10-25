@@ -1,0 +1,5 @@
+align 1000 le
+char a
+int b=1
+char c
+end

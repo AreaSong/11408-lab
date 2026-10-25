@@ -1,0 +1,8 @@
+shared-user-sync true
+message-boundary true
+pipe-boundary false
+signal-bulk false
+sigkill-catch false
+sigstop-catch false
+sigterm-catch true
+mmap-ipc true

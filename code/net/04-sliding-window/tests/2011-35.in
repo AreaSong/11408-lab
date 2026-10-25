@@ -1,0 +1,4 @@
+proto sr bits 3
+send
+ack 1
+timeout 0 2

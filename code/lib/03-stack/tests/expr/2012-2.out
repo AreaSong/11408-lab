@@ -1,0 +1,30 @@
+case post expr=a+b-a*((c+d)/e-f)+g
+scan=a do=out op=[] post=a depth=0
+scan=+ do=push op=[+] post=a depth=1
+scan=b do=out op=[+] post=ab depth=1
+scan=- do=pop op=[] post=ab+ depth=0
+scan=- do=push op=[-] post=ab+ depth=1
+scan=a do=out op=[-] post=ab+a depth=1
+scan=* do=push op=[- *] post=ab+a depth=2
+scan=( do=push op=[- * (] post=ab+a depth=3
+scan=( do=push op=[- * ( (] post=ab+a depth=4
+scan=c do=out op=[- * ( (] post=ab+ac depth=4
+scan=+ do=push op=[- * ( ( +] post=ab+ac depth=5
+scan=d do=out op=[- * ( ( +] post=ab+acd depth=5
+scan=) do=pop op=[- * ( (] post=ab+acd+ depth=4
+scan=) do=drop op=[- * (] post=ab+acd+ depth=3
+scan=/ do=push op=[- * ( /] post=ab+acd+ depth=4
+scan=e do=out op=[- * ( /] post=ab+acd+e depth=4
+scan=- do=pop op=[- * (] post=ab+acd+e/ depth=3
+scan=- do=push op=[- * ( -] post=ab+acd+e/ depth=4
+scan=f do=out op=[- * ( -] post=ab+acd+e/f depth=4
+scan=) do=pop op=[- * (] post=ab+acd+e/f- depth=3
+scan=) do=drop op=[- *] post=ab+acd+e/f- depth=2
+scan=+ do=pop op=[-] post=ab+acd+e/f-* depth=1
+scan=+ do=pop op=[] post=ab+acd+e/f-*- depth=0
+scan=+ do=push op=[+] post=ab+acd+e/f-*- depth=1
+scan=g do=out op=[+] post=ab+acd+e/f-*-g depth=1
+scan=end do=pop op=[] post=ab+acd+e/f-*-g+ depth=0
+postfix=ab+acd+e/f-*-g+
+max_depth=5
+status=ok

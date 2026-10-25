@@ -1,0 +1,5 @@
+alu add 8 1u FFH
+alu sub 8 5 5
+alu add 8 64 64
+alu and 8 F0H 3CH
+alu or 8 F0H 0FH

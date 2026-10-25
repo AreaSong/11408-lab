@@ -1,0 +1,4 @@
+claim kill-children
+claim free-device
+claim free-pcb
+claim free-memory

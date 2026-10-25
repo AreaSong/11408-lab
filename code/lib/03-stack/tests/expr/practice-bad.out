@@ -1,0 +1,23 @@
+case post expr=(a+b
+scan=( do=push op=[(] post= depth=1
+scan=a do=out op=[(] post=a depth=1
+scan=+ do=push op=[( +] post=a depth=2
+scan=b do=out op=[( +] post=ab depth=2
+scan=end do=pop op=[(] post=ab+ depth=1
+status=bad reason=unclosed
+case post expr=a+b)
+scan=a do=out op=[] post=a depth=0
+scan=+ do=push op=[+] post=a depth=1
+scan=b do=out op=[+] post=ab depth=1
+scan=) do=pop op=[] post=ab+ depth=0
+status=bad reason=mismatch
+case eval expr=a+1
+scan=a do=out op=[] post=a depth=0
+scan=+ do=push op=[+] post=a depth=1
+scan=1 do=out op=[+] post=a1 depth=1
+scan=end do=pop op=[] post=a1+ depth=0
+postfix=a1+
+max_depth=1
+status=bad reason=need-digit
+case post expr=+a
+status=bad reason=syntax

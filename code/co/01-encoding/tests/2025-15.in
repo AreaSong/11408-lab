@@ -1,0 +1,5 @@
+align 0000A0B0 le index 1 find 56
+int id=12345678H
+char name[10]
+int salary
+end

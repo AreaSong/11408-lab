@@ -1,0 +1,6 @@
+card
+level low
+metric ratio
+algo hrrn
+rule rr-join
+claim hrrn-both

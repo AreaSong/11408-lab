@@ -1,0 +1,4 @@
+code int 32 127
+code int 16 -9
+retype signed signed 16 32 -9
+sum 32 0000007FH FFFFFFF7H

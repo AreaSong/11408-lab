@@ -1,0 +1,15 @@
+enq 1
+enq 2
+enq 3
+enq 4
+enq 5
+enq 6
+deq
+deq
+deq
+enq 7
+enq 8
+enq 9
+size
+tail
+state

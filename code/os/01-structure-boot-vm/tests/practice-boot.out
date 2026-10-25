@@ -1,0 +1,7 @@
+1 who=firmware from=rom to=cpu what=post
+2 who=firmware from=disk:0 to=mem:0x7c00 what=read-mbr
+3 who=disk-boot from=mbr:table to=- what=find-active
+4 who=disk-boot from=disk:pbr to=mem:0x7c00 what=read-pbr
+5 who=part-boot from=partition to=mem:kernel what=load-kernel
+6 who=os-init from=kernel to=- what=init
+7 who=os-init from=kernel to=user:init what=first-process

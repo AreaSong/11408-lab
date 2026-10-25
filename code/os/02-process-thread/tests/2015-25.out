@@ -1,0 +1,4 @@
+p-wait from=running to=blocked class=block wakeup=no block=yes
+mem-fail from=running to=blocked class=block wakeup=no block=yes
+start-io from=running to=blocked class=block wakeup=no block=yes
+preempt from=running to=ready class=preempt wakeup=no block=no

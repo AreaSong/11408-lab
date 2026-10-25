@@ -1,0 +1,4 @@
+keyboard from=running to=blocked class=block wakeup=no block=yes
+page-fault from=running to=blocked class=block wakeup=no block=yes
+yield from=running to=ready class=yield wakeup=no block=no
+sem-wait from=running to=blocked class=block wakeup=no block=yes

@@ -1,0 +1,6 @@
+direct target=pid mailbox=no
+mailbox target=box mailbox=yes
+anon kin=yes named=no
+fifo kin=no named=yes
+region bulk=yes level=high
+struct bulk=no level=low

@@ -1,0 +1,8 @@
+reverse
+tail 7
+reverse
+tail 8
+tail 9
+reverse
+insert 0 1
+delete 5

@@ -1,0 +1,3 @@
+send 101001 gen x^3 + x^2 + 1
+check 101001001 gen 1101
+check 101001101 gen 1101

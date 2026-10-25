@@ -1,0 +1,10 @@
+create A
+create B
+dispatch A
+preempt A
+dispatch B
+block B disk
+wakeup B
+dispatch A
+revoke B
+exit A

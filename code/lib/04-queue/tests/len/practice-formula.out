@@ -1,0 +1,13 @@
+case slot cap=8 front=0 rear=3
+count=(3-0+8)%8=3 empty=0 full=0
+case slot cap=8 front=6 rear=2
+count=(2-6+8)%8=4 empty=0 full=0
+case slot cap=10 front=4 rear=1
+count=(1-4+10)%10=7 empty=0 full=0
+case slot cap=8 front=5 rear=5
+count=(5-5+8)%8=0 empty=1 full=0
+case slot cap=8 front=0 rear=7
+count=(7-0+8)%8=7 empty=0 full=1
+case slot cap=8 front=2 rear=1
+count=(1-2+8)%8=7 empty=0 full=1
+fail cap=1 front=0 rear=0

@@ -1,0 +1,10 @@
+proto stop bits 1
+send
+arrive 0
+ack 0
+send
+drop 1
+timeout
+arrive 1
+ack 1
+show

@@ -1,0 +1,11 @@
+ndouble
+empty
+insert 1 10
+insert 2 30
+insert 2 20
+delete 3
+get 1
+find 10
+delete 1
+delete 1
+empty

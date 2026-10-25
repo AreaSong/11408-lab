@@ -1,0 +1,8 @@
+claim shared-user-sync
+claim message-boundary
+claim pipe-boundary
+claim signal-bulk
+claim sigkill-catch
+claim sigstop-catch
+claim sigterm-catch
+claim mmap-ipc

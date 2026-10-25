@@ -1,0 +1,4 @@
+ivt when=os-init
+root when=logical-format
+partition-table when=partition
+inode-table when=logical-format

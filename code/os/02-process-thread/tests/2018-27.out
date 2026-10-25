@@ -1,0 +1,3 @@
+critical from=running to=blocked class=block wakeup=no block=yes
+disk-read from=running to=blocked class=block wakeup=no block=yes
+give-cpu from=running to=ready class=preempt wakeup=no block=no

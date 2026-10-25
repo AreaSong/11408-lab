@@ -1,0 +1,48 @@
+case eval expr=3*(5-2)+8/4
+scan=3 do=out op=[] post=3 depth=0
+scan=* do=push op=[*] post=3 depth=1
+scan=( do=push op=[* (] post=3 depth=2
+scan=5 do=out op=[* (] post=35 depth=2
+scan=- do=push op=[* ( -] post=35 depth=3
+scan=2 do=out op=[* ( -] post=352 depth=3
+scan=) do=pop op=[* (] post=352- depth=2
+scan=) do=drop op=[*] post=352- depth=1
+scan=+ do=pop op=[] post=352-* depth=0
+scan=+ do=push op=[+] post=352-* depth=1
+scan=8 do=out op=[+] post=352-*8 depth=1
+scan=/ do=push op=[+ /] post=352-*8 depth=2
+scan=4 do=out op=[+ /] post=352-*84 depth=2
+scan=end do=pop op=[+] post=352-*84/ depth=1
+scan=end do=pop op=[] post=352-*84/+ depth=0
+postfix=352-*84/+
+max_depth=3
+eval
+scan=3 do=push val=[3] depth=1
+scan=5 do=push val=[3 5] depth=2
+scan=2 do=push val=[3 5 2] depth=3
+scan=- do=op 5-2=3 val=[3 3] depth=2
+scan=* do=op 3*3=9 val=[9] depth=1
+scan=8 do=push val=[9 8] depth=2
+scan=4 do=push val=[9 8 4] depth=3
+scan=/ do=op 8/4=2 val=[9 2] depth=2
+scan=+ do=op 9+2=11 val=[11] depth=1
+value=11
+status=ok
+case eval expr=1-2*3
+scan=1 do=out op=[] post=1 depth=0
+scan=- do=push op=[-] post=1 depth=1
+scan=2 do=out op=[-] post=12 depth=1
+scan=* do=push op=[- *] post=12 depth=2
+scan=3 do=out op=[- *] post=123 depth=2
+scan=end do=pop op=[-] post=123* depth=1
+scan=end do=pop op=[] post=123*- depth=0
+postfix=123*-
+max_depth=2
+eval
+scan=1 do=push val=[1] depth=1
+scan=2 do=push val=[1 2] depth=2
+scan=3 do=push val=[1 2 3] depth=3
+scan=* do=op 2*3=6 val=[1 6] depth=2
+scan=- do=op 1-6=-5 val=[-5] depth=1
+value=-5
+status=ok

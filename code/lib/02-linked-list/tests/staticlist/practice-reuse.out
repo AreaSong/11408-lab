@@ -1,0 +1,45 @@
+new index=1 data=10
+pred pos=0 index=0
+link node[1].next=-1
+link node[0].next=1
+ok insert i=1 e=10 length=1 spare=2 [10]
+new index=2 data=20
+pred pos=1 index=1
+link node[2].next=-1
+link node[1].next=2
+ok insert i=2 e=20 length=2 spare=3 [10 20]
+new index=3 data=30
+pred pos=2 index=2
+link node[3].next=-1
+link node[2].next=3
+ok insert i=3 e=30 length=3 spare=4 [10 20 30]
+pred pos=1 index=1
+unlink index=2 e=20
+recycle index=2 spare=2
+ok delete i=2 e=20 length=2 spare=2 [10 30]
+spare=2 length=2
+[0] head next=1
+[1] data=10 next=3
+[2] data=20 next=4 free
+[3] data=30 next=-1
+[4] data=0 next=5 free
+[5] data=0 next=6 free
+[6] data=0 next=7 free
+[7] data=0 next=-1 free
+new index=2 data=99
+pred pos=1 index=1
+link node[2].next=3
+link node[1].next=2
+ok insert i=2 e=99 length=3 spare=4 [10 99 30]
+scan pos=1 index=1 data=10
+scan pos=2 index=2 data=99
+ok find e=99 pos=2
+scan pos=1 index=1 data=10
+scan pos=2 index=2 data=99
+scan pos=3 index=3 data=30
+scan miss
+ok find e=20 pos=0
+walk pos=1 index=1 data=10
+walk pos=2 index=2 data=99
+walk pos=3 index=3 data=30
+ok get i=3 value=30

@@ -1,0 +1,5 @@
+claim pipe-bidir
+claim pipe-disk
+claim pipe-rw-block
+claim pipe-one-end
+mode pipe

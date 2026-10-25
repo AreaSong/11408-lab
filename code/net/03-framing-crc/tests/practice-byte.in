@@ -1,0 +1,2 @@
+byte send 7E 21 7D 01 41
+byte recv 7E 7D 5E 21 7D 5D 7D 21 41 7E

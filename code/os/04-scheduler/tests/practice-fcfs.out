@@ -1,0 +1,18 @@
+algo=fcfs q=0 switch=0 order=none
+trace
+ready 0 queue P1 -> P1
+ready 7 queue P2 P3 P4 -> P2
+ready 11 queue P3 P4 -> P3
+ready 12 queue P4 -> P4
+gantt
+0-7 P1
+7-11 P2
+11-12 P3
+12-16 P4
+table
+name arrive service prio start finish turn weight wait response
+P1 0 7 0 0 7 7 1/1 0 0
+P2 2 4 0 7 11 9 9/4 5 5
+P3 4 1 0 11 12 8 8/1 7 7
+P4 5 4 0 12 16 11 11/4 7 7
+avg turn=35/4 weight=7/2 wait=19/4

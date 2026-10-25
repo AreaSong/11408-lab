@@ -1,0 +1,15 @@
+case init n=6
+front=0 rear=5 empty=1
+enq e=1 rear=5->0 index=0 front=0 empty=0 count=1
+case init n=8
+front=0 rear=7 empty=1
+enq e=1 rear=7->0 index=0 front=0 empty=0 count=1
+case elem cap=6 front=0 rear=5
+empty=1 count=0 full=0
+case elem cap=6 front=0 rear=0
+empty=0 count=(0-0+6)%6+1=1 full=0
+case elem cap=5 front=0 rear=3
+empty=0 count=(3-0+5)%5+1=4 full=1
+case elem cap=8 front=3 rear=1
+empty=0 count=(1-3+8)%8+1=7 full=1
+fail n=1

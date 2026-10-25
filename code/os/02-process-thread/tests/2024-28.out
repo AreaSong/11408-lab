@@ -1,0 +1,3 @@
+address-space shared=yes
+stack shared=no
+fd shared=yes

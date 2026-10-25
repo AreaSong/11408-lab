@@ -1,0 +1,10 @@
+head 1
+head 2
+tail 3
+insert 2 9
+delete 1
+find 9
+find 8
+get 2
+get 9
+reverse

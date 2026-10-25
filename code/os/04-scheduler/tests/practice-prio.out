@@ -1,0 +1,38 @@
+algo=prio-np q=0 switch=0 order=large
+trace
+ready 0 prio P1=1 -> P1
+ready 6 prio P2=5 -> P2
+gantt
+0-6 P1
+6-8 P2
+table
+name arrive service prio start finish turn weight wait response
+P1 0 6 1 0 6 6 1/1 0 0
+P2 2 2 5 6 8 6 3/1 4 4
+avg turn=6/1 weight=2/1 wait=2/1
+algo=prio-p q=0 switch=0 order=large
+trace
+ready 0 prio P1=1 -> P1
+ready 2 prio P1=1 P2=5 -> P2
+ready 4 prio P1=1 -> P1
+gantt
+0-2 P1
+2-4 P2
+4-8 P1
+table
+name arrive service prio start finish turn weight wait response
+P1 0 6 1 0 8 8 4/3 2 0
+P2 2 2 5 2 4 2 1/1 0 0
+avg turn=5/1 weight=7/6 wait=1/1
+algo=prio-p q=0 switch=0 order=small
+trace
+ready 0 prio P1=1 -> P1
+ready 4 prio P2=3 -> P2
+gantt
+0-4 P1
+4-6 P2
+table
+name arrive service prio start finish turn weight wait response
+P1 0 4 1 0 4 4 1/1 0 0
+P2 1 2 3 4 6 5 5/2 3 3
+avg turn=9/2 weight=7/4 wait=3/2

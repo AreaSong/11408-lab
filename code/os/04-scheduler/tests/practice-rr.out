@@ -1,0 +1,55 @@
+algo=rr q=2 switch=0 order=none
+trace
+ready 0 queue P1 -> P1
+ready 2 queue P2 P1 -> P2
+ready 4 queue P1 P3 P2 -> P1
+ready 6 queue P3 P2 P4 P1 -> P3
+ready 7 queue P2 P4 P1 -> P2
+ready 9 queue P4 P1 -> P4
+ready 11 queue P1 P4 -> P1
+ready 13 queue P4 P1 -> P4
+ready 15 queue P1 -> P1
+gantt
+0-2 P1
+2-4 P2
+4-6 P1
+6-7 P3
+7-9 P2
+9-11 P4
+11-13 P1
+13-15 P4
+15-16 P1
+table
+name arrive service prio start finish turn weight wait response
+P1 0 7 0 0 16 16 16/7 9 0
+P2 2 4 0 2 9 7 7/4 3 0
+P3 4 1 0 6 7 3 3/1 2 2
+P4 5 4 0 9 15 10 5/2 6 4
+avg turn=9/1 weight=267/112 wait=5/1
+algo=rr q=2 switch=0 order=none
+trace
+ready 0 queue P1 -> P1
+ready 2 queue P2 P1 -> P2
+ready 4 queue P1 P3 P2 -> P1
+ready 6 queue P3 P2 P4 P1 -> P3
+ready 7 queue P2 P4 P1 -> P2
+ready 9 queue P4 P1 -> P4
+ready 11 queue P1 P4 -> P1
+ready 12 queue P4 -> P4
+keep 14 P4
+gantt
+0-2 P1
+2-4 P2
+4-6 P1
+6-7 P3
+7-9 P2
+9-11 P4
+11-12 P1
+12-16 P4
+table
+name arrive service prio start finish turn weight wait response
+P1 0 5 0 0 12 12 12/5 7 0
+P2 2 4 0 2 9 7 7/4 3 0
+P3 4 1 0 6 7 3 3/1 2 2
+P4 5 6 0 9 16 11 11/6 5 4
+avg turn=33/4 weight=539/240 wait=17/4

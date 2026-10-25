@@ -1,0 +1,15 @@
+proto gbn bits 4 window 8
+send 8
+arrive 0
+ack 0
+arrive 1
+loseack 1
+arrive 2
+ack 2
+arrive 3
+ack 3
+arrive 4
+arrive 5
+arrive 6
+arrive 7
+timeout

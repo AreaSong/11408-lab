@@ -1,0 +1,19 @@
+algo=prio-p q=0 switch=0 order=large
+trace
+ready 0 prio P1=1 -> P1
+ready 20 prio P1=1 P2=10 -> P2
+ready 30 prio P1=1 P2=10 P3=100 -> P3
+ready 43 prio P1=1 P2=10 -> P2
+ready 75 prio P1=1 -> P1
+gantt
+0-20 P1
+20-30 P2
+30-43 P3
+43-75 P2
+75-115 P1
+table
+name arrive service prio start finish turn weight wait response
+P1 0 60 1 0 115 115 23/12 55 0
+P2 20 42 10 20 75 55 55/42 13 0
+P3 30 13 100 30 43 13 1/1 0 0
+avg turn=61/1 weight=355/252 wait=68/3

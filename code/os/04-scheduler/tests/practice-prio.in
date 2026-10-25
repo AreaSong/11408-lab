@@ -1,0 +1,12 @@
+run prio-np large
+P1 0 6 1
+P2 2 2 5
+end
+run prio-p large
+P1 0 6 1
+P2 2 2 5
+end
+run prio-p small
+P1 0 4 1
+P2 1 2 3
+end

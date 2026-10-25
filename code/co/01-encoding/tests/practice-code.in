@@ -1,0 +1,10 @@
+code int 8 -45
+code int 8 -128
+code int 8 0
+code int 8 -0
+code frac 8 -0.75
+code frac 8 -1
+decode int 8 comp 11010011
+extend orig 8 16 10000011
+range int 8
+range frac 8

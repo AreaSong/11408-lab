@@ -1,0 +1,4 @@
+shared duplex=full kernel=setup sync=user unit=region bulk=yes kin=no medium=memory
+message duplex=full kernel=every sync=os unit=message bulk=yes kin=no medium=memory
+pipe duplex=half kernel=every sync=os unit=byte bulk=yes kin=either medium=memory
+signal duplex=notify kernel=every sync=async unit=number bulk=no kin=no medium=none

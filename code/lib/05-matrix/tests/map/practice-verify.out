@@ -1,0 +1,115 @@
+verify lower n=4
+store i=1 j=1 seq=0 k=0
+store i=2 j=1 seq=1 k=1
+store i=2 j=2 seq=2 k=2
+store i=3 j=1 seq=3 k=3
+store i=3 j=2 seq=4 k=4
+store i=3 j=3 seq=5 k=5
+store i=4 j=1 seq=6 k=6
+store i=4 j=2 seq=7 k=7
+store i=4 j=3 seq=8 k=8
+store i=4 j=4 seq=9 k=9
+check i=1 j=1 absent=0 si=1 sj=1 swap=0 const=0 k=0
+check i=1 j=2 absent=0 si=2 sj=1 swap=1 const=0 k=1
+check i=1 j=3 absent=0 si=3 sj=1 swap=1 const=0 k=3
+check i=1 j=4 absent=0 si=4 sj=1 swap=1 const=0 k=6
+check i=2 j=1 absent=0 si=2 sj=1 swap=0 const=0 k=1
+check i=2 j=2 absent=0 si=2 sj=2 swap=0 const=0 k=2
+check i=2 j=3 absent=0 si=3 sj=2 swap=1 const=0 k=4
+check i=2 j=4 absent=0 si=4 sj=2 swap=1 const=0 k=7
+check i=3 j=1 absent=0 si=3 sj=1 swap=0 const=0 k=3
+check i=3 j=2 absent=0 si=3 sj=2 swap=0 const=0 k=4
+check i=3 j=3 absent=0 si=3 sj=3 swap=0 const=0 k=5
+check i=3 j=4 absent=0 si=4 sj=3 swap=1 const=0 k=8
+check i=4 j=1 absent=0 si=4 sj=1 swap=0 const=0 k=6
+check i=4 j=2 absent=0 si=4 sj=2 swap=0 const=0 k=7
+check i=4 j=3 absent=0 si=4 sj=3 swap=0 const=0 k=8
+check i=4 j=4 absent=0 si=4 sj=4 swap=0 const=0 k=9
+verify ok ordered=10 stored=10 checked=16
+verify band n=5
+store i=1 j=1 seq=0 k=0
+store i=1 j=2 seq=1 k=1
+store i=2 j=1 seq=2 k=2
+store i=2 j=2 seq=3 k=3
+store i=2 j=3 seq=4 k=4
+store i=3 j=2 seq=5 k=5
+store i=3 j=3 seq=6 k=6
+store i=3 j=4 seq=7 k=7
+store i=4 j=3 seq=8 k=8
+store i=4 j=4 seq=9 k=9
+store i=4 j=5 seq=10 k=10
+store i=5 j=4 seq=11 k=11
+store i=5 j=5 seq=12 k=12
+check i=1 j=1 absent=0 si=1 sj=1 swap=0 const=0 k=0
+check i=1 j=2 absent=0 si=1 sj=2 swap=0 const=0 k=1
+check i=1 j=3 absent=1
+check i=1 j=4 absent=1
+check i=1 j=5 absent=1
+check i=2 j=1 absent=0 si=2 sj=1 swap=0 const=0 k=2
+check i=2 j=2 absent=0 si=2 sj=2 swap=0 const=0 k=3
+check i=2 j=3 absent=0 si=2 sj=3 swap=0 const=0 k=4
+check i=2 j=4 absent=1
+check i=2 j=5 absent=1
+check i=3 j=1 absent=1
+check i=3 j=2 absent=0 si=3 sj=2 swap=0 const=0 k=5
+check i=3 j=3 absent=0 si=3 sj=3 swap=0 const=0 k=6
+check i=3 j=4 absent=0 si=3 sj=4 swap=0 const=0 k=7
+check i=3 j=5 absent=1
+check i=4 j=1 absent=1
+check i=4 j=2 absent=1
+check i=4 j=3 absent=0 si=4 sj=3 swap=0 const=0 k=8
+check i=4 j=4 absent=0 si=4 sj=4 swap=0 const=0 k=9
+check i=4 j=5 absent=0 si=4 sj=5 swap=0 const=0 k=10
+check i=5 j=1 absent=1
+check i=5 j=2 absent=1
+check i=5 j=3 absent=1
+check i=5 j=4 absent=0 si=5 sj=4 swap=0 const=0 k=11
+check i=5 j=5 absent=0 si=5 sj=5 swap=0 const=0 k=12
+verify ok ordered=13 stored=13 checked=25
+verify tri-lower n=3
+store i=1 j=1 seq=0 k=0
+store i=2 j=1 seq=1 k=1
+store i=2 j=2 seq=2 k=2
+store i=3 j=1 seq=3 k=3
+store i=3 j=2 seq=4 k=4
+store i=3 j=3 seq=5 k=5
+check i=1 j=1 absent=0 si=1 sj=1 swap=0 const=0 k=0
+check i=1 j=2 absent=0 si=1 sj=2 swap=0 const=1 k=6
+check i=1 j=3 absent=0 si=1 sj=3 swap=0 const=1 k=6
+check i=2 j=1 absent=0 si=2 sj=1 swap=0 const=0 k=1
+check i=2 j=2 absent=0 si=2 sj=2 swap=0 const=0 k=2
+check i=2 j=3 absent=0 si=2 sj=3 swap=0 const=1 k=6
+check i=3 j=1 absent=0 si=3 sj=1 swap=0 const=0 k=3
+check i=3 j=2 absent=0 si=3 sj=2 swap=0 const=0 k=4
+check i=3 j=3 absent=0 si=3 sj=3 swap=0 const=0 k=5
+verify ok ordered=6 stored=7 checked=9
+verify upper-row n=12
+verify ok ordered=78 stored=78 checked=144
+verify upper-col n=4
+store i=1 j=1 seq=0 k=0
+store i=1 j=2 seq=1 k=1
+store i=2 j=2 seq=2 k=2
+store i=1 j=3 seq=3 k=3
+store i=2 j=3 seq=4 k=4
+store i=3 j=3 seq=5 k=5
+store i=1 j=4 seq=6 k=6
+store i=2 j=4 seq=7 k=7
+store i=3 j=4 seq=8 k=8
+store i=4 j=4 seq=9 k=9
+check i=1 j=1 absent=0 si=1 sj=1 swap=0 const=0 k=0
+check i=1 j=2 absent=0 si=1 sj=2 swap=0 const=0 k=1
+check i=1 j=3 absent=0 si=1 sj=3 swap=0 const=0 k=3
+check i=1 j=4 absent=0 si=1 sj=4 swap=0 const=0 k=6
+check i=2 j=1 absent=0 si=1 sj=2 swap=1 const=0 k=1
+check i=2 j=2 absent=0 si=2 sj=2 swap=0 const=0 k=2
+check i=2 j=3 absent=0 si=2 sj=3 swap=0 const=0 k=4
+check i=2 j=4 absent=0 si=2 sj=4 swap=0 const=0 k=7
+check i=3 j=1 absent=0 si=1 sj=3 swap=1 const=0 k=3
+check i=3 j=2 absent=0 si=2 sj=3 swap=1 const=0 k=4
+check i=3 j=3 absent=0 si=3 sj=3 swap=0 const=0 k=5
+check i=3 j=4 absent=0 si=3 sj=4 swap=0 const=0 k=8
+check i=4 j=1 absent=0 si=1 sj=4 swap=1 const=0 k=6
+check i=4 j=2 absent=0 si=2 sj=4 swap=1 const=0 k=7
+check i=4 j=3 absent=0 si=3 sj=4 swap=1 const=0 k=8
+check i=4 j=4 absent=0 si=4 sj=4 swap=0 const=0 k=9
+verify ok ordered=10 stored=10 checked=16

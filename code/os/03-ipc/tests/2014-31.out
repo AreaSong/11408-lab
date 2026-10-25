@@ -1,0 +1,5 @@
+pipe-bidir false
+pipe-disk false
+pipe-rw-block true
+pipe-one-end false
+pipe duplex=half kernel=every sync=os unit=byte bulk=yes kin=either medium=memory

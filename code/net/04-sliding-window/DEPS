@@ -1,0 +1,4 @@
+# 发送窗口就是循环队列：front 是最早未确认的帧，rear 指向下一空位
+lib/04-queue cycq.h cycq.c
+# 带宽和时间的单位沿用第 00 关，k/M/G 仍是 10 的幂
+net/00-delay qty.h qty.c

@@ -1,0 +1,16 @@
+ops 6
+enq-r 1
+enq-r 2
+enq-f 9
+deq-r
+state
+enq-r 3
+enq-r 4
+enq-r 5
+enq-r 6
+state
+enq-r 7
+enq-f 8
+deq-f
+deq-r
+state
