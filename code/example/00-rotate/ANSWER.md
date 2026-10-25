@@ -1,28 +1,15 @@
-# example/00 · 数组循环左移 · 标准答案
+# example/00 · 数组循环左移 · 答案讲解
 
-> 样板关卡。题目见同目录的 `TASK.md`；本文件是答案讲解，做完再看。
+> 题目见同目录的 `TASK.md`；本文件是答案讲解，做完再看。答案代码在 `answer/` 项目里。
 
 ## 运行目标
 
-本文件夹是一个独立项目：CLion 选 File → Open 打开本文件夹即可。含 `main` 的 `.c` 各自是一个程序，出现在右上角的运行目标下拉框里。
-
-| 下拉框里的运行目标 | 入口文件 | 作用 |
+| 下拉框里的运行目标 | 来自 | 作用 |
 |---|---|---|
-| `example00_answer_rotate_test` | `rotate_test.c` | 用 `test.h` 的宏测 `rotate_left`，全部通过时退出码为 0 |
-| `example00_answer_rotate_io` | `rotate_io.c` | 读 `n p` 和 n 个整数，输出左移结果；直接运行会等你从键盘输入（如 `5 2` 回车 `1 2 3 4 5` 回车） |
+| `rotate_answer` | `answer/main.c` | 读 `n p` 和 n 个整数，输出左移结果；直接运行会等你从键盘输入（如 `5 2` 回车 `1 2 3 4 5` 回车） |
+| `rotate_answer_test` | `answer/test.c` | 用 `test.h` 的宏测 `rotate_left`，全部通过时退出码为 0 |
 
-跑全部测试：CLion 的 CTest 运行配置，或在构建目录里执行 `ctest --output-on-failure`。
-
-## 文件一览
-
-| 文件 | 作用 |
-|---|---|
-| `rotate.h` `rotate.c` | `reverse` 与 `rotate_left`，本关的核心代码 |
-| `rotate_test.c` | 单元测试 |
-| `rotate_io.c` | 输入输出程序，配合 `tests/rotate_io/` 做输出比对 |
-| `deps/lib00-warmup/test.h` | 依赖快照：测试宏来自 lib/00 |
-| `tests/` | 真题数据，由 lab.sh 从关卡目录复制 |
-| `CMakeLists.txt` `cmake/` | 构建配置，由 lab.sh 生成 |
+你的尝试同理：`mine/2026-10-25-first/` 里是 `rotate_first` 和 `rotate_first_test`。
 
 ## 2010-42 三段式
 
@@ -30,7 +17,7 @@
 
 把数组看成两段 AB：A 是前 p 个元素，B 是后 n−p 个元素，循环左移 p 位就是把 AB 变成 BA。先把 A 逆置得到 A⁻¹，再把 B 逆置得到 B⁻¹，最后把整个 A⁻¹B⁻¹ 逆置，得到 (A⁻¹B⁻¹)⁻¹ = BA。
 
-**2. 算法实现**：见 `rotate.c`，`reverse` 用首尾双指针交换，`rotate_left` 调用三次 `reverse`。
+**2. 算法实现**：见 `answer/rotate.c`，`reverse` 用首尾双指针交换，`rotate_left` 调用三次 `reverse`。
 
 **3. 复杂度**
 
