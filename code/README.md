@@ -14,31 +14,47 @@
 
 ## 关卡约定
 
-- **命名**：`序号-主题`，序号即学习顺序，例如 `co/06-cache/`；66 关的目录已全部建好
-- **每个关卡目录包含**：
-  - `mine/`：我的每次尝试，一次一个 `日期-说明` 目录（纯 C11，不用 C++）
-  - `answer/`：标准答案，带注释和讲解
-  - `tests/`：真题数据，`<程序名>/<用例>.in` 与 `.out`
-  - `NOTES.md`：每次尝试学到了什么、踩了什么坑，以及本关的概念卡片
-  - `CMakeLists.txt`：一行配置，一般不用动
+- **命名**：`序号-主题`，序号即学习顺序，例如 `co/06-cache/`；66 关的目录已全部建好；`example/00-rotate/` 是一道完整的样板题
+- **每个关卡目录**（以 `lib/02-linked-list/` 为例）：
+
+  ```
+  02-linked-list/
+  ├── TASK.md          题目：做什么、输入输出格式、真题题面（不含答案）
+  ├── ANSWER.md        答案讲解：思路、三段式、易错点，做完再看
+  ├── NOTES.md         我的复盘和概念卡片
+  ├── DEPS             （可选）本关复用的其他关卡
+  ├── tests/           真题数据 <用例>.in/.out，答案和每次尝试共用
+  ├── CMakeLists.txt   lab.sh 生成，收录下面的各个项目
+  ├── answer/          标准答案（一个完整的 CLion 项目）
+  └── mine/
+      └── 2026-11-01-first/   我的一次尝试（一个完整的 CLion 项目）
+          ├── CMakeLists.txt
+          ├── main.c          只负责输入输出和调用，读之前用 prompt("请输入…") 提示
+          ├── test.c          单元测试
+          ├── src/            本关的核心代码
+          └── deps/           lab.sh 复制进来的 test.h、prompt.h 和依赖关卡的代码，不手改
+  ```
 
 ## 怎么用
 
-1. 用 CLion 打开 `code/` 这个文件夹（CMake 项目）
-2. 新建一次尝试：在 `code/` 下运行 `./lab.sh`，选「新建尝试」，再选科目、关卡、填说明（也可以 `./lab.sh new lib 02 review`）。建出来的文件已经是能编译运行的模板，文件名和答案一致
-3. 在 CLion 里重新加载 CMake，右上角下拉框选程序运行或调试；带 `_answer` 的是标准答案
-4. 跑测试：CLion 的 CTest 运行配置，或 `ctest -L mine`（只跑自己的）、`ctest -L answer`
-5. 写完并通过测试后，用 `./lab.sh done` 标记完成：之后依赖本关的关卡（比如用到栈的二叉树）才会改用你写的代码，没标记就一直用答案
+1. 用 CLion 打开 `code/` 这个文件夹，一个窗口看到全部关卡；也可以只打开某一关、或某一个项目文件夹（都能直接运行和跑测试，项目还能单独拷给别人）
+2. 新建一次尝试：在 `code/` 下运行 `./lab.sh`，选「新建尝试」，再选科目、关卡、填说明（也可以 `./lab.sh new lib 02 review`）。建出来的项目已经能编译运行，文件名和答案一致
+3. 在 CLion 里重新加载 CMake（File → Reload CMake Project），右上角下拉框选程序运行或调试：`linked_list_first` 是我的主程序，`linked_list_first_test` 是单元测试，带 `_answer` 的是标准答案
+4. 跑测试：下拉框选「All CTest」点运行；终端可用 `ctest -R '^linked_list_first'` 只跑某次尝试
+5. 写完并通过测试后，用 `./lab.sh done` 标记完成：之后依赖本关的关卡（比如用到栈的二叉树）复制的就是我写的代码，没标记就一直用答案
 
 `lab.sh` 不带参数是交互菜单；也可以直接用子命令（`<尝试>` 写目录名或 `list` 里显示的编号）：
 
 | 命令 | 作用 |
 |---|---|
-| `./lab.sh new lib 02 [说明]` | 新建尝试，生成模板，并在 `NOTES.md` 追加小节 |
+| `./lab.sh new lib 02 [说明]` | 新建尝试项目，并在 `NOTES.md` 追加小节；说明缺省依次为 first、review、review2…… |
 | `./lab.sh list [lib] [02]` | 查看各关的尝试次数，或某关每次尝试的文件与完成标记 |
-| `./lab.sh rename lib 02 <尝试> <新说明>` | 改说明（日期不变），同步 `NOTES.md` 小节标题 |
+| `./lab.sh rename lib 02 <尝试> <新说明>` | 改说明（日期不变），程序名和 `NOTES.md` 小节标题一起改 |
 | `./lab.sh delete lib 02 <尝试>` | 确认后删除尝试，`NOTES.md` 的复盘保留 |
-| `./lab.sh done` / `undone lib 02 <尝试>` | 标记完成 / 取消标记 |
+| `./lab.sh done` / `undone lib 02 <尝试>` | 标记完成 / 取消标记，并更新依赖本关的各次尝试的 `deps/` |
+| `./lab.sh sync [lib] [02]` | 重新生成关卡配置、测试脚本和各项目的 `deps/`（改了 `DEPS` 或答案后用） |
+
+在 `src/` 里新增 `.c` 文件后，要在项目的 `CMakeLists.txt` 里把它加到 `add_executable` 的文件列表中（和 CLion 原生项目一样）。
 - **考查范围**：以 2027 年 408 统考大纲为准，各科 `LEVELS.md` 末尾有逐条的大纲覆盖对照
 
 ## 每关的闭环

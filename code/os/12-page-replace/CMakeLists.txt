@@ -1,5 +1,5 @@
-# 关卡子配置：不能单独加载，请在 CLion 中加载 code/ 下的 CMakeLists.txt
-if(NOT COMMAND lab_level)
-    message(FATAL_ERROR "这是关卡的子配置。请在 CLion 中加载 code/CMakeLists.txt（code 目录最外层那份）")
-endif()
-lab_level(DEPS lib/02-linked-list lib/16-hash)
+# 由 ./lab.sh 生成，新建、改名、删除尝试时自动更新：收录本关的答案和每次尝试
+cmake_minimum_required(VERSION 3.20)
+project(page_replace C)
+
+enable_testing()

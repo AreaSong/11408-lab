@@ -5,12 +5,17 @@
  */
 #include <stdio.h>
 
+#include "prompt.h"
 #include "segments.h"
 
 int main(void) {
     char id[32];
     int n = 0;
-    while (scanf("%31s %d", id, &n) == 2) {
+    for (;;) {
+        prompt("请输入「编号 n」，例如 2014-1 100（Ctrl+D 结束）：");
+        if (scanf("%31s %d", id, &n) != 2) {
+            break;
+        }
         long long count = 0;
         if (!segment_count(id, n, &count)) {
             printf("%s unknown\n", id);

@@ -29,3 +29,4 @@
 
 ## 工作记录
 - 2026-10-24 · 00 · `test.h`（CHECK / CHECK_EQ / CHECK_STR / TEST_SUMMARY，失败不中断、打印行号与实际值）、`max_find` + `max_test` + `max_io`、复杂度计数器（2011/2012/2014/2017/2019/2022 第 1 题已联网核实 + 3 段练习）、README；删除 `tests/.gitkeep` · 零 warning，`ctest -L answer -L lib00` 11/11 通过
+- 2026-10-24 · 00 · 迁移到新目录结构：`answer/` 改为独立项目（`main.c` 加输入提示、`test.c`、`complexity.c`、`src/`），README → 关卡层 `ANSWER.md`，补 `TASK.md`，`tests/max_io/` 上移到 `tests/` · 零 warning，`ctest -R '^warmup_answer'` 11/11 通过

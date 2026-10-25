@@ -1,25 +1,43 @@
-# 用本文件夹里的 .in / .out 测试项目的程序，由 lab.sh 生成，不用手改。
+# 用本文件夹里的 .in / .out 测试项目的程序，由 lab.sh 复制，不用手改。
 #
 # 项目的 CMakeLists.txt 最后一行 include 本文件后：
-#   - 与项目同名的主程序：每个 <用例>.in 喂给它，输出必须与 <用例>.out 一致
-#   - <项目名>_test 单元测试：退出码为 0 即通过
+#   - tests/<用例>.in       喂给与项目同名的主程序，输出必须与 <用例>.out 一致
+#   - tests/<名>/<用例>.in  喂给程序 <项目名>_<名>（一个项目有多个程序时用）
+#   - <项目名>_test         单元测试，退出码为 0 即通过
 # 项目被单独拷走、找不到本文件时，那行 include 带 OPTIONAL 会直接跳过，项目照常编译运行。
 #
 # 本文件有两种用法：被 include 时登记测试；被 CTest 以 cmake -P 调用时执行一次比对。
 
 if(NOT CMAKE_SCRIPT_MODE_FILE)
     enable_testing()
-    get_filename_component(lab_tests_dir "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
+    # 函数体里的 CMAKE_CURRENT_LIST_FILE 指向调用方，所以先把本文件路径存下来
+    set(lab_check_script "${CMAKE_CURRENT_LIST_FILE}")
+    get_filename_component(lab_tests_dir "${lab_check_script}" DIRECTORY)
+
+    function(lab_add_cases target dir)
+        if(NOT TARGET ${target})
+            return()
+        endif()
+        file(GLOB cases CONFIGURE_DEPENDS "${dir}/*.in")
+        foreach(in IN LISTS cases)
+            get_filename_component(case "${in}" NAME_WLE)
+            add_test(NAME "${target}::${case}"
+                     COMMAND "${CMAKE_COMMAND}" "-DPROG=$<TARGET_FILE:${target}>"
+                             "-DIN=${in}" "-DEXPECTED=${dir}/${case}.out"
+                             -P "${lab_check_script}")
+        endforeach()
+    endfunction()
+
     if(TARGET ${PROJECT_NAME}_test)
         add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
     endif()
-    file(GLOB lab_cases CONFIGURE_DEPENDS "${lab_tests_dir}/*.in")
-    foreach(lab_in IN LISTS lab_cases)
-        get_filename_component(lab_case "${lab_in}" NAME_WLE)
-        add_test(NAME "${PROJECT_NAME}::${lab_case}"
-                 COMMAND "${CMAKE_COMMAND}" "-DPROG=$<TARGET_FILE:${PROJECT_NAME}>"
-                         "-DIN=${lab_in}" "-DEXPECTED=${lab_tests_dir}/${lab_case}.out"
-                         -P "${CMAKE_CURRENT_LIST_FILE}")
+    lab_add_cases(${PROJECT_NAME} "${lab_tests_dir}")
+    file(GLOB lab_entries LIST_DIRECTORIES true "${lab_tests_dir}/*")
+    foreach(entry IN LISTS lab_entries)
+        if(IS_DIRECTORY "${entry}")
+            get_filename_component(sub "${entry}" NAME)
+            lab_add_cases(${PROJECT_NAME}_${sub} "${entry}")
+        endif()
     endforeach()
     return()
 endif()

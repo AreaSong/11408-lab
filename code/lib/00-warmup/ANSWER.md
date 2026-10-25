@@ -1,27 +1,33 @@
-# 00 · C 热身与测试工具 · 标准答案
+# lib/00 · C 热身与测试工具 · 答案讲解
 
+> 题目见同目录的 `TASK.md`；本文件是答案讲解，做完再看。答案代码在 `answer/` 项目里。
+>
 > 王道第 1 章 绪论。本关有两个目的：一是做出之后所有关卡都要用的 `test.h`；二是用计数器把时间复杂度测出来，和手推的结果对照。
 
 ## 运行目标
 
-`answer/` 不是独立项目，而是 `code/` 大项目里的一个单元：含 `main` 的 `.c` 各自是一个程序，出现在 CLion 右上角的运行目标下拉框里；其余文件被这些程序调用，不单独运行。
-
-| 下拉框里的运行目标 | 入口文件 | 作用 |
+| 下拉框里的运行目标 | 来自 | 作用 |
 |---|---|---|
-| `lib00_answer_max_test` | `max_test.c` | 用 `test.h` 的宏测 `max_find`，全部通过时退出码为 0 |
-| `lib00_answer_max_io` | `max_io.c` | 先读个数 n，再读 n 个整数，打印最大值；直接运行会等你从键盘输入（如 `5` 回车 `3 9 -2 7 9` 回车） |
-| `lib00_answer_complexity` | `complexity.c` | 读「编号 n」、打印该程序段基本语句的执行次数 |
+| `warmup_answer` | `answer/main.c` | 按提示输入个数 n 和 n 个整数（如 `5` 回车 `3 9 -2 7 9` 回车），打印最大值 |
+| `warmup_answer_test` | `answer/test.c` | 用 `test.h` 的宏测 `max_find`，全部通过时退出码为 0 |
+| `warmup_answer_complexity` | `answer/complexity.c` | 按提示输入「编号 n」，打印该程序段基本语句的执行次数；Ctrl+D 结束 |
+
+你的尝试同理：`mine/<日期>-first/` 里是 `warmup_first`、`warmup_first_test`、`warmup_first_complexity`。
+
+跑全部测试：右上角下拉框选「All CTest」，点运行。`tests/` 下的用例喂给主程序，`tests/complexity/` 下的用例喂给 `*_complexity`。
 
 ## 文件一览
 
 | 文件 | 作用 | 对应小步骤 |
 |---|---|---|
-| `test.h` | 测试宏 `CHECK` / `CHECK_EQ` / `CHECK_STR` / `TEST_SUMMARY`，只有头文件 | ① |
-| `max.h` `max.c` | `max_find`：数组求最大值 | ③ |
-| `max_test.c` | 用 `CHECK` 测 `max_find`，程序名以 `_test` 结尾，CTest 按退出码判定 | ③ |
-| `max_io.c` | 读输入、打印最大值，配合 `tests/max_io/` 体验输出比对 | ③ |
-| `segments.h` `segments.c` | 6 道真题程序段 + 3 段练习，在基本语句旁加计数器 | ④ |
+| `src/test.h` | 测试宏 `CHECK` / `CHECK_EQ` / `CHECK_STR` / `TEST_SUMMARY`，只有头文件 | ① |
+| `src/max.h` `src/max.c` | `max_find`：数组求最大值 | ③ |
+| `test.c` | 用 `CHECK` 测 `max_find`，CTest 按退出码判定 | ③ |
+| `main.c` | 读输入、打印最大值，配合 `tests/*.in` 体验输出比对 | ③ |
+| `src/segments.h` `src/segments.c` | 6 道真题程序段 + 3 段练习，在基本语句旁加计数器 | ④ |
 | `complexity.c` | 读「编号 n」、打印执行次数，配合 `tests/complexity/` | ④ |
+
+本关的 `test.h` 是自己的产出，所以放在 `src/`；其他关卡的 `test.h` 由 `lab.sh` 从这里复制到各项目的 `deps/`。
 
 小步骤 ② 是 CLion 操作，没有代码，做法见下方「CLion 操作」一节。
 
@@ -65,18 +71,18 @@
 ## 易错点
 1. **2022-1 不是 O(n log n)**：内层上界是外层变量 i，**内外层相关时不能直接相乘**，要逐项求和。2014-1 的内层上界是 n、与外层无关，才能用乘法规则。两题放在一起对照最清楚：实测 2014-1 每次 ×14~×18，2022-1 每次只有 ×8 左右，且始终小于 2n。
 2. **递归看「每层工作量 × 层数」**：fact 每层 O(1)、n 层，所以 O(n)；halve 每层合计 n、log₂n 层，所以 O(n log n)。只看递归深度会把 halve 误判为 O(log n)。
-3. **求最大值的初值用 `a[0]`，不用 0**：全负数组会得到错误的 0。`tests/max_io/practice-all-negative` 专门抓这个错误。
+3. **求最大值的初值用 `a[0]`，不用 0**：全负数组会得到错误的 0。`tests/practice-all-negative` 专门抓这个错误。
 4. **空表要单独处理**：没有任何 int 能当「没有最大值」的标记，所以用 `bool` 返回值 + 指针输出参数。这正是王道 `int &e` 在 C 里的写法：参数写 `int *out`，调用处传 `&m`。
 5. **复杂度只取最高阶、忽略系数**：2011-1 精确次数是 log₂n − 2，2017-1 是 √(2n)，写成 O(log n)、O(√n)。
-6. **`unsigned` 溢出**：`fact(1000)` 的乘积早已溢出。有符号溢出是未定义行为，所以 `segments.c` 里用 `unsigned long long`（无符号溢出有定义，按 2^64 回绕）；这里只数调用次数，不关心乘积。
+6. **`unsigned` 溢出**：`fact(1000)` 的乘积早已溢出。有符号溢出是未定义行为，所以 `src/segments.c` 里用 `unsigned long long`（无符号溢出有定义，按 2^64 回绕）；这里只数调用次数，不关心乘积。
 
 ## CLion 操作（小步骤 ②）
-1. 在 `code/` 下运行 `./lab.sh`，选「新建尝试」，建一次尝试 `lib/00-warmup/mine/<日期>-<说明>/`；里面的文件和答案同名，已经是能编译运行的空模板
-2. CLion 菜单 **File → Reload CMake Project**；右上角运行配置下拉框里就会出现 `lib00_<尝试名>_max_test` 等目标
-3. 选中目标点 ▶ 运行；在 `max.c` 的 `if (a[i] > best)` 行号旁单击设断点，点 🐞 调试，单步观察 `i` 和 `best` 的变化
-4. 跑全部测试：CLion 的 CTest 运行配置，或终端 `ctest -L mine -L lib00 --output-on-failure`
-5. **输出比对用例按入口文件名查找**：`tests/max_io/` 对应入口文件 `max_io.c`。自己的入口文件要起同样的名字，才能共用这些用例；输出格式必须完全一致（行尾空白和首尾空行会被忽略）
-6. 全部写完、测试通过后运行 `./lab.sh done lib 00 <尝试>`：之后所有关卡改用你自己写的 `test.h`
+1. 在 `code/` 下运行 `./lab.sh`，选「新建尝试」，建一次尝试 `lib/00-warmup/mine/<日期>-first/`；它是一个完整的 CLion 项目，文件和答案同名，已经是能编译运行的空模板
+2. CLion 菜单 **File → Reload CMake Project**；右上角运行配置下拉框里就会出现 `warmup_first`、`warmup_first_test`、`warmup_first_complexity`（也可以 File → Open 单独打开这个尝试文件夹）
+3. 选中目标点 ▶ 运行；在 `src/max.c` 的 `if (a[i] > best)` 行号旁单击设断点，点 🐞 调试，单步观察 `i` 和 `best` 的变化
+4. 跑全部测试：下拉框选「All CTest」点运行；终端可用 `ctest -R '^warmup_first' --output-on-failure`
+5. **输出比对用例按程序查找**：`tests/*.in` 喂给主程序（`main.c`），`tests/complexity/*.in` 喂给 `complexity.c` 编出的程序；输出格式必须完全一致（行尾空白和首尾空行会被忽略），输入提示用 `prompt(...)` 打印，跑测试时自动不打印
+6. 全部写完、测试通过后运行 `./lab.sh done lib 00 <尝试>`：之后各关尝试的 `deps/test.h` 改用你自己写的版本
 
 ## test.h 接口速查（后续所有关卡）
 
