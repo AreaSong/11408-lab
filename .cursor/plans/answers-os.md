@@ -26,3 +26,4 @@
 
 ## 工作记录
 - 2026-10-25 · 00 · 运行环境与系统调用：`mode`/`event`/`syscall`/`link`/`load` 按王道分类（2009-22、2012-23、2013-28、2014-25、2017-24、2019-25、2022-27、2022-31、2024-23、2026-21、2026-23 已核对题面），外加 `io_cost`、`layout`、`fault`；计时、地址、除零和空指针记在 `EXPERIMENTS.md`（`dtruss` 因没有 DTrace 权限未跑成） · 零 warning，`ctest -R '^syscall_answer'` 16/16 通过；`answer/` 单独拷到 `/tmp` 可编译
+- 2026-10-25 · 00 · 按王道把整数除零、非法指令、越权改为不能修复的故障（`return=none`），终止只留给 `controller-error`、`memory-check`；去掉 TASK 里泄露 2013-28 的句子 · 零 warning，`ctest -R '^syscall_answer'` 16/16 通过

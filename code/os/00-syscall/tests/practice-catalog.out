@@ -43,9 +43,11 @@ io-done class=interrupt subtype=external return=next
 dma-done class=interrupt subtype=external return=next
 page-fault class=exception subtype=fault return=current
 float-underflow class=exception subtype=fault return=current
-div-zero class=exception subtype=abort return=none
-illegal class=exception subtype=abort return=none
-protection class=exception subtype=abort return=none
+div-zero class=exception subtype=fault return=none
+illegal class=exception subtype=fault return=none
+protection class=exception subtype=fault return=none
+controller-error class=exception subtype=abort return=none
+memory-check class=exception subtype=abort return=none
 syscall class=exception subtype=trap return=next
 breakpoint class=exception subtype=trap return=next
 order=3-2-4-1

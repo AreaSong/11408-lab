@@ -3,3 +3,5 @@ cmake_minimum_required(VERSION 3.20)
 project(delay C)
 
 enable_testing()
+
+add_subdirectory(answer)

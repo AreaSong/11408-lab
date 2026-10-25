@@ -9,7 +9,7 @@ int divide_int(int dividend, int divisor) {
     return dividend / divisor;
 }
 
-/* 对空指针取值会变成一次非法访存，由硬件报异常，进程被终止。 */
+/* 对空指针取值是越权访存，按王道属于不能修复的故障。硬件报异常后进程被结束。 */
 int load_int(volatile int *p) {
     return *p;
 }

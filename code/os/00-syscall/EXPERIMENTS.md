@@ -37,7 +37,7 @@ dtrace: failed to initialize dtrace: DTrace requires additional privileges
 
 `fault div0` 打印 `div0=0`，退出码 0。进程没有被杀掉。arm64 的整数除零得到 0，不陷入内核。
 
-`fault null` 没有任何 `null=` 输出。用 Python 启动时返回码是 -11，也就是信号 11（SIGSEGV，段错误）。外壳若把它收成退出码，是 139（128+11）。空指针访问由硬件报异常，进程被终止。
+`fault null` 没有任何 `null=` 输出。用 Python 启动时返回码是 -11，也就是信号 11（SIGSEGV，段错误）。外壳若把它收成退出码，是 139（128+11）。空指针访问由硬件报异常，进程被信号结束。按王道这是不能修复的故障（`protection`），进程结束不等于异常类别里的「终止」。
 
 分类程序里的 `switch div-zero` 仍是 `to-kernel=yes`。那是考纲按「会陷入」的机器给出的答案，和这次实测不是同一件事。
 

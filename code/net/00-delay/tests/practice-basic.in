@@ -1,0 +1,6 @@
+link 8000 bit 10 Mbps 1000 km 200000000 m/s 0 ms 0 ms
+bottleneck 3
+100 Mbps
+10 Mbps
+1 Gbps
+goodput 980 B 20 B 100 Mbps

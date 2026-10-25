@@ -16,13 +16,16 @@ static const EventRow EVENT_ROWS[] = {
     {"clock", "interrupt", "external", "next"},
     {"io-done", "interrupt", "external", "next"},
     {"dma-done", "interrupt", "external", "next"},
-    /* 故障：同步，处理后重新执行惹出故障的那条指令 */
+    /* 故障：指令执行过程中发现。能修复就回到当前指令，不能修复就不返回 */
     {"page-fault", "exception", "fault", "current"},
     {"float-underflow", "exception", "fault", "current"},
-    /* 终止：同步，现场已经不可恢复 */
-    {"div-zero", "exception", "abort", "none"},
-    {"illegal", "exception", "abort", "none"},
-    {"protection", "exception", "abort", "none"},
+    {"div-zero", "exception", "fault", "none"},
+    {"illegal", "exception", "fault", "none"},
+    /* 越权（存储保护错）也在当前指令执行中被发现，修不好，仍是故障 */
+    {"protection", "exception", "fault", "none"},
+    /* 终止：随机发生的硬件故障，不由某条指令引起 */
+    {"controller-error", "exception", "abort", "none"},
+    {"memory-check", "exception", "abort", "none"},
     /* 自陷：程序有意安排的陷入，服务完执行下一条 */
     {"syscall", "exception", "trap", "next"},
     {"breakpoint", "exception", "trap", "next"},

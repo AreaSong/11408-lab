@@ -100,8 +100,11 @@ static void test_events(void) {
     expect_event("clock", "interrupt", "external", "next");
     expect_event("page-fault", "exception", "fault", "current");
     expect_event("float-underflow", "exception", "fault", "current");
-    expect_event("div-zero", "exception", "abort", "none");
-    expect_event("illegal", "exception", "abort", "none");
+    expect_event("div-zero", "exception", "fault", "none");
+    expect_event("illegal", "exception", "fault", "none");
+    expect_event("protection", "exception", "fault", "none");
+    expect_event("controller-error", "exception", "abort", "none");
+    expect_event("memory-check", "exception", "abort", "none");
     expect_event("syscall", "exception", "trap", "next");
     expect_event("breakpoint", "exception", "trap", "next");
     const char *klass = "keep";

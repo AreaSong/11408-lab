@@ -11,7 +11,7 @@
   - `fault.c`：空指针访问；整数除以 0。除法写在单独的 `src/arith.c` 里，让编译器发出真正的除法指令
 - **小步骤**：
   ① 用 `io_cost` 看 `printf` 的用户态缓冲和 `write` 的立刻进入内核；加参数 `--time` 比较耗时。`dtruss` 需要管理员权限，本机若被系统保护拦住，以计时代替
-  ② 用 `fault null` 触发访存异常，看进程怎样被终止；用 `fault div0` 看本机结果。**分类程序仍按考纲回答「整数除零会进入内核态」。arm64 上整数除零不会陷入，结果为 0**，这正好说明异常由硬件定义
+  ② 用 `fault null` 触发一次非法访存，看进程会不会被信号结束；用 `fault div0` 看本机整数除法的结果。arm64 上整数除零不会陷入，结果为 0，这正好说明异常由硬件定义
   ③ 运行 `layout`，对照地址从低到高的顺序，画出代码段、只读数据、数据段、BSS、堆、栈
   ④ 用 `otool -L` 看可执行文件依赖哪些动态库；把 `layout` 运行两次，比较函数地址
 - **通过标准**：能判断哪些操作要在内核态执行、一个事件是中断还是异常、系统调用的执行顺序、三种链接方式和三种装入方式的差别。主程序和 `io_cost` 的测试全部通过
@@ -29,7 +29,7 @@
 |---|---|
 | `mode <名字>` | `<名字> mode=user` 或 `mode=kernel`（这条指令或这个程序在哪种模式下执行） |
 | `occur <名字>` | `<名字> user=yes` 或 `user=no`（这件事能否在用户态发生） |
-| `switch <名字>` | `<名字> to-kernel=yes` 或 `to-kernel=no`（会不会从用户态进入内核态。除零按考纲，不按本机） |
+| `switch <名字>` | `<名字> to-kernel=yes` 或 `to-kernel=no`（会不会从用户态进入内核态） |
 | `rule` | 两行。`user privileged=yes\|no unprivileged=yes\|no`，然后同样一行 `kernel` |
 | `claim <名字>` | `<名字> true` 或 `false` |
 | `event <名字>` | `<名字> class=interrupt\|exception subtype=external\|fault\|trap\|abort return=next\|current\|none` |
@@ -47,7 +47,7 @@
 - `occur`：`syscall` `external-interrupt` `page-fault` `process-switch`
 - `switch`：`div-zero` `read` `sin` `trap` `page-fault` `jump`
 - `claim`：`service-in-kernel` `syscall-hides-device` `unified-abi` `syscall-is-interface` `event-time-always-kernel` `each-syscall-has-routine` `handler-starts-in-kernel` `new-device-registers-isr`
-- `event`：`keyboard` `clock` `io-done` `dma-done` `page-fault` `float-underflow` `div-zero` `illegal` `protection` `syscall` `breakpoint`
+- `event`：`keyboard` `clock` `io-done` `dma-done` `page-fault` `float-underflow` `div-zero` `illegal` `protection` `controller-error` `memory-check` `syscall` `breakpoint`
 - `link`：`static` `load-time` `run-time`
 - `load`：`absolute` `relocatable` `dynamic`
 
@@ -132,7 +132,7 @@ A. 系统调用　B. 外部中断　C. 进程切换　D. 缺页
 
 A. 仅Ⅰ、Ⅱ　B. 仅Ⅰ、Ⅲ　C. 仅Ⅱ、Ⅲ　D. Ⅰ、Ⅱ和Ⅲ
 
-> 查询：`switch div-zero`、`switch sin`、`switch read`。这里的除零按考纲，不按 arm64 实测。
+> 查询：`switch div-zero`、`switch sin`、`switch read`。
 
 ### 2014-25
 

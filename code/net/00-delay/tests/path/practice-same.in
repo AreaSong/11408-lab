@@ -1,0 +1,8 @@
+interval 5 ms
+setup 10 ms
+link S A 10 ms
+link A D 15 ms
+vc 3 S A D
+packet 1 3 S A D
+packet 2 3 S A D
+packet 3 3 S A D

@@ -45,6 +45,8 @@ event float-underflow
 event div-zero
 event illegal
 event protection
+event controller-error
+event memory-check
 event syscall
 event breakpoint
 syscall
