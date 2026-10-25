@@ -7,7 +7,7 @@
 # 规则：
 #   - mine/ 下每次尝试、answer/ 各算一个「单元」，互相独立编译
 #   - 单元里含 main 的 .c 各自成为一个程序，其余 .c 合成本单元的公共库
-#   - 依赖关卡默认取 mine/ 中日期最新、且有代码的那次尝试；一次都没写过就用 answer/
+#   - 依赖关卡默认取 mine/ 中日期最新、且用 ./lab.sh done 标记完成的那次尝试；没有标记过就用 answer/
 #   - 所有关卡自动依赖 lib/00-warmup（测试宏 test.h）
 #   - 程序名以 _test 结尾：直接运行，退出码为 0 即通过
 #   - tests/<程序名>/<用例>.in 与 .out：把 .in 喂给程序，输出必须与 .out 一致
@@ -52,22 +52,23 @@ function(_lab_has_code dir out)
 endfunction()
 
 # 选出依赖关卡要用的单元：返回单元名（日期-说明 或 answer）与目录，找不到时为空
+# 只采用带 .done 标记（./lab.sh done）的尝试：写到一半的代码不能拖垮依赖它的关卡
 function(_lab_pick_unit dep_rel prefer_answer out_name out_dir)
     set(base "${LAB_ROOT}/${dep_rel}")
     set(${out_name} "" PARENT_SCOPE)
     set(${out_dir} "" PARENT_SCOPE)
     if(NOT prefer_answer)
-        file(GLOB attempts LIST_DIRECTORIES true CONFIGURE_DEPENDS "${base}/mine/*")
-        list(SORT attempts ORDER DESCENDING)
-        foreach(a IN LISTS attempts)
-            if(IS_DIRECTORY "${a}")
-                _lab_has_code("${a}" ok)
-                if(ok)
-                    get_filename_component(name "${a}" NAME)
-                    set(${out_name} "${name}" PARENT_SCOPE)
-                    set(${out_dir} "${a}" PARENT_SCOPE)
-                    return()
-                endif()
+        # 标记的增删要触发重新配置，所以用 CONFIGURE_DEPENDS 盯住 .done
+        file(GLOB marks CONFIGURE_DEPENDS "${base}/mine/*/.done")
+        list(SORT marks ORDER DESCENDING)
+        foreach(m IN LISTS marks)
+            get_filename_component(a "${m}" DIRECTORY)
+            _lab_has_code("${a}" ok)
+            if(ok)
+                get_filename_component(name "${a}" NAME)
+                set(${out_name} "${name}" PARENT_SCOPE)
+                set(${out_dir} "${a}" PARENT_SCOPE)
+                return()
             endif()
         endforeach()
     endif()

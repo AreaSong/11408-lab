@@ -8,6 +8,8 @@ add_compile_options(-Wall -Wextra -g)
 # 依赖关卡的公共库会经由多条路径传递进来（如 test.h 所在关卡），重复链接无害，只关掉这条提示
 if(APPLE)
     add_link_options(-Wl,-no_warn_duplicate_libraries)
+    # lab.sh 生成的模板 .c 只有 #include、没有符号，打进静态库时 ranlib 会报警告
+    set(CMAKE_C_ARCHIVE_FINISH "<CMAKE_RANLIB> -no_warning_for_no_symbols -c <TARGET>")
 endif()
 
 enable_testing()

@@ -32,7 +32,7 @@
 
 - **前置条件**：所有关卡依赖 `lib/00-warmup` 的 `test.h`。`answers-lib.md` 中 00 关不是 `✅` 时，计组、OS、计网的对话不开工，告诉用户先等数据结构第 00 关
 - **只改自己科目的文件**：本关的 `answer/`、`tests/`，以及自己的进度文件
-  - 不改 `code/cmake/`、`code/CMakeLists.txt`、任何 `CMakeLists.txt`、`AGENTS.md`、`LEVELS.md`、`README.md`、`new.sh`、其他科目的文件、用户的 `mine/` 与 `NOTES.md`
+  - 不改 `code/cmake/`、`code/CMakeLists.txt`、任何 `CMakeLists.txt`、`AGENTS.md`、`LEVELS.md`、`README.md`、`lab.sh`、其他科目的文件、用户的 `mine/` 与 `NOTES.md`
   - 确需修改上述文件时（例如本关需要新增 DEPS），写进「待用户处理」，不要自己改
 - **编译**：用 CLion 自带的 CMake，编译目录用本科目自己的，只编本关目标
   ```
@@ -56,7 +56,7 @@
    - 来自真题的用例：**联网核实**题目与答案后才写入，用例名用年份与题号（如 `2019-41`）
    - 核实不到的：用自编数据，用例名以 `practice-` 开头，不冒充真题
    - 结果依赖本机环境或时间的实验（计时、抓包、`dig`）不进 `tests/`，写进 `experiments.md`
-3. `answer/README.md`：思路、对应考点、易错点（与王道约定不一致处明确指出）、每个小步骤对应哪段代码、概念卡片参考答案；🎯 关卡附算法题三段式（设计思想、代码、复杂度）
+3. `answer/README.md`：开头先放「运行目标」表（CLion 下拉框里的程序名 `<科目><关卡号>_answer_<入口文件名>`、入口文件、作用，会等键盘输入的要注明），格式参照 `lib/00-warmup/answer/README.md`；然后是思路、对应考点、易错点（与王道约定不一致处明确指出）、每个小步骤对应哪段代码、概念卡片参考答案；🎯 关卡附算法题三段式（设计思想、代码、复杂度）
 4. `answer/experiments.md`：仅限有命令行实验的关卡，记录命令、本机实际输出、该看出什么
 5. 质量门禁：本关目标构建零 warning；本关 `ctest -L answer` 全部通过
 
