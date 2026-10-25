@@ -6,10 +6,12 @@
 
 | 下拉框里的运行目标 | 来自 | 作用 |
 |---|---|---|
-| `rotate_answer` | `answer/main.c` | 读 `n p` 和 n 个整数，输出左移结果；直接运行会等你从键盘输入（如 `5 2` 回车 `1 2 3 4 5` 回车） |
+| `rotate_answer` | `answer/main.c` | 按提示输入 `n p` 和 n 个整数（如 `5 2` 回车 `1 2 3 4 5` 回车），输出左移结果 |
 | `rotate_answer_test` | `answer/test.c` | 用 `test.h` 的宏测 `rotate_left`，全部通过时退出码为 0 |
 
 你的尝试同理：`mine/2026-10-25-first/` 里是 `rotate_first` 和 `rotate_first_test`。
+
+跑全部测试：右上角下拉框选「All CTest」（CLion 加载项目后自动生成；没有就在「编辑配置」里新建一个 CTest 配置），点运行。
 
 ## 2010-42 三段式
 
@@ -17,7 +19,7 @@
 
 把数组看成两段 AB：A 是前 p 个元素，B 是后 n−p 个元素，循环左移 p 位就是把 AB 变成 BA。先把 A 逆置得到 A⁻¹，再把 B 逆置得到 B⁻¹，最后把整个 A⁻¹B⁻¹ 逆置，得到 (A⁻¹B⁻¹)⁻¹ = BA。
 
-**2. 算法实现**：见 `answer/rotate.c`，`reverse` 用首尾双指针交换，`rotate_left` 调用三次 `reverse`。
+**2. 算法实现**：见 `answer/src/rotate.c`，`reverse` 用首尾双指针交换，`rotate_left` 调用三次 `reverse`。
 
 **3. 复杂度**
 

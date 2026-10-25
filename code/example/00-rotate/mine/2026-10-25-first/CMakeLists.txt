@@ -3,9 +3,9 @@ project(rotate_first C)
 
 set(CMAKE_C_STANDARD 11)
 add_compile_options(-Wall -Wextra)
-include_directories(deps)
+include_directories(src deps)
 
-add_executable(rotate_first main.c rotate.c)
-add_executable(rotate_first_test test.c rotate.c)
+add_executable(rotate_first main.c src/rotate.c)
+add_executable(rotate_first_test test.c src/rotate.c)
 
 include(../../tests/check.cmake OPTIONAL)

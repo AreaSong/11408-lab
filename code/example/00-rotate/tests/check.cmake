@@ -24,6 +24,9 @@ if(NOT CMAKE_SCRIPT_MODE_FILE)
     return()
 endif()
 
+# deps/prompt.h 看到这个变量就不打印输入提示，否则提示文字会混进输出、比对失败
+set(ENV{LAB_TEST} 1)
+
 # 比较前统一换行符、去掉每行行尾空白和首尾空行，避免因多一个空格而误判
 execute_process(
     COMMAND "${PROG}"
