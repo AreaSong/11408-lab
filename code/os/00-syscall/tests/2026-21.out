@@ -1,0 +1,4 @@
+io mode=kernel
+cli mode=kernel
+iret mode=kernel
+trap mode=user

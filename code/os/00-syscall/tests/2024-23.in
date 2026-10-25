@@ -1,0 +1,4 @@
+claim event-time-always-kernel
+claim each-syscall-has-routine
+claim handler-starts-in-kernel
+claim new-device-registers-isr

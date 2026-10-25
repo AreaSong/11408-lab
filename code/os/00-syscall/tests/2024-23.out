@@ -1,0 +1,4 @@
+event-time-always-kernel false
+each-syscall-has-routine true
+handler-starts-in-kernel true
+new-device-registers-isr true

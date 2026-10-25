@@ -1,0 +1,4 @@
+round 1 len=5 A[0..4] mid=15 > B[0..4] mid=6 -> A[0..2] B[2..4]
+round 2 len=3 A[0..2] mid=13 > B[2..4] mid=8 -> A[0..1] B[3..4]
+round 3 len=2 A[0..1] mid=11 > B[3..4] mid=8 -> A[0..0] B[4..4]
+median=11

@@ -1,0 +1,6 @@
+static when=before-run unpack=no
+load-time when=load unpack=while-loading
+run-time when=execute unused=skip
+absolute when=compile address=absolute movable=no
+relocatable when=load address=patched-once movable=no
+dynamic when=execute address=relocation-register movable=yes

@@ -1,0 +1,4 @@
+event keyboard
+event div-zero
+event float-underflow
+event page-fault

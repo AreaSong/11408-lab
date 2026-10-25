@@ -1,0 +1,4 @@
+syscall user=yes
+external-interrupt user=yes
+process-switch user=no
+page-fault user=yes

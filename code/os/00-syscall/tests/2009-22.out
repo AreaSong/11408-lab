@@ -1,0 +1,4 @@
+keyboard class=interrupt subtype=external return=next
+div-zero class=exception subtype=abort return=none
+float-underflow class=exception subtype=fault return=current
+page-fault class=exception subtype=fault return=current

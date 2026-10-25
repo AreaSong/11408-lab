@@ -1,0 +1,5 @@
+order=3-2-4-1
+3 action=pass-args actor=user mode=user saves=-
+2 action=trap actor=hardware mode=user-to-kernel saves=pc,psw
+4 action=service actor=os mode=kernel saves=general-regs
+1 action=return-user actor=os mode=kernel-to-user saves=-

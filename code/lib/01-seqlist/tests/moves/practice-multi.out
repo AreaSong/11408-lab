@@ -1,0 +1,4 @@
+n=1 insert total=1 trials=2 avg=0.5 expect=0.5 delete total=0 trials=1 avg=0.0 expect=0.0
+n=4 insert total=10 trials=5 avg=2.0 expect=2.0 delete total=6 trials=4 avg=1.5 expect=1.5
+n=5 insert total=15 trials=6 avg=2.5 expect=2.5 delete total=10 trials=5 avg=2.0 expect=2.0
+n=8 insert total=36 trials=9 avg=4.0 expect=4.0 delete total=28 trials=8 avg=3.5 expect=3.5

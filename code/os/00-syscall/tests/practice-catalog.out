@@ -1,0 +1,61 @@
+trap mode=user
+jump mode=user
+push mode=user
+mov mode=user
+sin mode=user
+cli mode=kernel
+sti mode=kernel
+halt mode=kernel
+io mode=kernel
+iret mode=kernel
+set-clock mode=kernel
+clear-memory mode=kernel
+compiler mode=user
+linker mode=user
+shell mode=user
+loader mode=kernel
+scheduler mode=kernel
+process-switch mode=kernel
+page-fault-handler mode=kernel
+syscall user=yes
+external-interrupt user=yes
+page-fault user=yes
+process-switch user=no
+div-zero to-kernel=yes
+read to-kernel=yes
+sin to-kernel=no
+trap to-kernel=yes
+page-fault to-kernel=yes
+jump to-kernel=no
+user privileged=no unprivileged=yes
+kernel privileged=yes unprivileged=yes
+service-in-kernel true
+syscall-hides-device true
+unified-abi false
+syscall-is-interface true
+event-time-always-kernel false
+each-syscall-has-routine true
+handler-starts-in-kernel true
+new-device-registers-isr true
+keyboard class=interrupt subtype=external return=next
+clock class=interrupt subtype=external return=next
+io-done class=interrupt subtype=external return=next
+dma-done class=interrupt subtype=external return=next
+page-fault class=exception subtype=fault return=current
+float-underflow class=exception subtype=fault return=current
+div-zero class=exception subtype=abort return=none
+illegal class=exception subtype=abort return=none
+protection class=exception subtype=abort return=none
+syscall class=exception subtype=trap return=next
+breakpoint class=exception subtype=trap return=next
+order=3-2-4-1
+3 action=pass-args actor=user mode=user saves=-
+2 action=trap actor=hardware mode=user-to-kernel saves=pc,psw
+4 action=service actor=os mode=kernel saves=general-regs
+1 action=return-user actor=os mode=kernel-to-user saves=-
+static when=before-run unpack=no
+load-time when=load unpack=while-loading
+run-time when=execute unused=skip
+absolute when=compile address=absolute movable=no
+relocatable when=load address=patched-once movable=no
+dynamic when=execute address=relocation-register movable=yes

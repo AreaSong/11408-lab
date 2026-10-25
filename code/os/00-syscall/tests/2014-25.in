@@ -1,0 +1,4 @@
+mode trap
+mode jump
+mode push
+mode cli

@@ -1,0 +1,6 @@
+link static
+link load-time
+link run-time
+load absolute
+load relocatable
+load dynamic

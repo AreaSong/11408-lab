@@ -1,0 +1,10 @@
+insert 1 10
+insert 2 30
+insert 2 20
+delete 3
+find 20
+find 99
+get 2
+get 4
+insert 0 1
+delete 9

@@ -1,0 +1,4 @@
+mode compiler
+mode linker
+mode loader
+mode shell

@@ -1,0 +1,4 @@
+trap mode=user
+jump mode=user
+push mode=user
+cli mode=kernel

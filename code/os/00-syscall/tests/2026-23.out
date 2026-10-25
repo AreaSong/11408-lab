@@ -1,0 +1,4 @@
+compiler mode=user
+linker mode=user
+loader mode=kernel
+shell mode=user

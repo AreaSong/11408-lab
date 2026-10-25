@@ -1,0 +1,4 @@
+occur syscall
+occur external-interrupt
+occur process-switch
+occur page-fault

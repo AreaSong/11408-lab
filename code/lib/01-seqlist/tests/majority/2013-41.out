@@ -1,0 +1,10 @@
+pick candidate=0 count=1
+i=1 a=5 replace candidate=5 count=1
+i=2 a=5 vote count=2
+i=3 a=3 cancel count=1
+i=4 a=5 vote count=2
+i=5 a=7 cancel count=1
+i=6 a=5 vote count=2
+i=7 a=5 vote count=3
+verify candidate=5 times=5
+majority=5

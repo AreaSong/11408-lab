@@ -1,0 +1,4 @@
+fail delete i=1
+ok find e=1 pos=0
+fail get i=1
+ok insert i=1 e=7 moves=0 length=1 cap=4 [7]

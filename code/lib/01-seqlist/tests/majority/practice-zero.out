@@ -1,0 +1,6 @@
+pick candidate=0 count=1
+i=1 a=0 vote count=2
+i=2 a=0 vote count=3
+i=3 a=1 cancel count=2
+verify candidate=0 times=3
+majority=0

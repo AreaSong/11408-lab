@@ -1,0 +1,4 @@
+mode io
+mode cli
+mode iret
+mode trap

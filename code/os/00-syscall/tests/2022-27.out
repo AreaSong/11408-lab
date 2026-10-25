@@ -1,0 +1,2 @@
+user privileged=no unprivileged=yes
+kernel privileged=yes unprivileged=yes
