@@ -1,0 +1,8 @@
+DNS：0 个 RTT。
+往返时间：10 ms。
+持久连接，非流水线。初始拥塞窗口 1 MSS。
+建立连接：1 个 RTT。
+HTML 1 MSS：拥塞窗口 1 MSS，本轮发送 1 MSS，1 个 RTT，窗口变为 2 MSS。
+对象 3 MSS：拥塞窗口 2 MSS，本轮发送 2 MSS，1 个 RTT，窗口变为 4 MSS。
+对象还剩 1 MSS：拥塞窗口 4 MSS，本轮发送 1 MSS，1 个 RTT，窗口变为 5 MSS。
+结果：4 个 RTT，40 ms

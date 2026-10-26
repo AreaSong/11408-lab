@@ -1,0 +1,7 @@
+exam 2023-31
+claim close-nlink
+reset inode
+create /F 1
+proc 0 open /F r
+proc 0 close 0
+lstat /F

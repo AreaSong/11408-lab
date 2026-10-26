@@ -1,0 +1,9 @@
+card
+paging dim=1 unit=fixed visible=no frag=internal share=page bound=page-ge-length
+segment dim=2 unit=logical visible=yes frag=external share=segment bound=seg-then-offset
+segpage dim=2 unit=page-in-seg visible=segment frag=internal share=segment
+visits paging=2 segment=2 segpage=3 tlb-hit=1
+multi-level why=top-le-one-page not=fewer-entries
+eat paths=tlb-hit,pt-hit,fault order=serial
+pdbr addr=physical process-switch=changes thread-switch=same
+clock fields=access,dirty

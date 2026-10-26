@@ -1,0 +1,2 @@
+serial 1 7 1 1 0.5 ms
+task 50 MHz 4 0.5 ms 10 20 15 1000

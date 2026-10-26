@@ -1,0 +1,12 @@
+ring new 3
+ring put a
+ring put b
+ring put c
+ring put x
+ring get
+ring put d
+ring show
+ring get
+ring get
+ring get
+ring get

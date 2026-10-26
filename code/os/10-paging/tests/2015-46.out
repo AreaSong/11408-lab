@@ -1,0 +1,6 @@
+geom mode=bits va=32 page=4096 pte=4
+offset-bits=12 page-bits=20 pages=1048576 table-bytes=4194304
+per-page=1024 level-bits=10 levels=2
+top-bits=10 top-entries=1024 top-bytes=4096 fits=yes
+tables=1+1024 pages-used=1025
+dirs a=0x1000000 dir=0x4 b=0x1112048 dir=0x4 tables=1

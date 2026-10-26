@@ -1,0 +1,6 @@
+pipe struct
+load R1, [a]
+add R2, R3, R4
+add R5, R6, R7
+add R8, R9, R10
+.

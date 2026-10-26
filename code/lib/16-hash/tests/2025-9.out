@@ -1,0 +1,9 @@
+linear empty=1 put=3
+linear_gap=yes
+quad empty=2
+quad_gap=no
+qpos empty=2
+qpos_gap=no
+linear_mix=yes
+quad_syn=yes
+letter=A

@@ -1,0 +1,8 @@
+dev add char p0 c0 ch0
+dev add char p1 c1 ch1
+dev proc A
+dev proc B
+dev map A LP p0
+dev map B LP p1
+dev ask A LP
+dev ask B LP

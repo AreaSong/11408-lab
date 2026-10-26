@@ -1,0 +1,25 @@
+vm reset 2
+vm page 0 100 1
+vm page 1 200 1
+vm page 2 300 0
+vm touch 0 r
+vm touch 0 w
+vm touch 1 w
+vm touch 2 w
+vm touch 2 r
+vm show 0
+vm show 1
+vm show 2
+vm touch 9 r
+vm show 5
+vm reset 1
+vm page 0 10 1
+vm page 1 11 1
+vm touch 0 r
+vm touch 1 r
+vm show 0
+vm reset 2
+vm page 3 30 1
+vm page 4 40 1
+vm burst 3 r 4 w
+vm burst 3 r 9 r

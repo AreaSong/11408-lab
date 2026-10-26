@@ -1,0 +1,9 @@
+trace page=4096 tlb=10 mem=100 fault=100000000 resident=2 slots=8
+map page=0 frame=0x101 valid=1
+map page=1 frame=0x0 valid=0
+map page=2 frame=0x254 valid=1
+go addr=0x2362 page=2 offset=0x362 result=pt-hit frame=0x254 pa=0x254362 ns=210 victim=-
+go addr=0x1565 page=1 offset=0x565 result=fault frame=0x101 pa=0x101565 ns=100000220 victim=0
+go addr=0x25a5 page=2 offset=0x5a5 result=tlb-hit frame=0x254 pa=0x2545a5 ns=110 victim=-
+seglen segments=256 max=16777216
+exam 2009-27 answer=C

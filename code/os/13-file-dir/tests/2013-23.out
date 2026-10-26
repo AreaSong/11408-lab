@@ -1,0 +1,11 @@
+exam 2013-23 answer=A
+claim delete-parent value=false
+reset scheme=inode
+mkdir path=/d inode=1 nlink=2
+create path=/d/a inode=2 nlink=1 blocks=1
+create path=/d/b inode=3 nlink=1 blocks=1
+unlink path=/d/a nlink=0 fcb=freed parent-kept=yes
+ls path=/d
+entry name=b kind=file inode=3
+lstat path=/d kind=dir inode=1 nlink=2 mode=755
+rmdir path=/d result=not-empty

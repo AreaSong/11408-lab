@@ -1,0 +1,9 @@
+new D 3
+edge 0 1
+edge 1 2
+edge 2 0
+reach
+new D 3
+edge 0 1
+edge 1 2
+reach

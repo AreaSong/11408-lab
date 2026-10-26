@@ -1,0 +1,10 @@
+linear 7 7 1 22 43 15
+del 43
+find 15
+linear 7 7 1 22 43 15
+erase 43
+find 15
+chain 13 13 1 14 1 27
+del 1
+find 14
+find 27

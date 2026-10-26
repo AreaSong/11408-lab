@@ -1,0 +1,9 @@
+look result=pt-hit frame=0x20 pa=0x20180
+look result=tlb-hit frame=0x10 pa=0x10180
+look result=fault
+flat page=10 result=bound
+flat page=8 result=fault pte=0x200020
+flat page=8 result=ok pte=0x200020 frame=0x900 pa=0x900000
+two result=fault-dir pde=0x1004
+two result=fault-page pde=0x1004 pt-base=0x2000 pte=0x200c
+two result=ok pde=0x1004 pt-base=0x2000 pte=0x200c pa=0x9010

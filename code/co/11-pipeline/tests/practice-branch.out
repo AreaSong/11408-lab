@@ -1,0 +1,40 @@
+【五段流水线 · 有转发 · 指令和数据存储器分开 · 预测不转移】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  beq R1, R2, L
+I2  add R3, R4, R5
+I3  add R6, R7, R8
+I4  L: nop
+冲刷：I2 I3（预测不转移，实际转移，EX 段才知道，IF 和 ID 里的指令作废）
+时空图
+时钟    1    2    3    4    5    6    7    8
+I1     IF   ID   EX  MEM   WB               
+I2          IF   ID                         
+I3               IF                         
+I4                    IF   ID   EX  MEM   WB
+提交 2 条，理想 6 个时钟周期，实际 8 个时钟周期
+结果：冲刷 2 条，惩罚 2 拍，共 8 个时钟周期
+【五段流水线 · 有转发 · 指令和数据存储器分开 · 预测不转移】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  beq R1, R2, not
+I2  add R3, R4, R5
+I3  add R6, R7, R8
+时空图
+时钟    1    2    3    4    5    6    7
+I1     IF   ID   EX  MEM   WB          
+I2          IF   ID   EX  MEM   WB     
+I3               IF   ID   EX  MEM   WB
+提交 3 条，理想 7 个时钟周期，实际 7 个时钟周期
+结果：冲刷 0 条，惩罚 0 拍，共 7 个时钟周期
+【五段流水线 · 有转发 · 指令和数据存储器分开 · 延迟槽】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  beq R1, R2, L
+I2  add R3, R4, R5
+I3  L: nop
+I2 在延迟槽里，转移与否都执行
+时空图
+时钟    1    2    3    4    5    6    7
+I1     IF   ID   EX  MEM   WB          
+I2          IF   ID   EX  MEM   WB     
+I3               IF   ID   EX  MEM   WB
+提交 3 条，理想 7 个时钟周期，实际 7 个时钟周期
+结果：延迟槽惩罚 0 拍，共 7 个时钟周期

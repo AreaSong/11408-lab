@@ -1,0 +1,6 @@
+elem index=1026 addr=0x10801008
+cut addr=0x10801008 parts=0x42,0x1,0x8
+slot index=66 addr=0x201108
+join frame=0x301 offset=0x0 pa=0x301000
+slot index=1 addr=0x301004
+exam 2020-28 answer=D

@@ -1,0 +1,10 @@
+dev add block d0 c0 ch0
+dev add block d0 c1 ch1
+dev add block d1 c0 ch1
+dev proc A
+dev ask A LP
+dev map A LP d0
+dev ask A LP
+dev done A
+dev done A
+dev map B LP d0

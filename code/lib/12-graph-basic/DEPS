@@ -1,2 +1,4 @@
-lib/03-stack
-lib/04-queue
+# BFS 用第 04 关牺牲一格的循环队列，非递归 DFS 用第 03 关的顺序栈。
+# 栈和队列里只放顶点编号。链栈和链队列的结点类型重名，不能把整关 src 都链进来。
+lib/03-stack sqstack.h sqstack.c
+lib/04-queue cycq.h cycq.c

@@ -1,0 +1,7 @@
+asl all 10000 100
+asl all 10 3
+asl seq 1
+walk seq 10 6
+walk index 10 6
+walk isam 10 3 seq 6
+walk isam 10 3 bin 6

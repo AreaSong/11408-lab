@@ -1,0 +1,4 @@
+bin floor 1 2 3 4
+prob 35 15 15 35
+seq plain 1 4 2 3
+prob 35 35 15 15

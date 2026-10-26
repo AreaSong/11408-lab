@@ -1,0 +1,45 @@
+policy pred left
+load m=5
+tree (60 90 260 350 (10 20) (70 80 85) (100 110) (280 300) (400 500))
+height=2 keys=15 nodes=6
+root 60 90 260 350
+term 10 20 | 70 80 85 | 100 110 | 280 300 | 400 500
+chain=no
+del 260
+pred 110
+borrow left up=85 down=90
+tree (60 85 110 350 (10 20) (70 80) (90 100) (280 300) (400 500))
+height=2 keys=14 nodes=6
+root 60 85 110 350
+term 10 20 | 70 80 | 90 100 | 280 300 | 400 500
+chain=no
+policy succ left
+load m=5
+tree (60 90 260 350 (10 20) (70 80 85) (100 110) (280 300) (400 500))
+height=2 keys=15 nodes=6
+root 60 90 260 350
+term 10 20 | 70 80 85 | 100 110 | 280 300 | 400 500
+chain=no
+del 260
+succ 280
+merge left down=280
+tree (60 90 350 (10 20) (70 80 85) (100 110 280 300) (400 500))
+height=2 keys=14 nodes=5
+root 60 90 350
+term 10 20 | 70 80 85 | 100 110 280 300 | 400 500
+chain=no
+policy succ right
+load m=5
+tree (60 90 260 350 (10 20) (70 80 85) (100 110) (280 300) (400 500))
+height=2 keys=15 nodes=6
+root 60 90 260 350
+term 10 20 | 70 80 85 | 100 110 | 280 300 | 400 500
+chain=no
+del 260
+succ 280
+merge right down=350
+tree (60 90 280 (10 20) (70 80 85) (100 110) (300 350 400 500))
+height=2 keys=14 nodes=5
+root 60 90 280
+term 10 20 | 70 80 85 | 100 110 | 300 350 400 500
+chain=no

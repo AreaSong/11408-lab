@@ -1,0 +1,24 @@
+kind=U n=4 e=0
+multi
+edge-nodes=4
+list-nodes=8
+box 0-1 inext=0-2 jnext=1-2
+box 1-2 inext=- jnext=0-2
+box 0-2 inext=- jnext=2-3
+box 2-3 inext=- jnext=-
+v0 deg=2 chain=0-1,0-2
+v1 deg=2 chain=0-1,1-2
+v2 deg=3 chain=1-2,0-2,2-3
+v3 deg=1 chain=2-3
+hits 0=2 1=2 2=3 3=1
+seen-from-ends=8
+marked-once=4
+deg
+0=2
+1=2
+2=3
+3=1
+sum=8
+edges=4
+twice=8
+handshake=yes

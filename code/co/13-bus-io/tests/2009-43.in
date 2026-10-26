@@ -1,0 +1,2 @@
+intr 500 MHz 5 18 2 0.5 MB/s 4
+dma 500 MHz 500 5 MB/s 5000

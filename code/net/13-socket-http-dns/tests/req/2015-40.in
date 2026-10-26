@@ -1,0 +1,4 @@
+GET /index.html HTTP/1.1
+Host: www.test.edu.cn
+Connection: close
+Cookie: 123456

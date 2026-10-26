@@ -1,0 +1,15 @@
+prim 0
+new X 3
+new U 0
+new U 2
+edge 0 0 1
+edge 0 1 4
+edge 1 0 4
+edge 0 1 9
+topo
+aoe
+kruskal
+new D 2
+edge 0 1 -1
+aoe
+nope

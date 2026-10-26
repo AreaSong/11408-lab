@@ -1,0 +1,9 @@
+exam 2010-31
+claim cwd-io
+reset inode
+mkdir /a
+mkdir /a/b
+create /a/b/c 1
+proc 0 open /a/b/c r
+cd /a/b
+proc 0 open c r

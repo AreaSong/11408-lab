@@ -1,0 +1,29 @@
+【不可屏蔽中断】按字编址
+初态 IF=0 用户态 入口=6
+外部中断 不可屏蔽 在字地址 0 执行期间到达
+0 NOP
+1 HLT
+6 IRET
+----
+中断请求到达 | 字地址 0 执行期间 | 不可屏蔽
+T0 取指 PC=0 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=0000H PC=1 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=NOP | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 空操作 | 无 | 内总线驱动 0 个
+指令结束 响应不可屏蔽中断 | 断点 1 | 关中断 IF=0 内核态 | 入口 6 -> PC
+----
+T0 取指 PC=6 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=8000H PC=7 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=IRET | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 断点 1 -> PC，IF=1，用户态 | SPCout PCin IFset | 内总线驱动 1 个
+指令结束 下一条字地址 1 | 外部中断 无
+----
+T0 取指 PC=1 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=7000H PC=2 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=HLT | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 停机 | 无 | 内总线驱动 0 个
+停机
+结果：ACC=0 PC=2 断点=1 响应=1 次 IF=1

@@ -1,0 +1,12 @@
+220 lab.local ESMTP ready
+250 lab.local
+250 OK
+250 OK
+354 邮件内容以单独一行的 . 结束
+250 OK
+221 Bye
+
+信封发件人：a@lab.local
+信封收件人：b@lab.local
+邮件内容：
+.

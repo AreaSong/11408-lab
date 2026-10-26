@@ -1,0 +1,5 @@
+exam 2012-25 answer=B
+claim vm-discrete value=true
+claim vm-only-disk value=false
+claim vm-only-ram value=false
+claim vm-cap value=address-structure

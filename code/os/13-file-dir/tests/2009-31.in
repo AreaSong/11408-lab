@@ -1,0 +1,10 @@
+exam 2009-31
+reset inode
+create /F1 1
+symlink /F2 /F1
+link /F3 /F1
+lstat /F2
+unlink /F1
+lstat /F3
+stat /F2
+stat /F3

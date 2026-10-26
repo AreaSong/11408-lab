@@ -1,0 +1,2 @@
+buf trace single 2 10 4 6
+buf trace double 2 10 4 6

@@ -1,0 +1,11 @@
+group cap 3
+group fill 10 3 20 1
+group stack 10 11
+group total
+group alloc
+group alloc
+group alloc
+group show
+group free 30
+group free 31
+group show

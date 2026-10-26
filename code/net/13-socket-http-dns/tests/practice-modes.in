@@ -1,0 +1,9 @@
+dns 0
+objects 7
+parallel 1
+mode nonpersist
+go
+mode persist
+go
+mode pipeline
+go

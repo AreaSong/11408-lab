@@ -1,0 +1,7 @@
+HELO lab
+MAIL FROM:<a@lab.local>
+RCPT TO:<b@lab.local>
+DATA
+..
+.
+QUIT

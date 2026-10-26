@@ -1,0 +1,13 @@
+new D 5
+edge 0 4 1
+edge 0 1 1
+edge 0 2 1
+edge 1 2 1
+edge 4 3 1
+edge 2 3 1
+topo
+topo-all
+topo-check 0 4 1 2 3
+topo-check 0 1 4 2 3
+topo-check 0 1 2 4 3
+topo-check 0 4 2 1 3

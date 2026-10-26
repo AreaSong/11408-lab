@@ -1,0 +1,16 @@
+fail empty
+kind=U n=3 e=0
+fail loop
+fail dup
+fail range
+fail kind
+kind=D n=2 e=0
+fail kind
+fail format
+fail range
+fail format
+fail range
+fail range
+fail range
+fail format
+fail unknown

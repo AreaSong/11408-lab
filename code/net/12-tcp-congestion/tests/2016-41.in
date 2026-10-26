@@ -1,0 +1,7 @@
+mss 1KB
+buf 20KB
+seq 101
+init 1KB 32KB
+round 3
+send
+ack

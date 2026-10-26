@@ -1,0 +1,74 @@
+kind=U n=5 e=0
+bfs 0
+visit 0
+enq 0 queue=[0]
+deq 0 queue=[]
+scan 0-1 new
+visit 1
+enq 1 queue=[1]
+deq 1 queue=[]
+scan 1-0 seen
+order 0 1
+tree 0-1
+reached=2
+scans=2
+bfs-all
+start 0
+visit 0
+enq 0 queue=[0]
+deq 0 queue=[]
+scan 0-1 new
+visit 1
+enq 1 queue=[1]
+deq 1 queue=[]
+scan 1-0 seen
+order 0 1
+tree 0-1
+start 2
+visit 2
+enq 2 queue=[2]
+deq 2 queue=[]
+scan 2-3 new
+visit 3
+enq 3 queue=[3]
+deq 3 queue=[]
+scan 3-2 seen
+order 2 3
+tree 2-3
+start 4
+visit 4
+enq 4 queue=[4]
+deq 4 queue=[]
+order 4
+tree -
+starts=3
+visits=5
+scans=4
+list-nodes=4
+dfs-all
+start 0
+enter 0
+enter 1
+back 1
+back 0
+order 0 1
+tree 0-1
+start 2
+enter 2
+enter 3
+back 3
+back 2
+order 2 3
+tree 2-3
+start 4
+enter 4
+back 4
+order 4
+tree -
+starts=3
+visits=5
+scans=4
+list-nodes=4
+kind=U
+components=3
+connected=no

@@ -1,0 +1,85 @@
+ins 22 h=1
+path 1:-
+put 1 cmp=1
+ins 43 h=1
+path 1:22 2:-
+put 2 cmp=2
+ins 15 h=1
+path 1:22 2:43 3:-
+put 3 cmp=3
+kind=linear
+m=7 p=7 a=1
+slot - 22 43 15 - - -
+n=3
+alpha=3/7
+success=2/1
+fail=13/7
+den=7
+del 43 h=1
+path 1:22 2:43
+mark 2
+find 15 h=1
+path 1:22 2:# 3:15
+hit pos=3 cmp=3
+ins 22 h=1
+path 1:-
+put 1 cmp=1
+ins 43 h=1
+path 1:22 2:-
+put 2 cmp=2
+ins 15 h=1
+path 1:22 2:43 3:-
+put 3 cmp=3
+kind=linear
+m=7 p=7 a=1
+slot - 22 43 15 - - -
+n=3
+alpha=3/7
+success=2/1
+fail=13/7
+den=7
+erase 43 h=1
+path 1:22 2:43
+wipe 2
+find 15 h=1
+path 1:22 2:-
+miss stop=2 cmp=2
+ins 14 h=1
+path -
+front cmp=1
+ins 1 h=1
+path 14
+front cmp=1
+ins 27 h=1
+path 1 14
+front cmp=1
+kind=chain
+m=13 p=13 a=1
+bucket 0 -
+bucket 1 27 1 14
+bucket 2 -
+bucket 3 -
+bucket 4 -
+bucket 5 -
+bucket 6 -
+bucket 7 -
+bucket 8 -
+bucket 9 -
+bucket 10 -
+bucket 11 -
+bucket 12 -
+n=3
+alpha=3/13
+success=2/1
+fail=3/13
+den=13
+null=off
+del 1 h=1
+path 27 1
+drop cmp=2
+find 14 h=1
+path 27 14
+hit cmp=2
+find 27 h=1
+path 27
+hit cmp=1

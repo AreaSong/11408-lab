@@ -1,0 +1,56 @@
+kind=D n=4 e=0
+kind=D n=4 e=4
+mat
+0 1 1 1
+0 0 0 1
+0 0 0 0
+0 0 0 0
+list
+0: 1 2 3
+1: 3
+2: -
+3: -
+perms=6
+count=5
+0 1 3 2
+0 2 1 3
+0 2 3 1
+0 3 1 2
+0 3 2 1
+dfs 0
+enter 0
+enter 1
+enter 3
+back 3
+back 1
+enter 2
+back 2
+back 0
+order 0 1 3 2
+tree 0>1 1>3 0>2
+reached=4
+scans=4
+dfs-stack 0
+visit 0
+push 0 stack=[0]
+top 0 next=1
+visit 1
+push 1 stack=[0 1]
+top 1 next=3
+visit 3
+push 3 stack=[0 1 3]
+top 3 next=-
+pop 3 stack=[0 1]
+top 1 next=-
+pop 1 stack=[0]
+top 0 next=2
+visit 2
+push 2 stack=[0 2]
+top 2 next=-
+pop 2 stack=[0]
+top 0 next=-
+pop 0 stack=[]
+order 0 1 3 2
+tree 0>1 1>3 0>2
+reached=4
+scans=4

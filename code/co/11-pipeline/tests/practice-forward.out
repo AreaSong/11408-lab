@@ -1,0 +1,29 @@
+【五段流水线 · 有转发 · 指令和数据存储器分开】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  add R1, R2, R3
+I2  sub R4, R1, R5
+I3  and R6, R1, R7
+I4  or R8, R1, R9
+相关：I2 读 R1，I1 写 R1（RAW）
+相关：I3 读 R1，I1 写 R1（RAW）
+相关：I4 读 R1，I1 写 R1（RAW）
+时空图
+时钟    1    2    3    4    5    6    7    8
+I1     IF   ID   EX  MEM   WB               
+I2          IF   ID   EX  MEM   WB          
+I3               IF   ID   EX  MEM   WB     
+I4                    IF   ID   EX  MEM   WB
+提交 4 条，理想 8 个时钟周期，实际 8 个时钟周期
+结果：阻塞 0 拍，共 8 个时钟周期
+【五段流水线 · 有转发 · 指令和数据存储器分开】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  load R1, 0(R2)
+I2  add R3, R1, R4
+相关：I2 读 R1，I1 写 R1（RAW）
+I2 数据阻塞 1 拍（停在 ID）
+时空图
+时钟    1    2    3    4    5    6    7
+I1     IF   ID   EX  MEM   WB          
+I2          IF   ID   ID   EX  MEM   WB
+提交 2 条，理想 6 个时钟周期，实际 7 个时钟周期
+结果：阻塞 1 拍，共 7 个时钟周期

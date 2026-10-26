@@ -1,0 +1,4 @@
+exam 2024-26 answer=A
+claim bitmap-grows value=false
+claim group-grows value=true
+claim chain-grows value=true

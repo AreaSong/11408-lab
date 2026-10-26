@@ -1,0 +1,10 @@
+name www.abc.xyz.com
+server 根
+server com
+server xyz.com
+server abc.xyz.com
+mode iterative
+cache host
+go
+cache none
+go

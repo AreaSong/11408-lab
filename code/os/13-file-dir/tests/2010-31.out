@@ -1,0 +1,21 @@
+exam 2010-31 answer=C
+claim cwd-io value=false
+reset scheme=inode
+mkdir path=/a inode=1 nlink=2
+mkdir path=/a/b inode=2 nlink=2
+create path=/a/b/c inode=3 nlink=1 blocks=1
+step read-dir dir=/ name=a block=0
+step read-inode path=/a
+step read-dir dir=/a name=b block=0
+step read-inode path=/a/b
+step read-dir dir=/a/b name=c block=0
+step read-inode path=/a/b/c
+open pid=0 path=/a/b/c fd=0 reads=6
+step read-dir dir=/ name=a block=0
+step read-inode path=/a
+step read-dir dir=/a name=b block=0
+step read-inode path=/a/b
+cd path=/a/b reads=4
+step read-dir dir=/a/b name=c block=0
+step read-inode path=/a/b/c
+open pid=0 path=c fd=1 reads=2

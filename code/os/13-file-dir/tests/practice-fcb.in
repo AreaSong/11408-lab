@@ -1,0 +1,4 @@
+reset fcb
+mkdir /d
+create /d/b 1
+proc 0 open /d/b r

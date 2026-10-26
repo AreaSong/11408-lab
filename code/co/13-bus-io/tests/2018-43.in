@@ -1,0 +1,3 @@
+query 500 MHz 4 10 2 MB/s 4
+fit 500 MHz 400 40 MB/s 4
+dma 500 MHz 500 40 MB/s 1000

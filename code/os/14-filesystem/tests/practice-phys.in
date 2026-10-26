@@ -1,0 +1,4 @@
+phys all 1
+phys all 50
+phys fat-disk 50
+phys link 5

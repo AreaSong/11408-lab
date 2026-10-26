@@ -1,0 +1,5 @@
+exam 2025-30
+claim mmap-ipc
+claim mmap-virt
+claim mmap-phys
+claim mmap-page-disk

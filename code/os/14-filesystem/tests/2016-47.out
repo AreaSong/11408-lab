@@ -1,0 +1,3 @@
+exam 2016-47 fat-bytes=131072 file-bytes=268435456 slot100=106 slot106=108 clusters=48+106
+fat entries=65536 fat-bytes=131072 file-bytes=268435456
+fat byte=5000 nth=2 cluster=106

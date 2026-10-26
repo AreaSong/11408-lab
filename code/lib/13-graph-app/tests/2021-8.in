@@ -1,0 +1,11 @@
+new D 5
+edge 0 4 6
+edge 0 1 26
+edge 0 2 3
+edge 4 1 15
+edge 4 3 8
+edge 4 2 6
+edge 3 2 6
+edge 3 1 1
+edge 2 1 22
+dijkstra 0

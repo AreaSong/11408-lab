@@ -1,0 +1,61 @@
+ins 19 h=6
+path -
+front cmp=1
+ins 14 h=1
+path -
+front cmp=1
+ins 23 h=10
+path -
+front cmp=1
+ins 1 h=1
+path 14
+front cmp=1
+ins 68 h=3
+path -
+front cmp=1
+ins 20 h=7
+path -
+front cmp=1
+ins 84 h=6
+path 19
+front cmp=1
+ins 27 h=1
+path 1 14
+front cmp=1
+ins 55 h=3
+path 68
+front cmp=1
+ins 11 h=11
+path -
+front cmp=1
+ins 10 h=10
+path 23
+front cmp=1
+ins 79 h=1
+path 27 1 14
+front cmp=1
+kind=chain
+m=13 p=13 a=1
+bucket 0 -
+bucket 1 79 27 1 14
+bucket 2 -
+bucket 3 55 68
+bucket 4 -
+bucket 5 -
+bucket 6 84 19
+bucket 7 20
+bucket 8 -
+bucket 9 -
+bucket 10 10 23
+bucket 11 11
+bucket 12 -
+n=12
+alpha=12/13
+success=7/4
+fail=12/13
+den=13
+null=off
+success=7/4
+fail=25/13
+den=13
+null=on

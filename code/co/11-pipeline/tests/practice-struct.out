@@ -1,0 +1,15 @@
+【五段流水线 · 有转发 · 存储器不分开】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  load R1, [a]
+I2  add R2, R3, R4
+I3  add R5, R6, R7
+I4  add R8, R9, R10
+时空图
+时钟    1    2    3    4    5    6    7    8    9
+I1     IF   ID   EX  MEM   WB                    
+I2          IF   ID   EX  MEM   WB               
+I3               IF   ID   EX  MEM   WB          
+I4                         IF   ID   EX  MEM   WB
+提交 4 条，理想 8 个时钟周期，实际 9 个时钟周期
+结构阻塞 1 拍（取指和数据访存抢同一个存储器）
+结果：阻塞 1 拍，共 9 个时钟周期

@@ -1,0 +1,12 @@
+edges=16
+below=2
+known=7
+known-sum=24
+rest=8
+extra=4
+padded=0
+vertices=11
+max-deg=4
+havel=yes
+deg-sum=32
+seq 4 4 4 3 3 3 3 2 2 2 2

@@ -1,0 +1,7 @@
+avg hit=9/10 walks=1 eat=130
+avg hit=9/10 walks=2 eat=140
+avg hit=1/3 walks=1 eat=530/3
+rate ok=9/10 eat=190
+path kind=tlb-hit ns=110
+path kind=pt-hit ns=210
+path kind=fault ns=100000220

@@ -1,0 +1,6 @@
+reset scheme=fcb
+mkdir path=/d inode=1 nlink=2
+create path=/d/b inode=2 nlink=1 blocks=1
+step read-dir dir=/ name=d block=0
+step read-dir dir=/d name=b block=0
+open pid=0 path=/d/b fd=0 reads=2

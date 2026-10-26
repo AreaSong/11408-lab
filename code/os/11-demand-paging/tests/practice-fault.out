@@ -1,0 +1,80 @@
+vm frames=2
+page=0 disk=100 writable=1
+page=1 disk=200 writable=1
+page=2 disk=300 writable=0
+touch page=0 rw=r result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step frame kind=free id=0
+step load page=0 disk=100 frame=0
+step pte present=1 frame=0 access=1 dirty=0
+step state from=blocked to=ready
+step restart instr=same
+touch page=0 rw=w result=hit frame=0 access=1 dirty=1
+touch page=1 rw=w result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step frame kind=free id=1
+step load page=1 disk=200 frame=1
+step pte present=1 frame=1 access=1 dirty=1
+step state from=blocked to=ready
+step restart instr=same
+touch page=2 rw=w result=abort reason=protect
+touch page=2 rw=r result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step victim page=0 dirty=1 frame=0
+step writeback page=0 disk=100 frame=0
+step load page=2 disk=300 frame=0
+step pte present=1 frame=0 access=1 dirty=0
+step state from=blocked to=ready
+step restart instr=same
+show page=0 defined=yes present=0 frame=- disk=100 access=0 dirty=0 writable=1
+show page=1 defined=yes present=1 frame=1 disk=200 access=1 dirty=1 writable=1
+show page=2 defined=yes present=1 frame=0 disk=300 access=1 dirty=0 writable=0
+touch page=9 rw=r result=abort reason=illegal
+show page=5 defined=no
+vm frames=1
+page=0 disk=10 writable=1
+page=1 disk=11 writable=1
+touch page=0 rw=r result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step frame kind=free id=0
+step load page=0 disk=10 frame=0
+step pte present=1 frame=0 access=1 dirty=0
+step state from=blocked to=ready
+step restart instr=same
+touch page=1 rw=r result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step victim page=0 dirty=0 frame=0
+step discard page=0 frame=0
+step load page=1 disk=11 frame=0
+step pte present=1 frame=0 access=1 dirty=0
+step state from=blocked to=ready
+step restart instr=same
+show page=0 defined=yes present=0 frame=- disk=10 access=0 dirty=0 writable=1
+vm frames=2
+page=3 disk=30 writable=1
+page=4 disk=40 writable=1
+burst count=2 faults=2
+touch page=3 rw=r result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step frame kind=free id=0
+step load page=3 disk=30 frame=0
+step pte present=1 frame=0 access=1 dirty=0
+step state from=blocked to=ready
+step restart instr=same
+touch page=4 rw=w result=fault
+step trap kind=fault where=addr-translate
+step state from=running to=blocked why=disk-io
+step frame kind=free id=1
+step load page=4 disk=40 frame=1
+step pte present=1 frame=1 access=1 dirty=1
+step state from=blocked to=ready
+step restart instr=same
+burst count=2 faults=0
+touch page=3 rw=r result=hit frame=0 access=1 dirty=0
+touch page=9 rw=r result=abort reason=illegal

@@ -1,0 +1,101 @@
+【硬布线】节拍电位和操作码译码相与
+组合逻辑
+PCout = T0
+MARin = T0 + T4·(LDA+STA+ADD+DIV)
+MemR = T1 + T5·(LDA+ADD+DIV)
+MDRinE = T1 + T5·(LDA+ADD+DIV)
+PC+1 = T1
+MDRout = T2 + T6·LDA + T6·ADD + T6·DIV·非零
+IRin = T2
+IRout = T4·(LDA+STA+ADD+DIV+JMP)
+ACCin = T6·LDA + T7·(ADD+DIV·非零)
+ACCout = T5·STA + T7·(ADD+DIV·非零)
+Ain = T6·(ADD+DIV·非零)
+Add = T7·ADD
+Div = T7·DIV·非零
+MDRin = T5·STA
+MDRoutE = T6·STA
+MemW = T6·STA
+PCin = T4·(JMP+IRET)
+SavePC = T4·TRAP + T6·DIV·零
+IFclr = SavePC
+Vec = SavePC
+SPCout = T4·IRET
+IFset = T4·IRET
+T3 译码、NOP 的 T4、HLT 的 T4 不发微命令。取指与操作码无关
+同一拍里 PCout、MDRout、IRout、ACCout、SPCout 最多一个
+PC+1 走增量器，Vec 走中断入口的专用通路，都不占内总线
+真值表
+NOP
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | 无 | 内总线驱动 0 个
+LDA
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | IRout MARin | 内总线驱动 1 个
+T5 执行 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 | MDRout ACCin | 内总线驱动 1 个
+STA
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | IRout MARin | 内总线驱动 1 个
+T5 执行 | ACCout MDRin | 内总线驱动 1 个
+T6 执行 | MDRoutE MemW | 内总线驱动 0 个
+ADD
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | IRout MARin | 内总线驱动 1 个
+T5 执行 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 | MDRout Ain | 内总线驱动 1 个
+T7 执行 | ACCout Add ACCin | 内总线驱动 1 个
+JMP
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | IRout PCin | 内总线驱动 1 个
+TRAP
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | SavePC IFclr Vec | 内总线驱动 0 个
+HLT
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | 无 | 内总线驱动 0 个
+IRET
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | SPCout PCin IFset | 内总线驱动 1 个
+DIV 除数非 0
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | IRout MARin | 内总线驱动 1 个
+T5 执行 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 | MDRout Ain | 内总线驱动 1 个
+T7 执行 | ACCout Div ACCin | 内总线驱动 1 个
+DIV 除数为 0
+T0 取指 | PCout MARin | 内总线驱动 1 个
+T1 取指 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 | MDRout IRin | 内总线驱动 1 个
+T3 译码 | 无 | 内总线驱动 0 个
+T4 执行 | IRout MARin | 内总线驱动 1 个
+T5 执行 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 | SavePC IFclr Vec | 内总线驱动 0 个
+结果：微命令 22 个

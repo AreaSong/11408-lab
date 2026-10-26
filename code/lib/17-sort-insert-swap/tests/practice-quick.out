@@ -1,0 +1,13 @@
+pass 1
+cut 0 7 pivot=49 at=3
+27 38 13 49 76 97 65 49
+pass 2
+cut 0 2 pivot=27 at=1
+13 27 38 49 76 97 65 49
+cut 4 7 pivot=76 at=6
+13 27 38 49 49 65 76 97
+pass 3
+cut 4 5 pivot=49 at=4
+13 27 38 49 49 65 76 97
+cmp=22
+move=17

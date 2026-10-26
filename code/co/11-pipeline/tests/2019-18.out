@@ -1,0 +1,26 @@
+【2019-18】哪一对不存在数据冒险
+RAW 指令对： I1-I3 I1-I4 I2-I3 I3-I4
+I1 写 s2，I3 读 s2。I2 写 s3，I3 读 s3，而且 I2 是 load。I3 写 s2，I4 的 store 读 s2
+I2 写的是 s3，I4 读的是 s2 和 t2，两边没有写后读
+【五段流水线 · 有转发 · 指令和数据存储器分开】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  add s2, s1, s0
+I2  load s3, 0(t2)
+I3  add s2, s2, s3
+I4  store s2, 0(t2)
+相关：I3 读 s2，I1 写 s2（RAW）
+相关：I3 读 s3，I2 写 s3（RAW）
+相关：I4 读 s2，I3 写 s2（RAW，数在 MEM 段才用）
+I3 数据阻塞 1 拍（停在 ID）
+I4 取指堵住 1 拍（前一条还占着 ID，按序不能越过）
+时空图
+时钟    1    2    3    4    5    6    7    8    9
+I1     IF   ID   EX  MEM   WB                    
+I2          IF   ID   EX  MEM   WB               
+I3               IF   ID   ID   EX  MEM   WB     
+I4                    IF   IF   ID   EX  MEM   WB
+提交 4 条，理想 8 个时钟周期，实际 9 个时钟周期
+结果：阻塞 1 拍，共 9 个时钟周期
+有转发时，I1 到 I3 的 ALU 结果能直接送过去。I2 到 I3 是 load-use，I3 仍要停 1 拍
+I4 要的 s2 在 MEM 段才用，I3 的结果可以从 MEM/WB 转过去，I4 自己不再为数据停
+结果：答案 C

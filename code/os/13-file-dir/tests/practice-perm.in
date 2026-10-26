@@ -1,0 +1,20 @@
+reset inode
+mkdir /d
+create /d/a 1
+chmod /d 100
+ls /d
+create /d/b 1
+proc 0 open /d/a r
+chmod /d 200
+create /d/c 1
+chmod /d 400
+ls /d
+proc 0 open /d/a r
+chmod /d 300
+create /d/c 1
+ls /d
+create /f 1
+chmod /f 400
+access /f r
+access /f w
+access /f x

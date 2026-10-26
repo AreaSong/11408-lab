@@ -1,0 +1,7 @@
+方法：GET
+路径：/index.html
+版本：HTTP/1.1
+主机：www.test.edu.cn
+连接：非持续
+Cookie：有
+结果：非持续连接，有 Cookie

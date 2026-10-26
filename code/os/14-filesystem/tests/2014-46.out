@@ -1,0 +1,4 @@
+exam 2014-46 cont=59 fcb=start+length link=31 data=1020 bytes=4380866641920 gb=4080
+insert cont n=200 pos=30 move=29 dir=head reads=59 fcb=start+length
+insert link n=200 pos=30 reads=31
+linkmax data=1020 bytes=4380866641920 gb=4080

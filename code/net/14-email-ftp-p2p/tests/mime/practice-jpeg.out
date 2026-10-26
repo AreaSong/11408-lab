@@ -1,0 +1,12 @@
+正文 4 字节是二进制，不能直接放进 SMTP。
+MIME 不修改 SMTP，只把内容编成 7 位 ASCII。Base64 把 3 个字节收成 4 个可打印字符。
+Base64：/9j/4A==
+From: a@lab.local
+To: b@lab.local
+Subject: photo
+MIME-Version: 1.0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+
+/9j/4A==
+结果：/9j/4A==

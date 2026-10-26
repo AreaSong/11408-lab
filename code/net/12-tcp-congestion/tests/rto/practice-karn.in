@@ -1,0 +1,5 @@
+init 6s
+sample 1.5s
+sample 2.5s
+rexmit
+sample 3s

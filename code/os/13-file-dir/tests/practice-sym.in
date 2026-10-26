@@ -1,0 +1,11 @@
+reset inode
+mkdir /a
+create /a/b 1
+symlink /s /a/b
+link /h /a/b
+proc 0 open /a/b r
+proc 0 open /h r
+proc 0 open /s r
+reset inode
+symlink /loop /loop
+stat /loop

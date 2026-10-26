@@ -1,0 +1,50 @@
+kind=D n=3 e=0
+warn neg
+src 0
+dist 0 4 5
+path - 0 0
+round 1 pick 1 dist=4
+dist 0 4 5
+path - 0 0
+round 2 pick 2 dist=5
+dist 0 4 5
+path - 0 0
+order 1 2
+route 0 0
+route 1 0>1
+route 2 0>2
+k -
+0 4 5
+inf 0 inf
+inf -3 0
+k 0
+0 4 5
+inf 0 inf
+inf -3 0
+k 1
+0 4 5
+inf 0 inf
+inf -3 0
+k 2
+0 2 5
+inf 0 inf
+inf -3 0
+path
+- 2 0
+- - -
+- 2 -
+negcycle no
+kind=D n=2 e=0
+k -
+0 1
+-2 0
+k 0
+0 1
+-2 -1
+k 1
+-1 0
+-3 -2
+path
+- -
+1 -
+negcycle yes

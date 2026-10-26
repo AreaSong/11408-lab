@@ -1,0 +1,14 @@
+n=4
+graphs=64
+formula-disc-max=3
+seen-disc-max=3
+guarantee=4
+guarantee-holds=yes
+sum-even=yes
+n=1
+tree=0
+disc-max=0
+guarantee=0
+complete-u=0
+complete-d=0
+strong-min=0

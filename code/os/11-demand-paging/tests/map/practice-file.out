@@ -1,0 +1,3 @@
+shared mem=bbbb file=bbbb
+private mem=dddd file=cccc
+virt=yes phys=unknown writeback=shared-only

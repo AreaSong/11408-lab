@@ -1,0 +1,21 @@
+add device=d0 type=block ctrl=c0 chan=ch0
+add device=d1 type=block ctrl=c1 chan=ch0
+proc name=A
+proc name=B
+map p=A logic=disk phys=d0
+map p=B logic=disk phys=d1
+ask p=A logic=disk phys=d0
+grant p=A device=d0
+grant p=A controller=c0
+grant p=A channel=ch0
+state p=A stage=io
+ask p=B logic=disk phys=d1
+grant p=B device=d1
+grant p=B controller=c1
+block p=B level=channel queue=ch0
+done p=A
+free p=A channel=ch0
+free p=A controller=c0
+free p=A device=d0
+grant p=B channel=ch0
+state p=B stage=io

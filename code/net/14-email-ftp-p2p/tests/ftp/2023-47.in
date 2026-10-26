@@ -1,0 +1,10 @@
+ask control
+ask data
+ask login
+go
+reset
+mode active
+login
+put F
+quit
+go

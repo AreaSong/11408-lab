@@ -1,0 +1,26 @@
+kind=D n=4 e=0
+bfs-all
+start 0
+visit 0
+enq 0 queue=[0]
+deq 0 queue=[]
+scan 0>1 new
+visit 1
+enq 1 queue=[1]
+scan 0>2 new
+visit 2
+enq 2 queue=[1 2]
+deq 1 queue=[2]
+scan 1>2 seen
+scan 1>3 new
+visit 3
+enq 3 queue=[2 3]
+deq 2 queue=[3]
+scan 2>3 seen
+deq 3 queue=[]
+order 0 1 2 3
+tree 0>1 0>2 1>3
+starts=1
+visits=4
+scans=5
+list-nodes=5

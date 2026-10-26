@@ -1,0 +1,12 @@
+ring cap=3
+put data=a n=1
+put data=b n=2
+put data=c n=3
+result=full
+get data=a n=2
+put data=d n=3
+show n=3 cap=3 order=b,c,d
+get data=b n=2
+get data=c n=1
+get data=d n=0
+result=empty

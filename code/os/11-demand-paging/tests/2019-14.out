@@ -1,0 +1,6 @@
+exam 2019-14 answer=D
+claim fault-restart value=this-instr
+claim fault-next value=false
+claim fault-external value=false
+claim fault-multi value=true
+claim fault-multi-max value=6

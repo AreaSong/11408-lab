@@ -1,0 +1,10 @@
+mount reset fs=2
+mount mkdir fs=0 parent=/ name=mnt
+mount file fs=1 parent=/ name=a
+mount at path=/mnt fs=1
+mount point=/mnt fs=1
+step fs=0 name=mnt cross=1
+cat path=/mnt fs=1 dir=1
+step fs=0 name=mnt cross=1
+step fs=1 name=a cross=0
+cat path=/mnt/a fs=1 data=hi

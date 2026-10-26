@@ -1,0 +1,10 @@
+# 2009-46 三次访问的时间和 1565H 的物理地址；2009-27 最大段长
+trace reset 4096 10 100 100000000 2
+trace map 0 101H 1
+trace map 1 0 0
+trace map 2 254H 1
+trace go 2362H
+trace go 1565H
+trace go 25A5H
+seglen 32 8
+exam 2009-27

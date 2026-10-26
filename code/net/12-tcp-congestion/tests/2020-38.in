@@ -1,0 +1,4 @@
+mss 1KB
+rtt 2ms
+init 8KB 8KB
+until cwnd 32KB

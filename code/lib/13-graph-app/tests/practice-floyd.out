@@ -1,0 +1,22 @@
+kind=D n=3 e=0
+k -
+0 3 8
+inf 0 2
+inf inf 0
+k 0
+0 3 8
+inf 0 2
+inf inf 0
+k 1
+0 3 5
+inf 0 2
+inf inf 0
+k 2
+0 3 5
+inf 0 2
+inf inf 0
+path
+- 0 1
+- - 1
+- - -
+negcycle no

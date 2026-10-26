@@ -1,0 +1,11 @@
+card cont=random,external-frag,hard-extend
+card link=no-random,no-external-frag,pointer-in-block
+card fat=random,resident,no-external-frag
+card index=random,no-external-frag,index-block
+card layout=boot,super,free,inode,data
+card open=sys-one-per-inode,user-per-fd
+card vfs=one-ops-two-fs
+card mount=path-crosses-fs
+claim link-implicit value=true
+claim cont-random value=true
+claim fat-random value=true

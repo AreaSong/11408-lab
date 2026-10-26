@@ -1,0 +1,2 @@
+GET /a.txt HTTP/1.0
+Host: localhost

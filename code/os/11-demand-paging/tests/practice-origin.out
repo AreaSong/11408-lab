@@ -1,0 +1,8 @@
+origin mode=rich kind=clean from=swap evict=discard
+origin mode=rich kind=dirty from=swap evict=swap
+origin mode=poor kind=clean from=file evict=discard
+origin mode=poor kind=dirty-first from=file evict=swap
+origin mode=poor kind=dirty-next from=swap evict=swap
+origin mode=unix kind=fresh from=file evict=discard
+origin mode=unix kind=swapped from=swap evict=swap
+origin mode=unix kind=shared from=memory evict=none

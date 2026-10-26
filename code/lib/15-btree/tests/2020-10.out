@@ -1,0 +1,22 @@
+bt m=4
+ins 5
+put [5]
+ins 6
+put [5 6]
+ins 9
+put [5 6 9]
+ins 13
+split up=6 left=[5] right=[9 13] height=2
+ins 8
+put [8 9 13]
+ins 2
+put [2 5]
+ins 12
+split up=9 left=[8] right=[12 13] height=2
+ins 15
+put [12 13 15]
+tree (6 9 (2 5) (8) (12 13 15))
+height=2 keys=8 nodes=4
+root 6 9
+term 2 5 | 8 | 12 13 15
+chain=no

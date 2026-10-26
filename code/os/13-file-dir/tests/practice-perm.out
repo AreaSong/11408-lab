@@ -1,0 +1,27 @@
+reset scheme=inode
+mkdir path=/d inode=1 nlink=2
+create path=/d/a inode=2 nlink=1 blocks=1
+chmod path=/d mode=100
+ls path=/d result=eacces
+create path=/d/b result=eacces
+step read-dir dir=/ name=d block=0
+step read-inode path=/d
+step read-dir dir=/d name=a block=0
+step read-inode path=/d/a
+open pid=0 path=/d/a fd=0 reads=4
+chmod path=/d mode=200
+create path=/d/c result=eacces
+chmod path=/d mode=400
+ls path=/d
+entry name=a kind=file inode=2
+step read-dir dir=/ name=d block=0
+step read-inode path=/d
+open pid=0 path=/d/a result=eacces reads=2
+chmod path=/d mode=300
+create path=/d/c inode=3 nlink=1 blocks=1
+ls path=/d result=eacces
+create path=/f inode=4 nlink=1 blocks=1
+chmod path=/f mode=400
+access path=/f bit=r result=ok
+access path=/f bit=w result=eacces
+access path=/f bit=x result=eacces

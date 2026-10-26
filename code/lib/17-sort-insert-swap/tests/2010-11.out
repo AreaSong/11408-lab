@@ -1,0 +1,29 @@
+pass 1 swap=2 tail=1
+2 12 16 5 10 88
+pass 2 swap=2 tail=2
+2 12 5 10 16 88
+pass 3 swap=2 tail=3
+2 5 10 12 16 88
+pass 4 swap=0 tail=4
+2 5 10 12 16 88
+stop
+cmp=14
+move=18
+pass 1 swap=3 head=1
+2 5 12 16 88 10
+pass 2 swap=3 head=2
+2 5 10 12 16 88
+pass 3 swap=0 head=3
+2 5 10 12 16 88
+stop
+cmp=12
+move=18
+insert=no
+binary=no
+shell=no
+rise=no
+sink=yes
+quick=no
+merge=no
+radix=no
+letter=A

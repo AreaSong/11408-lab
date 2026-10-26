@@ -1,0 +1,10 @@
+phys kind=cont k=1 reads=1 next=1
+phys kind=link k=1 reads=1 next=1
+phys kind=fat k=1 reads=1 next=1
+phys kind=index k=1 reads=2 next=1
+phys kind=cont k=50 reads=1 next=1
+phys kind=link k=50 reads=50 next=1
+phys kind=fat k=50 reads=1 next=1
+phys kind=index k=50 reads=2 next=1
+phys kind=fat-disk k=50 reads=2 next=1
+phys kind=link k=5 reads=5 next=1

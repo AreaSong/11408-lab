@@ -1,0 +1,12 @@
+new D 2
+edge 0 1 1
+edge 1 0 1
+topo
+topo-all
+new D 3
+edge 0 1 1
+edge 1 2 1
+topo
+topo-all
+topo-check 0 1 2
+topo-check 0 2 1

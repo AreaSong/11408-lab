@@ -1,0 +1,9 @@
+write=8
+seek0=0
+read=408-file
+match=yes
+seek4=4
+tail=file
+closed=yes
+unlinked=yes
+reopen=enoent

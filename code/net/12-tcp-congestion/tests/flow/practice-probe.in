@@ -1,0 +1,11 @@
+mss 100
+cwnd 1000
+buf 300
+seq 1
+send 100
+ack 100
+send 100
+ack 100
+send 100
+ack 100
+probe

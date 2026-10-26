@@ -1,0 +1,9 @@
+class div0
+class page
+class syscall
+class bkpt
+class hw
+class io
+class nmi
+class dma
+class cache

@@ -1,0 +1,41 @@
+fail unknown
+fail format
+fail empty
+fail range
+ins 1 h=1
+path 1:-
+put 1 cmp=1
+ins 1 h=1
+path 1:1
+fail dup
+kind=linear
+m=7 p=7 a=1
+slot - 1 - - - - -
+n=1
+alpha=1/7
+success=1/1
+fail=8/7
+den=7
+ins 3 h=3
+path -
+front cmp=1
+kind=chain
+m=5 p=5 a=1
+bucket 0 -
+bucket 1 -
+bucket 2 -
+bucket 3 3
+bucket 4 -
+n=1
+alpha=1/5
+success=1/1
+fail=1/5
+den=5
+null=off
+fail kind
+del 9 h=4
+path -
+fail miss
+del 3 h=3
+path 3
+drop cmp=1

@@ -1,0 +1,19 @@
+layout blocks=32 block=64 file-bytes=2048 boot=0 super=1 bitmap=2 inode=3-6 data=7-31 inodes=8 free=24
+create name=a ino=1
+result=exist
+write name=a bytes=5 blocks=1
+layout blocks=32 block=64 file-bytes=2048 boot=0 super=1 bitmap=2 inode=3-6 data=7-31 inodes=8 free=23
+open pid=0 name=a fd=0 sys=0 refs=1 mode=r
+open pid=1 name=a fd=0 sys=0 refs=2 mode=r
+sys 0 ino=1 refs=2
+fd pid=0 0 sys=0 off=0 mode=r
+fd pid=1 0 sys=0 off=0 mode=r
+read pid=0 fd=0 n=5 data=hello off=5
+result=eacces
+result=no-file
+layout blocks=32 block=64 file-bytes=2048 boot=0 super=1 bitmap=2 inode=3-6 data=7-31 inodes=8 free=23
+sys none
+fd none
+show name=a ino=1 bytes=5
+open pid=0 name=a fd=0 sys=0 refs=1 mode=r
+read pid=0 fd=0 n=5 data=hello off=5

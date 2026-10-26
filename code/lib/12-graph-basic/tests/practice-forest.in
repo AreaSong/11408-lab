@@ -1,0 +1,7 @@
+new U 5
+edge 0 1
+edge 2 3
+bfs 0
+bfs-all
+dfs-all
+reach

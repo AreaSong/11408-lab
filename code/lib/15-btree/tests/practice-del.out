@@ -1,0 +1,66 @@
+load m=3
+tree (62 (60) (65 78))
+height=2 keys=4 nodes=3
+root 62
+term 60 | 65 78
+chain=no
+del 78
+tree (62 (60) (65))
+height=2 keys=3 nodes=3
+root 62
+term 60 | 65
+chain=no
+load m=3
+tree (20 (10) (30 40))
+height=2 keys=4 nodes=3
+root 20
+term 10 | 30 40
+chain=no
+del 10
+borrow right up=30 down=20
+tree (30 (20) (40))
+height=2 keys=3 nodes=3
+root 30
+term 20 | 40
+chain=no
+load m=3
+tree (20 (10) (30))
+height=2 keys=3 nodes=3
+root 20
+term 10 | 30
+chain=no
+del 10
+merge right down=20
+shrink
+tree (20 30)
+height=1 keys=2 nodes=1
+root 20 30
+term 20 30
+chain=no
+load m=3
+tree (20 (10) (30))
+height=2 keys=3 nodes=3
+root 20
+term 10 | 30
+chain=no
+del 30
+merge left down=20
+shrink
+tree (10 20)
+height=1 keys=2 nodes=1
+root 10 20
+term 10 20
+chain=no
+load m=3
+tree (20 (10 15) (30))
+height=2 keys=4 nodes=3
+root 20
+term 10 15 | 30
+chain=no
+del 20
+pred 15
+tree (15 (10) (30))
+height=2 keys=3 nodes=3
+root 15
+term 10 | 30
+chain=no

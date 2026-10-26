@@ -1,0 +1,23 @@
+new U 3
+edge 0 1 1
+edge 1 2 1
+edge 0 2 1
+prim 0
+prim 1
+kruskal
+new U 4
+edge 0 1 1
+edge 1 2 1
+edge 2 3 1
+edge 0 3 1
+kruskal
+dijkstra 2
+new U 3
+edge 0 2 4
+edge 1 2 3
+edge 0 1 1
+prim 0
+kruskal
+new U 3
+edge 0 1 1
+prim 0

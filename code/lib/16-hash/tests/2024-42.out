@@ -1,0 +1,35 @@
+ins 20 h=5
+path 5:-
+put 5 cmp=1
+ins 3 h=9
+path 9:-
+put 9 cmp=1
+ins 11 h=0
+path 0:-
+put 0 cmp=1
+ins 18 h=10
+path 10:-
+put 10 cmp=1
+ins 9 h=5
+path 5:20 6:-
+put 6 cmp=2
+ins 14 h=9
+path 9:3 10:18 2:-
+put 2 cmp=3
+ins 7 h=10
+path 10:18 0:11 3:-
+put 3 cmp=3
+kind=qpos
+m=11 p=11 a=3
+slot 11 - 14 7 - 20 9 - - 3 18
+n=7
+alpha=7/11
+success=12/7
+fail=29/11
+den=11
+find 14 h=9
+path 9:3 10:18 2:14
+hit pos=2 cmp=3
+miss 8 h=2
+path 2:14 3:7 6:9 0:11 7:-
+miss stop=7 cmp=5

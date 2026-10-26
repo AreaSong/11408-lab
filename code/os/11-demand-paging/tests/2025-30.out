@@ -1,0 +1,5 @@
+exam 2025-30 answer=A note=ii-disputed
+claim mmap-ipc value=true
+claim mmap-virt value=true
+claim mmap-phys value=false
+claim mmap-page-disk value=disputed

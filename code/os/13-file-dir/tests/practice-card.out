@@ -1,0 +1,10 @@
+card fcb=name-and-meta
+card inode=dirent-name-ino meta=separate
+card protect-password=stored-in-system
+card protect-cipher=encrypt-content
+card protect-acl=in-fcb
+claim hard-cross value=false
+claim soft-cross value=true
+claim hard-alive value=true
+claim soft-dangling value=true
+claim root-bypass value=false

@@ -1,0 +1,5 @@
+dns 4
+objects 7
+parallel 1
+mode nonpersist
+go

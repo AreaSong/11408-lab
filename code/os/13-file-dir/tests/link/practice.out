@@ -1,0 +1,11 @@
+create-nlink=1
+soft-same-inode=no
+soft-nlink=1
+target-nlink-after-soft=1
+hard-same-inode=yes
+hard-nlink=2
+target-nlink-after-hard=2
+after-unlink-target hard-nlink=1
+hard-read=data
+soft-read=dangling
+soft-nlink=1

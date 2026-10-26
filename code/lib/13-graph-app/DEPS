@@ -1,1 +1,2 @@
-lib/09-heap-huffman-ufset
+# Kruskal 用小根堆挑最轻的边，再用并查集判环。堆只存 int，顶点编号要编进 key。
+lib/09-heap-huffman-ufset heap.h heap.c ufset.h ufset.c

@@ -1,0 +1,13 @@
+cmp m=4
+btree
+tree (6 9 (2 5) (8) (12 13 15))
+height=2 keys=8 nodes=4
+root 6 9
+term 2 5 | 8 | 12 13 15
+chain=no
+bplus
+tree (6 9 15 (2 5 6) (8 9) (12 13 15))
+height=2 keys=8 nodes=4
+root 6 9 15
+chain=yes
+leaf 2 5 6 | 8 9 | 12 13 15

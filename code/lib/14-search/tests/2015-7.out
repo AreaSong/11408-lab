@@ -1,0 +1,24 @@
+path
+1 500 (-inf,+inf) in
+2 200 (-inf,500) in
+3 450 (200,500) in
+4 180 (200,450) out
+no
+path
+1 500 (-inf,+inf) in
+2 450 (-inf,500) in
+3 200 (-inf,450) in
+4 180 (-inf,200) in
+yes
+path
+1 180 (-inf,+inf) in
+2 500 (180,+inf) in
+3 200 (180,500) in
+4 450 (200,500) in
+yes
+path
+1 180 (-inf,+inf) in
+2 200 (180,+inf) in
+3 500 (200,+inf) in
+4 450 (200,500) in
+yes

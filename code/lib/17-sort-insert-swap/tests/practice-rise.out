@@ -1,0 +1,13 @@
+pass 1 swap=5 head=1
+13 49 38 65 97 76 27 49
+pass 2 swap=5 head=2
+13 27 49 38 65 97 76 49
+pass 3 swap=4 head=3
+13 27 38 49 49 65 97 76
+pass 4 swap=1 head=4
+13 27 38 49 49 65 76 97
+pass 5 swap=0 head=5
+13 27 38 49 49 65 76 97
+stop
+cmp=25
+move=45

@@ -1,0 +1,4 @@
+exam 2018-46
+inode max 4096 4 8 1 1 1
+inode need 4096 4 8 1 1 1 6144
+inode need 4096 4 8 1 1 1 40960

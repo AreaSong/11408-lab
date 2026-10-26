@@ -1,0 +1,58 @@
+ins 7 h=0
+path 0:-
+put 0 cmp=1
+ins 8 h=3
+path 3:-
+put 3 cmp=1
+ins 30 h=6
+path 6:-
+put 6 cmp=1
+ins 11 h=5
+path 5:-
+put 5 cmp=1
+ins 18 h=5
+path 5:11 6:30 7:-
+put 7 cmp=3
+ins 9 h=6
+path 6:30 7:18 8:-
+put 8 cmp=3
+ins 14 h=0
+path 0:7 1:-
+put 1 cmp=2
+kind=linear
+m=10 p=7 a=3
+slot 7 14 - 8 - 11 30 18 9 -
+n=7
+alpha=7/10
+success=12/7
+fail=18/7
+den=7
+ins 7 h=0
+path 0:-
+put 0 cmp=1
+ins 8 h=3
+path 3:-
+put 3 cmp=1
+ins 30 h=6
+path 6:-
+put 6 cmp=1
+ins 11 h=5
+path 5:-
+put 5 cmp=1
+ins 18 h=5
+path 5:11 6:30 7:-
+put 7 cmp=3
+ins 9 h=6
+path 6:30 7:18 8:-
+put 8 cmp=3
+ins 14 h=0
+path 0:7 1:-
+put 1 cmp=2
+kind=linear
+m=16 p=7 a=3
+slot 7 14 - 8 - 11 30 18 9 - - - - - - -
+n=7
+alpha=7/16
+success=12/7
+fail=18/7
+den=7

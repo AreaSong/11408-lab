@@ -1,0 +1,10 @@
+reset inode
+mkdir /a
+mkdir /a/b
+create /a/b/c 1
+proc 0 open /a/b/c r
+read 0 0 0
+read 0 0 0
+readpath /a/b/c 0
+cd /a/b
+proc 0 open c r

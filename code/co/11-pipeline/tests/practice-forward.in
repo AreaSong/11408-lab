@@ -1,0 +1,10 @@
+pipe forward
+add R1, R2, R3
+sub R4, R1, R5
+and R6, R1, R7
+or R8, R1, R9
+.
+pipe forward
+load R1, 0(R2)
+add R3, R1, R4
+.

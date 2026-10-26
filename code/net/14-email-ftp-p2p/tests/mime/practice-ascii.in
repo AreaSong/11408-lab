@@ -1,0 +1,5 @@
+from a@lab.local
+to b@lab.local
+subject hello
+body hello
+go

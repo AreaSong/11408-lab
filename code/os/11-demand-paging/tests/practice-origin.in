@@ -1,0 +1,8 @@
+origin rich clean
+origin rich dirty
+origin poor clean
+origin poor dirty-first
+origin poor dirty-next
+origin unix fresh
+origin unix swapped
+origin unix shared

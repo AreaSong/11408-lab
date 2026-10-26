@@ -1,0 +1,19 @@
+fail empty
+fail format
+fail range
+kind=U n=2 e=0
+fail loop
+fail dup
+fail dup
+fail kind
+fail kind
+heap edges=1
+sort 0-1:4
+next 4 open 0-1
+add 0-1
+edges 0-1
+cost 4
+span yes
+kind=D n=2 e=0
+fail neg
+fail unknown

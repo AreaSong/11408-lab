@@ -1,0 +1,4 @@
+bitmap pos 100 32 1
+bitmap block 2 5 32 1
+bitmap pos 13 16 0
+bitmap block 0 13 16 0

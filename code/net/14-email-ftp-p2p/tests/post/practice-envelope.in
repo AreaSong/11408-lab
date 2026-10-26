@@ -1,0 +1,12 @@
+HELO lab
+MAIL FROM:<a@lab.local>
+RCPT TO:<b@lab.local>
+RCPT TO:<c@lab.local>
+DATA
+From: a@lab.local
+To: b@lab.local
+Subject: hi
+
+hello
+.
+QUIT

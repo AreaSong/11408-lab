@@ -1,0 +1,11 @@
+seq plain 10 20 30 40 50 60
+find 20
+find 1
+seq guard 10 20 30 40 50 60
+find 20
+find 1
+seq order 10 20 30 40 50 60
+find 25
+find 40
+find 5
+find 70

@@ -1,0 +1,11 @@
+group cap=3
+fill block=10 n=3 bottom=20 top=22
+stack n=2 bottom=10 top=11
+total n=5
+alloc block=11 read=0 n=1
+alloc block=10 read=1 n=3
+alloc block=22 read=0 n=2
+stack n=2 bottom=20 top=21
+free block=30 write=0 n=3
+free block=31 write=1 n=1
+stack n=1 bottom=31 top=31

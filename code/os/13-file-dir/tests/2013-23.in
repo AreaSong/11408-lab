@@ -1,0 +1,10 @@
+exam 2013-23
+claim delete-parent
+reset inode
+mkdir /d
+create /d/a 1
+create /d/b 1
+unlink /d/a
+ls /d
+lstat /d
+rmdir /d

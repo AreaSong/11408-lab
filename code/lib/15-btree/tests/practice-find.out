@@ -1,0 +1,88 @@
+bt m=4
+ins 5
+put [5]
+ins 6
+put [5 6]
+ins 9
+put [5 6 9]
+ins 13
+split up=6 left=[5] right=[9 13] height=2
+ins 8
+put [8 9 13]
+ins 2
+put [2 5]
+ins 12
+split up=9 left=[8] right=[12 13] height=2
+ins 15
+put [12 13 15]
+tree (6 9 (2 5) (8) (12 13 15))
+height=2 keys=8 nodes=4
+root 6 9
+term 2 5 | 8 | 12 13 15
+chain=no
+find 6
+node [6 9]
+6 =
+hit term=no
+find 8
+node [6 9]
+6 >
+9 <
+node [8]
+8 =
+hit term=yes
+find 7
+node [6 9]
+6 >
+9 <
+node [8]
+8 <
+miss term=yes
+plus m=4
+ins 5
+put [5]
+ins 6
+put [5 6]
+ins 9
+put [5 6 9]
+ins 13
+put [5 6 9 13]
+ins 8
+split leaf left=[5 6] right=[8 9 13] copy=6 13 height=2
+ins 2
+put [2 5 6]
+ins 12
+put [8 9 12 13]
+ins 15
+split leaf left=[8 9] right=[12 13 15] copy=9 15 height=2
+tree (6 9 15 (2 5 6) (8 9) (12 13 15))
+height=2 keys=8 nodes=4
+root 6 9 15
+chain=yes
+leaf 2 5 6 | 8 9 | 12 13 15
+find 6
+node [6 9 15]
+6 = copy
+node [2 5 6]
+2 >
+5 >
+6 =
+hit leaf=yes
+find 9
+node [6 9 15]
+6 >
+9 = copy
+node [8 9]
+8 >
+9 =
+hit leaf=yes
+find 100
+node [6 9 15]
+6 >
+9 >
+15 >
+node [12 13 15]
+12 >
+13 >
+15 >
+miss leaf=yes

@@ -1,0 +1,10 @@
+insert=no
+binary=no
+shell=yes
+gaps 3 2
+rise=no
+sink=no
+quick=no
+merge=no
+radix=no
+letter=A

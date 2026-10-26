@@ -1,0 +1,7 @@
+mount reset
+mount mkdir 0 / mnt
+mount file 1 / a hi
+mount at /mnt
+mount show
+mount cat /mnt
+mount cat /mnt/a

@@ -1,0 +1,8 @@
+exam 2022-45
+reset inode
+mkdir /stu
+mkdir /stu/course
+create /stu/course/course1 1
+cd /stu/course
+cache data .
+load course1

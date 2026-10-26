@@ -1,0 +1,10 @@
+exam 2009-31 answer=B f2=1 f3=1
+reset scheme=inode
+create path=/F1 inode=1 nlink=1 blocks=1
+symlink path=/F2 inode=2 nlink=1 target-nlink=1
+link path=/F3 inode=1 nlink=2
+lstat path=/F2 kind=symlink inode=2 nlink=1 mode=777 target=/F1
+unlink path=/F1 nlink=1 fcb=kept parent-kept=yes
+lstat path=/F3 kind=file inode=1 nlink=1 mode=644 blocks=1
+stat path=/F2 result=dangling
+stat path=/F3 kind=file inode=1 nlink=1 mode=644 blocks=1

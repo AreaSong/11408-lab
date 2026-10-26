@@ -1,0 +1,3 @@
+insert cont n=200 pos=1 move=0 dir=head reads=1 fcb=start+length
+insert cont n=200 pos=200 move=1 dir=tail reads=3 fcb=length
+insert link n=8 pos=4 reads=5

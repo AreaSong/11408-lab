@@ -1,0 +1,7 @@
+new U 4
+edge 2 3 8
+edge 1 2 8
+edge 0 2 8
+edge 0 3 5
+prim 3
+kruskal

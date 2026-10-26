@@ -1,0 +1,26 @@
+kind=D n=6 e=0
+src 0
+dist 0 5 inf inf 4 inf
+path - 0 - - 0 -
+round 1 pick 4 dist=4
+dist 0 5 inf 11 4 9
+path - 0 - 4 0 4
+round 2 pick 1 dist=5
+dist 0 5 7 11 4 9
+path - 0 1 4 0 4
+round 3 pick 2 dist=7
+dist 0 5 7 11 4 9
+path - 0 1 4 0 4
+round 4 pick 5 dist=9
+dist 0 5 7 11 4 9
+path - 0 1 4 0 4
+round 5 pick 3 dist=11
+dist 0 5 7 11 4 9
+path - 0 1 4 0 4
+order 4 1 2 5 3
+route 0 0
+route 1 0>1
+route 2 0>1>2
+route 3 0>4>3
+route 4 0>4
+route 5 0>4>5

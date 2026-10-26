@@ -1,0 +1,30 @@
+alloc begin fixed-local 5 2 2 2
+alloc ref 1 7
+alloc ref 1 8
+alloc ref 0 1
+alloc ref 0 2
+alloc ref 0 3
+alloc ref 0 1
+alloc ref 0 4
+alloc ref 1 7
+alloc end
+alloc begin var-global 5 2 2 2
+alloc ref 1 7
+alloc ref 1 8
+alloc ref 0 1
+alloc ref 0 2
+alloc ref 0 3
+alloc ref 0 1
+alloc ref 0 4
+alloc ref 1 7
+alloc end
+alloc begin var-local 5 2 2 2
+alloc ref 1 7
+alloc ref 1 8
+alloc ref 0 1
+alloc ref 0 2
+alloc ref 0 3
+alloc ref 0 1
+alloc ref 0 4
+alloc ref 1 7
+alloc end

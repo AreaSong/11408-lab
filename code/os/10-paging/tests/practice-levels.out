@@ -1,0 +1,8 @@
+geom mode=bits va=32 page=4096 pte=8
+offset-bits=12 page-bits=20 pages=1048576 table-bytes=8388608
+per-page=512 level-bits=9 levels=3
+top-bits=2 top-entries=4 top-bytes=32 fits=yes
+tables=1+4+2048 pages-used=2053
+frag page=4096 bytes=5000 pages=2 internal=3192
+frag page=4096 bytes=8192 pages=2 internal=0
+share page-a=3 page-b=7 frame=0x10 pa=0x10008 same=yes

@@ -1,0 +1,6 @@
+mss 1KB
+rtt 200ms
+buf 20KB
+seq 101
+init 1KB 32KB
+stall

@@ -1,0 +1,17 @@
+add device=d0 type=block ctrl=c0 chan=ch0
+result=dup
+result=mismatch
+proc name=A
+result=no-map
+map p=A logic=LP phys=d0
+ask p=A logic=LP phys=d0
+grant p=A device=d0
+grant p=A controller=c0
+grant p=A channel=ch0
+state p=A stage=io
+done p=A
+free p=A channel=ch0
+free p=A controller=c0
+free p=A device=d0
+result=not-io
+result=none

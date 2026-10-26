@@ -1,0 +1,9 @@
+exam 2023-31 answer=B
+claim close-nlink value=false
+reset scheme=inode
+create path=/F inode=1 nlink=1 blocks=1
+step read-dir dir=/ name=F block=0
+step read-inode path=/F
+open pid=0 path=/F fd=0 reads=2
+close pid=0 fd=0 count=0 mem=dropped nlink=1 disk=kept
+lstat path=/F kind=file inode=1 nlink=1 mode=644 blocks=1

@@ -1,0 +1,18 @@
+find 1
+prob 1
+seq order 3 1
+seq plain
+bin floor 2 2
+blk seq bin
+add 2 1
+asl
+blk seq seq
+add 5 1 4
+prob 1
+tree
+add 3
+show
+best seq seq 10 3
+worst floor 0
+fit tree order
+nope

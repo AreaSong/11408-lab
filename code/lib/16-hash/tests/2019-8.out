@@ -1,0 +1,35 @@
+ins 87 h=3
+path 3:-
+put 3 cmp=1
+ins 40 h=5
+path 5:-
+put 5 cmp=1
+ins 30 h=2
+path 2:-
+put 2 cmp=1
+ins 6 h=6
+path 6:-
+put 6 cmp=1
+ins 11 h=4
+path 4:-
+put 4 cmp=1
+ins 22 h=1
+path 1:-
+put 1 cmp=1
+ins 98 h=0
+path 0:-
+put 0 cmp=1
+ins 20 h=6
+path 6:6 7:-
+put 7 cmp=2
+kind=linear
+m=11 p=7 a=1
+slot 98 22 30 87 11 40 6 20 - - -
+n=8
+alpha=8/11
+success=9/8
+fail=6/1
+den=7
+value=6/1
+letter=C
+run=8

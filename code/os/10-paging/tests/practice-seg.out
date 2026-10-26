@@ -1,0 +1,9 @@
+seg offset=999 result=ok pa=0x43e7
+seg offset=1000 result=bound
+segno result=bound-seg
+segno result=bound-off
+segno result=ok pa=0x2000
+segpage result=pt-hit pa=0x5008 visits=3
+segpage result=bound visits=1
+segpage result=fault visits=2
+segpage result=tlb-hit pa=0x5008 visits=1

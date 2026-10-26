@@ -1,0 +1,18 @@
+fail empty
+fail empty
+fail order
+fail range
+fail order
+blk index=seq inner=bin
+fail order
+fail empty
+blk index=seq inner=seq
+fail kind
+fail kind
+fail order
+show b=1 n=3 index=seq inner=seq
+block 1 n=3 min=1 max=5 5 1 4
+fail divide
+fail range
+fail format
+fail unknown

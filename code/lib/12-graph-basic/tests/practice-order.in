@@ -1,0 +1,13 @@
+new U 4
+edge 0 2
+edge 0 1
+edge 1 3
+edge 2 3
+show
+dfs 0
+dfs-stack 0
+dfs-flip 0
+bfs 0
+canon
+dfs 0
+bfs 0

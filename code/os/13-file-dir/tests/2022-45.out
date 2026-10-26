@@ -1,0 +1,14 @@
+exam 2022-45 stu=course:2,doc:10 x=30 reads=2 indirect=1+2
+reset scheme=inode
+mkdir path=/stu inode=1 nlink=2
+mkdir path=/stu/course inode=2 nlink=2
+create path=/stu/course/course1 inode=3 nlink=1 blocks=1
+step read-dir dir=/ name=stu block=0
+step read-inode path=/stu
+step read-dir dir=/stu name=course block=0
+step read-inode path=/stu/course
+cd path=/stu/course reads=4
+cache data path=.
+step read-inode path=/stu/course/course1
+step read-data ino=3 block=0
+load path=course1 reads=2

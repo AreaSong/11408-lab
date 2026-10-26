@@ -1,0 +1,16 @@
+pipe predict
+beq R1, R2, L
+add R3, R4, R5
+add R6, R7, R8
+L: nop
+.
+pipe predict
+beq R1, R2, not
+add R3, R4, R5
+add R6, R7, R8
+.
+pipe slot
+beq R1, R2, L
+add R3, R4, R5
+L: nop
+.

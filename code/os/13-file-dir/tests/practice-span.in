@@ -1,0 +1,9 @@
+reset inode
+mkdir /d
+create /d/a 1
+create /d/b 1
+blocks /d 2
+place /d/b 1
+cd /d
+proc 0 open a r
+proc 0 open b r

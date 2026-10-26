@@ -1,0 +1,9 @@
+name www.other.net
+server 根
+server 顶级
+server 权威
+mode iterative
+cache none
+go
+mode recursive
+go

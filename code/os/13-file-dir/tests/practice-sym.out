@@ -1,0 +1,24 @@
+reset scheme=inode
+mkdir path=/a inode=1 nlink=2
+create path=/a/b inode=2 nlink=1 blocks=1
+symlink path=/s inode=3 nlink=1 target-nlink=1
+link path=/h inode=2 nlink=2
+step read-dir dir=/ name=a block=0
+step read-inode path=/a
+step read-dir dir=/a name=b block=0
+step read-inode path=/a/b
+open pid=0 path=/a/b fd=0 reads=4
+step read-dir dir=/ name=h block=0
+step read-inode path=/h
+open pid=0 path=/h fd=1 reads=2
+step read-dir dir=/ name=s block=0
+step read-inode path=/s
+step read-link path=/s
+step read-dir dir=/ name=a block=0
+step read-inode path=/a
+step read-dir dir=/a name=b block=0
+step read-inode path=/a/b
+open pid=0 path=/s fd=2 reads=7
+reset scheme=inode
+symlink path=/loop inode=1 nlink=1 target-nlink=absent
+stat path=/loop result=loop

@@ -1,0 +1,41 @@
+【微程序】与硬布线同一组控制信号
+μ0 取指 T0 | PCout MARin | 下地址 1
+μ1 取指 T1 | MemR MDRinE PC+1 | 下地址 2
+μ2 取指 T2 | MDRout IRin | 下地址 3
+μ3 译码 T3 | 无 | 下地址 由操作码形成
+μ4 NOP 执行 T4 | 无 | 下地址 0
+μ5 LDA 执行 T4 | IRout MARin | 下地址 6
+μ6 LDA 执行 T5 | MemR MDRinE | 下地址 7
+μ7 LDA 执行 T6 | MDRout ACCin | 下地址 0
+μ8 STA 执行 T4 | IRout MARin | 下地址 9
+μ9 STA 执行 T5 | ACCout MDRin | 下地址 10
+μ10 STA 执行 T6 | MDRoutE MemW | 下地址 0
+μ11 ADD 执行 T4 | IRout MARin | 下地址 12
+μ12 ADD 执行 T5 | MemR MDRinE | 下地址 13
+μ13 ADD 执行 T6 | MDRout Ain | 下地址 14
+μ14 ADD 执行 T7 | ACCout Add ACCin | 下地址 0
+μ15 DIV 执行 T4 | IRout MARin | 下地址 16
+μ16 DIV 执行 T5 | MemR MDRinE | 下地址 17（除数为 0 则 19）
+μ17 DIV 执行 T6 | MDRout Ain | 下地址 18
+μ18 DIV 执行 T7 | ACCout Div ACCin | 下地址 0
+μ19 DIV 除数为 0 执行 T6 | SavePC IFclr Vec | 下地址 0
+μ20 JMP 执行 T4 | IRout PCin | 下地址 0
+μ21 TRAP 执行 T4 | SavePC IFclr Vec | 下地址 0
+μ22 HLT 执行 T4 | 无 | 下地址 停止
+μ23 IRET 执行 T4 | SPCout PCin IFset | 下地址 0
+入口 NOP=4 LDA=5 STA=8 ADD=11 DIV=15 JMP=20 TRAP=21 HLT=22 IRET=23
+微命令 22 个，直接编码操作控制字段 22 位
+判别字段 1 位。为 0 时按下地址走；为 1 且除数为 0 时改走备用下地址
+微指令 24 条，下地址字段至少 5 位
+直接编码字长 22 位 + 1 位 + 5 位 = 28 位
+控存实际容量 24 条 × 28 位/条 = 672 位
+下地址 5 位最多寻址 32 条
+控存最大容量 32 条 × 28 位/条 = 896 位
+字段直接编码：内总线输出 5 个互斥微命令，字段 3 位
+ALU 的 Add 与 Div 互斥，字段 2 位。MemR 与 MemW 互斥，字段 2 位
+MDRoutE 走数据总线，可以和某一次内总线输出同时有效，留在直接编码里
+其余 13 个微命令直接编码 13 位，操作控制字段 20 位，比直接编码少 2 位
+字段编码字长 20 位 + 1 位 + 5 位 = 26 位
+控存实际容量 24 条 × 26 位/条 = 624 位
+控存最大容量 32 条 × 26 位/条 = 832 位
+结果：直接编码字长 28 位，实际容量 672 位，字段编码字长 26 位，实际容量 624 位

@@ -1,0 +1,7 @@
+方法：GET
+路径：/
+版本：HTTP/1.1
+主机：localhost
+连接：持续
+Cookie：无
+结果：持续连接，无 Cookie

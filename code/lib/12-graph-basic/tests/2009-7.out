@@ -1,0 +1,9 @@
+n=3
+graphs=8
+connected=4
+sum-even=yes
+i-always=yes
+ii-always=no
+iii-always=no
+conn-e-gt=1
+conn-deg1=3

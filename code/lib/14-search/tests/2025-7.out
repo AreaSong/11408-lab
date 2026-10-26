@@ -1,0 +1,6 @@
+best n=400 index=seq inner=seq
+s=8 b=50 asl=30/1=30.00
+s=10 b=40 asl=26/1=26.00
+s=20 b=20 asl=21/1=21.00
+s=25 b=16 asl=43/2=21.50
+pick s=20 asl=21/1=21.00 tie=-

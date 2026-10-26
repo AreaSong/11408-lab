@@ -1,0 +1,24 @@
+exam 2020-23 answer=B
+claim sys-one value=true
+claim user-same value=false
+claim close-always-drop value=false
+reset scheme=inode
+create path=/F inode=1 nlink=1 blocks=1
+step read-dir dir=/ name=F block=0
+step read-inode path=/F
+open pid=0 path=/F fd=0 reads=2
+step read-dir dir=/ name=F block=0
+step read-inode path=/F
+open pid=1 path=/F fd=0 reads=2
+step read-data ino=1 block=0
+read pid=0 fd=0 block=0 reads=1 offset=1
+tables sys=1
+sys ino=1 count=2 mode=644 blocks=1
+user pid=0 fd=0 ino=1 acc=r offset=1
+user pid=1 fd=0 ino=1 acc=w offset=0
+read pid=1 fd=0 result=eacces
+close pid=0 fd=0 count=1 mem=kept nlink=1 disk=kept
+tables sys=1
+sys ino=1 count=1 mode=644 blocks=1
+user pid=1 fd=0 ino=1 acc=w offset=0
+close pid=1 fd=0 count=0 mem=dropped nlink=1 disk=kept

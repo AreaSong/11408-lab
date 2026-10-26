@@ -1,0 +1,6 @@
+geom mode=pages va=26 page=1024 pte=2
+offset-bits=10 page-bits=16 pages=65536 table-bytes=131072
+per-page=512 level-bits=9 levels=2
+top-bits=7 top-entries=128 top-bytes=256 fits=yes
+tables=1+128 pages-used=129
+exam 2010-29 answer=B

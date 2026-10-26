@@ -1,0 +1,4 @@
+file 300 Mb
+server 30 Mbps
+peer 10 Mbps 3 Mbps
+go

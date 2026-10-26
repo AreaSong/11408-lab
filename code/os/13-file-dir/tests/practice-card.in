@@ -1,0 +1,6 @@
+card
+claim hard-cross
+claim soft-cross
+claim hard-alive
+claim soft-dangling
+claim root-bypass

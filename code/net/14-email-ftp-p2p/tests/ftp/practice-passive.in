@@ -1,0 +1,5 @@
+mode passive
+login
+get a.txt
+quit
+go

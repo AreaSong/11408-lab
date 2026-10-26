@@ -1,0 +1,16 @@
+reset scheme=inode
+mkdir path=/d inode=1 nlink=2
+create path=/d/a inode=2 nlink=1 blocks=1
+create path=/d/b inode=3 nlink=1 blocks=1
+blocks path=/d dir-blocks=2
+place path=/d/b block=1
+step read-dir dir=/ name=d block=0
+step read-inode path=/d
+cd path=/d reads=2
+step read-dir dir=/d name=a block=0
+step read-inode path=/d/a
+open pid=0 path=a fd=0 reads=2
+step read-dir dir=/d block=0
+step read-dir dir=/d name=b block=1
+step read-inode path=/d/b
+open pid=0 path=b fd=1 reads=3

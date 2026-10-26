@@ -1,0 +1,17 @@
+迭代查询，本地域名服务器缓存。域名 www.abc.xyz.com。
+1. 主机 → 本地域名服务器：查询 www.abc.xyz.com
+2. 本地域名服务器 → 主机：回答 IP（本地缓存）
+查询 1 条，响应 1 条。
+结果：主机 1 条，本地域名服务器 0 条，共 2 条
+
+迭代查询，从 com 继续。域名 www.abc.xyz.com。
+1. 主机 → 本地域名服务器：查询 www.abc.xyz.com
+2. 本地域名服务器 → com：查询 www.abc.xyz.com
+3. com → 本地域名服务器：去问 xyz.com
+4. 本地域名服务器 → xyz.com：查询 www.abc.xyz.com
+5. xyz.com → 本地域名服务器：去问 abc.xyz.com
+6. 本地域名服务器 → abc.xyz.com：查询 www.abc.xyz.com
+7. abc.xyz.com → 本地域名服务器：回答 IP
+8. 本地域名服务器 → 主机：回答 IP
+查询 4 条，响应 4 条。
+结果：主机 1 条，本地域名服务器 3 条，共 8 条

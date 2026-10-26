@@ -1,0 +1,9 @@
+bt 2 1
+bound 5 0
+choice min 5 2
+bt 4 1 2
+ins 1
+del 9
+find 3
+load 3 ( 10 ( 20 ) ( 5 ) )
+show

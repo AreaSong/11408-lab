@@ -1,0 +1,3 @@
+trait
+btree link=no seq=no data=all hit_internal=yes
+bplus link=yes seq=yes data=leaf hit_internal=no

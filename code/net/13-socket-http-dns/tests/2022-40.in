@@ -1,0 +1,8 @@
+rtt 10ms
+dns 0
+objects 1
+parallel 1
+mode persist
+html 1
+obj 3
+go

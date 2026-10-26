@@ -1,0 +1,68 @@
+theory linear n=7 m=10
+alpha=7/10
+formula_succ=13/6
+formula_fail=109/18
+theory linear n=14 m=20
+alpha=7/10
+formula_succ=13/6
+formula_fail=109/18
+theory chain n=7 m=10
+alpha=7/10
+formula_succ=27/20
+formula_fail=1.1966
+theory chain n=14 m=20
+alpha=7/10
+formula_succ=27/20
+formula_fail=1.1966
+ins 1 h=1
+path 1:-
+put 1 cmp=1
+ins 12 h=1
+path 1:1 2:-
+put 2 cmp=2
+ins 23 h=1
+path 1:1 2:12 3:-
+put 3 cmp=3
+ins 8 h=8
+path 8:-
+put 8 cmp=1
+ins 19 h=8
+path 8:8 9:-
+put 9 cmp=2
+kind=linear
+m=11 p=11 a=1
+slot - 1 12 23 - - - - 8 19 -
+n=5
+alpha=5/11
+success=9/5
+fail=20/11
+den=11
+ins 1 h=1
+path 1:-
+put 1 cmp=1
+ins 12 h=12
+path 12:-
+put 12 cmp=1
+ins 23 h=0
+path 0:-
+put 0 cmp=1
+ins 8 h=8
+path 8:-
+put 8 cmp=1
+ins 19 h=19
+path 19:-
+put 19 cmp=1
+kind=linear
+m=23 p=23 a=1
+slot 23 1 - - - - - - 8 - - - 12 - - - - - - 19 - - -
+n=5
+alpha=5/23
+success=1/1
+fail=29/23
+den=23
+grow linear p=5 n=6 m=8
+alpha=3/4
+success=5/3
+fail=5/1
+formula_succ=5/2
+formula_fail=17/2

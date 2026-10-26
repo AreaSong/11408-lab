@@ -1,0 +1,16 @@
+add device=p0 type=char ctrl=c0 chan=ch0
+add device=p1 type=char ctrl=c1 chan=ch1
+proc name=A
+proc name=B
+map p=A logic=LP phys=p0
+map p=B logic=LP phys=p1
+ask p=A logic=LP phys=p0
+grant p=A device=p0
+grant p=A controller=c0
+grant p=A channel=ch0
+state p=A stage=io
+ask p=B logic=LP phys=p1
+grant p=B device=p1
+grant p=B controller=c1
+grant p=B channel=ch1
+state p=B stage=io

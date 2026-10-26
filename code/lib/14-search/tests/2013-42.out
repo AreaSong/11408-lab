@@ -1,0 +1,17 @@
+bin floor n=4
+key 1 2 3 4
+root=2
+depth 2 1 2 3
+node i=1 key=1 depth=2 left=0 right=0
+node i=2 key=2 depth=1 left=1 right=3
+node i=3 key=3 depth=2 left=0 right=4
+node i=4 key=4 depth=3 left=0 right=0
+fail 2 2 2 3 3
+height=3
+asl succ=2/1=2.00 fail=12/5=2.40 weight=no
+asl succ=11/5=2.20 fail=12/5=2.40 weight=yes
+seq plain n=4
+cmp 1 2 3 4
+gap 4
+asl succ=5/2=2.50 fail=4/1=4.00 weight=no
+asl succ=21/10=2.10 fail=4/1=4.00 weight=yes

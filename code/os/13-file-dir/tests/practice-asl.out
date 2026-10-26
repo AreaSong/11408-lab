@@ -1,0 +1,29 @@
+seq n=10000 cmp=10001/2
+index n=10000 cmp=123631/10000
+isam-seq n=10000 groups=100 cmp=101/1
+isam-bin n=10000 groups=100 cmp=563/10
+seq n=10 cmp=11/2
+index n=10 cmp=29/10
+isam-seq n=10 groups=3 size=4+3+3 cmp=41/10
+isam-bin n=10 groups=3 size=4+3+3 cmp=39/10
+seq n=1 cmp=1/1
+step key=1
+step key=2
+step key=3
+step key=4
+step key=5
+step key=6
+walk org=seq n=10 key=6 cmp=6
+step mid=5
+step mid=8
+step mid=6
+walk org=index n=10 key=6 cmp=3
+step index max=4
+step index max=7
+step group key=5
+step group key=6
+walk org=isam-seq n=10 groups=3 key=6 cmp=4
+step index mid=2 max=7
+step group key=5
+step group key=6
+walk org=isam-bin n=10 groups=3 key=6 cmp=3

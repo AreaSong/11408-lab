@@ -1,0 +1,18 @@
+edge 0 1
+new U 3
+edge 0 0
+edge 1 2
+edge 1 2
+edge 3 0
+cross
+new D 2
+edge 0 1
+multi
+dfs x
+dfs 5
+new X 2
+new U 0
+enum 7
+bound 0
+least 16 2 4
+nope

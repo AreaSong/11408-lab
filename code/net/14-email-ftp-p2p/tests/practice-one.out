@@ -1,0 +1,12 @@
+单位约定：k、M、G 按 10^3、10^6、10^9 计算；1 B = 8 bit。
+文件 F = 300000000 bit = 300 Mbit（M = 10^6）。
+服务器上传 us = 30000000 bps = 30 Mbps（M = 10^6）。
+对等方 N = 1。最慢下载 dmin = 10000000 bps = 10 Mbps（M = 10^6）。上传之和 Σui = 3000000 bps = 3 Mbps（M = 10^6）。
+C/S：NF/us = 1 × 300000000 bit / 30000000 bit/s = 10 s。
+F/dmin = 300000000 bit / 10000000 bit/s = 30 s。
+Dcs = max(NF/us, F/dmin) = 30 s。瓶颈是最慢对等方的下载。
+P2P：服务器至少把每个比特送出一次，F/us = 10 s。
+F/dmin = 30 s。
+总上传 us+Σui = 33000000 bit/s。NF/(us+Σui) = 100/11 s（约 9.091 s）。
+Dp2p = max(F/us, F/dmin, NF/(us+Σui)) = 30 s。瓶颈是最慢对等方的下载。
+结果：C/S 30 s，P2P 30 s

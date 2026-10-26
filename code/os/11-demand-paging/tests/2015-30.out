@@ -1,0 +1,5 @@
+exam 2015-30 answer=C
+combo name=fixed-local result=ok
+combo name=var-global result=ok
+combo name=var-local result=ok
+combo name=fixed-global result=illegal

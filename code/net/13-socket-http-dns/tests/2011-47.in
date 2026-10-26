@@ -1,0 +1,6 @@
+dns 0
+objects 5
+parallel 1
+mode persist
+from request
+go

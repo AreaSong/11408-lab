@@ -1,0 +1,20 @@
+ins 1 h=1
+path 1:-
+put 1 cmp=1
+ins 14 h=1
+path 1:1 2:-
+put 2 cmp=2
+kind=double
+m=13 p=13 a=1 q=5
+slot - 1 14 - - - - - - - - - -
+n=2
+alpha=2/13
+success=3/2
+fail=depend
+den=13
+miss 27 h=1
+path 1:1 4:-
+miss stop=4 cmp=2
+miss 40 h=1
+path 1:1 6:-
+miss stop=6 cmp=2

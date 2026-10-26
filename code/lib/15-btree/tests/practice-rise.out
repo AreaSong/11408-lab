@@ -1,0 +1,28 @@
+bt m=5
+ins 10
+put [10]
+ins 20
+put [10 20]
+ins 30
+put [10 20 30]
+ins 40
+put [10 20 30 40]
+ins 25
+split up=25 left=[10 20] right=[30 40] height=2
+tree (25 (10 20) (30 40))
+height=2 keys=5 nodes=3
+root 25
+term 10 20 | 30 40
+chain=no
+bt m=3
+ins 10
+put [10]
+ins 30
+put [10 30]
+ins 20
+split up=20 left=[10] right=[30] height=2
+tree (20 (10) (30))
+height=2 keys=3 nodes=3
+root 20
+term 10 | 30
+chain=no

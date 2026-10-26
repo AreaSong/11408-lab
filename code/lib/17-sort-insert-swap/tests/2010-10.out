@@ -1,0 +1,13 @@
+sorted 1 2 3 4 5 6 7 8
+parts 7 7 7 7
+depth 8 8 8 8
+opt_parts=7
+opt_depth=2
+mixed 49 38 65 97 76 13 27 49
+parts 4 4 4 4
+depth 4 4 4 4
+opt_parts=4
+opt_depth=3
+order_same=yes
+data_same=no
+letter=D

@@ -1,0 +1,9 @@
+reset scheme=inode
+create path=/F inode=1 nlink=1 blocks=1
+step read-dir dir=/ name=F block=0
+step read-inode path=/F
+open pid=0 path=/F fd=0 reads=2
+unlink path=/F nlink=0 fcb=busy parent-kept=yes
+lstat path=/F result=not-found
+close pid=0 fd=0 count=0 mem=dropped nlink=0 disk=freed
+lstat path=/F result=not-found

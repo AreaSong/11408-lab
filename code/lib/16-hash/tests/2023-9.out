@@ -1,0 +1,31 @@
+bias=4
+ins 2022 h=1
+path 1:-
+put 1 cmp=1
+ins 12 h=1
+path 1:2022 2:-
+put 2 cmp=2
+ins 25 h=4
+path 4:-
+put 4 cmp=1
+kind=linear
+m=5 p=5 a=1 b=4
+slot - 2022 12 - 25
+n=3
+alpha=3/5
+success=4/3
+fail=9/5
+den=5
+del 25 h=4
+path 4:25
+mark 4
+kind=linear
+m=5 p=5 a=1 b=4
+slot - 2022 12 - #
+n=2
+alpha=2/5
+success=3/2
+fail=9/5
+den=5
+value=9/5
+letter=C

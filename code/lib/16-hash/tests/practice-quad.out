@@ -1,0 +1,60 @@
+ins 12 h=1
+path 1:-
+put 1 cmp=1
+ins 23 h=1
+path 1:12 2:-
+put 2 cmp=2
+ins 34 h=1
+path 1:12 2:23 0:-
+put 0 cmp=3
+ins 45 h=1
+path 1:12 2:23 0:34 5:-
+put 5 cmp=4
+kind=quad
+m=11 p=11 a=1
+slot 34 12 23 - - 45 - - - - -
+n=4
+alpha=4/11
+success=5/2
+fail=19/11
+den=11
+ins 12 h=1
+path 1:-
+put 1 cmp=1
+ins 23 h=1
+path 1:12 2:-
+put 2 cmp=2
+ins 34 h=1
+path 1:12 2:23 5:-
+put 5 cmp=3
+ins 45 h=1
+path 1:12 2:23 5:34 10:-
+put 10 cmp=4
+kind=qpos
+m=11 p=11 a=1
+slot - 12 23 - - 34 - - - - 45
+n=4
+alpha=4/11
+success=5/2
+fail=18/11
+den=11
+ins 0 h=0
+path 0:-
+put 0 cmp=1
+ins 5 h=0
+path 0:0 1:-
+put 1 cmp=2
+ins 10 h=0
+path 0:0 1:5 4:-
+put 4 cmp=3
+ins 15 h=0
+path 0:0 1:5 4:10
+fail full
+kind=quad
+m=5 p=5 a=1
+slot 0 5 - - 10
+n=3
+alpha=3/5
+success=2/1
+fail=2/1
+den=5

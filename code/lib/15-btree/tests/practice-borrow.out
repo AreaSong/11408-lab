@@ -1,0 +1,13 @@
+load m=3
+tree (65 (60 62) (78))
+height=2 keys=4 nodes=3
+root 65
+term 60 62 | 78
+chain=no
+del 78
+borrow left up=62 down=65
+tree (62 (60) (65))
+height=2 keys=3 nodes=3
+root 62
+term 60 | 65
+chain=no

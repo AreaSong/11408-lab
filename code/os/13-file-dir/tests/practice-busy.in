@@ -1,0 +1,7 @@
+reset inode
+create /F 1
+proc 0 open /F r
+unlink /F
+lstat /F
+proc 0 close 0
+lstat /F

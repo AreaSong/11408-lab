@@ -1,0 +1,5 @@
+file 15 Gb
+server 30 Mbps
+peer 2 Mbps 500 kbps
+count 10
+go

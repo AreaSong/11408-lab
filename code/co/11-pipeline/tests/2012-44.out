@@ -1,0 +1,55 @@
+【2012-44】
+(1) x = -513，16 位补码：513 = 0201H，取反加一得 FDFFH
+算术右移 1 位，空出的高位补符号 1，得到 FEFFH。移位过程在第 02 关
+(2) 4 条指令、5 段、没有任何阻塞：周期数 = 5 + 4 - 1 = 8
+(3) x = a + b。ADD Rs, Rd 的功能是 (Rs)+(Rd)→Rd，所以和写在 R2，STORE 用 R2
+数据 Cache 和指令 Cache 是分开的，没有结构冒险。没有转发，而且同一拍不能又读又写
+【五段流水线 · 无转发 · 同拍不能读写 · 指令和数据存储器分开】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  load R1, [a]
+I2  load R2, [b]
+I3  add R1, R2
+I4  store R2, [x]
+相关：I3 读 R1，I1 写 R1（RAW）
+相关：I3 读 R2，I2 写 R2（RAW）
+相关：I4 读 R2，I3 写 R2（RAW）
+I3 数据阻塞 3 拍（停在 ID）
+I4 数据阻塞 3 拍（停在 ID）
+I4 取指堵住 3 拍（前一条还占着 ID，按序不能越过）
+时空图
+时钟    1    2    3    4    5    6    7    8    9   10   11   12   13   14
+I1     IF   ID   EX  MEM   WB                                             
+I2          IF   ID   EX  MEM   WB                                        
+I3               IF   ID   ID   ID   ID   EX  MEM   WB                    
+I4                    IF   IF   IF   IF   ID   ID   ID   ID   EX  MEM   WB
+提交 4 条，理想 8 个时钟周期，实际 14 个时钟周期
+结果：阻塞 6 拍，共 14 个时钟周期
+I3 的 ID 要等 I1、I2 都写回，并且写回的那一拍还不能读
+I4 的 IF 堵住，是因为 I3 还停在 ID，按序发射，下一条不能先取进来覆盖它
+(4) x = x*2+a。SHL 把 R1 左移，ADD R1, R2 把和写入 R2，再 STORE R2
+【五段流水线 · 无转发 · 同拍不能读写 · 指令和数据存储器分开】
+约定：IF 取指，ID 译码并读寄存器，EX 执行或算地址，MEM 访存，WB 写回。
+I1  load R1, [x]
+I2  load R2, [a]
+I3  shl R1
+I4  add R1, R2
+I5  store R2, [x]
+相关：I3 读 R1，I1 写 R1（RAW）
+相关：I4 读 R1，I3 写 R1（RAW）
+相关：I4 读 R2，I2 写 R2（RAW）
+相关：I5 读 R2，I4 写 R2（RAW）
+I3 数据阻塞 2 拍（停在 ID）
+I4 数据阻塞 3 拍（停在 ID）
+I4 取指堵住 2 拍（前一条还占着 ID，按序不能越过）
+I5 数据阻塞 3 拍（停在 ID）
+I5 取指堵住 3 拍（前一条还占着 ID，按序不能越过）
+时空图
+时钟    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17
+I1     IF   ID   EX  MEM   WB                                                            
+I2          IF   ID   EX  MEM   WB                                                       
+I3               IF   ID   ID   ID   EX  MEM   WB                                        
+I4                    IF   IF   IF   ID   ID   ID   ID   EX  MEM   WB                    
+I5                                   IF   IF   IF   IF   ID   ID   ID   ID   EX  MEM   WB
+提交 5 条，理想 9 个时钟周期，实际 17 个时钟周期
+结果：阻塞 8 拍，共 17 个时钟周期
+结果：无阻塞 8 个时钟周期，x=a+b 共 14 个时钟周期，x=x*2+a 共 17 个时钟周期

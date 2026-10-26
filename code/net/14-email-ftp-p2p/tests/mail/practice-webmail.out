@@ -1,0 +1,2 @@
+Web 邮箱。用户和自己的邮件服务器之间换成 HTTP，两台邮件服务器之间仍是 SMTP。
+结果：HTTP、SMTP、HTTP

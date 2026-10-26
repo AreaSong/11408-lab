@@ -1,0 +1,16 @@
+image new /tmp/lab14-practice-image.img 32
+create a
+create a
+write a hello
+image layout
+proc 0 open a r
+proc 1 open a r
+tables
+proc 0 read 0 5
+proc 0 write 0 x
+show missing
+image open /tmp/lab14-practice-image.img
+tables
+show a
+proc 0 open a r
+proc 0 read 0 5

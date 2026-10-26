@@ -1,0 +1,11 @@
+card
+fault kind=fault detect=cpu-on-translate handler=os restart=this-instr
+multi max=6 parts=fetch+src+dst
+fields present=in-memory access=for-replace dirty=writeback disk=swap-or-file
+state on-fault=running-to-blocked io-done=blocked-to-ready
+alloc fixed-local=ok var-global=ok var-local=ok fixed-global=illegal
+fetch demand=one-page prep=neighbors-if-free wrong-prep=may-fault-more
+origin rich=copy-then-swap poor=clean-file dirty-later-swap
+origin unix=fresh-file swapped-from-swap shared-if-resident
+mmap where=virtual ipc=shared-file writeback=shared-only item-ii=disputed
+vm base=discrete max=address-structure

@@ -1,0 +1,10 @@
+spool reset 3
+spool submit A j1
+spool submit B j2
+spool submit C j3
+spool submit D j4
+spool show
+spool print
+spool show
+spool finish
+spool print

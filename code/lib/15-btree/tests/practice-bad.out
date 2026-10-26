@@ -1,0 +1,28 @@
+fail range
+fail range
+fail format
+bt m=4
+ins 1
+put [1]
+ins 2
+put [1 2]
+tree (1 2)
+height=1 keys=2 nodes=1
+root 1 2
+term 1 2
+chain=no
+ins 1
+fail dup
+del 9
+fail miss
+find 3
+node [1 2]
+1 >
+2 >
+miss term=yes
+fail bad
+tree (1 2)
+height=1 keys=2 nodes=1
+root 1 2
+term 1 2
+chain=no

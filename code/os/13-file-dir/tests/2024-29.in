@@ -1,0 +1,7 @@
+exam 2024-29
+claim open-name
+claim read-name
+reset inode
+create /F 1
+proc 0 open /F r
+read 0 0 0

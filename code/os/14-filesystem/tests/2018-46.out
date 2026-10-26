@@ -1,0 +1,4 @@
+exam 2018-46 max-bytes=4402345705472 expr=32KB+4MB+4GB+4TB inodes=67108864 data-files=268435456 images=67108864 f1-addr=0 f2-addr=1 same=no
+max blocks=1074791432 bytes=4402345705472 expr=32KB+4MB+4GB+4TB
+need bytes=6144 blocks=2 level=direct indirect=none
+need bytes=40960 blocks=10 level=single indirect=1

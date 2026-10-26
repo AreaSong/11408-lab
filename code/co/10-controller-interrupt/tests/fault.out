@@ -1,0 +1,103 @@
+【除零故障】按字编址
+初态 IF=1 用户态 入口=6
+外部中断 无
+0 LDA 20
+1 DIV 21
+2 STA 22
+3 HLT
+6 STA 24
+7 LDA 23
+8 STA 21
+9 LDA 24
+10 IRET
+M[20]=8
+M[21]=0
+M[23]=2
+----
+T0 取指 PC=0 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=1014H PC=1 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=LDA 20 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=20 | IRout MARin | 内总线驱动 1 个
+T5 执行 MDR=8 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 MDR -> ACC=8 | MDRout ACCin | 内总线驱动 1 个
+指令结束 下一条字地址 1 | 外部中断 无
+----
+T0 取指 PC=1 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=4015H PC=2 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=DIV 21 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=21 | IRout MARin | 内总线驱动 1 个
+T5 执行 MDR=0 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 除数为 0 | SavePC IFclr Vec | 内总线驱动 0 个
+异常 故障 除零 | 响应在本条指令执行过程中 | 断点 1（取指后 PC 已是 2） | IF=0 内核态 | 入口 6 -> PC
+----
+T0 取指 PC=6 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=2018H PC=7 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=STA 24 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=24 | IRout MARin | 内总线驱动 1 个
+T5 执行 ACC=8 -> MDR | ACCout MDRin | 内总线驱动 1 个
+T6 执行 M[24]=8 | MDRoutE MemW | 内总线驱动 0 个
+指令结束 下一条字地址 7 | 外部中断 无
+----
+T0 取指 PC=7 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=1017H PC=8 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=LDA 23 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=23 | IRout MARin | 内总线驱动 1 个
+T5 执行 MDR=2 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 MDR -> ACC=2 | MDRout ACCin | 内总线驱动 1 个
+指令结束 下一条字地址 8 | 外部中断 无
+----
+T0 取指 PC=8 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=2015H PC=9 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=STA 21 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=21 | IRout MARin | 内总线驱动 1 个
+T5 执行 ACC=2 -> MDR | ACCout MDRin | 内总线驱动 1 个
+T6 执行 M[21]=2 | MDRoutE MemW | 内总线驱动 0 个
+指令结束 下一条字地址 9 | 外部中断 无
+----
+T0 取指 PC=9 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=1018H PC=10 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=LDA 24 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=24 | IRout MARin | 内总线驱动 1 个
+T5 执行 MDR=8 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 MDR -> ACC=8 | MDRout ACCin | 内总线驱动 1 个
+指令结束 下一条字地址 10 | 外部中断 无
+----
+T0 取指 PC=10 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=8000H PC=11 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=IRET | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 断点 1 -> PC，IF=1，用户态 | SPCout PCin IFset | 内总线驱动 1 个
+指令结束 下一条字地址 1 | 外部中断 无
+----
+T0 取指 PC=1 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=4015H PC=2 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=DIV 21 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=21 | IRout MARin | 内总线驱动 1 个
+T5 执行 MDR=2 | MemR MDRinE | 内总线驱动 0 个
+T6 执行 除数 2 送入 A | MDRout Ain | 内总线驱动 1 个
+T7 执行 商 8/2=4 -> ACC | ACCout Div ACCin | 内总线驱动 1 个
+指令结束 下一条字地址 2 | 外部中断 无
+----
+T0 取指 PC=2 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=2016H PC=3 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=STA 22 | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 MAR=22 | IRout MARin | 内总线驱动 1 个
+T5 执行 ACC=4 -> MDR | ACCout MDRin | 内总线驱动 1 个
+T6 执行 M[22]=4 | MDRoutE MemW | 内总线驱动 0 个
+指令结束 下一条字地址 3 | 外部中断 无
+----
+T0 取指 PC=3 -> MAR | PCout MARin | 内总线驱动 1 个
+T1 取指 MDR=7000H PC=4 | MemR MDRinE PC+1 | 内总线驱动 0 个
+T2 取指 IR=HLT | MDRout IRin | 内总线驱动 1 个
+T3 译码 操作码送控制单元 | 无 | 内总线驱动 0 个
+T4 执行 停机 | 无 | 内总线驱动 0 个
+停机
+结果：ACC=4 PC=4 断点=1 响应=1 次 IF=1

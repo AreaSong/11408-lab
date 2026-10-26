@@ -1,0 +1,15 @@
+spool cap=3
+submit p=A job=j1 well=1/3 printer=idle
+submit p=B job=j2 well=2/3 printer=idle
+submit p=C job=j3 well=3/3 printer=idle
+submit p=D job=j4 result=block well=3/3
+well n=3 cap=3 printer=idle job=-
+order=j1,j2,j3
+wait=D:j4
+print job=j1 owner=A via=output-buffer by=daemon well=2/3
+admit p=D job=j4 well=3/3
+well n=3 cap=3 printer=busy job=j1
+order=j2,j3,j4
+wait=-
+finish job=j1 printer=idle
+print job=j2 owner=B via=output-buffer by=daemon well=2/3

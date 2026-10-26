@@ -1,0 +1,5 @@
+mss 1000
+cwnd 4000
+send 1000
+send 1000
+ack 1000 rwnd 2000

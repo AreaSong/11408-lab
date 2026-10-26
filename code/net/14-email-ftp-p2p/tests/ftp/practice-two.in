@@ -1,0 +1,7 @@
+mode active
+login
+list
+get a.txt
+put b.txt
+quit
+go

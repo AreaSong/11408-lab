@@ -1,0 +1,67 @@
+blk index=seq inner=seq
+show b=3 n=6 index=seq inner=seq
+block 1 n=2 min=1 max=3 1 3
+block 2 n=2 min=4 max=6 4 6
+block 3 n=2 min=7 max=9 7 9
+asl exact=7/2=3.50
+parts index=2/1=2.00 inner=3/2=1.50
+rough=7/2=3.50 match=yes
+find 4
+index i=1 max=3 >
+index i=2 max=6 <
+block=2
+inner j=1 a=4 =
+hit j=1 cmp=3
+find 10
+index i=1 max=3 >
+index i=2 max=6 >
+index i=3 max=9 >
+miss cmp=3
+blk index=bin inner=seq
+asl exact=10/3=3.33
+parts index=11/6=1.83 inner=3/2=1.50
+rough=19/6=3.17 match=no
+find 1
+index low=1 high=3 mid=2 max=6 <
+index low=1 high=1 mid=1 max=3 <
+index low=1 high=0 stop
+block=1
+inner j=1 a=1 =
+hit j=1 cmp=3
+find 4
+index low=1 high=3 mid=2 max=6 <
+index low=1 high=1 mid=1 max=3 >
+index low=2 high=1 stop
+block=2
+inner j=1 a=4 =
+hit j=1 cmp=3
+find 6
+index low=1 high=3 mid=2 max=6 =
+block=2
+inner j=1 a=4 !=
+inner j=2 a=6 =
+hit j=2 cmp=3
+blk index=seq inner=bin
+asl exact=11/3=3.67
+parts index=2/1=2.00 inner=5/3=1.67
+rough=11/3=3.67 match=yes
+blk index=seq inner=seq
+show b=2 n=5 index=seq inner=seq
+block 1 n=3 min=1 max=11 11 1 8
+block 2 n=2 min=20 max=30 20 30
+asl exact=16/5=3.20
+parts index=7/5=1.40 inner=9/5=1.80
+rough=- match=-
+find 1
+index i=1 max=11 <
+block=1
+inner j=1 a=11 !=
+inner j=2 a=1 =
+hit j=2 cmp=3
+find 15
+index i=1 max=11 >
+index i=2 max=30 <
+block=2
+inner j=1 a=20 !=
+inner j=2 a=30 !=
+miss cmp=4

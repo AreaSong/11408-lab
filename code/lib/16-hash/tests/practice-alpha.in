@@ -1,0 +1,7 @@
+theory linear 7 10
+theory linear 14 20
+theory chain 7 10
+theory chain 14 20
+linear 11 11 1 1 12 23 8 19
+linear 23 23 1 1 12 23 8 19
+grow linear 5 6 8

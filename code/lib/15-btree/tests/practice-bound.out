@@ -1,0 +1,17 @@
+bound m=5 h=2
+min_keys=5 max_keys=24
+min_nodes=3 max_nodes=6
+bound m=3 h=5
+min_keys=31 max_keys=242
+min_nodes=31 max_nodes=121
+bound m=4 h=1
+min_keys=1 max_keys=3
+min_nodes=1 max_nodes=1
+nodes n=4 m=4
+max_nodes=3
+nodes n=5 m=5
+max_nodes=3
+most m=3 h=2 level2=4
+max_nodes=4
+shapes n=4 m=4
+count=2

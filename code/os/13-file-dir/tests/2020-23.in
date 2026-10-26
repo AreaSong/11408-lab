@@ -1,0 +1,14 @@
+exam 2020-23
+claim sys-one
+claim user-same
+claim close-always-drop
+reset inode
+create /F 1
+proc 0 open /F r
+proc 1 open /F w
+read 0 0 0
+tables
+read 1 0 0
+proc 0 close 0
+tables
+proc 1 close 0

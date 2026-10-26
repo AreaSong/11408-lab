@@ -1,0 +1,28 @@
+layer n=1 name=user duty=library,spool
+layer n=2 name=independent duty=map,buffer,alloc,protect
+layer n=3 name=driver duty=device-command
+layer n=4 name=interrupt duty=wake
+ctrl name=poll cpu=busy-wait unit=byte data=cpu irq=none
+ctrl name=interrupt cpu=after-start unit=byte data=cpu irq=per-byte
+ctrl name=dma cpu=start-end unit=block data=dma irq=per-block
+ctrl name=channel cpu=start-end unit=group data=channel irq=per-io
+wait name=block state=blocked ret=on-data yield=yes
+wait name=nonblock state=running ret=eagain yield=no
+wait name=async state=running ret=on-complete yield=no
+card unit=block,char
+card share=exclusive,shared,virtual
+card speed=low,medium,high
+card control=poll,interrupt,dma,channel
+card channel=byte-mux,selector,block-mux
+card layer=user,independent,driver,interrupt
+card driver=init,read,write,isr,major,minor
+card table=sdt,dct,coct,chct
+card spool=in-well,out-well,in-buf,out-buf,in-proc,out-proc
+card buffer=single,double,ring,pool
+part input-well=disk
+part output-well=disk
+part input-buffer=memory
+part output-buffer=memory
+part input-process=daemon
+part output-process=daemon
+part role=exclusive-to-shared

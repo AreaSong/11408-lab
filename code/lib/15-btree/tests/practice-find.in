@@ -1,0 +1,8 @@
+bt 4 5 6 9 13 8 2 12 15
+find 6
+find 8
+find 7
+plus 4 5 6 9 13 8 2 12 15
+find 6
+find 9
+find 100

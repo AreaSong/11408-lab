@@ -1,0 +1,24 @@
+add device=p0 type=char ctrl=c0 chan=ch0
+proc name=A
+proc name=B
+proc name=C
+map p=A logic=LP phys=p0
+map p=B logic=LP phys=p0
+map p=C logic=LP phys=p0
+ask p=A logic=LP phys=p0
+grant p=A device=p0
+grant p=A controller=c0
+grant p=A channel=ch0
+state p=A stage=io
+ask p=B logic=LP phys=p0
+block p=B level=device queue=p0
+ask p=C logic=LP phys=p0
+block p=C level=device queue=p0
+done p=A
+free p=A channel=ch0
+free p=A controller=c0
+free p=A device=p0
+grant p=B device=p0
+grant p=B controller=c0
+grant p=B channel=ch0
+state p=B stage=io

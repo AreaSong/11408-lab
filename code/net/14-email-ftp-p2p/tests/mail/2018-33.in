@@ -1,0 +1,5 @@
+transport ftp
+transport dns
+transport smtp
+transport http
+go
