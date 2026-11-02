@@ -155,19 +155,22 @@ cmd_new() {
 
 current_focus() {
     if [ -f "$root/.focus" ]; then
-        tr -d '[:space:]' < "$root/.focus"
+        grep -v '^[[:space:]]*$' "$root/.focus" || echo "mine"
     else
         echo "mine"
     fi
 }
 
-# 若当前处于「单关聚焦」，新建尝试时自动跟进到新关卡；mine / all 模式不动
+# 若当前处于「指定关卡聚焦」，新建尝试时把新关卡追加进去；mine / all 模式不动
 sync_focus_on_new() {
-    local cur
+    local cur target
     cur="$(current_focus)"
-    if [ "$cur" != "mine" ] && [ "$cur" != "all" ] && [ "$cur" != "$(rel "$1")" ]; then
-        echo "$(rel "$1")" > "$root/.focus"
-        echo "已将 CMake 聚焦切换到：$(rel "$1")"
+    target="$(rel "$1")"
+    if [ "$cur" != "mine" ] && [ "$cur" != "all" ]; then
+        if ! grep -qxF "$target" "$root/.focus" 2>/dev/null; then
+            echo "$target" >> "$root/.focus"
+            echo "已将 ${target} 加入 CMake 聚焦列表"
+        fi
     fi
 }
 
@@ -186,11 +189,13 @@ show_focus() {
         all)
             echo "当前 CMake 加载模式：all（加载全部 66 个关卡，含未学关卡的标准答案）" ;;
         *)
-            echo "当前 CMake 加载模式：单关聚焦 → ${cur}（仅加载这一关）" ;;
+            echo "当前 CMake 加载模式：指定关卡聚焦（仅加载以下关卡）："
+            while read -r d; do echo "  - $d"; done <<< "$cur" ;;
     esac
 }
 
 cmd_focus() {
+    local items=()
     case $# in
         0) show_focus; return ;;
         1)
@@ -203,12 +208,16 @@ cmd_focus() {
                     echo "已设为全量模式（all）：CLion 加载全部 66 个关卡。" ;;
                 *) usage ;;
             esac ;;
-        2)
-            check_subject "$1"
-            require_level "$1" "$2"
-            echo "$(rel "$level_dir")" > "$root/.focus"
-            echo "已聚焦到单关：$(rel "$level_dir")（CLion 下拉框只显示这一关的目标）" ;;
-        *) usage ;;
+        *)
+            [ $(( $# % 2 )) -eq 0 ] || usage
+            while [ $# -gt 0 ]; do
+                check_subject "$1"
+                require_level "$1" "$2"
+                items+=("$(rel "$level_dir")")
+                shift 2
+            done
+            printf '%s\n' "${items[@]}" | awk '!seen[$0]++' > "$root/.focus"
+            echo "已聚焦到指定关卡：${items[*]}（CLion 下拉框只显示这些关卡的目标）" ;;
     esac
     echo "请在 CLion 里点击 File → Reload CMake Project 生效。"
 }
