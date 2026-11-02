@@ -176,8 +176,15 @@ entry_files() {
 # write_project_cmake <项目目录> <项目名> <关卡相对路径> [tests 所在目录的相对路径，缺省同关卡]
 # 变式题（-variant）解的是另一道题，第 4 个参数传 . 让它只跑自己目录里的 tests/
 write_project_cmake() {
-    local dir="$1" name="$2" level srcs f target tests_rel="${4:-$3}"
+    local dir="$1" name="$2" level srcs f target tests_rel="${4:-$3}" ans_name
     level="$(cd "$dir/$3" && pwd)"
+    if [ -f "$level/answer/CMakeLists.txt" ]; then
+        ans_name="$(level_base "$level")_answer"
+        sed -e "s|${ans_name}|${name}|g" \
+            -e "s|include(\.\./tests/check\.cmake|include(${tests_rel}/tests/check.cmake|" \
+            "$level/answer/CMakeLists.txt" > "$dir/CMakeLists.txt"
+        return
+    fi
     srcs="$(cd "$dir" && ls src 2>/dev/null | grep -E '\.c$' | sed 's|^|src/|' | tr '\n' ' ' || true)"
     if [ -n "$(deps_lines "$level")" ]; then srcs="$srcs\${DEPS_SRC}"; fi
     srcs="${srcs% }"
@@ -229,7 +236,7 @@ create_project() {
         for f in $(entry_files "$answer"); do
             case "$f" in
                 main.c|test.c) ;;
-                *) printf 'int main(void) {\n    return 0;\n}\n' > "$dir/$f" ;;
+                *) template_main $headers > "$dir/$f" ;;
             esac
         done
     fi

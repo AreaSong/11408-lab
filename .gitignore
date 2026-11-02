@@ -12,9 +12,10 @@ a.out
 *.dSYM/
 build/
 
-# CLion
+# CLion 与本地聚焦状态
 .idea/
 cmake-build-*/
+code/.focus
 
 # 本地 Agent 编排记录（不纳入版本管理）
 gem/.agents/

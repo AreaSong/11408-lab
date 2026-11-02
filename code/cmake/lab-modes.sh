@@ -127,3 +127,156 @@ pick_drill() {
     n="$(ask_number "输入编号" "$(( ${#drills[@]} + 1 ))" "$default_idx")"
     if [ "$n" -eq 1 ]; then echo ""; else echo "${drills[$((n - 2))]}"; fi
 }
+
+cmd_new() {
+    local subj="" lvl="" desc="" mode=m1 drill="" drill_given=no
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --mode) [ $# -ge 2 ] || usage; check_mode "$2"; mode="$2"; shift 2 ;;
+            --drill) [ $# -ge 2 ] || usage; check_drill "$2"; drill="$2"; drill_given=yes; shift 2 ;;
+            -*) usage ;;
+            *)
+                if [ -z "$subj" ]; then subj="$1"
+                elif [ -z "$lvl" ]; then lvl="$1"
+                elif [ -z "$desc" ]; then desc="$1"
+                else usage
+                fi
+                shift ;;
+        esac
+    done
+    [ -n "$subj" ] && [ -n "$lvl" ] || usage
+    if [ "$mode" = m0 ] && [ "$drill_given" = no ] && [ -z "$(drill_of "$desc")" ]; then drill=blank; fi
+    check_subject "$subj"
+    ensure_level "$subj" "$lvl"
+    do_new "$desc" "$mode" "$drill"
+}
+
+# ---------- CMake 加载范围（focus）与复习看板（review） ----------
+
+current_focus() {
+    if [ -f "$root/.focus" ]; then
+        tr -d '[:space:]' < "$root/.focus"
+    else
+        echo "mine"
+    fi
+}
+
+# 若当前处于「单关聚焦」，新建尝试时自动跟进到新关卡；mine / all 模式不动
+sync_focus_on_new() {
+    local cur
+    cur="$(current_focus)"
+    if [ "$cur" != "mine" ] && [ "$cur" != "all" ] && [ "$cur" != "$(rel "$1")" ]; then
+        echo "$(rel "$1")" > "$root/.focus"
+        echo "已将 CMake 聚焦切换到：$(rel "$1")"
+    fi
+}
+
+show_focus() {
+    local cur d
+    cur="$(current_focus)"
+    case "$cur" in
+        mine|"")
+            echo "当前 CMake 加载模式：mine（默认智能模式——自动加载所有你建过 mine/ 尝试的关卡 + example）"
+            echo "当前加载的关卡："
+            for d in $(all_levels); do
+                if [ "$(count_attempts "$d")" -gt 0 ] || [[ "$(rel "$d")" == example/* ]]; then
+                    echo "  - $(rel "$d")"
+                fi
+            done ;;
+        all)
+            echo "当前 CMake 加载模式：all（加载全部 66 个关卡，含未学关卡的标准答案）" ;;
+        *)
+            echo "当前 CMake 加载模式：单关聚焦 → ${cur}（仅加载这一关）" ;;
+    esac
+}
+
+cmd_focus() {
+    case $# in
+        0) show_focus; return ;;
+        1)
+            case "$1" in
+                mine|default)
+                    rm -f "$root/.focus"
+                    echo "已设为默认智能模式（mine）：CLion 自动加载所有你建过尝试的关卡，随便点哪关都能直接运行。" ;;
+                all|off)
+                    echo "all" > "$root/.focus"
+                    echo "已设为全量模式（all）：CLion 加载全部 66 个关卡。" ;;
+                *) usage ;;
+            esac ;;
+        2)
+            check_subject "$1"
+            require_level "$1" "$2"
+            echo "$(rel "$level_dir")" > "$root/.focus"
+            echo "已聚焦到单关：$(rel "$level_dir")（CLion 下拉框只显示这一关的目标）" ;;
+        *) usage ;;
+    esac
+    echo "请在 CLion 里点击 File → Reload CMake Project 生效。"
+}
+
+interactive_focus() {
+    local n
+    show_focus
+    echo "切换 CMake 加载范围："
+    echo "  1) 智能模式 mine（推荐默认：加载所有建过尝试的关卡，随便点哪关都能直接跑）"
+    echo "  2) 单关模式（只加载某 1 关）"
+    echo "  3) 全量模式 all（加载全部 66 关）"
+    n="$(ask_number "输入编号" 3 1)"
+    case "$n" in
+        1) cmd_focus mine ;;
+        2) pick_subject; pick_existing_level; cmd_focus "$subject" "$(basename "$level_dir")" ;;
+        3) cmd_focus all ;;
+    esac
+}
+
+cmd_review() {
+    local filter="${1:-}"
+    if [ -n "$filter" ]; then check_subject "$filter"; fi
+    python3 - "$root" "$filter" <<'PY'
+import datetime, pathlib, re, sys
+
+root = pathlib.Path(sys.argv[1])
+filt = sys.argv[2]
+subjects = [filt] if filt else ["lib", "co", "os", "net"]
+names = {"lib": "数据结构", "co": "计组", "os": "操作系统", "net": "计网"}
+rank_map = {"—": 0, "L0": 1, "L1": 2, "L2": 3, "L3": 4, "L4": 5}
+today = datetime.date.today()
+rows = []
+
+for s in subjects:
+    p = root / s / "AGENTS.md"
+    if not p.exists():
+        continue
+    for ln in p.read_text(encoding="utf-8").splitlines():
+        if not re.match(r"^\| \d\d \|", ln):
+            continue
+        c = [x.strip() for x in ln.split("|")[1:-1]]
+        if len(c) < 6:
+            continue
+        num, topic, scale, status, level, last = c[:6]
+        if status.startswith("⬜") and last == "—":
+            continue
+        days = None
+        if re.match(r"^\d{4}-\d{2}-\d{2}$", last):
+            days = (today - datetime.date.fromisoformat(last)).days
+        in_prog = 0 if status.startswith("🟡") else 1
+        rows.append((in_prog, rank_map.get(level, 0), -(days if days is not None else 9999), s, num, topic, status, level, last, days))
+
+if not rows:
+    print("还没有已开始或已完成的关卡。")
+    sys.exit(0)
+
+rows.sort()
+print(f"复习与进度看板（共 {len(rows)} 关，按优先度排序）：")
+for _, _, _, s, num, topic, status, level, last, days in rows:
+    age = f"{last}（{days}天前）" if days is not None else last
+    if status.startswith("🟡"):
+        rec = "接着推进当前关卡"
+    elif days is not None and days <= 7:
+        rec = "巩固期：预测 → 运行 + 反讲"
+    elif level in ("—", "L0", "L1", "L2"):
+        rec = "重点复习：空白重写(-rewrite) 或 挖空(-blank)"
+    else:
+        rec = "复习检验：空白重写(-rewrite) + 变式(-variant) / 找 bug(-bug)"
+    print(f"  [{s}/{num}] {topic}  | {status} | 档位：{level} | 最近：{age}  → {rec}")
+PY
+}

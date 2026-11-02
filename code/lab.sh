@@ -11,6 +11,8 @@
 #   ./lab.sh delete <科目> <关卡号> <尝试>           确认后删除（NOTES.md 里的复盘保留）
 #   ./lab.sh done   <科目> <关卡号> <尝试>           标记完成：依赖本关的尝试改用这次的代码（-bug / -variant 不能标记）
 #   ./lab.sh undone <科目> <关卡号> <尝试>           取消完成标记
+#   ./lab.sh focus  [mine | all | <科目> <关卡号>]   查看或切换 CLion 加载范围（默认 mine：自动加载已建过尝试的关卡）
+#   ./lab.sh review [科目]                           查看已学关卡的档位、距今天数与复习建议
 #   ./lab.sh sync   [科目] [关卡号]                  重新生成关卡配置、tests/check.cmake、各项目 deps/
 #
 # <尝试> 写完整目录名（如 2026-03-01-first）或 list 里显示的编号都可以。
@@ -164,6 +166,7 @@ do_new() {
     create_project "$level_dir" "$dir" "$pname" "$own_tests"
     write_mode_files "$dir" "$mode" "$drill"
     sync_level "$level_dir"
+    sync_focus_on_new "$level_dir"
 
     [ -f "$level_dir/NOTES.md" ] || notes_header "$(basename "$(dirname "$level_dir")")" "$(basename "$level_dir")" > "$level_dir/NOTES.md"
     printf '\n## %s\n- %s\n- \n' "$name" "$(attempt_label "$dir")" >> "$level_dir/NOTES.md"
@@ -405,9 +408,13 @@ interactive_new() {
 interactive() {
     local action
     echo "要做什么："
-    echo "  1) 新建尝试   2) 查看   3) 改名   4) 删除   5) 标记完成   6) 取消完成标记   7) 同步全部"
-    action="$(ask_number "输入编号" 7)"
-    if [ "$action" -eq 7 ]; then do_sync $(all_levels); return; fi
+    echo "  1) 新建尝试   2) 查看   3) 改名   4) 删除   5) 标记完成   6) 取消完成标记   7) 复习看板   8) 切换 CMake 范围   9) 同步全部"
+    action="$(ask_number "输入编号" 9)"
+    case "$action" in
+        7) cmd_review; return ;;
+        8) interactive_focus; return ;;
+        9) do_sync $(all_levels); return ;;
+    esac
     pick_subject
     if [ "$action" -eq 1 ]; then interactive_new; return; fi
     pick_existing_level
@@ -423,31 +430,8 @@ interactive() {
 # ---------- 命令行 ----------
 
 usage() {
-    sed -n '4,14p' "$0" | sed 's/^# \{0,1\}//' >&2
+    sed -n '4,16p' "$0" | sed 's/^# \{0,1\}//' >&2
     exit "${1:-1}"
-}
-
-cmd_new() {
-    local subj="" lvl="" desc="" mode=m1 drill="" drill_given=no
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            --mode) [ $# -ge 2 ] || usage; check_mode "$2"; mode="$2"; shift 2 ;;
-            --drill) [ $# -ge 2 ] || usage; check_drill "$2"; drill="$2"; drill_given=yes; shift 2 ;;
-            -*) usage ;;
-            *)
-                if [ -z "$subj" ]; then subj="$1"
-                elif [ -z "$lvl" ]; then lvl="$1"
-                elif [ -z "$desc" ]; then desc="$1"
-                else usage
-                fi
-                shift ;;
-        esac
-    done
-    [ -n "$subj" ] && [ -n "$lvl" ] || usage
-    if [ "$mode" = m0 ] && [ "$drill_given" = no ] && [ -z "$(drill_of "$desc")" ]; then drill=blank; fi
-    check_subject "$subj"
-    ensure_level "$subj" "$lvl"
-    do_new "$desc" "$mode" "$drill"
 }
 
 cmd_list() {
@@ -479,6 +463,8 @@ main() {
         list) cmd_list "$@"; return ;;
         sync) cmd_sync "$@"; return ;;
         new) cmd_new "$@"; return ;;
+        focus) cmd_focus "$@"; return ;;
+        review) [ $# -le 1 ] || usage; cmd_review "${1:-}"; return ;;
         rename) [ $# -eq 4 ] || usage ;;
         delete|done|undone) [ $# -eq 3 ] || usage ;;
         -h|--help|help) usage 0 ;;
