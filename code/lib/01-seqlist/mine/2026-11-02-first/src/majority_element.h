@@ -1,0 +1,4 @@
+#ifndef MAJORITY_ELEMENT_H
+#define MAJORITY_ELEMENT_H
+
+#endif

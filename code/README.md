@@ -32,26 +32,27 @@
           ├── main.c          只负责输入输出和调用，读之前用 prompt("请输入…") 提示
           ├── test.c          单元测试
           ├── src/            本关的核心代码
-          └── deps/           lab.sh 复制进来的 test.h、prompt.h 和依赖关卡的代码，不手改
+          ├── deps/           lab.sh 复制进来的 test.h、prompt.h 和依赖关卡的代码，不手改
+          └── VARIANT.md      （仅变式题 -variant 有）变式题面，且带本尝试独立的 tests/
   ```
 
 ## 怎么用
 
 1. 用 CLion 打开 `code/` 这个文件夹，一个窗口看到全部关卡；也可以只打开某一关、或某一个项目文件夹（都能直接运行和跑测试，项目还能单独拷给别人）
-2. 新建一次尝试：在 `code/` 下运行 `./lab.sh`，选「新建尝试」，再选科目、关卡、填说明（也可以 `./lab.sh new lib 02 review`）。建出来的项目已经能编译运行，文件名和答案一致
+2. 新建一次尝试：在 `code/` 下运行 `./lab.sh`，选「新建尝试」，依次选科目、关卡、**教学方式**（M0 领读 / M1 引导 / M2 项目指导 / M3 独立挑战）和**练习形式**（正常写 / 挖空 `-blank` / 找 bug `-bug` / 空白重写 `-rewrite` / 变式 `-variant`），再填说明；也可以直接用命令行，如 `./lab.sh new lib 02 --mode m0` 或 `./lab.sh new lib 02 review --drill variant`（详见 [TEACHING.md](TEACHING.md)）。建出来的项目已经能编译运行，文件名和答案一致
 3. 在 CLion 里重新加载 CMake（File → Reload CMake Project），右上角下拉框选程序运行或调试：`linked_list_first` 是我的主程序，`linked_list_first_test` 是单元测试，带 `_answer` 的是标准答案
-4. 跑测试：下拉框选「All CTest」点运行；终端可用 `ctest -R '^linked_list_first'` 只跑某次尝试
-5. 写完并通过测试后，用 `./lab.sh done` 标记完成：之后依赖本关的关卡（比如用到栈的二叉树）复制的就是我写的代码，没标记就一直用答案
+4. 跑测试：下拉框选「All CTest」点运行；终端可用 `ctest -R '^linked_list_first'` 只跑某次尝试（变式题只跑它自己目录里的 `tests/`）
+5. 写完并通过测试后，用 `./lab.sh done` 标记完成（`-bug` 和 `-variant` 练习不能标记）：之后依赖本关的关卡（比如用到栈的二叉树）复制的就是我写的代码，没标记就一直用答案
 
 `lab.sh` 不带参数是交互菜单；也可以直接用子命令（`<尝试>` 写目录名或 `list` 里显示的编号）：
 
 | 命令 | 作用 |
 |---|---|
-| `./lab.sh new lib 02 [说明]` | 新建尝试项目，并在 `NOTES.md` 追加小节；说明缺省依次为 first、review、review2…… |
-| `./lab.sh list [lib] [02]` | 查看各关的尝试次数，或某关每次尝试的文件与完成标记 |
-| `./lab.sh rename lib 02 <尝试> <新说明>` | 改说明（日期不变），程序名和 `NOTES.md` 小节标题一起改 |
+| `./lab.sh new lib 02 [说明] [--mode m0..m3] [--drill blank\|bug\|rewrite\|variant]` | 新建尝试项目（选教学方式与练习形式），并在 `NOTES.md` 追加小节；说明缺省依次为 first、review、review2…… |
+| `./lab.sh list [lib] [02]` | 查看各关的尝试次数，或某关每次尝试的方式、练习、文件与完成标记 |
+| `./lab.sh rename lib 02 <尝试> <新说明>` | 改说明（日期和练习后缀不变），程序名和 `NOTES.md` 小节标题一起改 |
 | `./lab.sh delete lib 02 <尝试>` | 确认后删除尝试，`NOTES.md` 的复盘保留 |
-| `./lab.sh done` / `undone lib 02 <尝试>` | 标记完成 / 取消标记，并更新依赖本关的各次尝试的 `deps/` |
+| `./lab.sh done` / `undone lib 02 <尝试>` | 标记完成 / 取消标记（`-bug` / `-variant` 不能标记），并更新依赖本关的各次尝试的 `deps/` |
 | `./lab.sh sync [lib] [02]` | 重新生成关卡配置、测试脚本和各项目的 `deps/`（改了 `DEPS` 或答案后用） |
 
 在 `src/` 里新增 `.c` 文件后，要在项目的 `CMakeLists.txt` 里把它加到 `add_executable` 的文件列表中（和 CLion 原生项目一样）。
@@ -59,6 +60,7 @@
 
 ## 每关的闭环
 
+0. **定档与建尝试**：开始一关时 AI 先问这关我掌握到什么程度，推荐教学方式（M0 领读 / M1 引导 / M2 项目指导 / M3 独立挑战）和练习形式，再由我用 `./lab.sh` 新建尝试，详见 [TEACHING.md](TEACHING.md)
 1. **学**：读王道对应章节，明确考纲采用的模型与约定
 2. **设计**：先在纸上画数据结构和状态流转
 3. **编码**：100~300 行，能跑通即可

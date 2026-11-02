@@ -3,12 +3,13 @@
 #
 # 用法：
 #   ./lab.sh                                       交互菜单
-#   ./lab.sh new    <科目> <关卡号> [说明]           新建尝试；说明缺省为 first、review、review2……
+#   ./lab.sh new    <科目> <关卡号> [说明] [--mode m0|m1|m2|m3] [--drill blank|bug|rewrite|variant]
+#                                                  新建尝试；说明缺省为 first、review、review2……（M0 默认带 -blank）
 #   ./lab.sh new    lib 02-linked-list             关卡还不存在时给完整目录名，先建关卡骨架
-#   ./lab.sh list   [科目] [关卡号]                  查看关卡、尝试和完成标记
-#   ./lab.sh rename <科目> <关卡号> <尝试> <新说明>   只改说明，日期不变，程序名一起改
+#   ./lab.sh list   [科目] [关卡号]                  查看关卡、尝试（含教学方式与练习形式）和完成标记
+#   ./lab.sh rename <科目> <关卡号> <尝试> <新说明>   只改说明，日期不变，程序名一起改（不能改掉练习后缀）
 #   ./lab.sh delete <科目> <关卡号> <尝试>           确认后删除（NOTES.md 里的复盘保留）
-#   ./lab.sh done   <科目> <关卡号> <尝试>           标记完成：依赖本关的尝试改用这次的代码
+#   ./lab.sh done   <科目> <关卡号> <尝试>           标记完成：依赖本关的尝试改用这次的代码（-bug / -variant 不能标记）
 #   ./lab.sh undone <科目> <关卡号> <尝试>           取消完成标记
 #   ./lab.sh sync   [科目] [关卡号]                  重新生成关卡配置、tests/check.cmake、各项目 deps/
 #
@@ -54,6 +55,7 @@ count_attempts() { attempts_of "$1" | grep -c . || true; }
 rel() { echo "${1#"$root"/}"; }
 
 source "$root/cmake/lab-units.sh"
+source "$root/cmake/lab-modes.sh"
 
 # 依赖本关的尝试实际会复制哪份代码，规则同 dep_src_dir
 used_unit() {
@@ -75,11 +77,14 @@ desc_taken() {
 }
 
 default_desc() {
-    local n=2
-    if ! desc_taken "$1" first; then echo first; return; fi
-    if ! desc_taken "$1" review; then echo review; return; fi
-    while desc_taken "$1" "review$n"; do n=$((n + 1)); done
-    echo "review$n"
+    local n=2 base suffix="${2:+-$2}"
+    if ! base_taken "$1" first; then base=first
+    elif ! base_taken "$1" review; then base=review
+    else
+        while base_taken "$1" "review$n"; do n=$((n + 1)); done
+        base="review$n"
+    fi
+    echo "${base}${suffix}"
 }
 
 project_name() { echo "$(level_base "$1")_${2//-/_}"; }
@@ -144,25 +149,31 @@ require_attempt() {
 # ---------- 各项操作（读全局 level_dir、attempt） ----------
 
 do_new() {
-    local desc="$1" name dir pname
-    [ -n "$desc" ] || desc="$(default_desc "$level_dir")"
+    local desc="${1:-}" mode="${2:-m1}" drill="${3:-}" resolved name dir pname own_tests=""
+    resolved="$(resolve_desc_drill "$desc" "$drill")"
+    desc="$(echo "$resolved" | sed -n '1p')"
+    drill="$(echo "$resolved" | sed -n '2p')"
+    [ -n "$desc" ] || desc="$(default_desc "$level_dir" "$drill")"
     is_slug "$desc" || die "说明只能用小写字母、数字和连字符，例如 recursive、two-pointer"
     ! desc_taken "$level_dir" "$desc" || die "本关已有说明为 ${desc} 的尝试，程序会重名，换一个说明"
     name="$(date +%F)-$desc"
     dir="$level_dir/mine/$name"
     pname="$(project_name "$level_dir" "$desc")"
+    if [ "$drill" = variant ]; then own_tests=own-tests; fi
     mkdir -p "$dir"
-    create_project "$level_dir" "$dir" "$pname"
+    create_project "$level_dir" "$dir" "$pname" "$own_tests"
+    write_mode_files "$dir" "$mode" "$drill"
     sync_level "$level_dir"
 
     [ -f "$level_dir/NOTES.md" ] || notes_header "$(basename "$(dirname "$level_dir")")" "$(basename "$level_dir")" > "$level_dir/NOTES.md"
-    printf '\n## %s\n- \n' "$name" >> "$level_dir/NOTES.md"
+    printf '\n## %s\n- %s\n- \n' "$name" "$(attempt_label "$dir")" >> "$level_dir/NOTES.md"
 
-    echo "已创建项目：$(rel "$dir")/"
-    (cd "$dir" && find . -type f ! -path './deps/*' | sort | sed 's|^\./|  - |')
+    echo "已创建项目：$(rel "$dir")/  [$(attempt_label "$dir")]"
+    (cd "$dir" && find . -type f ! -name .mode ! -path './deps/*' | sort | sed 's|^\./|  - |')
     echo "  - deps/（$(ls "$dir/deps" | tr '\n' ' ')）"
     echo "已在 NOTES.md 末尾添加小节：## $name"
     echo "在 CLion 里重新加载 CMake 项目，运行目标里就会出现 ${pname}、${pname}_test；也可以单独用 CLion 打开这个文件夹。"
+    next_step_hint "$drill" "$(rel "$dir")"
 }
 
 # 列出尝试；第二个参数为 files 时连文件一起列
@@ -178,18 +189,25 @@ show_attempts() {
         i=$((i + 1))
         mark=""
         if [ -f "$level_dir/mine/$a/.done" ]; then mark="  [已完成]"; fi
-        printf '  %d) %s%s\n' "$i" "$a" "$mark"
+        printf '  %d) %s  [%s]%s\n' "$i" "$a" "$(attempt_label "$level_dir/mine/$a")" "$mark"
         if [ "${1:-}" = files ]; then
-            (cd "$level_dir/mine/$a" && find . -type f ! -name .done ! -path './deps/*' ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|       |')
+            (cd "$level_dir/mine/$a" && find . -type f ! -name .done ! -name .mode ! -path './deps/*' ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|       |')
         fi
     done <<< "$list"
     echo "依赖本关的尝试当前使用：$(used_unit "$level_dir")"
 }
 
 do_rename() {
-    local desc="$1" new notes tmp old_name new_name cml
+    local desc="$1" new notes tmp old_name new_name cml old_drill new_drill
     is_slug "$desc" || die "说明只能用小写字母、数字和连字符"
     [[ "$attempt" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}- ]] || die "${attempt} 不是「日期-说明」格式，请手动改名"
+    old_drill="$(drill_of "$attempt")"
+    new_drill="$(drill_of "$desc")"
+    if [ -n "$old_drill" ] && [ -z "$new_drill" ]; then
+        desc="$desc-$old_drill"
+        new_drill="$old_drill"
+    fi
+    [ "$old_drill" = "$new_drill" ] || die "不能改变练习后缀（原来是 ${old_drill:-正常写}，新说明是 ${new_drill:-正常写}）"
     new="${attempt:0:10}-$desc"
     [ "$new" != "$attempt" ] || die "新名字和原来一样"
     ! desc_taken "$level_dir" "$desc" || die "本关已有说明为 ${desc} 的尝试，程序会重名"
@@ -214,7 +232,7 @@ do_delete() {
     local dir="$level_dir/mine/$attempt" reply was_done=no
     if [ -f "$dir/.done" ]; then was_done=yes; fi
     echo "将删除 $(rel "$dir")/，其中的文件："
-    (cd "$dir" && find . -type f ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|  - |')
+    (cd "$dir" && find . -type f ! -name .done ! -name .mode ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|  - |')
     reply="$(ask "确认删除？NOTES.md 里的复盘会保留 (y/n)" "n")"
     case "$reply" in
         y|Y|yes)
@@ -229,6 +247,7 @@ do_delete() {
 do_mark() {
     local mark="$level_dir/mine/$attempt/.done"
     if [ "$1" = done ]; then
+        check_can_done "$attempt"
         : > "$mark"
         echo "已标记完成：mine/$attempt"
     else
@@ -269,11 +288,11 @@ ask() {
     fi
 }
 
-# 反复询问直到输入是 1..max 的编号
+# 反复询问直到输入是 1..max 的编号；第 3 个参数是可选默认值
 ask_number() {
-    local prompt="$1" max="$2" reply
+    local prompt="$1" max="$2" default="${3:-}" reply
     while true; do
-        reply="$(ask "$prompt")" || exit 1
+        reply="$(ask "$prompt" "$default")" || exit 1
         if [[ "$reply" =~ ^[0-9]+$ ]] && [ "$reply" -ge 1 ] && [ "$reply" -le "$max" ]; then
             echo "$reply"
             return
@@ -352,7 +371,7 @@ ask_slug() {
 }
 
 interactive_new() {
-    local num level_arg desc default=first reply
+    local num level_arg desc default=first reply mode drill resolved
     list_levels "$subject"
     num="$(ask_level_num)"
     level_arg="$num"
@@ -361,17 +380,26 @@ interactive_new() {
         level_arg="$num-$(ask_slug "英文目录名，例如 linked-list")"
     else
         require_level "$subject" "$num"
-        default="$(default_desc "$level_dir")"
         if [ "$(count_attempts "$level_dir")" -gt 0 ]; then show_attempts; fi
     fi
+    mode="$(pick_mode)"
+    drill="$(pick_drill "$mode")"
+    if [ -n "$level_dir" ]; then
+        default="$(default_desc "$level_dir" "$drill")"
+    elif [ -n "$drill" ]; then
+        default="first-$drill"
+    fi
     desc="$(ask_slug "这次尝试的说明（如 review、recursive）" "$default")"
-    reply="$(ask "将在 $subject/$level_arg 下创建 mine/$(date +%F)-${desc}，确认？(y/n)" "y")"
+    resolved="$(resolve_desc_drill "$desc" "$drill")"
+    desc="$(echo "$resolved" | sed -n '1p')"
+    drill="$(echo "$resolved" | sed -n '2p')"
+    reply="$(ask "将在 $subject/$level_arg 下创建 mine/$(date +%F)-${desc}（$(mode_label "$mode") · $(drill_label "$drill")），确认？(y/n)" "y")"
     case "$reply" in
         y|Y|yes) ;;
         *) echo "已取消"; exit 0 ;;
     esac
     ensure_level "$subject" "$level_arg"
-    do_new "$desc"
+    do_new "$desc" "$mode" "$drill"
 }
 
 interactive() {
@@ -395,8 +423,31 @@ interactive() {
 # ---------- 命令行 ----------
 
 usage() {
-    sed -n '4,13p' "$0" | sed 's/^# \{0,1\}//' >&2
+    sed -n '4,14p' "$0" | sed 's/^# \{0,1\}//' >&2
     exit "${1:-1}"
+}
+
+cmd_new() {
+    local subj="" lvl="" desc="" mode=m1 drill="" drill_given=no
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --mode) [ $# -ge 2 ] || usage; check_mode "$2"; mode="$2"; shift 2 ;;
+            --drill) [ $# -ge 2 ] || usage; check_drill "$2"; drill="$2"; drill_given=yes; shift 2 ;;
+            -*) usage ;;
+            *)
+                if [ -z "$subj" ]; then subj="$1"
+                elif [ -z "$lvl" ]; then lvl="$1"
+                elif [ -z "$desc" ]; then desc="$1"
+                else usage
+                fi
+                shift ;;
+        esac
+    done
+    [ -n "$subj" ] && [ -n "$lvl" ] || usage
+    if [ "$mode" = m0 ] && [ "$drill_given" = no ] && [ -z "$(drill_of "$desc")" ]; then drill=blank; fi
+    check_subject "$subj"
+    ensure_level "$subj" "$lvl"
+    do_new "$desc" "$mode" "$drill"
 }
 
 cmd_list() {
@@ -427,8 +478,7 @@ main() {
     case "$cmd" in
         list) cmd_list "$@"; return ;;
         sync) cmd_sync "$@"; return ;;
-        new) if [ $# -lt 2 ] || [ $# -gt 3 ]; then usage; fi
-             check_subject "$1"; ensure_level "$1" "$2"; do_new "${3:-}"; return ;;
+        new) cmd_new "$@"; return ;;
         rename) [ $# -eq 4 ] || usage ;;
         delete|done|undone) [ $# -eq 3 ] || usage ;;
         -h|--help|help) usage 0 ;;

@@ -173,9 +173,10 @@ entry_files() {
     (cd "$1" && ls | grep -E '\.c$' || true) | awk '{ k = ($0 == "main.c") ? 0 : ($0 == "test.c") ? 1 : 2; print k "\t" $0 }' | sort | cut -f2
 }
 
-# write_project_cmake <项目目录> <项目名> <tests 相对路径>
+# write_project_cmake <项目目录> <项目名> <关卡相对路径> [tests 所在目录的相对路径，缺省同关卡]
+# 变式题（-variant）解的是另一道题，第 4 个参数传 . 让它只跑自己目录里的 tests/
 write_project_cmake() {
-    local dir="$1" name="$2" level srcs f target
+    local dir="$1" name="$2" level srcs f target tests_rel="${4:-$3}"
     level="$(cd "$dir/$3" && pwd)"
     srcs="$(cd "$dir" && ls src 2>/dev/null | grep -E '\.c$' | sed 's|^|src/|' | tr '\n' ' ' || true)"
     if [ -n "$(deps_lines "$level")" ]; then srcs="$srcs\${DEPS_SRC}"; fi
@@ -200,13 +201,14 @@ write_project_cmake() {
             echo "add_executable($target $f${srcs:+ $srcs})"
         done
         echo
-        echo "include($3/tests/check.cmake OPTIONAL)"
+        echo "include($tests_rel/tests/check.cmake OPTIONAL)"
     } > "$dir/CMakeLists.txt"
 }
 
-# create_project <关卡目录> <项目目录> <项目名>：照答案的文件结构生成能直接编译的空骨架
+# create_project <关卡目录> <项目目录> <项目名> [own-tests]：照答案的文件结构生成能直接编译的空骨架
+# 第 4 个参数为 own-tests 时，项目带自己的 tests/，不跑关卡层的测试（变式题用）
 create_project() {
-    local level="$1" dir="$2" name="$3" answer="$1/answer" f headers=""
+    local level="$1" dir="$2" name="$3" answer="$1/answer" f headers="" own_tests="${4:-}"
     mkdir -p "$dir/src"
     if [ -d "$answer/src" ]; then
         for f in $(cd "$answer/src" && ls | grep -E '\.h$' || true); do
@@ -231,7 +233,13 @@ create_project() {
             esac
         done
     fi
-    write_project_cmake "$dir" "$name" "../.."
+    if [ "$own_tests" = own-tests ]; then
+        mkdir -p "$dir/tests"
+        cp "$tpl_dir/check.cmake" "$dir/tests/check.cmake"
+        write_project_cmake "$dir" "$name" "../.." "."
+    else
+        write_project_cmake "$dir" "$name" "../.."
+    fi
 }
 
 # ---------- 同步 ----------
@@ -242,7 +250,13 @@ sync_level() {
     mkdir -p "$dir/tests"
     cp "$tpl_dir/check.cmake" "$dir/tests/check.cmake"
     ensure_task "$dir"
-    for p in $(projects_of "$dir"); do fill_deps "$dir" "$p"; done
+    for p in $(projects_of "$dir"); do
+        fill_deps "$dir" "$p"
+        # 自带 tests/ 的尝试（变式题）也刷新比对脚本
+        if [ "$p" != answer ] && [ -f "$dir/$p/tests/check.cmake" ]; then
+            cp "$tpl_dir/check.cmake" "$dir/$p/tests/check.cmake"
+        fi
+    done
     write_level_cmake "$dir"
 }
 
