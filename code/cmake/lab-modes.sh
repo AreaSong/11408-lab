@@ -179,10 +179,10 @@ show_focus() {
     cur="$(current_focus)"
     case "$cur" in
         mine|"")
-            echo "当前 CMake 加载模式：mine（默认智能模式——自动加载所有你建过 mine/ 尝试的关卡 + example）"
+            echo "当前 CMake 加载模式：mine（默认智能模式——自动加载四门课中已建过 mine/ 尝试的关卡）"
             echo "当前加载的关卡："
             for d in $(all_levels); do
-                if [ "$(count_attempts "$d")" -gt 0 ] || [[ "$(rel "$d")" == example/* ]]; then
+                if [ "$(count_attempts "$d")" -gt 0 ] && [[ "$(rel "$d")" != example/* ]]; then
                     echo "  - $(rel "$d")"
                 fi
             done ;;

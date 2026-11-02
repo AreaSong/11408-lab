@@ -42,7 +42,7 @@
   CM=/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin
   NJ=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja
   B=/tmp/lab-build-<科目>
-  $CM/cmake -S code -B $B -G Ninja -DCMAKE_MAKE_PROGRAM=$NJ
+  $CM/cmake -S code -B $B -G Ninja -DCMAKE_MAKE_PROGRAM=$NJ -DLAB_FOCUS=all
   $CM/cmake --build $B
   cd $B && $CM/ctest -R '^<基名>_answer' --output-on-failure
   ```

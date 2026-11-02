@@ -1,5 +1,5 @@
 # 总入口：用 CLion 打开 code/，一个窗口看到全部关卡。
-# 默认只收录「已建过 mine/ 尝试的关卡」（以及 example/），避免未学关卡的 200+ 个答案目标塞满下拉框；
+# 默认只收录四门课里「已建过 mine/ 尝试的关卡」，避免未学关卡的 200+ 个答案目标和样板空模板干扰下拉框与 All CTest；
 # 可用 ./lab.sh focus mine | all | <科目> <关卡号>... 切换加载范围（见 .focus）。
 cmake_minimum_required(VERSION 3.20)
 project(Lab408 C)
@@ -7,7 +7,9 @@ project(Lab408 C)
 enable_testing()
 
 set(lab_focus_lines "mine")
-if(EXISTS "${CMAKE_SOURCE_DIR}/.focus")
+if(DEFINED LAB_FOCUS AND NOT "${LAB_FOCUS}" STREQUAL "")
+    set(lab_focus_lines "${LAB_FOCUS}")
+elseif(EXISTS "${CMAKE_SOURCE_DIR}/.focus")
     file(STRINGS "${CMAKE_SOURCE_DIR}/.focus" lab_focus_lines)
 endif()
 if(NOT lab_focus_lines)
@@ -29,7 +31,7 @@ else()
         foreach(level IN LISTS levels)
             if(EXISTS "${level}/CMakeLists.txt")
                 file(GLOB attempts "${level}/mine/*/CMakeLists.txt")
-                if(lab_focus_first STREQUAL "all" OR attempts OR subject STREQUAL "example")
+                if(lab_focus_first STREQUAL "all" OR (attempts AND NOT subject STREQUAL "example"))
                     add_subdirectory("${level}")
                 endif()
             endif()
