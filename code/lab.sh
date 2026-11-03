@@ -4,7 +4,7 @@
 # 用法：
 #   ./lab.sh                                       交互菜单
 #   ./lab.sh new    <科目> <关卡号> [说明] [--mode m0|m1|m2|m3] [--drill blank|bug|rewrite|variant]
-#                                                  新建尝试；说明缺省为 first、review、review2……（M0 默认带 -blank）
+#                                                  新建尝试；说明缺省为 first、review、review2……
 #   ./lab.sh new    lib 02-linked-list             关卡还不存在时给完整目录名，先建关卡骨架
 #   ./lab.sh list   [科目] [关卡号]                  查看关卡、尝试（含教学方式与练习形式）和完成标记
 #   ./lab.sh rename <科目> <关卡号> <尝试> <新说明>   只改说明，日期不变，程序名一起改（不能改掉练习后缀）

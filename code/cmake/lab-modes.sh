@@ -118,7 +118,6 @@ pick_mode() {
 
 pick_drill() {
     local default_idx=1 i n
-    if [ "$1" = m0 ]; then default_idx=2; fi
     echo "选择练习形式：" >&2
     echo "  1) 正常写（自己从头实现）" >&2
     for i in "${!drills[@]}"; do
@@ -129,11 +128,11 @@ pick_drill() {
 }
 
 cmd_new() {
-    local subj="" lvl="" desc="" mode=m1 drill="" drill_given=no
+    local subj="" lvl="" desc="" mode=m1 drill=""
     while [ $# -gt 0 ]; do
         case "$1" in
             --mode) [ $# -ge 2 ] || usage; check_mode "$2"; mode="$2"; shift 2 ;;
-            --drill) [ $# -ge 2 ] || usage; check_drill "$2"; drill="$2"; drill_given=yes; shift 2 ;;
+            --drill) [ $# -ge 2 ] || usage; check_drill "$2"; drill="$2"; shift 2 ;;
             -*) usage ;;
             *)
                 if [ -z "$subj" ]; then subj="$1"
@@ -145,7 +144,6 @@ cmd_new() {
         esac
     done
     [ -n "$subj" ] && [ -n "$lvl" ] || usage
-    if [ "$mode" = m0 ] && [ "$drill_given" = no ] && [ -z "$(drill_of "$desc")" ]; then drill=blank; fi
     check_subject "$subj"
     ensure_level "$subj" "$lvl"
     do_new "$desc" "$mode" "$drill"
