@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 960" width="1080" height="960" style="background:#ffffff; font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+    <style>
+      .card { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; rx: 10; }
+      .title { font-size: 16px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-size: 12px; fill: #475569; }
+      .axis { stroke: #64748b; stroke-width: 1.5; marker-end: url(#arrow); }
+      .grid-dash { stroke: #94a3b8; stroke-width: 1.2; stroke-dasharray: 4,4; fill: none; }
+      .curve-blue { stroke: #2563eb; stroke-width: 2.8; fill: none; stroke-linecap: round; }
+      .curve-orange { stroke: #ea580c; stroke-width: 2.5; fill: none; stroke-linecap: round; }
+      .point { fill: #dc2626; }
+      .label { font-size: 12px; fill: #1e293b; font-weight: 500; }
+      .tag { font-size: 11px; fill: #b91c1c; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- Header -->
+  <text x="540" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#0f172a">高数必备 9 张“核心母图”速查卡（看图说话版）</text>
+
+  <!-- ==================== 1. y = x^2 & y = x^3 ==================== -->
+  <g transform="translate(20, 55)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">① 幂函数：y = x²（蓝）与 y = x³（橙）</text>
+    <text x="16" y="46" class="subtitle">x² 偶函数（左右对称碗）；x³ 奇函数（穿原点拐弯）</text>
+    <!-- Axes: origin at (165, 175) -->
+    <line x1="45" y1="175" x2="295" y2="175" class="axis"/>
+    <line x1="165" y1="260" x2="165" y2="65" class="axis"/>
+    <text x="285" y="192" class="label">x</text>
+    <text x="173" y="75" class="label">y</text>
+    <!-- y = x^2: scale 50px = 1 unit -->
+    <path d="M 85 75 Q 165 275 245 75" class="curve-blue"/>
+    <!-- y = x^3 -->
+    <path d="M 105 255 C 140 175, 150 175, 165 175 C 180 175, 190 175, 225 95" class="curve-orange"/>
+    <circle cx="165" cy="175" r="4" class="point"/>
+    <circle cx="215" cy="125" r="3.5" class="point"/>
+    <text x="172" y="192" class="label">(0,0)</text>
+    <text x="222" y="128" class="label">(1,1)</text>
+    <text x="72" y="95" fill="#2563eb" font-size="13" font-weight="bold">y = x² (≥0)</text>
+    <text x="215" y="90" fill="#ea580c" font-size="13" font-weight="bold">y = x³</text>
+  </g>
+
+  <!-- ==================== 2. y = 1/x ==================== -->
+  <g transform="translate(375, 55)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">② 反比例：y = 1/x（无穷大/无穷小代表）</text>
+    <text x="16" y="46" class="subtitle">x→0 时飞向无穷大(∞)；x→∞ 时贴近 0（无穷小）</text>
+    <!-- Axes: origin at (165, 165) -->
+    <line x1="35" y1="165" x2="295" y2="165" class="axis"/>
+    <line x1="165" y1="260" x2="165" y2="65" class="axis"/>
+    <text x="285" y="182" class="label">x</text>
+    <text x="173" y="75" class="label">y</text>
+    <!-- Branch 1 (x > 0) -->
+    <path d="M 177 72 Q 182 148 285 157" class="curve-blue"/>
+    <!-- Branch 2 (x < 0) -->
+    <path d="M 45 173 Q 148 182 153 258" class="curve-blue"/>
+    <circle cx="205" cy="125" r="3.5" class="point"/>
+    <text x="212" y="125" class="label">(1,1)</text>
+    <text x="182" y="88" class="tag">x→0⁺ 时 y→+∞</text>
+    <text x="215" y="150" class="tag">x→+∞ 时 y→0</text>
+  </g>
+
+  <!-- ==================== 3. y = |x| ==================== -->
+  <g transform="translate(730, 55)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">③ 绝对值：y = |x|（尖角模型）</text>
+    <text x="16" y="46" class="subtitle">高数必考反例：在 x=0 处【连续（没断），但不可导（尖角）】</text>
+    <!-- Axes: origin at (165, 210) -->
+    <line x1="35" y1="210" x2="295" y2="210" class="axis"/>
+    <line x1="165" y1="260" x2="165" y2="65" class="axis"/>
+    <text x="285" y="227" class="label">x</text>
+    <text x="173" y="75" class="label">y</text>
+    <!-- V shape -->
+    <path d="M 65 110 L 165 210 L 265 110" class="curve-blue"/>
+    <circle cx="165" cy="210" r="4.5" class="point"/>
+    <text x="125" y="232" class="tag">x=0 尖角：连续但不可导！</text>
+    <text x="235" y="105" fill="#2563eb" font-size="13" font-weight="bold">y = x (x&gt;0)</text>
+    <text x="45" y="105" fill="#2563eb" font-size="13" font-weight="bold">y = -x (x&lt;0)</text>
+  </g>
+
+  <!-- ==================== 4. y = e^x ==================== -->
+  <g transform="translate(20, 355)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">④ 指数函数：y = eˣ（左右极限不同！）</text>
+    <text x="16" y="46" class="subtitle">必过 (0,1)，永远 &gt;0；往左贴近 0，往右爆炸升天</text>
+    <!-- Axes: origin at (145, 215) -->
+    <line x1="35" y1="215" x2="295" y2="215" class="axis"/>
+    <line x1="145" y1="255" x2="145" y2="65" class="axis"/>
+    <text x="285" y="232" class="label">x</text>
+    <text x="153" y="75" class="label">y</text>
+    <!-- e^x curve -->
+    <path d="M 40 212 C 100 211, 125 200, 145 170 C 165 140, 185 105, 200 70" class="curve-blue"/>
+    <circle cx="145" cy="170" r="4" class="point"/>
+    <text x="153" y="175" class="label" font-weight="bold">(0, 1)</text>
+    <text x="42" y="198" class="tag">x→-∞ 时 eˣ → 0</text>
+    <text x="195" y="92" class="tag">x→+∞ 时 eˣ → +∞</text>
+  </g>
+
+  <!-- ==================== 5. y = ln x ==================== -->
+  <g transform="translate(375, 355)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">⑤ 自然对数：y = ln x（只在 y 轴右边！）</text>
+    <text x="16" y="46" class="subtitle">定义域 x&gt;0，必过 (1,0)；靠近 0 时跌向 -∞</text>
+    <!-- Axes: origin at (95, 165) -->
+    <line x1="45" y1="165" x2="295" y2="165" class="axis"/>
+    <line x1="95" y1="260" x2="95" y2="65" class="axis"/>
+    <text x="285" y="182" class="label">x</text>
+    <text x="103" y="75" class="label">y</text>
+    <!-- ln x curve -->
+    <path d="M 103 255 C 108 205, 125 180, 155 165 C 195 145, 240 130, 285 120" class="curve-blue"/>
+    <circle cx="155" cy="165" r="4" class="point"/>
+    <circle cx="225" cy="136" r="3.5" class="point"/>
+    <text x="148" y="185" class="label" font-weight="bold">(1, 0)</text>
+    <text x="215" y="125" class="label">(e, 1)</text>
+    <text x="108" y="245" class="tag">x→0⁺ 时 ln x → -∞</text>
+    <text x="200" y="102" class="tag">x→+∞ 时 ln x → +∞</text>
+  </g>
+
+  <!-- ==================== 6. y = arctan x ==================== -->
+  <g transform="translate(730, 355)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">⑥ 反正切：y = arctan x（高数高频宠儿）</text>
+    <text x="16" y="46" class="subtitle">有界！被上下两条虚线 ±π/2 死死夹住，过原点 (0,0)</text>
+    <!-- Axes: origin at (165, 165) -->
+    <line x1="35" y1="165" x2="295" y2="165" class="axis"/>
+    <line x1="165" y1="255" x2="165" y2="65" class="axis"/>
+    <!-- Horizontal asymptotes y = +- pi/2 -->
+    <line x1="40" y1="105" x2="290" y2="105" class="grid-dash"/>
+    <line x1="40" y1="225" x2="290" y2="225" class="grid-dash"/>
+    <text x="172" y="100" class="tag">y = +π/2 (上界)</text>
+    <text x="172" y="242" class="tag">y = -π/2 (下界)</text>
+    <!-- arctan curve -->
+    <path d="M 42 220 C 110 218, 135 195, 165 165 C 195 135, 220 112, 288 110" class="curve-blue"/>
+    <circle cx="165" cy="165" r="4" class="point"/>
+    <text x="215" y="132" class="label">x→+∞ 趋近 π/2</text>
+    <text x="45" y="205" class="label">x→-∞ 趋近 -π/2</text>
+  </g>
+
+  <!-- ==================== 7. y = sin x ==================== -->
+  <g transform="translate(20, 655)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">⑦ 正弦：y = sin x（从原点出发的波浪）</text>
+    <text x="16" y="46" class="subtitle">奇函数，必过 (0,0)，永远在 [-1, 1] 之间震荡（有界）</text>
+    <!-- Axes: origin at (115, 165) -->
+    <line x1="35" y1="165" x2="295" y2="165" class="axis"/>
+    <line x1="115" y1="245" x2="115" y2="75" class="axis"/>
+    <line x1="40" y1="115" x2="290" y2="115" class="grid-dash"/>
+    <line x1="40" y1="215" x2="290" y2="215" class="grid-dash"/>
+    <text x="95" y="118" class="label">1</text>
+    <text x="90" y="220" class="label">-1</text>
+    <!-- sin wave: period = 160px (40px per pi/2). Origin at x=115 -->
+    <path d="M 35 165 C 55 215, 60 215, 75 215 C 90 215, 95 190, 115 165 C 135 140, 140 115, 155 115 C 170 115, 175 140, 195 165 C 215 190, 220 215, 235 215 C 250 215, 255 190, 275 165" class="curve-blue"/>
+    <circle cx="115" cy="165" r="4" class="point"/>
+    <circle cx="155" cy="115" r="3.5" class="point"/>
+    <circle cx="195" cy="165" r="3.5" class="point"/>
+    <circle cx="235" cy="215" r="3.5" class="point"/>
+    <circle cx="275" cy="165" r="3.5" class="point"/>
+    <text x="118" y="182" class="label">0</text>
+    <text x="145" y="105" class="tag">π/2 (最高1)</text>
+    <text x="192" y="182" class="label">π</text>
+    <text x="220" y="235" class="label">3π/2 (-1)</text>
+    <text x="268" y="182" class="label">2π</text>
+  </g>
+
+  <!-- ==================== 8. y = cos x ==================== -->
+  <g transform="translate(375, 655)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">⑧ 余弦：y = cos x（从最高点出发的波浪）</text>
+    <text x="16" y="46" class="subtitle">偶函数，起点在 (0,1)，在 π/2 处等于 0，范围 [-1, 1]</text>
+    <!-- Axes: origin at (115, 165) -->
+    <line x1="35" y1="165" x2="295" y2="165" class="axis"/>
+    <line x1="115" y1="245" x2="115" y2="75" class="axis"/>
+    <line x1="40" y1="115" x2="290" y2="115" class="grid-dash"/>
+    <line x1="40" y1="215" x2="290" y2="215" class="grid-dash"/>
+    <!-- cos wave: origin x=115 is peak y=115 -->
+    <path d="M 35 215 C 50 215, 55 190, 75 165 C 95 140, 100 115, 115 115 C 130 115, 135 140, 155 165 C 175 190, 180 215, 195 215 C 210 215, 215 190, 235 165 C 255 140, 260 115, 275 115" class="curve-blue"/>
+    <circle cx="115" cy="115" r="4" class="point"/>
+    <circle cx="155" cy="165" r="3.5" class="point"/>
+    <circle cx="195" cy="215" r="3.5" class="point"/>
+    <circle cx="235" cy="165" r="3.5" class="point"/>
+    <text x="72" y="105" class="tag">(0, 1) 起点最高</text>
+    <text x="148" y="182" class="label">π/2</text>
+    <text x="182" y="235" class="label">π (-1)</text>
+    <text x="225" y="182" class="label">3π/2</text>
+    <text x="265" y="105" class="label">2π</text>
+  </g>
+
+  <!-- ==================== 9. y = tan x ==================== -->
+  <g transform="translate(730, 655)">
+    <rect class="card" width="330" height="280"/>
+    <text x="16" y="28" class="title">⑨ 正切：y = tan x = sin x / cos x</text>
+    <text x="16" y="46" class="subtitle">过 (0,0)；在 ±π/2 处分母 cos=0，撞墙飞向 ±∞（间断）</text>
+    <!-- Axes: origin at (165, 165) -->
+    <line x1="35" y1="165" x2="295" y2="165" class="axis"/>
+    <line x1="165" y1="255" x2="165" y2="65" class="axis"/>
+    <!-- Vertical asymptotes x = +- pi/2 at x=95 and x=235 -->
+    <line x1="95" y1="70" x2="95" y2="250" class="grid-dash"/>
+    <line x1="235" y1="70" x2="235" y2="250" class="grid-dash"/>
+    <text x="60" y="248" class="tag">x = -π/2</text>
+    <text x="210" y="82" class="tag">x = +π/2 (墙)</text>
+    <!-- tan curve -->
+    <path d="M 103 250 C 110 195, 135 175, 165 165 C 195 155, 220 135, 227 80" class="curve-blue"/>
+    <circle cx="165" cy="165" r="4" class="point"/>
+    <text x="172" y="182" class="label">(0,0)</text>
+  </g>
+</svg>
