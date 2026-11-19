@@ -6,3 +6,4 @@ enable_testing()
 
 add_subdirectory(answer)
 add_subdirectory(mine/2026-11-03-first)
+add_subdirectory(mine/2026-11-12-review)
