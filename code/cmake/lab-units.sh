@@ -175,6 +175,8 @@ entry_files() {
 
 # write_project_cmake <项目目录> <项目名> <关卡相对路径> [tests 所在目录的相对路径，缺省同关卡]
 # 变式题（-variant）解的是另一道题，第 4 个参数传 . 让它只跑自己目录里的 tests/
+# 在 mine/ 下新建尝试时，默认处于「🟢 先学会模式」，因此把非 _test 的外围壳子目标（main/moves 等）加上 # 注释隐藏，
+# 让 CLion 右上角默认只出现清爽的 1 个 ${name}_test 运行按钮；切换到「🔵 规范化代码模式」时取消注释即可。
 write_project_cmake() {
     local dir="$1" name="$2" level srcs f target tests_rel="${4:-$3}" ans_name
     level="$(cd "$dir/$3" && pwd)"
@@ -182,7 +184,10 @@ write_project_cmake() {
         ans_name="$(level_base "$level")_answer"
         sed -e "s|${ans_name}|${name}|g" \
             -e "s|include(\.\./tests/check\.cmake|include(${tests_rel}/tests/check.cmake|" \
-            "$level/answer/CMakeLists.txt" > "$dir/CMakeLists.txt"
+            "$level/answer/CMakeLists.txt" | awk -v t="add_executable(${name}_test " '
+            /^add_executable\(/ && index($0, t) != 1 { print "# [🔵 规范化模式启用] " $0; next }
+            { print }
+        ' > "$dir/CMakeLists.txt"
         return
     fi
     srcs="$(cd "$dir" && ls src 2>/dev/null | grep -E '\.c$' | sed 's|^|src/|' | tr '\n' ' ' || true)"
@@ -205,7 +210,11 @@ write_project_cmake() {
                 test.c) target="${name}_test" ;;
                 *) target="${name}_$(basename "$f" .c)" ;;
             esac
-            echo "add_executable($target $f${srcs:+ $srcs})"
+            if [ "$f" = "test.c" ]; then
+                echo "add_executable($target $f${srcs:+ $srcs})"
+            else
+                echo "# [🔵 规范化模式启用] add_executable($target $f${srcs:+ $srcs})"
+            fi
         done
         echo
         echo "include($tests_rel/tests/check.cmake OPTIONAL)"

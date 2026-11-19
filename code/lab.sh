@@ -175,7 +175,7 @@ do_new() {
     (cd "$dir" && find . -type f ! -name .mode ! -path './deps/*' | sort | sed 's|^\./|  - |')
     echo "  - deps/（$(ls "$dir/deps" | tr '\n' ' ')）"
     echo "已在 NOTES.md 末尾添加小节：## $name"
-    echo "在 CLion 里重新加载 CMake 项目，运行目标里就会出现 ${pname}、${pname}_test；也可以单独用 CLion 打开这个文件夹。"
+    echo "在 CLion 里重新加载 CMake 项目，运行目标里默认只出现清爽的 ${pname}_test（若切换🔵规范化模式，取消 CMakeLists.txt 中其余目标的注释即可）。"
     next_step_hint "$drill" "$(rel "$dir")"
 }
 
