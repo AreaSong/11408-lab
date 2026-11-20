@@ -1,0 +1,18 @@
+winner_seg=1
+winner_key=3
+ls 1 0 2
+out 3 7 10
+cmp=10
+path=2
+formula=6
+naive_rest=4
+naive_all=6
+winner_seg=0
+winner_key=1
+ls 0 1 2
+out 1 2 3 4 5 6
+cmp=15
+path=2
+formula=12
+naive_rest=10
+naive_all=12

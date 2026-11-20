@@ -1,0 +1,7 @@
+dummy=1
+merge 0 2 3 -> 5
+merge 5 6 9 -> 20
+merge 12 17 18 -> 47
+merge 20 24 47 -> 91
+wpl=163
+io=326

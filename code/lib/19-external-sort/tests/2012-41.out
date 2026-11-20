@@ -1,0 +1,9 @@
+dummy=0
+merge 10 35 -> 45
+merge 40 45 -> 85
+merge 50 60 -> 110
+merge 85 110 -> 195
+merge 195 200 -> 395
+wpl=830
+io=1660
+cmp_worst=825
