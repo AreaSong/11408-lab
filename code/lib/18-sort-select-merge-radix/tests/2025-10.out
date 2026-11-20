@@ -1,0 +1,8 @@
+exam 2025-10
+n=6
+select_worst=15
+bubble_worst=45
+insert_worst=25
+quick_worst=16
+select_cap=15
+letter=D

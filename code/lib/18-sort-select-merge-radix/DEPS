@@ -1,1 +1,4 @@
-lib/09-heap-huffman-ufset
+# 初始大根堆调用第 09 关的建堆。筛选是 static，堆排序的交换在本关，规则与那里相同。
+lib/09-heap-huffman-ufset heap.h heap.c
+# 汇总表里的插入、希尔、起泡、快排沿用第 17 关的比较次数和移动次数。
+lib/17-sort-insert-swap seq.h seq.c insert.h insert.c shell.h shell.c bubble.h bubble.c quick.h quick.c

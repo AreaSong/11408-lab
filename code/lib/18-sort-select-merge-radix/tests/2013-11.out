@@ -1,0 +1,11 @@
+exam 2013-11
+pass 1 digit=1
+110 120 911 122 114 7 119
+pass 2 digit=10
+7 110 911 114 119 120 122
+pass 3 digit=100
+7 110 114 119 120 122 911
+cmp=0
+move=42
+stable=yes
+letter=C

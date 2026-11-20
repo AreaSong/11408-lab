@@ -1,0 +1,9 @@
+exam 2019-7
+scale_small=n2
+scale_large=nlogn
+storage_heap=2i
+merge_stable=yes
+quick_stable=no
+insert_cmp_up=4
+merge_cmp_up=8
+letter=D

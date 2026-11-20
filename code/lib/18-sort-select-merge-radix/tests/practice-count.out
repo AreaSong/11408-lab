@@ -1,0 +1,30 @@
+row up
+insert cmp=4 move=0
+binary cmp=8 move=0
+shell cmp=7 move=0
+bubble cmp=4 move=0
+quick cmp=10 move=8
+select cmp=10 move=0
+heap cmp=12 move=30
+merge cmp=8 move=26
+radix cmp=0 move=10
+row down
+insert cmp=10 move=18
+binary cmp=6 move=18
+shell cmp=8 move=10
+bubble cmp=10 move=30
+quick cmp=12 move=10
+select cmp=10 move=6
+heap cmp=10 move=24
+merge cmp=5 move=26
+radix cmp=0 move=10
+row classic
+insert cmp=20 move=25
+binary cmp=16 move=25
+shell cmp=21 move=27
+bubble cmp=27 move=45
+quick cmp=22 move=17
+select cmp=28 move=21
+heap cmp=27 move=57
+merge cmp=16 move=48
+radix cmp=0 move=32

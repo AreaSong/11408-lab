@@ -1,0 +1,12 @@
+insert best=n avg=n2 worst=n2 space=1 stable=yes live=yes
+binary best=nlogn avg=n2 worst=n2 space=1 stable=yes live=yes
+shell best=nlogn avg=n1.3 worst=n2 space=1 stable=no live=no
+bubble best=n avg=n2 worst=n2 space=1 stable=yes live=yes
+quick best=nlogn avg=nlogn worst=n2 space=logn stable=no live=no
+select best=n2 avg=n2 worst=n2 space=1 stable=no live=no
+heap best=nlogn avg=nlogn worst=nlogn space=1 stable=no live=no
+merge best=nlogn avg=nlogn worst=nlogn space=n stable=yes live=yes
+radix best=d(n+r) avg=d(n+r) worst=d(n+r) space=r stable=yes live=yes
+quick_worst_space=n
+radix_array_space=n+r
+live_ok=yes

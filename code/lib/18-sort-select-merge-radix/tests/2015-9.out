@@ -1,0 +1,7 @@
+exam 2015-9
+radix_move=16..16 same=yes
+insert_move=0..12 same=no
+bubble_move=0..18 same=no
+quick_move=5..9 same=no
+select_move=0..9 same=no
+letter=C

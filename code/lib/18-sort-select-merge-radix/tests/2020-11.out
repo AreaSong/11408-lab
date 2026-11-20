@@ -1,0 +1,13 @@
+exam 2020-11
+insert_cmp_up=4
+select_cmp_up=10
+select_cmp_down=10
+insert_move_up=0
+select_move_up=0
+space=1
+insert_move_down=18
+select_move_down=6
+fewer_cmp=yes
+fewer_space=no
+fewer_move=no
+letter=A

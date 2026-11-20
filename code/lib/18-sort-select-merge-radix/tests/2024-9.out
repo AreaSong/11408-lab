@@ -1,0 +1,13 @@
+exam 2024-9
+build
+28 22 20 19 8 12 15 5
+heap09=yes
+pass 1 at=7 key=28
+22 19 20 5 8 12 15 28
+pass 2 at=6 key=22
+20 19 15 5 8 12 22 28
+cmp=14
+move=15
+stable=yes
+heap 20 19 15 5 8 12
+letter=B

@@ -1,0 +1,32 @@
+pass 1 digit=1
+21 12
+pass 2 digit=10
+12 21
+cmp=0
+move=8
+stable=yes
+pass 1 digit=1
+720 355 436 457 657 329 839
+pass 2 digit=10
+720 329 436 839 355 457 657
+pass 3 digit=100
+329 355 436 457 657 720 839
+cmp=0
+move=42
+stable=yes
+pass 1 digit=1
+110 120 911 122 114 7 119
+pass 2 digit=10
+7 110 911 114 119 120 122
+pass 3 digit=100
+7 110 114 119 120 122 911
+cmp=0
+move=42
+stable=yes
+pass 1 digit=1
+21 11 21
+pass 2 digit=10
+11 21 21
+cmp=0
+move=12
+stable=yes
