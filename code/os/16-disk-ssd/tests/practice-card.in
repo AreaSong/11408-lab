@@ -1,0 +1,16 @@
+card
+fmt
+claim scan-to-end
+claim look-to-end
+claim cscan-serves-return
+claim jump-counts
+claim sstf-may-starve
+claim only-fcfs-unstuck
+claim half-rot
+claim sched-cuts-seek
+claim sched-cuts-rot
+claim tie-low-track
+claim chs-by-driver
+claim gc-copies-valid
+claim wear-cuts-total
+claim static-moves-cold

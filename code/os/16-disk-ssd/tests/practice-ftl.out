@@ -1,0 +1,15 @@
+ftl new blocks=2 pages=2 policy=none
+ftl write lpn=0 value=1
+ftl write lpn=0 value=9
+ftl host=2 flash=2 gc=0
+b0 erase=0 p0=i p1=v,0,9
+b1 erase=0 p0=f p1=f
+ftl new blocks=2 pages=2 policy=none
+ftl write lpn=0 value=1
+ftl write lpn=1 value=2
+ftl write lpn=2 value=3
+ftl write lpn=3 value=4
+ftl write lpn=0 value=9
+ftl host=5 flash=6 gc=1
+b0 erase=1 p0=v,1,2 p1=v,0,9
+b1 erase=0 p0=v,2,3 p1=v,3,4

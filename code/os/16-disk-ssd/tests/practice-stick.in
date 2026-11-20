@@ -1,0 +1,4 @@
+stick fcfs 3
+stick sstf 3
+stick scan 3
+stick cscan 3

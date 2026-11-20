@@ -1,0 +1,4 @@
+algo=fcfs extra=3 order=50 80 50 50 50 stuck=no
+algo=sstf extra=3 order=50 50 50 50 80 stuck=yes
+algo=scan extra=3 order=50 50 50 50 80 stuck=yes
+algo=cscan extra=3 order=50 50 50 50 80 stuck=yes

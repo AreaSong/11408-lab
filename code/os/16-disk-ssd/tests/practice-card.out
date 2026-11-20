@@ -1,0 +1,20 @@
+parts=surface,track,sector,cylinder
+address=cylinder+head+sector
+same-cylinder=no-extra-seek
+1 physical-format sector
+2 partition partition-table
+3 logical-format root
+claim scan-to-end value=true
+claim look-to-end value=false
+claim cscan-serves-return value=false
+claim jump-counts value=true
+claim sstf-may-starve value=true
+claim only-fcfs-unstuck value=true
+claim half-rot value=true
+claim sched-cuts-seek value=true
+claim sched-cuts-rot value=false
+claim tie-low-track value=true
+claim chs-by-driver value=true
+claim gc-copies-valid value=true
+claim wear-cuts-total value=false
+claim static-moves-cold value=true

@@ -1,0 +1,11 @@
+ftl new 2 2 none
+ftl write 0 1
+ftl write 0 9
+ftl show
+ftl new 2 2 none
+ftl write 0 1
+ftl write 1 2
+ftl write 2 3
+ftl write 3 4
+ftl write 0 9
+ftl show

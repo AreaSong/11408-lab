@@ -1,0 +1,4 @@
+exam 2025-32 answer=B keep=block-size
+claim wear-by-fs value=false
+claim ssd-overwrite value=false
+claim flash-prefers-fcfs value=true
