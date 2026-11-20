@@ -1,0 +1,10 @@
+mode pipe
+freq 100
+asm
+.text
+ld r1, #7
+addi r1, r1, #1
+hlt
+end
+load
+compare

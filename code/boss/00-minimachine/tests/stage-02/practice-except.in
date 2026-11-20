@@ -1,0 +1,17 @@
+mode pipe
+kernel on
+event on
+asm
+.text
+div r1, r2, r3
+st r4, [r5]
+hlt
+end
+load
+set r2 1
+set r3 0
+set r4 0x11111111
+set r5 0x2000
+setw 0x2000 0x22222222
+run
+dmem 0x2000 1

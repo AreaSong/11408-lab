@@ -1,0 +1,13 @@
+mode pipe
+forward off
+diagram on
+asm
+.text
+add r1, r2, r3
+sub r4, r1, r5
+and r6, r1, r0
+or r7, r1, r2
+hlt
+end
+load
+run 4

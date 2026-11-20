@@ -1,5 +1,6 @@
 #include "cpu/cpu_exec.h"
 #include "cpu/cpu_intr.h"
+#include "cpu/cpu_pipe.h"
 #include "cpu/cpu_tick.h"
 
 #include <string.h>
@@ -150,6 +151,13 @@ static void settle(MmMachine *m, int had, int trap) {
 int cpu_step(MmMachine *m) {
     int trap = 0;
     int had;
+    if (m->pipe_on) {
+        if (m->halted && !m->asleep) {
+            return 1;
+        }
+        cpu_pipe_run(m, 1);
+        return (m->halted && !m->asleep) ? 1 : 0;
+    }
     if (m->halted && !m->asleep) {
         return 1;
     }
@@ -164,6 +172,9 @@ int cpu_step(MmMachine *m) {
 
 int cpu_run(MmMachine *m, int max_steps) {
     int i;
+    if (m->pipe_on) {
+        return cpu_pipe_run(m, max_steps);
+    }
     for (i = 0; i < max_steps; i++) {
         if (m->halted && !m->asleep) {
             return 0;

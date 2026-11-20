@@ -1,0 +1,16 @@
+mode pipe
+forward on
+branch predict
+cache split
+diagram on
+freq 100
+asm
+.text
+add r1, r2, r3
+add r4, r5, r6
+add r0, r2, r3
+add r7, r5, r6
+hlt
+end
+load
+run 4

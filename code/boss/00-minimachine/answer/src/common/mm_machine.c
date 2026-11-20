@@ -1,6 +1,7 @@
 #include "common/mm_internal.h"
 #include "asm/asm_image.h"
 #include "cpu/cpu_intr.h"
+#include "cpu/cpu_pipe.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +34,7 @@ static void clear_arch(MmMachine *m) {
         memset(m->port, 0, sizeof(uint32_t) * 65536u);
     }
     cpu_intr_reset(m);
+    cpu_pipe_reset(m);
 }
 
 MmMachine *mm_create(uint32_t mem_bytes) {

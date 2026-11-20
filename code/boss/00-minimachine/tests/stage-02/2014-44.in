@@ -1,0 +1,20 @@
+mode pipe
+forward off
+branch stall
+diagram on
+asm
+.text
+shl r4, r2, #2
+add r4, r4, r3
+ld r5, [r4]
+add r1, r1, r5
+addi r2, r2, #1
+jr r2
+loop: shl r4, r2, #2
+hlt
+end
+load
+set r2 0x1017
+set r3 0xFFFFDFA4
+setw 0x2000 3
+run 7

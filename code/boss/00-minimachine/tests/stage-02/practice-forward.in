@@ -1,0 +1,14 @@
+mode pipe
+forward on
+diagram on
+asm
+.text
+ld r1, [r2]
+add r3, r1, r4
+hlt
+end
+load
+set r2 0x2000
+setw 0x2000 9
+run 2
+regs

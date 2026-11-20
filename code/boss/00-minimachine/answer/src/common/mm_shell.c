@@ -4,6 +4,7 @@
 #include "common/mm_internal.h"
 #include "common/mm_shell_stage.h"
 #include "cpu/cpu_exec.h"
+#include "cpu/cpu_pipe.h"
 #include "kernel/k_trap.h"
 #include "prompt.h"
 
@@ -139,6 +140,15 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int pipe = mm_shell_pipe(s, out, machine, *mem_bytes, opt, *image);
+        if (pipe != 0) {
+            if (pipe > 0) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return pipe < 0 ? -1 : 0;
+        }
+    }
+    {
         int stage = mm_shell_stage(s, out, machine, *mem_bytes, opt);
         if (stage != 0) {
             if (stage > 0) {
@@ -215,6 +225,9 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         rc = cpu_run(m, limit);
         print_stop(out, m, rc == 1);
         mm_print_stats(m, out);
+        if (cpu_pipe_enabled(m)) {
+            cpu_pipe_report(m, out);
+        }
         return 0;
     }
     if (strcmp(s, "step") == 0) {
@@ -228,6 +241,9 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
     }
     if (strcmp(s, "stats") == 0) {
         mm_print_stats(m, out);
+        if (cpu_pipe_enabled(m)) {
+            cpu_pipe_report(m, out);
+        }
         return 0;
     }
     if (starts(s, "dmem")) {

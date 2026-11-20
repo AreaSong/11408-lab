@@ -90,3 +90,10 @@
 | `timer 周期` / `timer off` | 01 | 按时钟周期周期性地挂起 IRQ0 |
 | `conin 文本` / `conout` | 01 | 预置键盘输入，或打印控制台已输出的字符 |
 | `sr epc/epsw/cause/badva/imr/...` | 01 | 打印一个控制寄存器 |
+| `mode tick` / `mode pipe` | 02 | 节拍模式或五段流水线，默认节拍 |
+| `forward on` / `off` | 02 | 数据转发，默认开 |
+| `branch predict` / `stall` | 02 | 预测不转移，或阻塞到 MEM 结束 |
+| `cache split` / `unified` | 02 | 指令和数据存储器分开，或共用 |
+| `diagram on` / `off` | 02 | 流水线时空图，默认关 |
+| `freq 数` | 02 | 主频，单位 MHz，用来算执行时间和 MIPS |
+| `compare` | 02 | 同一程序用两种模式各跑一遍，比最终状态并算加速比 |

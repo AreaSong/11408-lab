@@ -2,6 +2,7 @@
 
 #include "common/mm_internal.h"
 #include "cpu/cpu_intr.h"
+#include "cpu/cpu_pipe.h"
 #include "kernel/k_trap.h"
 
 #include <stdio.h>
@@ -30,7 +31,10 @@ static int parse_u32(const char *text, uint32_t *out) {
     return 0;
 }
 
-void mm_shell_opt_init(MmShellOpt *opt) { memset(opt, 0, sizeof *opt); }
+void mm_shell_opt_init(MmShellOpt *opt) {
+    memset(opt, 0, sizeof *opt);
+    opt->forward = 1;
+}
 
 void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     int i;
@@ -69,6 +73,16 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     if (opt->timer_set) {
         m->port[0x11] = opt->timer;
         m->port[0x10] = opt->timer == 0 ? 0 : 1;
+    }
+    {
+        CpuPipeOpt pipe;
+        cpu_pipe_opt_default(&pipe);
+        pipe.forward = opt->forward;
+        pipe.branch_stall = opt->branch_stall;
+        pipe.unified = opt->unified;
+        pipe.diagram = opt->diagram;
+        pipe.freq_mhz = opt->freq_mhz;
+        cpu_pipe_set(m, &pipe, opt->pipe);
     }
 }
 

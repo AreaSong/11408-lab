@@ -34,7 +34,8 @@
 |---|---|---|
 | 00 | [stages/00-isa-asm/ANSWER.md](stages/00-isa-asm/ANSWER.md) | `boss-stage-00` |
 | 01 | [stages/01-interrupt/ANSWER.md](stages/01-interrupt/ANSWER.md) | `boss-stage-01` |
-| 02~13 | 待写 | `boss-stage-NN` |
+| 02 | [stages/02-pipeline/ANSWER.md](stages/02-pipeline/ANSWER.md) | `boss-stage-02` |
+| 03~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

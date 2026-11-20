@@ -9,6 +9,38 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/* 时空图画得下的动态指令数和时钟列。超出仍照常执行，只是格子不再记。 */
+#define MM_PIPE_LOG 24
+#define MM_PIPE_CYC 64
+
+typedef struct {
+    int valid;
+    int seq;
+    uint32_t pc;
+    uint32_t npc;
+    CpuInsn in;
+    int dest;
+    int ex0;
+    int ex1;
+    int memr;
+    int is_load;
+    int uses_mem;
+    int is_branch;
+    int writes_flags;
+    int reads_flags;
+    int halt;
+    int psw_write;
+    int trap;
+    int taken;
+    int fault;
+    uint32_t badva;
+    uint32_t result;
+    uint32_t ea;
+    uint32_t flag_bits;
+    uint32_t new_psw;
+    uint32_t target;
+} PipeSlot;
+
 struct MmMachine {
     uint32_t r[8];
     uint32_t pc;
@@ -69,6 +101,31 @@ struct MmMachine {
     char con_in[256];
     int con_in_len;
     int con_in_pos;
+    /* 阶段 02。配置在 mm_reset 时恢复默认，命令层会再套上。 */
+    int pipe_on;
+    int pipe_forward;
+    int pipe_branch;
+    int pipe_unified;
+    int pipe_diagram;
+    uint32_t pipe_mhz;
+    int pipe_cycles;
+    int pipe_committed;
+    int pipe_flushed;
+    int pipe_struct;
+    int pipe_data;
+    int pipe_ctrl;
+    int pipe_nlog;
+    int pipe_clog;
+    int pipe_overflow;
+    uint32_t pipe_log_pc[MM_PIPE_LOG];
+    int pipe_log_id[MM_PIPE_LOG];
+    int pipe_log_if[MM_PIPE_LOG];
+    int pipe_log_branch[MM_PIPE_LOG];
+    int pipe_log_flush[MM_PIPE_LOG];
+    int pipe_log_ctrl[MM_PIPE_LOG];
+    char pipe_log_text[MM_PIPE_LOG][48];
+    char pipe_cell[MM_PIPE_LOG][MM_PIPE_CYC];
+    PipeSlot pipe_st[5];
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

@@ -11,7 +11,7 @@
 |---|---|---|---|---|
 | 00 | isa-asm：MM32 指令集、汇编器、多周期节拍 trace | co/01~04、co/08、co/09 | ✅ | boss-stage-00 |
 | 01 | interrupt：异常、中断、`syscall`，用户态与内核态切换 | co/10、os/00、阶段 00 | ✅ | boss-stage-01 |
-| 02 | pipeline：五段流水线、冒险检测与转发、CPI/MIPS 统计 | co/00、co/11、阶段 01 | ⬜ | — |
+| 02 | pipeline：五段流水线、冒险检测与转发、CPI/MIPS 统计 | co/00、co/11、阶段 01 | ✅ | boss-stage-02 |
 | 03 | memory：多体交叉主存、Cache | co/05、co/06、阶段 02 | ⬜ | — |
 | 04 | mmu：TLB 加两级页表，页故障进内核 | co/07、os/10、阶段 03 | ⬜ | — |
 | 05 | process：PCB、fork/exec、可切换调度算法 | os/02~05、lib/04、lib/09、阶段 04 | ⬜ | — |
@@ -31,3 +31,4 @@
 - 2026-11-20 · 结构重构 · boss 改为单个整机工程 `00-minimachine`（14 个阶段题面占位、合并 DEPS、按阶段的测试登记与 `lab.sh borrow`/`--from-stage`），删除原 14 个里程碑目录；未写任何阶段的参考实现，详见 `boss-single-project.md`
 - 2026-11-20 · 阶段 00 isa-asm · MM32 编码/两遍汇编/ALU/寻址/节拍执行与命令脚本；`ctest -R '^minimachine_answer'` 全过（含 s00 单元测试与 6 个脚本）；已打标签 `boss-stage-00`
 - 2026-11-20 · 阶段 01 interrupt · 中断隐指令、宿主向量表、exit/write/read、屏蔽字嵌套与时钟/终端；向量字为 0 时仍按阶段 00 停机。零 warning，`ctest -R '^minimachine_answer'` 全过（s00 回归 + s01 单元测试与 6 个脚本）；`answer/` 单独拷到 `/tmp` 可配置编译。已打标签 `boss-stage-01`
+- 2026-11-20 · 阶段 02 pipeline · 五段流水（转发、预测不转移、阻塞到 MEM、统一存储器）、精确异常与 CPI/MIPS/加速比。默认仍是节拍模式。零 warning，`ctest -R '^minimachine_answer'` 全过（含 s00/s01 回归与 s02）；`answer/` 单独拷到 `/tmp` 可配置编译。已打标签 `boss-stage-02`

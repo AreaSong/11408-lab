@@ -1,0 +1,18 @@
+mode pipe
+forward on
+branch stall
+diagram on
+asm
+.text
+add r2, r1, r0
+ld r3, [r2]
+jr r3
+dest: addi r4, r4, #20
+hlt
+.data
+slot: .word dest
+end
+load
+set r0 0x1014
+run 4
+regs
