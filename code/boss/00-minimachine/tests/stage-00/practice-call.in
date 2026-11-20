@@ -1,0 +1,19 @@
+asm
+.text
+        li sp, #0x7000
+        li r1, #6
+        li r2, #7
+        call muladd
+        hlt
+muladd: push lr
+        push fp
+        mov fp, sp
+        add r0, r1, r2
+        mov sp, fp
+        pop fp
+        pop lr
+        ret
+end
+load
+run
+regs

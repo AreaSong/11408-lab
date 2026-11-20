@@ -7,7 +7,7 @@
 
 | 下拉框里的运行目标 | 来自 | 作用 |
 |---|---|---|
-| `minimachine_answer` | `answer/main.c` | 命令脚本解释器：读标准输入的命令，配置机器、运行、打印 trace（待阶段 00 补） |
+| `minimachine_answer` | `answer/main.c` | 命令脚本解释器：读标准输入的命令，汇编、装入、按节拍运行（阶段 00 起会等键盘输入） |
 | `minimachine_answer_test` | `answer/test.c` | 冒烟测试 |
 | `minimachine_answer_sNN_test` | `tests/stage-NN/*.c` | 阶段 NN 的单元测试，只通过公共头文件调用 |
 
@@ -32,7 +32,8 @@
 
 | 阶段 | 讲解 | 标签 |
 |---|---|---|
-| 00~13 | 待写（每写完一个阶段在此登记 `stages/NN-<主题>/ANSWER.md`） | `boss-stage-NN` |
+| 00 | [stages/00-isa-asm/ANSWER.md](stages/00-isa-asm/ANSWER.md) | `boss-stage-00`（待打） |
+| 01~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

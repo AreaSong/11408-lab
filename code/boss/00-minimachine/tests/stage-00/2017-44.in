@@ -1,0 +1,9 @@
+asm
+cmp r1, r2
+hlt
+end
+load
+set r1 0
+set r2 0xFFFFFFFF
+run
+regs

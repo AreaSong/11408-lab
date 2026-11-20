@@ -1,0 +1,9 @@
+asm
+sub r0, r1, r2
+hlt
+end
+load
+set r1 10
+set r2 -20
+run
+regs
