@@ -3,7 +3,7 @@
 
 tpl_dir="$root/cmake/templates"
 warmup_rel="lib/00-warmup"
-all_subjects=(lib co os net example)
+all_subjects=(lib co os net boss example)
 
 # 关卡目录名去掉编号、连字符换成下划线，作为程序名前缀：02-linked-list → linked_list
 level_base() {

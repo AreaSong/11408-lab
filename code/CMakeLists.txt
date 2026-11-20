@@ -1,5 +1,5 @@
 # 总入口：用 CLion 打开 code/，一个窗口看到全部关卡。
-# 默认只收录四门课里「已建过 mine/ 尝试的关卡」，避免未学关卡的 200+ 个答案目标和样板空模板干扰下拉框与 All CTest；
+# 默认只收录四门课与 boss 里「已建过 mine/ 尝试的关卡」，避免未学关卡的 200+ 个答案目标和样板空模板干扰下拉框与 All CTest；
 # 可用 ./lab.sh focus mine | all | <科目> <关卡号>... 切换加载范围（见 .focus）。
 cmake_minimum_required(VERSION 3.20)
 project(Lab408 C)
@@ -26,7 +26,7 @@ if(NOT lab_focus_first STREQUAL "mine" AND NOT lab_focus_first STREQUAL "all")
         endif()
     endforeach()
 else()
-    foreach(subject lib co os net example)
+    foreach(subject lib co os net boss example)
         file(GLOB levels LIST_DIRECTORIES true "${CMAKE_SOURCE_DIR}/${subject}/[0-9][0-9]-*")
         foreach(level IN LISTS levels)
             if(EXISTS "${level}/CMakeLists.txt")

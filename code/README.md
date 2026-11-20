@@ -10,7 +10,7 @@
 | `co/` | 计算机组成原理 | 数据表示、Cache、迷你 CPU、地址翻译…… |
 | `os/` | 操作系统 | 进程调度、PV 同步、死锁、页面置换、文件系统、磁盘调度…… |
 | `net/` | 计算机网络 | 分层封装、子网与路由、滑动窗口、TCP 拥塞控制…… |
-| `boss/` | 综合 | 把各科模块接起来，完成 MiniMachine |
+| `boss/` | 综合 | MiniMachine 一个整机工程 `00-minimachine/`，分 14 个阶段：某个阶段的前置关卡学完即可开，参考实现按阶段在写；详情见 [LEVELS.md](boss/LEVELS.md)、[ISA.md](boss/ISA.md)、[COVERAGE.md](boss/COVERAGE.md) |
 
 ## 关卡约定
 
@@ -80,6 +80,8 @@
 | 命令 | 作用 |
 |---|---|
 | `./lab.sh new lib 02 [说明] [--mode m0..m3] [--drill blank\|bug\|rewrite\|variant]` | 新建尝试项目（选教学方式与练习形式），并在 `NOTES.md` 追加小节；说明缺省依次为 first、review、review2…… |
+| `./lab.sh new boss 00 [说明] [--from-stage NN]` | boss 整机：新建尝试并写 `.stage`（缺省 `00`，测试只登记到这一阶段）；`--from-stage NN` 以标签 `boss-stage-NN` 的参考实现为底 |
+| `./lab.sh borrow boss <尝试> <子系统> [NN]` | boss 整机：前面阶段没写完时，从标签 `boss-stage-NN`（缺省为 `.stage` 的上一阶段）借入 `src/<子系统>/`，记在 `.borrowed` |
 | `./lab.sh list [lib] [02]` | 查看各关的尝试次数，或某关每次尝试的方式、练习、文件与完成标记 |
 | `./lab.sh rename lib 02 <尝试> <新说明>` | 改说明（日期和练习后缀不变），程序名和 `NOTES.md` 小节标题一起改 |
 | `./lab.sh delete lib 02 <尝试>` | 确认后删除尝试，`NOTES.md` 的复盘保留 |

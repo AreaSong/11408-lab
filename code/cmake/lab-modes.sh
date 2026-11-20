@@ -128,11 +128,12 @@ pick_drill() {
 }
 
 cmd_new() {
-    local subj="" lvl="" desc="" mode=m1 drill=""
+    local subj="" lvl="" desc="" mode=m1 drill="" from=""
     while [ $# -gt 0 ]; do
         case "$1" in
             --mode) [ $# -ge 2 ] || usage; check_mode "$2"; mode="$2"; shift 2 ;;
             --drill) [ $# -ge 2 ] || usage; check_drill "$2"; drill="$2"; shift 2 ;;
+            --from-stage) [ $# -ge 2 ] || usage; check_stage_num "$2"; from="$2"; shift 2 ;;
             -*) usage ;;
             *)
                 if [ -z "$subj" ]; then subj="$1"
@@ -145,8 +146,9 @@ cmd_new() {
     done
     [ -n "$subj" ] && [ -n "$lvl" ] || usage
     check_subject "$subj"
+    if [ -n "$from" ] && [ "$subj" != boss ]; then die "--from-stage 只用于 boss（MiniMachine 整机工程）"; fi
     ensure_level "$subj" "$lvl"
-    do_new "$desc" "$mode" "$drill"
+    do_new "$desc" "$mode" "$drill" "$from"
 }
 
 # ---------- CMake 加载范围（focus）与复习看板（review） ----------
@@ -177,7 +179,7 @@ show_focus() {
     cur="$(current_focus)"
     case "$cur" in
         mine|"")
-            echo "当前 CMake 加载模式：mine（默认智能模式——自动加载四门课中已建过 mine/ 尝试的关卡）"
+            echo "当前 CMake 加载模式：mine（默认智能模式——自动加载四门课与 boss 中已建过 mine/ 尝试的关卡）"
             echo "当前加载的关卡："
             for d in $(all_levels); do
                 if [ "$(count_attempts "$d")" -gt 0 ] && [[ "$(rel "$d")" != example/* ]]; then
@@ -185,7 +187,7 @@ show_focus() {
                 fi
             done ;;
         all)
-            echo "当前 CMake 加载模式：all（加载全部 66 个关卡，含未学关卡的标准答案）" ;;
+            echo "当前 CMake 加载模式：all（加载全部关卡：四门课 66 关加 boss 整机，含未学关卡的标准答案）" ;;
         *)
             echo "当前 CMake 加载模式：指定关卡聚焦（仅加载以下关卡）："
             while read -r d; do echo "  - $d"; done <<< "$cur" ;;
@@ -203,7 +205,7 @@ cmd_focus() {
                     echo "已设为默认智能模式（mine）：CLion 自动加载所有你建过尝试的关卡，随便点哪关都能直接运行。" ;;
                 all|off)
                     echo "all" > "$root/.focus"
-                    echo "已设为全量模式（all）：CLion 加载全部 66 个关卡。" ;;
+                    echo "已设为全量模式（all）：CLion 加载全部关卡（四门课 66 关 + boss 整机）。" ;;
                 *) usage ;;
             esac ;;
         *)
@@ -226,7 +228,7 @@ interactive_focus() {
     echo "切换 CMake 加载范围："
     echo "  1) 智能模式 mine（推荐默认：加载所有建过尝试的关卡，随便点哪关都能直接跑）"
     echo "  2) 单关模式（只加载某 1 关）"
-    echo "  3) 全量模式 all（加载全部 66 关）"
+    echo "  3) 全量模式 all（加载全部关卡）"
     n="$(ask_number "输入编号" 3 1)"
     case "$n" in
         1) cmd_focus mine ;;
@@ -243,8 +245,8 @@ import datetime, pathlib, re, sys
 
 root = pathlib.Path(sys.argv[1])
 filt = sys.argv[2]
-subjects = [filt] if filt else ["lib", "co", "os", "net"]
-names = {"lib": "数据结构", "co": "计组", "os": "操作系统", "net": "计网"}
+subjects = [filt] if filt else ["lib", "co", "os", "net", "boss"]
+names = {"lib": "数据结构", "co": "计组", "os": "操作系统", "net": "计网", "boss": "综合 MiniMachine"}
 rank_map = {"—": 0, "L0": 1, "L1": 2, "L2": 3, "L3": 4, "L4": 5}
 today = datetime.date.today()
 rows = []

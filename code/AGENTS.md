@@ -6,25 +6,25 @@
 > 考查范围以 **2027 年 408 统考大纲**（高教社 2026 年 9 月版，与 2026 版无变动）为准，各科 `LEVELS.md` 末尾有逐条的「大纲覆盖对照」。
 
 ## 目录与命名
-- 科目目录：`lib/`（数据结构）、`co/`、`os/`、`net/`、`boss/`（四门学完后再启动）
+- 科目目录：`lib/`（数据结构）、`co/`、`os/`、`net/`、`boss/`（MiniMachine：只有一个整机工程 `boss/00-minimachine/`，分 14 个阶段，某个阶段的前置关卡学完即可开，按序号串行；参考实现按阶段在写，详情见 `boss/AGENTS.md`、`boss/LEVELS.md`、`boss/ISA.md`、`boss/COVERAGE.md`）
 - 关卡目录：`<科目>/<两位序号>-<英文主题>/`，例如 `os/04-scheduler/`；序号即学习顺序；66 个关卡目录已全部建好；`example/00-rotate/` 是结构样板
 - 每个关卡目录 = 公共部分（在关卡层）+ 若干个**独立的 CLion 项目**（`answer/`、`mine/<日期-说明>/`）：
   - `TASK.md`：题目（本关任务、主程序输入输出格式与样例、真题题面），不含思路和代码；还没写答案的关卡是从 `LEVELS.md` 摘出的占位
   - `ANSWER.md`：答案讲解（运行目标表、思路/三段式、易错点、概念卡片参考）
   - `NOTES.md`：用户自己写的复盘，按尝试分节 + 「概念卡片」一节，AI 只提醒、不代写
   - `DEPS`（可选）：本关复用的其他关卡，一行一个 `<关卡> [文件...]`，如 `lib/04-queue`；不列文件就取该关整个 `src/`，依赖会传递
-  - `tests/`：`<用例>.in/.out` 喂给主程序，`<程序后缀>/<用例>.in/.out` 喂给同项目的其他程序；`check.cmake` 由 `lab.sh` 复制，不手改
+  - `tests/`：`<用例>.in/.out` 喂给主程序，`<程序后缀>/<用例>.in/.out` 喂给同项目的其他程序；boss 另有 `stage-NN/`（阶段单元测试 `*.c` 与喂主程序的用例）；`check.cmake` 由 `lab.sh` 复制，不手改
   - `CMakeLists.txt`：由 `lab.sh` 生成，收录 `answer/` 和每次尝试
   - `answer/`：标准答案项目；`mine/<YYYY-MM-DD>-<说明>/`：用户的每次尝试（自带与答案同名、能编译的空模板，可带 `--mode` 与 `--drill`）。**绝不提前预建**：4 档主模式（M0~M3 正常写，含 M0 领读）和 `-rewrite` 均使用干净的空模板项目（不往 `mine/` 预填任何代码）；只有用户明确点名要做 `-blank` / `-bug` / `-variant` 3 种专项作业时，才由 AI 当场调用 `./lab.sh new` 创建并填入骨架、问题代码或变式题面（详见 [TEACHING.md](TEACHING.md)）
 - 每个项目的结构（与 CLion 原生 C 项目一致，可单独打开、单独拷给别人）：
-  - `CMakeLists.txt`：原生写法，`add_executable` 显式列文件；新建时生成，之后用户/答案作者自己维护（新增 `src/*.c` 要手动加进去）
+  - `CMakeLists.txt`：原生写法，`add_executable` 显式列文件；新建时生成，之后用户/答案作者自己维护（新增 `src/*.c` 要手动加进去）。boss 整机例外：用 `file(GLOB_RECURSE … src/*.c)` 收按子系统分目录的源码并设 `LAB_CORE_SRC`
   - `main.c`：只负责输入输出和调用，读输入前用 `prompt("请输入…")` 打印提示；`test.c`：单元测试；其他含 `main` 的根目录 `.c` 是额外程序
   - `src/`：本关核心代码；`deps/`：`lab.sh` 复制进来的 `test.h`、`prompt.h` 和依赖关卡的代码，不手改
-  - 尝试目录额外会有 `.mode`（记录教学方式 `m0`~`m3`）；变式题（`-variant`）还自带 `VARIANT.md`（题面）和独立的 `tests/`
+  - 尝试目录额外会有 `.mode`（记录教学方式 `m0`~`m3`）；变式题（`-variant`）还自带 `VARIANT.md`（题面）和独立的 `tests/`；boss 的尝试还有 `.stage`（学到第几阶段，测试只登记到这一阶段）和 `.borrowed`（`./lab.sh borrow` 借用过的子系统）
 
 ## 构建与测试（CMake，用 CLion 打开 `code/`、某一关、或某一个项目都行）
 - **CLion 默认加载范围（智能模式 `mine`）**：顶层 `code/CMakeLists.txt` 默认只收录**已建过 `mine/` 尝试的关卡**（及 `example/`），未学关卡的 200+ 个标准答案目标默认不加载进下拉框；你学过的任何一关都能随时在文件树里点开直接运行。可用 `./lab.sh focus [mine | all | <科目> <关卡号>]` 查看或切换加载范围
-- 程序名：`<基名>_<answer 或尝试说明>`，基名 = 关卡目录名去掉序号、连字符换下划线；单元测试加 `_test`，额外程序加 `_<文件名>`。例如 `linked_list_answer`、`linked_list_first_test`、`warmup_answer_complexity`
+- 程序名：`<基名>_<answer 或尝试说明>`，基名 = 关卡目录名去掉序号、连字符换下划线；单元测试加 `_test`，额外程序加 `_<文件名>`。例如 `linked_list_answer`、`linked_list_first_test`、`warmup_answer_complexity`；boss 的阶段单元测试是 `minimachine_<answer 或尝试说明>_sNN_test`（来自 `tests/stage-NN/*.c`，带 ctest 标签 `stage-NN`）
 - 同一关内尝试的说明不能重复（程序名会冲突），`lab.sh` 缺省依次用 `first`、`review`、`review2`……；带练习形式时说明以 `-blank` / `-bug` / `-rewrite` / `-variant` 结尾
 - 测试：`<项目名>_test` 按退出码判定；`tests/` 的用例逐个比对输出（自动忽略行尾空白与首尾空行，跑测试时 `prompt` 不打印；变式题 `-variant` 只跑它自己目录里的 `tests/`）。筛选用正则：`ctest -R '^linked_list_answer'`
 - 依赖复制规则：`answer/` 拿依赖关卡的 `answer/src`；`mine/` 拿依赖关卡最新一次 `./lab.sh done` 标记完成的尝试的 `src/`，没有就用答案；所有关卡自动带 `lib/00-warmup` 的 `test.h`

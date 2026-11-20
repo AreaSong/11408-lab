@@ -6,7 +6,9 @@
 #   ./lab.sh new    <科目> <关卡号> [说明] [--mode m0|m1|m2|m3] [--drill blank|bug|rewrite|variant]
 #                                                  新建尝试；说明缺省为 first、review、review2……
 #   ./lab.sh new    lib 02-linked-list             关卡还不存在时给完整目录名，先建关卡骨架
-#   ./lab.sh list   [科目] [关卡号]                  查看关卡、尝试（含教学方式与练习形式）和完成标记
+#   ./lab.sh new    boss 00 [说明] [--from-stage NN] boss 整机：尝试里写 .stage（缺省 00）；--from-stage 以标签 boss-stage-NN 的参考实现为底
+#   ./lab.sh borrow boss <尝试> <子系统> [NN]        boss 整机：从标签 boss-stage-NN（缺省 .stage 的上一阶段）借入 src/<子系统>/
+#   ./lab.sh list   [科目] [关卡号]                  查看关卡、尝试（含教学方式、练习形式、boss 阶段与借用）和完成标记
 #   ./lab.sh rename <科目> <关卡号> <尝试> <新说明>   只改说明，日期不变，程序名一起改（不能改掉练习后缀）
 #   ./lab.sh delete <科目> <关卡号> <尝试>           确认后删除（NOTES.md 里的复盘保留）
 #   ./lab.sh done   <科目> <关卡号> <尝试>           标记完成：依赖本关的尝试改用这次的代码（-bug / -variant 不能标记）
@@ -16,15 +18,15 @@
 #   ./lab.sh sync   [科目] [关卡号]                  重新生成关卡配置、tests/check.cmake、各项目 deps/
 #
 # <尝试> 写完整目录名（如 2026-03-01-first）或 list 里显示的编号都可以。
-# 科目：lib / co / os / net / example；说明只能用小写字母、数字和连字符，同一关内不能重复（会成为程序名）。
+# 科目：lib / co / os / net / boss / example；说明只能用小写字母、数字和连字符，同一关内不能重复（会成为程序名）。
 # 增删改之后，在 CLion 里重新加载 CMake 项目才能看到变化。
 
 set -euo pipefail
 trap 'exit 1' TERM
 
 root="$(cd "$(dirname "$0")" && pwd)"
-subjects=(lib co os net example)
-subject_names=(数据结构 计组 操作系统 计网 样板)
+subjects=(lib co os net boss example)
+subject_names=(数据结构 计组 操作系统 计网 "综合 MiniMachine" 样板)
 
 die() { echo "错误：$*" >&2; exit 1; }
 
@@ -32,8 +34,8 @@ is_slug() { [[ "$1" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; }
 
 check_subject() {
     case "$1" in
-        lib|co|os|net|example) ;;
-        *) die "科目只能是 lib、co、os、net、example，收到的是：$1" ;;
+        lib|co|os|net|boss|example) ;;
+        *) die "科目只能是 lib、co、os、net、boss、example，收到的是：$1" ;;
     esac
 }
 
@@ -58,6 +60,7 @@ rel() { echo "${1#"$root"/}"; }
 
 source "$root/cmake/lab-units.sh"
 source "$root/cmake/lab-modes.sh"
+source "$root/cmake/lab-boss.sh"
 
 # 依赖本关的尝试实际会复制哪份代码，规则同 dep_src_dir
 used_unit() {
@@ -151,7 +154,12 @@ require_attempt() {
 # ---------- 各项操作（读全局 level_dir、attempt） ----------
 
 do_new() {
-    local desc="${1:-}" mode="${2:-m1}" drill="${3:-}" resolved name dir pname own_tests=""
+    local desc="${1:-}" mode="${2:-m1}" drill="${3:-}" from="${4:-}" resolved name dir pname own_tests=""
+    if is_boss_level; then
+        boss_check_new "$from"
+    elif [ -n "$from" ]; then
+        die "--from-stage 只用于 boss（MiniMachine 整机工程）"
+    fi
     resolved="$(resolve_desc_drill "$desc" "$drill")"
     desc="$(echo "$resolved" | sed -n '1p')"
     drill="$(echo "$resolved" | sed -n '2p')"
@@ -165,6 +173,7 @@ do_new() {
     mkdir -p "$dir"
     create_project "$level_dir" "$dir" "$pname" "$own_tests"
     write_mode_files "$dir" "$mode" "$drill"
+    if is_boss_level; then boss_setup_attempt "$dir" "$from"; fi
     sync_level "$level_dir"
     sync_focus_on_new "$level_dir"
 
@@ -172,7 +181,7 @@ do_new() {
     printf '\n## %s\n- %s\n- \n' "$name" "$(attempt_label "$dir")" >> "$level_dir/NOTES.md"
 
     echo "已创建项目：$(rel "$dir")/  [$(attempt_label "$dir")]"
-    (cd "$dir" && find . -type f ! -name .mode ! -path './deps/*' | sort | sed 's|^\./|  - |')
+    (cd "$dir" && find . -type f ! -name .mode ! -name .stage ! -name .borrowed ! -path './deps/*' | sort | sed 's|^\./|  - |')
     echo "  - deps/（$(ls "$dir/deps" | tr '\n' ' ')）"
     echo "已在 NOTES.md 末尾添加小节：## $name"
     echo "在 CLion 里重新加载 CMake 项目，运行目标里默认只出现清爽的 ${pname}_test（若切换🔵规范化模式，取消 CMakeLists.txt 中其余目标的注释即可）。"
@@ -192,9 +201,9 @@ show_attempts() {
         i=$((i + 1))
         mark=""
         if [ -f "$level_dir/mine/$a/.done" ]; then mark="  [已完成]"; fi
-        printf '  %d) %s  [%s]%s\n' "$i" "$a" "$(attempt_label "$level_dir/mine/$a")" "$mark"
+        printf '  %d) %s  [%s]%s%s\n' "$i" "$a" "$(attempt_label "$level_dir/mine/$a")" "$(boss_attempt_note "$level_dir/mine/$a")" "$mark"
         if [ "${1:-}" = files ]; then
-            (cd "$level_dir/mine/$a" && find . -type f ! -name .done ! -name .mode ! -path './deps/*' ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|       |')
+            (cd "$level_dir/mine/$a" && find . -type f ! -name .done ! -name .mode ! -name .stage ! -name .borrowed ! -path './deps/*' ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|       |')
         fi
     done <<< "$list"
     echo "依赖本关的尝试当前使用：$(used_unit "$level_dir")"
@@ -235,7 +244,7 @@ do_delete() {
     local dir="$level_dir/mine/$attempt" reply was_done=no
     if [ -f "$dir/.done" ]; then was_done=yes; fi
     echo "将删除 $(rel "$dir")/，其中的文件："
-    (cd "$dir" && find . -type f ! -name .done ! -name .mode ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|  - |')
+    (cd "$dir" && find . -type f ! -name .done ! -name .mode ! -name .stage ! -name .borrowed ! -path './cmake-build-*' ! -path './.idea/*' | sort | sed 's|^\./|  - |')
     reply="$(ask "确认删除？NOTES.md 里的复盘会保留 (y/n)" "n")"
     case "$reply" in
         y|Y|yes)
@@ -319,11 +328,11 @@ level_status() {
     echo "尝试 $(count_attempts "$1") 次，依赖用 $(used_unit "$1")"
 }
 
-# 有 LEVELS.md 时按关卡总览表列出（含未建的关），否则列出已有目录
+# LEVELS.md 里有「| 两位数 |」开头的总览表时按表列出（含未建的关），否则列出已有目录（如 boss 的总览表按阶段写）
 list_levels() {
     local s="$1" levels_md="$root/$1/LEVELS.md" num topic dir
     echo "$s 的关卡："
-    if [ ! -f "$levels_md" ]; then
+    if [ ! -f "$levels_md" ] || ! grep -E '^\| [0-9]{2} \|' "$levels_md" >/dev/null; then
         for dir in "$root/$s"/[0-9][0-9]-*; do
             if [ -d "$dir" ]; then printf '  %s  [%s]\n' "$(basename "$dir")" "$(level_status "$dir")"; fi
         done
@@ -430,7 +439,7 @@ interactive() {
 # ---------- 命令行 ----------
 
 usage() {
-    sed -n '4,16p' "$0" | sed 's/^# \{0,1\}//' >&2
+    sed -n '4,18p' "$0" | sed 's/^# \{0,1\}//' >&2
     exit "${1:-1}"
 }
 
@@ -463,6 +472,7 @@ main() {
         list) cmd_list "$@"; return ;;
         sync) cmd_sync "$@"; return ;;
         new) cmd_new "$@"; return ;;
+        borrow) cmd_borrow "$@"; return ;;
         focus) cmd_focus "$@"; return ;;
         review) [ $# -le 1 ] || usage; cmd_review "${1:-}"; return ;;
         rename) [ $# -eq 4 ] || usage ;;

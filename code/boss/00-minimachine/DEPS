@@ -1,0 +1,42 @@
+# boss/00-minimachine 的依赖：整机只有这一份 DEPS。
+# 不带 # 的行由 lab.sh 把代码复制进 deps/（依赖会传递）；不列文件就取整个 src/。同一关卡只写一行，要用的文件都列在这一行。
+# 从阶段 00 起 deps/ 里就有下面全部数据结构；answer 拿各关的 answer/src，mine 优先拿该关 done 过的尝试。
+# deps/ 是平铺的：answer/src/ 下任何文件的 basename 都不得与这里复制进来的文件同名，C 全局符号带子系统前缀。
+#
+# 「前置」注释列的是学完才开该阶段的关卡，只作开关条件，不复制代码（机制模块由 boss 重写成整机部件）。
+# 阶段按序号依次开，每个阶段还要等上一个阶段完成。
+# 阶段 00 前置：co/01-encoding co/02-adder co/03-mul-div co/04-ieee754 co/08-isa-x86 co/09-mini-cpu
+# 阶段 01 前置：co/10-controller-interrupt os/00-syscall
+# 阶段 02 前置：co/00-performance co/11-pipeline
+# 阶段 03 前置：co/05-memory co/06-cache
+# 阶段 04 前置：co/07-vm-translate os/10-paging
+# 阶段 05 前置：os/02-process-thread os/03-ipc os/04-scheduler os/05-mlfq-smp lib/04-queue lib/09-heap-huffman-ufset
+# 阶段 06 前置：os/06-mutex os/07-pv-classic os/08-deadlock-banker lib/12-graph-basic
+# 阶段 07 前置：os/09-contiguous-alloc os/11-demand-paging os/12-page-replace lib/02-linked-list lib/16-hash
+# 阶段 07 选开前置：lib/11-rbtree（红黑树管理虚拟内存区间，不做选开就不用学；做时再加代码行，先确认文件名与依赖链不重名）
+# 阶段 08 前置：os/13-file-dir os/14-filesystem os/16-disk-ssd lib/15-btree
+# 阶段 09 前置：co/13-bus-io os/15-io
+# 阶段 10 前置：net/00-delay net/01-encap-parse net/02-physical net/03-framing-crc net/04-sliding-window net/05-mac net/06-lan-switch lib/04-queue
+# 阶段 11 前置：net/07-ipv4 net/08-forwarding-nat net/09-routing-sdn net/10-bgp-multicast-mip lib/13-graph-app
+# 阶段 12 前置：net/11-udp-tcp-conn net/12-tcp-congestion net/13-socket-http-dns net/14-email-ftp-p2p
+# 阶段 13 前置：全部 66 关
+
+# 阶段 05 用于就绪队列、多级反馈队列各级（牺牲一格的循环队列，只存 PID）；阶段 10 的链路层发送窗口也用它。
+lib/04-queue cycq.h cycq.c
+# 阶段 05 用于 sleep 的定时器（小根堆，按到期时刻排）；阶段 13 的 zip 用同一关的哈夫曼编码。
+lib/09-heap-huffman-ufset heap.h heap.c huff.h huff.c
+# 阶段 07 用于伙伴系统的空闲块链、LRU 的使用顺序（双链表）。
+lib/02-linked-list dlist.h dlist.c
+# 阶段 07 用于 LRU 判断页在不在（拉链散列表）。hash.c 里的 hash_insert 会调用 open_insert，要把 open.c 带上。
+lib/16-hash hash.h hash.c chain.c open.c
+# 阶段 08 用于大目录的文件名索引（B+ 树）。
+lib/15-btree bp.h bp.c limit.h limit.c
+# 阶段 11 用于 OSPF 的 Dijkstra。
+lib/13-graph-app graph.h graph.c path.h path.c
+# 阶段 11 用于 IP 首部校验和。
+net/01-encap-parse checksum.h checksum.c bytes.h bytes.c
+# 阶段 13 用于 grep（KMP）。
+lib/06-string-kmp match.h match.c nexttab.h nexttab.c
+# 阶段 13 用于 sort（置换-选择、败者树、多路平衡归并）。
+lib/19-external-sort repl.h repl.c loser.h loser.c balance.h balance.c ext.h
+# lib/12 的 graph.c 和 lib/13 重名，deps/ 平铺会互相覆盖，所以阶段 06 的资源分配图找环不链接 lib/12，按其思路重写。

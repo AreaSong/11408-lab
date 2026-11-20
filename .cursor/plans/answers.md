@@ -14,6 +14,7 @@
 | 计组 | `answers-co.md` | `/tmp/lab-build-co` |
 | 操作系统 | `answers-os.md` | `/tmp/lab-build-os` |
 | 计网 | `answers-net.md` | `/tmp/lab-build-net` |
+| 综合（boss） | `answers-boss.md` | `/tmp/lab-build-boss` |
 
 ## 每轮流程（必须照做）
 
@@ -36,6 +37,7 @@
   - `answer/CMakeLists.txt` 由答案作者自己写（照样板的原生写法，显式列文件）；关卡层的 `CMakeLists.txt`、`tests/check.cmake`、`answer/deps/` 由 `./lab.sh sync` 生成，不手改
   - 不改 `code/cmake/`、`code/CMakeLists.txt`、`AGENTS.md`、`LEVELS.md`、`README.md`、`lab.sh`、其他科目的文件、用户的 `mine/` 与 `NOTES.md`
   - 本关需要复用别的关卡时，在本关 `DEPS` 里加一行（如 `lib/04-queue`），依赖关卡必须已 `✅`
+  - boss 的参考实现可通过整机唯一的 `DEPS` 复用各关的 `answer/src`；接口不适合整机时在 boss 内重写，并在该阶段 `ANSWER.md` 中标出对应关卡和差异。boss 按阶段推进，见下方「boss 例外」
 - **编译**：先同步本关，再用 CLion 自带的 CMake，编译目录用本科目自己的
   ```
   ./code/lab.sh sync <科目> <关卡号>
@@ -63,5 +65,43 @@
 4. `ANSWER.md`：开头先放「运行目标」表（程序名、来自哪个文件、作用，会等键盘输入的要注明），格式参照 `lib/00-warmup/ANSWER.md`；然后是思路、对应考点、易错点（与王道约定不一致处明确指出）、每个小步骤对应哪段代码、概念卡片参考答案；🎯 关卡附算法题三段式（设计思想、代码、复杂度）
 5. `EXPERIMENTS.md`：仅限有命令行实验的关卡，记录命令、本机实际输出、该看出什么
 6. 质量门禁：构建零 warning；`ctest -R '^<基名>_answer'` 全部通过；把 `answer/` 单独拷到 `/tmp` 用 cmake 配置能编译
+
+## boss 例外（MiniMachine 整机，按阶段推进）
+
+boss 只有一个关卡 `code/boss/00-minimachine/`（基名 `minimachine`），`answer/` 是整台机器。上面的流程照做，但「一关」换成「**一个阶段**」，并有以下不同：
+
+1. **选阶段与开工门禁**：在 `answers-boss.md` 中选第一个 `⬜` 且依赖全为 `✅` 的阶段 N。N > 0 时先检查 `git tag -l boss-stage-<N-1>` 有输出、且 `git status --porcelain code/boss` 为空；不满足就不开工，提醒用户先提交阶段 N−1 并打标签（N = 0 时免检）
+2. **读文件**：除上面的文件外，读 `code/boss/00-minimachine/TASK.md`、`ANSWER.md`（子系统地图）、`stages/NN-<主题>/TASK.md` 占位，以及前面已发布阶段的公共头文件
+3. **交付物**（替代「每关交付物」的第 1~4 条）：
+   - `answer/src/<子系统>/` 的增量代码；阶段 00 新建 `answer/`：`CMakeLists.txt` 照下方写法，`main.c` 是命令脚本解释器，`test.c` 是冒烟测试
+   - `stages/NN-<主题>/TASK.md` 正式题面（替换占位）：本阶段任务、**必须提供的公共头文件与函数签名**、主程序新增的命令与样例、真题题面；`stages/NN-<主题>/ANSWER.md`：思路、考点、易错点、对应代码、概念卡片参考、「回归变更」（没有就写「无」）
+   - `tests/stage-NN/*.c`：阶段单元测试，只通过公共头文件调用，一个阶段的全部 `.c` 编成一个程序（只能有一个 `main`）；`tests/stage-NN/<用例>.in/.out` 喂主程序；用例命名规则同上
+   - 更新总览：`00-minimachine/TASK.md` 的命令总表、`00-minimachine/ANSWER.md` 的各阶段讲解表与子系统地图；要增补端口、系统调用号、控制寄存器时先改 `boss/ISA.md`；需要新数据结构时改 `00-minimachine/DEPS` 后 `./code/lab.sh sync boss 00`
+   - 多机、交换机、路由器的用例在单进程内用模拟时钟仿真；真实 UDP 互联只写进 `stages/13-showcase/EXPERIMENTS.md`
+4. **规则**：后面的阶段可以改前面阶段的代码，但**已发布阶段的公共头文件只增不改**，已有的 trace 格式和早期 `.out` 不变（迫不得已要改时写进该阶段 `ANSWER.md`「回归变更」并同步旧 `.out`）；`src/` 文件带子系统前缀、源码带目录包含、basename 不与 `deps/` 重名
+5. **质量门禁**：构建零 warning；**全回归** `ctest -R '^minimachine_answer' --output-on-failure` 全部通过（含之前所有阶段）；把 `answer/` 单独拷到 `/tmp` 用 cmake 配置能编译
+6. **收尾**：**不提交、不打标签**；在 `answers-boss.md`「待用户处理」写「审阅后提交，并打标签 `boss-stage-NN`（或提交后对 AI 说「打标签」）」。用户没打上这个标签之前，下一轮不开下一阶段
+
+`answer/CMakeLists.txt`（boss 例外：用 `GLOB_RECURSE`，逐阶段加文件、用户借用子系统时都不用改 CMake；`lab.sh new` 照它生成尝试的 CMakeLists，并注释掉非 `_test` 目标）：
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(minimachine_answer C)
+
+set(CMAKE_C_STANDARD 11)
+add_compile_options(-Wall -Wextra)
+include_directories(src deps)
+
+file(GLOB_RECURSE MM_SRC CONFIGURE_DEPENDS src/*.c)
+file(GLOB DEPS_SRC CONFIGURE_DEPENDS deps/*.c)
+set(LAB_CORE_SRC ${MM_SRC} ${DEPS_SRC})
+
+add_executable(minimachine_answer main.c ${LAB_CORE_SRC})
+add_executable(minimachine_answer_test test.c ${LAB_CORE_SRC})
+
+include(../tests/check.cmake OPTIONAL)
+```
+
+`tests/check.cmake` 会为每个 `tests/stage-NN/` 生成 `minimachine_answer_sNN_test` 与 `minimachine_answer::sNN/<用例>`，都带标签 `stage-NN`；只看某阶段用 `ctest -R '^minimachine_answer' -L '^stage-05$'`。
 
 状态图例：`⬜` 未开始 · `🔄` 进行中 · `⏸ 等 xxx` 等依赖 · `✅` 已完成
