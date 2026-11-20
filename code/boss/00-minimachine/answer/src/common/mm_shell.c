@@ -2,7 +2,9 @@
 
 #include "asm/asm_asm.h"
 #include "common/mm_internal.h"
+#include "common/mm_shell_stage.h"
 #include "cpu/cpu_exec.h"
+#include "kernel/k_trap.h"
 #include "prompt.h"
 
 #include <ctype.h>
@@ -72,8 +74,12 @@ static int read_asm(FILE *in, char **src, char *err, size_t cap) {
 }
 
 static void print_stop(FILE *out, const MmMachine *m, int limited) {
-    if (m->halted && m->cause >= 0) {
-        fprintf(out, "停止 原因=异常 向量=%d 名称=%s PC=%08X\n", m->cause, mm_cause_name(m->cause), m->pc);
+    int code = 0;
+    if (k_exited(m, &code)) {
+        fprintf(out, "停止 原因=退出 码=%d PC=%08X\n", code, m->pc);
+    } else if (m->halted && m->cause >= 0) {
+        fprintf(out, "停止 原因=异常 向量=%d 名称=%s PC=%08X EPC=%08X\n", m->cause, mm_cause_name(m->cause),
+                m->pc, mm_sr(m, MM_SR_EPC));
     } else if (m->halted) {
         fprintf(out, "停止 原因=停机 PC=%08X\n", m->pc);
     } else if (limited) {
@@ -126,11 +132,20 @@ static int cmd_set(MmMachine *m, const char *args, FILE *out) {
 }
 
 static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, AsmImage **image,
-                       uint32_t *mem_bytes, int *trace_on) {
+                       uint32_t *mem_bytes, int *trace_on, MmShellOpt *opt) {
     char *s = trim(line);
     MmMachine *m;
     if (*s == '\0' || *s == '#') {
         return 0;
+    }
+    {
+        int stage = mm_shell_stage(s, out, machine, *mem_bytes, opt);
+        if (stage != 0) {
+            if (stage > 0) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return stage < 0 ? -1 : 0;
+        }
     }
     if (starts(s, "trace")) {
         const char *arg = rest_of(s, "trace");
@@ -180,6 +195,8 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
             fprintf(out, "错误：映像超出主存\n");
             return -1;
         }
+        mm_shell_apply(m, opt);
+        mm_shell_bind(m, out, opt, *trace_on);
         fprintf(out, "已装入 PC=%08X\n", mm_pc(m));
         return 0;
     }
@@ -187,7 +204,7 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
     if (m == NULL) {
         return -1;
     }
-    mm_set_trace(m, *trace_on ? out : NULL);
+    mm_shell_bind(m, out, opt, *trace_on);
     if (starts(s, "run")) {
         const char *arg = rest_of(s, "run");
         int limit = 10000;
@@ -315,15 +332,17 @@ int mm_shell(FILE *in, FILE *out) {
     char line[256];
     MmMachine *machine = NULL;
     AsmImage *image = NULL;
+    MmShellOpt opt;
     uint32_t mem_bytes = MM_MEM_MAX;
     int trace_on = 0;
     int rc = 0;
+    mm_shell_opt_init(&opt);
     while (rc == 0 && !feof(in)) {
         prompt("请输入命令：");
         if (fgets(line, sizeof line, in) == NULL) {
             break;
         }
-        if (one_command(line, in, out, &machine, &image, &mem_bytes, &trace_on) != 0) {
+        if (one_command(line, in, out, &machine, &image, &mem_bytes, &trace_on, &opt) != 0) {
             rc = 1;
         }
     }

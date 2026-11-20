@@ -32,8 +32,9 @@
 
 | 阶段 | 讲解 | 标签 |
 |---|---|---|
-| 00 | [stages/00-isa-asm/ANSWER.md](stages/00-isa-asm/ANSWER.md) | `boss-stage-00`（待打） |
-| 01~13 | 待写 | `boss-stage-NN` |
+| 00 | [stages/00-isa-asm/ANSWER.md](stages/00-isa-asm/ANSWER.md) | `boss-stage-00` |
+| 01 | [stages/01-interrupt/ANSWER.md](stages/01-interrupt/ANSWER.md) | `boss-stage-01` |
+| 02~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

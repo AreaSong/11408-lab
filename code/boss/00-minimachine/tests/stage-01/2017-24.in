@@ -1,0 +1,18 @@
+kernel on
+user on
+asm
+ld r0, #1
+ld r1, #1
+la r2, msg
+ld r3, #5
+syscall
+ld r0, #0
+ld r1, #0
+syscall
+.data
+msg: .asciz "hello"
+end
+load
+event on
+run
+conout

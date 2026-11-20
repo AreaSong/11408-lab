@@ -3,6 +3,7 @@
 
 #include "common/mm_machine.h"
 #include "cpu/cpu_decode.h"
+#include "cpu/cpu_intr.h"
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -44,6 +45,30 @@ struct MmMachine {
     char t_sig[80];
     MmMemHook hook_read;
     MmMemHook hook_write;
+    CpuHandler handler[32];
+    MmQuietFn after_intr;
+    FILE *event;
+    uint16_t irq_pending;
+    uint16_t irq_service;
+    int nmi_pending;
+    int nmi_service;
+    int asleep;
+    int exited;
+    int exit_code;
+    int deliver_depth;
+    int irq_depth;
+    uint32_t irq_mask[16];
+    uint8_t irq_steps[16];
+    uint32_t timer_acc;
+    int nest_len;
+    int nest_seq[32];
+    int last_len;
+    int last_seq[32];
+    char con_out[512];
+    int con_len;
+    char con_in[256];
+    int con_in_len;
+    int con_in_pos;
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

@@ -36,6 +36,11 @@ int cpu_tick_fetch(MmMachine *m, int kind) {
     if (kind == K_FETCH_MAR) {
         m->ipc = m->pc;
         m->mar = m->pc;
+        if ((m->psw & MM_PSW_U) != 0 && cpu_is_host(m->pc)) {
+            set_func(m, "用户态进入宿主入口");
+            set_det(m, "PC=%08X", m->pc);
+            return mark_fault(m, MM_EX_PROT, m->pc);
+        }
         set_sig(m, "取指", "PCout MARin IPCin");
         set_func(m, "PC->MAR PC->IPC");
         set_det(m, "PC=%08X MAR=%08X IPC=%08X", m->pc, m->mar, m->ipc);
@@ -119,6 +124,11 @@ int cpu_tick_move(MmMachine *m, int kind) {
             set_det(m, "目标=%08X", m->r[in->rs]);
             return mark_fault(m, MM_EX_ALIGN, m->r[in->rs]);
         }
+        if ((m->psw & MM_PSW_U) != 0 && cpu_is_host(m->r[in->rs])) {
+            set_func(m, "用户态不能进入宿主入口");
+            set_det(m, "目标=%08X", m->r[in->rs]);
+            return mark_fault(m, MM_EX_PROT, m->r[in->rs]);
+        }
         m->pc = m->r[in->rs];
         set_sig(m, "执行", "RSout PCin");
         set_func(m, "r%d->PC", in->rs);
@@ -159,6 +169,11 @@ int cpu_tick_move(MmMachine *m, int kind) {
             set_func(m, "Z->PC 未对齐");
             set_det(m, "目标=%08X", m->z);
             return mark_fault(m, MM_EX_ALIGN, m->z);
+        }
+        if ((m->psw & MM_PSW_U) != 0 && cpu_is_host(m->z)) {
+            set_func(m, "用户态不能进入宿主入口");
+            set_det(m, "目标=%08X", m->z);
+            return mark_fault(m, MM_EX_PROT, m->z);
         }
         m->pc = m->z;
         set_sig(m, "执行", "Zout PCin");

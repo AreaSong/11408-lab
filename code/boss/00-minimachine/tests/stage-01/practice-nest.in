@@ -1,0 +1,17 @@
+kernel on
+if on
+mask 0 0x7
+mask 1 0x2
+mask 2 0x6
+mask 3 0xF
+raise 0
+raise 1
+raise 2
+raise 3
+asm
+nop
+hlt
+end
+load
+event on
+run

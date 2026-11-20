@@ -1,0 +1,10 @@
+kernel on
+if on
+timer 5
+asm
+nop
+hlt
+end
+load
+event on
+run 1

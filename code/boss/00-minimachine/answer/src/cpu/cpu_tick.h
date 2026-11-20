@@ -68,5 +68,6 @@ int cpu_tick_move(MmMachine *m, int kind);
 int cpu_tick_mem(MmMachine *m, int kind);
 int cpu_tick(MmMachine *m, int kind);
 int cpu_seq(const CpuInsn *in, int *kinds, int cap);
+void cpu_emit_tick(MmMachine *m);
 
 #endif

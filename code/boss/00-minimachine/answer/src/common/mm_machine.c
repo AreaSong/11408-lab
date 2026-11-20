@@ -1,5 +1,6 @@
 #include "common/mm_internal.h"
 #include "asm/asm_image.h"
+#include "cpu/cpu_intr.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -31,6 +32,7 @@ static void clear_arch(MmMachine *m) {
     if (m->port != NULL) {
         memset(m->port, 0, sizeof(uint32_t) * 65536u);
     }
+    cpu_intr_reset(m);
 }
 
 MmMachine *mm_create(uint32_t mem_bytes) {
@@ -64,10 +66,12 @@ void mm_destroy(MmMachine *m) {
 
 void mm_reset(MmMachine *m) {
     FILE *trace = m->trace;
+    FILE *event = m->event;
     MmMemHook rd = m->hook_read;
     MmMemHook wr = m->hook_write;
     clear_arch(m);
     m->trace = trace;
+    m->event = event;
     m->hook_read = rd;
     m->hook_write = wr;
 }

@@ -1,0 +1,10 @@
+kernel on
+user on
+asm
+di
+hlt
+end
+load
+event on
+run
+sr epc

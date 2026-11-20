@@ -1,28 +1,12 @@
 #include "cpu/cpu_exec.h"
+#include "cpu/cpu_intr.h"
 #include "cpu/cpu_tick.h"
 
 #include <string.h>
 
-static void emit(MmMachine *m) {
-    int drivers = cpu_bus_drivers(m->t_sig);
-    m->t_index++;
-    m->cycles++;
-    if (drivers > 1) {
-        m->bus_bad++;
-    }
-    if (m->trace == NULL) {
-        return;
-    }
-    fprintf(m->trace, "%s T%d %s | %s | %s | 内总线驱动 %d 个\n", m->t_stage, m->t_index,
-            m->t_func, m->t_detail, m->t_sig, drivers);
-    if (drivers > 1) {
-        fprintf(m->trace, "冲突：同一时钟周期只允许一个部件向内总线输出\n");
-    }
-}
-
 static int run_tick(MmMachine *m, int kind) {
     int rc = cpu_tick(m, kind);
-    emit(m);
+    cpu_emit_tick(m);
     return rc;
 }
 
@@ -67,59 +51,28 @@ static void account(MmMachine *m) {
             (psw & MM_PSW_PG) != 0, m->t_index, m->fetch_mem, m->op_mem);
 }
 
-static void note_exc(MmMachine *m, int trap) {
-    if (!trap) {
-        m->pc = m->ipc;
-    }
-    m->halted = 1;
-    m->trap = trap;
-    if (m->trace == NULL || m->cause < 0) {
-        return;
-    }
-    fprintf(m->trace, "异常 %s 向量=%d 断点=%s %08X\n", mm_cause_name(m->cause), m->cause,
-            trap ? "下一条" : "本条", trap ? m->pc : m->ipc);
-}
-
-static int stop_exc(MmMachine *m, int trap) {
-    note_exc(m, trap);
-    account(m);
-    return 1;
-}
-
-static int privileged(const CpuInsn *in) {
-    switch (in->op) {
-    case MM_OP_IRET:
-    case MM_OP_EI:
-    case MM_OP_DI:
-    case MM_OP_HLT:
-    case MM_OP_IN:
-    case MM_OP_OUT:
-    case MM_OP_MFSR:
-    case MM_OP_MTSR:
-    case MM_OP_TLBFLUSH:
+static int vector_empty(const MmMachine *m) {
+    uint32_t word = 0;
+    if (m->cause < 0 || m->cause >= MM_VEC_COUNT) {
         return 1;
-    default:
+    }
+    if (mm_raw_read((MmMachine *)m, m->sr[MM_SR_VBR] + (uint32_t)m->cause * 4u, 4, &word) != 0) {
         return 0;
     }
+    return word == 0;
 }
 
-int cpu_step(MmMachine *m) {
-    int kinds[16];
-    int n;
-    int i;
-    int rc;
-    if (m->halted) {
-        return 1;
+static void drain(MmMachine *m) {
+    cpu_timer_edge(m);
+    while (!m->halted && cpu_poll(m)) {
     }
-    m->t_index = 0;
-    m->op_mem = 0;
-    m->fetch_mem = 0;
-    m->step_base = m->cycles;
-    m->cause = -1;
-    m->trap = 0;
-    memset(&m->din, 0, sizeof m->din);
-    m->din.illegal = 1;
-    rc = run_tick(m, K_FETCH_MAR);
+    if (m->after_intr != NULL) {
+        m->after_intr(m);
+    }
+}
+
+static int fetch_word(MmMachine *m) {
+    int rc = run_tick(m, K_FETCH_MAR);
     if (rc == TK_OK) {
         rc = run_tick(m, K_FETCH_MEM);
     }
@@ -129,47 +82,96 @@ int cpu_step(MmMachine *m) {
     if (rc == TK_OK) {
         rc = run_tick(m, K_DECODE);
     }
+    return rc;
+}
+
+static int execute_insn(MmMachine *m, int *trap) {
+    int kinds[16];
+    int n = 0;
+    int i;
+    int rc;
+    int had = 0;
+    m->t_index = 0;
+    m->op_mem = 0;
+    m->fetch_mem = 0;
+    m->step_base = m->cycles;
+    m->cause = -1;
+    m->trap = 0;
+    memset(&m->din, 0, sizeof m->din);
+    m->din.illegal = 1;
+    rc = fetch_word(m);
     if (rc != TK_OK) {
-        return stop_exc(m, 0);
-    }
-    if (m->din.illegal) {
+        had = 1;
+    } else if (m->din.illegal) {
         m->cause = MM_EX_ILL;
-        return stop_exc(m, 0);
-    }
-    if (privileged(&m->din) && (m->psw & MM_PSW_U) != 0) {
+        had = 1;
+    } else if (cpu_is_privileged(m->din.op) && (m->psw & MM_PSW_U) != 0) {
         m->cause = MM_EX_PRIV;
-        return stop_exc(m, 0);
-    }
-    n = cpu_seq(&m->din, kinds, 16);
-    if (n < 0) {
-        m->cause = MM_EX_ILL;
-        return stop_exc(m, 0);
-    }
-    for (i = 0; i < n; i++) {
-        rc = run_tick(m, kinds[i]);
-        if (rc == TK_HALT) {
-            m->halted = 1;
-            m->cause = -1;
-            break;
+        had = 1;
+    } else {
+        n = cpu_seq(&m->din, kinds, 16);
+        if (n < 0) {
+            m->cause = MM_EX_ILL;
+            had = 1;
         }
-        if (rc == TK_FAULT) {
-            return stop_exc(m, 0);
-        }
-        if (rc == TK_TRAP) {
-            return stop_exc(m, 1);
+        for (i = 0; !had && i < n; i++) {
+            rc = run_tick(m, kinds[i]);
+            if (rc == TK_HALT) {
+                m->halted = 1;
+                m->asleep = 1;
+                m->cause = -1;
+                break;
+            }
+            if (rc == TK_FAULT) {
+                had = 1;
+            } else if (rc == TK_TRAP) {
+                had = 1;
+                *trap = 1;
+            }
         }
     }
-    account(m);
-    return m->halted ? 1 : 0;
+    return had;
+}
+
+static void settle(MmMachine *m, int had, int trap) {
+    if (had && vector_empty(m)) {
+        cpu_deliver(m, m->cause, trap);
+        account(m);
+    } else {
+        account(m);
+        if (had) {
+            cpu_deliver(m, m->cause, trap);
+        } else {
+            drain(m);
+        }
+    }
+}
+
+int cpu_step(MmMachine *m) {
+    int trap = 0;
+    int had;
+    if (m->halted && !m->asleep) {
+        return 1;
+    }
+    if (m->asleep) {
+        drain(m);
+        return (m->halted && !m->asleep) ? 1 : 0;
+    }
+    had = execute_insn(m, &trap);
+    settle(m, had, trap);
+    return (m->halted && !m->asleep) ? 1 : 0;
 }
 
 int cpu_run(MmMachine *m, int max_steps) {
     int i;
     for (i = 0; i < max_steps; i++) {
-        if (m->halted) {
+        if (m->halted && !m->asleep) {
             return 0;
         }
         cpu_step(m);
+        if (m->halted) {
+            return 0;
+        }
     }
-    return m->halted ? 0 : 1;
+    return 1;
 }

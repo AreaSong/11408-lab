@@ -1,0 +1,10 @@
+kernel on
+if on
+raise 3
+asm
+nop
+hlt
+end
+load
+event on
+run

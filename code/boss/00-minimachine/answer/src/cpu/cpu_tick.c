@@ -1,9 +1,27 @@
 #include "cpu/cpu_tick.h"
 
 #include "cpu/cpu_alu.h"
+#include "cpu/cpu_exec.h"
 
 #include <stdarg.h>
 #include <stdio.h>
+
+void cpu_emit_tick(MmMachine *m) {
+    int drivers = cpu_bus_drivers(m->t_sig);
+    m->t_index++;
+    m->cycles++;
+    if (drivers > 1) {
+        m->bus_bad++;
+    }
+    if (m->trace == NULL) {
+        return;
+    }
+    fprintf(m->trace, "%s T%d %s | %s | %s | 内总线驱动 %d 个\n", m->t_stage, m->t_index, m->t_func,
+            m->t_detail, m->t_sig, drivers);
+    if (drivers > 1) {
+        fprintf(m->trace, "冲突：同一时钟周期只允许一个部件向内总线输出\n");
+    }
+}
 
 static void set_sig(MmMachine *m, const char *sig) {
     snprintf(m->t_stage, sizeof m->t_stage, "%s", "执行");
@@ -215,6 +233,11 @@ static int tick_branch(MmMachine *m) {
         set_det(m, "目标=%08X", m->z);
         return mark_fault(m, MM_EX_ALIGN, m->z);
     }
+    if ((m->psw & MM_PSW_U) != 0 && cpu_is_host(m->z)) {
+        set_func(m, "用户态不能进入宿主入口");
+        set_det(m, "目标=%08X", m->z);
+        return mark_fault(m, MM_EX_PROT, m->z);
+    }
     m->pc = m->z;
     set_sig(m, "Zout PCin");
     set_func(m, "条件成立 Z->PC");
@@ -277,6 +300,11 @@ static int tick_ctl(MmMachine *m, int kind) {
             set_det(m, "EPC=%08X", target);
             return mark_fault(m, MM_EX_ALIGN, target);
         }
+        if ((m->sr[MM_SR_EPSW] & MM_PSW_U) != 0 && cpu_is_host(target)) {
+            set_func(m, "用户态不能回到宿主入口");
+            set_det(m, "EPC=%08X", target);
+            return mark_fault(m, MM_EX_PROT, target);
+        }
         m->pc = target;
         set_sig(m, "SRout PCin");
         set_func(m, "EPC->PC");
@@ -285,6 +313,7 @@ static int tick_ctl(MmMachine *m, int kind) {
     }
     if (kind == K_IRET_PSW) {
         m->psw = m->sr[MM_SR_EPSW] & 0xffu;
+        m->cause = -1;
         set_sig(m, "SRout PSWin");
         set_func(m, "EPSW->PSW");
         set_det(m, "PSW=%08X", m->psw);
@@ -313,6 +342,9 @@ static int tick_ctl(MmMachine *m, int kind) {
     }
     if (kind == K_OUT) {
         m->port[in->imm] = m->r[in->rs];
+        if (in->imm == 0x70) {
+            cpu_eoi(m, (int)m->r[in->rs]);
+        }
         set_sig(m, "RSout IOin");
         set_func(m, "r%d->端口%u", in->rs, in->imm);
         set_det(m, "端口=%08X", m->port[in->imm]);
