@@ -5,3 +5,4 @@ project(delay C)
 enable_testing()
 
 add_subdirectory(answer)
+add_subdirectory(mine/2026-11-19-first)
