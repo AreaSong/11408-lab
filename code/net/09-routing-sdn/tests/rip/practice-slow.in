@@ -1,0 +1,8 @@
+init
+router R1
+router R2
+net N
+rlink R1 R2
+nlink R1 N
+converge
+slow R1 N

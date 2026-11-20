@@ -1,0 +1,22 @@
+as 20
+ttl 15
+init
+router R11
+router R12
+router R13
+router R14
+router R15
+router R16
+net 210.2.4.0/24
+net 210.2.3.0/24
+rlink R11 R12
+rlink R12 R13
+rlink R11 R14
+rlink R14 R15
+rlink R15 R16
+rlink R13 R15
+rlink R13 R16
+nlink R16 210.2.4.0/24
+nlink R14 210.2.3.0/24
+spread 210.2.4.0/24 30
+spread 210.2.3.0/24 30

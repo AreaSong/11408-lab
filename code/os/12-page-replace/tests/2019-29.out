@@ -1,0 +1,14 @@
+algo=lru frames=4 refs=12
+t=1 page=0 rw=r result=fault victim=- slots=0 - - - stack=0
+t=2 page=1 rw=r result=fault victim=- slots=0 1 - - stack=1 0
+t=3 page=2 rw=r result=fault victim=- slots=0 1 2 - stack=2 1 0
+t=4 page=7 rw=r result=fault victim=- slots=0 1 2 7 stack=7 2 1 0
+t=5 page=0 rw=r result=hit victim=- slots=0 1 2 7 stack=0 7 2 1
+t=6 page=5 rw=r result=fault victim=1 slots=0 5 2 7 stack=5 0 7 2
+t=7 page=3 rw=r result=fault victim=2 slots=0 5 3 7 stack=3 5 0 7
+t=8 page=5 rw=r result=hit victim=- slots=0 5 3 7 stack=5 3 0 7
+t=9 page=0 rw=r result=hit victim=- slots=0 5 3 7 stack=0 5 3 7
+t=10 page=2 rw=r result=fault victim=7 slots=0 5 3 2 stack=2 0 5 3
+t=11 page=7 rw=r result=fault victim=3 slots=0 5 7 2 stack=7 2 0 5
+t=12 page=6 rw=r result=fault victim=5 slots=0 6 7 2 stack=6 7 2 0
+summary faults=9 replaces=5 rate=9/12

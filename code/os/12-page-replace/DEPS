@@ -1,2 +1,4 @@
-lib/02-linked-list
-lib/16-hash
+# LRU：双链表记最近使用顺序（靠近表头的是刚用过的），拉链散列表判断这一页在不在。
+# hash.c 里的 hash_insert 会调用 open_insert，链接时要把 open.c 带上。
+lib/02-linked-list dlist.h dlist.c
+lib/16-hash hash.h hash.c chain.c open.c

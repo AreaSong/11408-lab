@@ -1,0 +1,52 @@
+page-bytes=256 algo=lru frames=2
+pages=0 0 0 0 1 1 0 0
+summary algo=lru frames=2 faults=2 replaces=0 rate=2/8
+page-bytes=64 algo=lru frames=2
+pages=0 1 2 3 4 5 0 1
+summary algo=lru frames=2 faults=8 replaces=6 rate=8/8
+sweep-frames algo=fifo refs=20
+summary algo=fifo frames=1 faults=20 replaces=19 rate=20/20
+summary algo=fifo frames=2 faults=15 replaces=13 rate=15/20
+summary algo=fifo frames=3 faults=15 replaces=12 rate=15/20
+summary algo=fifo frames=4 faults=10 replaces=6 rate=10/20
+summary algo=fifo frames=5 faults=9 replaces=4 rate=9/20
+summary algo=fifo frames=6 faults=6 replaces=0 rate=6/20
+sweep-frames algo=lru refs=20
+summary algo=lru frames=1 faults=20 replaces=19 rate=20/20
+summary algo=lru frames=2 faults=17 replaces=15 rate=17/20
+summary algo=lru frames=3 faults=12 replaces=9 rate=12/20
+summary algo=lru frames=4 faults=8 replaces=4 rate=8/20
+summary algo=lru frames=5 faults=7 replaces=2 rate=7/20
+summary algo=lru frames=6 faults=6 replaces=0 rate=6/20
+sweep-frames algo=opt refs=20
+summary algo=opt frames=1 faults=20 replaces=19 rate=20/20
+summary algo=opt frames=2 faults=13 replaces=11 rate=13/20
+summary algo=opt frames=3 faults=9 replaces=6 rate=9/20
+summary algo=opt frames=4 faults=8 replaces=4 rate=8/20
+summary algo=opt frames=5 faults=7 replaces=2 rate=7/20
+summary algo=opt frames=6 faults=6 replaces=0 rate=6/20
+sweep-frames algo=clock refs=20
+summary algo=clock frames=1 faults=20 replaces=19 rate=20/20
+summary algo=clock frames=2 faults=15 replaces=13 rate=15/20
+summary algo=clock frames=3 faults=14 replaces=11 rate=14/20
+summary algo=clock frames=4 faults=9 replaces=5 rate=9/20
+summary algo=clock frames=5 faults=9 replaces=4 rate=9/20
+summary algo=clock frames=6 faults=6 replaces=0 rate=6/20
+sweep-algos frames=3 refs=20
+summary algo=opt frames=3 faults=9 replaces=6 rate=9/20
+summary algo=lru frames=3 faults=12 replaces=9 rate=12/20
+summary algo=clock frames=3 faults=14 replaces=11 rate=14/20
+summary algo=clock2 frames=3 faults=14 replaces=11 rate=14/20
+summary algo=fifo frames=3 faults=15 replaces=12 rate=15/20
+pattern=loop frames=3 refs=24 pages=0 1 2 repeated
+summary algo=lru frames=3 faults=3 replaces=0 rate=3/24
+pattern=scan frames=3 refs=24 pages=0 1 2 3 4 5 6 7 repeated
+summary algo=lru frames=3 faults=24 replaces=21 rate=24/24
+thrash algo=lru refs=24
+frames=6 faults=6 rate=6/24
+frames=5 faults=6 rate=6/24
+frames=4 faults=6 rate=6/24
+frames=3 faults=6 rate=6/24
+frames=2 faults=24 rate=24/24
+frames=1 faults=24 rate=24/24
+jump-below=3

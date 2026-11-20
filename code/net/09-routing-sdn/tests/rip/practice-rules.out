@@ -1,0 +1,5 @@
+R1 Net1 1 直连
+R1 Net2 2 R2
+R1 Net3 3 R2
+R1 Net4 7 R2
+R1 Net5 4 R2

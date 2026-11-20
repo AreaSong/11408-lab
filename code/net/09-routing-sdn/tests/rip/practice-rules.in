@@ -1,0 +1,21 @@
+init
+router R1
+router R2
+router R3
+net Net1
+net Net2
+net Net3
+net Net4
+net Net5
+rlink R1 R2
+rlink R1 R3
+set R1 Net1 1 direct
+set R1 Net2 3 R2
+set R1 Net3 4 R3
+set R1 Net4 5 R2
+learn R1 R2 Net1 2
+learn R1 R2 Net2 1
+learn R1 R2 Net3 2
+learn R1 R2 Net4 6
+learn R1 R2 Net5 3
+tables R1

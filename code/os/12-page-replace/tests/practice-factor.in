@@ -1,0 +1,9 @@
+size lru 2 256 0 64 128 192 256 320 0 64
+size lru 2 64 0 64 128 192 256 320 0 64
+sweep frames fifo 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+sweep frames lru 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+sweep frames opt 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+sweep frames clock 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+sweep algos 3 7 0 1 2 0 3 0 4 2 3 0 3 2 1 2 0 1 7 0 1
+locality 3
+thrash lru 0 1 2 0 1 2 0 1 2 0 1 2 3 4 5 3 4 5 3 4 5 3 4 5

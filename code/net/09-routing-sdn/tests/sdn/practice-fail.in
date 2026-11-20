@@ -1,0 +1,13 @@
+init
+switch S0
+switch S1
+switch S2
+host H0 S0
+host H2 S2
+link S0 S1 1
+link S1 S2 1
+link S0 S2 1
+install
+go H0 H2
+fail S0 S2
+go H0 H2

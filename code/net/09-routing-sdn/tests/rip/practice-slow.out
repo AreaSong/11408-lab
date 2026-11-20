@@ -1,0 +1,49 @@
+轮 0
+R1 N 16 -
+R2 N 2 R1
+轮 1 R2 到 R1
+R1 N 3 R2
+R2 N 2 R1
+轮 2 R1 到 R2
+R1 N 3 R2
+R2 N 4 R1
+轮 3 R2 到 R1
+R1 N 5 R2
+R2 N 4 R1
+轮 4 R1 到 R2
+R1 N 5 R2
+R2 N 6 R1
+轮 5 R2 到 R1
+R1 N 7 R2
+R2 N 6 R1
+轮 6 R1 到 R2
+R1 N 7 R2
+R2 N 8 R1
+轮 7 R2 到 R1
+R1 N 9 R2
+R2 N 8 R1
+轮 8 R1 到 R2
+R1 N 9 R2
+R2 N 10 R1
+轮 9 R2 到 R1
+R1 N 11 R2
+R2 N 10 R1
+轮 10 R1 到 R2
+R1 N 11 R2
+R2 N 12 R1
+轮 11 R2 到 R1
+R1 N 13 R2
+R2 N 12 R1
+轮 12 R1 到 R2
+R1 N 13 R2
+R2 N 14 R1
+轮 13 R2 到 R1
+R1 N 15 R2
+R2 N 14 R1
+轮 14 R1 到 R2
+R1 N 15 R2
+R2 N 16 -
+轮 15 R2 到 R1
+R1 N 16 -
+R2 N 16 -
+收敛 15

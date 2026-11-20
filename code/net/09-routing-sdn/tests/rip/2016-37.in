@@ -1,0 +1,14 @@
+init
+router R1
+router R2
+router R3
+net 201.1.2.0/25
+rlink R1 R2
+rlink R1 R3
+rlink R2 R3
+nlink R3 201.1.2.0/25
+converge
+tables
+down R3 201.1.2.0/25
+hear R2 R3
+show R2 201.1.2.0/25

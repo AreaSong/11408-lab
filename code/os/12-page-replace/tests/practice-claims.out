@@ -1,0 +1,29 @@
+exam=2014-30 letter=A only=fifo
+exam=2015-27 letter=A victim=2
+exam=2016-26 letter=A order=(0,0) (0,1) (1,0) (1,1)
+exam=2016-29 letter=A set=0 2 3 6 size=4
+exam=2019-29 letter=C faults=9 replaces=5
+exam=2021-28 letter=C page=0x2 offset=0xa01 victim=3 frame=0x60 phys=0x60a01
+exam=2025-26 letter=B faults=6
+exam=2025-27 letter=D
+claim=stack yes=opt,lru no=fifo,clock,clock2
+claim=clock-belady
+fifo=9,10
+clock=9,10
+clock2=9,10
+lru=10,8
+opt=7,6
+2014-30=A
+claim=replace-count exam=2019-29 faults=9 replaces=5 letter=C
+note=装入空页框算缺页，不算置换
+claim=warm exam=2025-26 faults=6 letter=B order=oldest-first
+claim=window exam=2016-29 letter=A set=0 2 3 6
+note=窗口是最近6次访问，不是6个不同的页
+claim=clock2-order letter=A order=(0,0) (0,1) (1,0) (1,1)
+claim=thrash cause=frames-below-working-set fix=suspend-processes
+card topic=抖动
+cause=物理块数小于工作集，缺页频繁，CPU大部分时间在换页
+fix=挂起若干进程，把页框让给剩下的进程
+fix=按工作集或页错误率调整每个进程的驻留集
+fix=改写程序，让访问更集中
+not=只加大快表不能消除抖动

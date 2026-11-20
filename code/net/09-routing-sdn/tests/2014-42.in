@@ -1,0 +1,19 @@
+init
+node R1
+node R2
+node R3
+node R4
+node 192.1.1.0/24 net
+node 192.1.5.0/24 net
+node 192.1.6.0/24 net
+node 192.1.7.0/24 net
+link R1 R2 3
+link R1 R3 2
+link R2 R4 4
+link R3 R4 6
+link R1 192.1.1.0/24 1
+link R3 192.1.5.0/24 1
+link R2 192.1.6.0/24 1
+link R4 192.1.7.0/24 1
+from R1 net
+default 10

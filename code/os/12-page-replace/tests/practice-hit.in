@@ -1,0 +1,4 @@
+# 命中时 FIFO 不挪队列，LRU 要把这一页挪到最近使用的一端。
+run fifo 3 1 2 3 1 4
+run lru 3 1 2 3 1 4
+run lru 3 1w 2 1
