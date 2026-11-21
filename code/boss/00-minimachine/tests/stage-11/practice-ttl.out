@@ -1,0 +1,2 @@
+ttl dec ttl=63 cksum=67de changed=TTL、首部校验和
+ttl zero icmp=11 code=0

@@ -142,6 +142,12 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int ip = mm_shell_ip(s, out, opt);
+        if (ip != 0) {
+            return ip < 0 ? -1 : 0;
+        }
+    }
+    {
         int link = mm_shell_link(s, out, machine, *mem_bytes, opt);
         if (link != 0) {
             if (link > 0 && *machine != NULL) {

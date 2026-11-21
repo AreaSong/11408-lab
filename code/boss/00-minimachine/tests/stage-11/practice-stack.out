@@ -1,0 +1,12 @@
+ip on
+arp target=10.0.0.1 req=ff-ff-ff-ff-ff-ff mac=02-00-00-00-01
+fwd if=E1 ttl=63 cksum=67dd
+frag n=2 off=0,97 len=796,724
+miss icmp=3 code=0
+zero icmp=11 code=0
+ping type=0 from=10.1.0.2
+hop 1 type=11 from=10.0.0.1
+hop 2 type=0 from=10.1.0.2
+nat 4000 4001
+dhcp DISCOVER OFFER REQUEST ACK addr=192.168.1.10
+ip off

@@ -66,6 +66,7 @@ typedef struct {
     int fs;
     int io_on;
     int link_on;
+    int ip_on;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -106,5 +107,8 @@ int mm_shell_io(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, 
 
 /* 阶段 10 的链路、滑动窗口、交换机和网卡。返回值同 mm_shell_stage。 */
 int mm_shell_link(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
+
+/* 阶段 11 的 IP、转发、ARP、NAT 和路由。返回值同 mm_shell_stage。 */
+int mm_shell_ip(char *line, FILE *out, MmShellOpt *opt);
 
 #endif

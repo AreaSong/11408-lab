@@ -1,0 +1,4 @@
+v6 compress 2001:0db8:0000:0000:0000:0000:0000:0001
+v6 compress 2001:0:0:ffff:0:0:1:2
+v6 expand ff05::b3
+v6 compress ::

@@ -1,0 +1,3 @@
+rip rules Net1 1 直连; Net2 2 R2; Net3 3 R2; Net4 7 R2; Net5 4 R2
+rip slow rounds=15
+rip split rounds=2

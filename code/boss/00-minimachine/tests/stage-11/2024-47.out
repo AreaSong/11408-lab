@@ -1,0 +1,2 @@
+rip 2024-47 proto=OSPF ttl=16 t4=60 t3=30
+bgp 2024-47 eBGP UPDATE iBGP R14=R11 R15=R13

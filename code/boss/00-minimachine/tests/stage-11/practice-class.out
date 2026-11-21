@@ -1,0 +1,4 @@
+cidr class 10.1.2.3 A private=1
+cidr class 172.32.1.1 B private=0
+cidr class 192.168.0.1 C private=1
+cidr class 224.0.0.1 D private=0

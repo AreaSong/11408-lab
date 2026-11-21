@@ -1,0 +1,2 @@
+fwd 2011-47 src=101.12.123.15 ttl=127 cksum=65e8 changed=源地址、TTL、首部校验和
+arp 2011-47 target=10.2.128.1 req=ff-ff-ff-ff-ff-ff mac=00-21-27-21-51-ee
