@@ -1,0 +1,10 @@
+fs on
+fs mkdir /d
+fs create /d/a0 z
+fs create /d/a1 z
+fs create /d/a2 z
+fs create /d/a3 z
+fs create /d/a4 z
+fs create /d/a5 z
+fs index /d
+fs open 0 /d/a5 r

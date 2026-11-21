@@ -1,0 +1,7 @@
+fs on
+fs mount
+fs create /mnt/a hi
+fs kind /mnt/a
+fs create /b no
+fs kind /b
+fs link /h /mnt/a

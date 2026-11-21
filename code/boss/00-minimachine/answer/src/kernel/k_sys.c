@@ -2,6 +2,7 @@
 
 #include "cpu/cpu_intr.h"
 #include "kernel/k_trap.h"
+#include "kernel/k_file.h"
 #include "kernel/k_vm.h"
 #include "mmu/mmu_walk.h"
 
@@ -218,10 +219,16 @@ int k_proc_syscall(MmMachine *m) {
         return sys_sleep(m, pcb, a);
     }
     if (num == K_SYS_WRITE || num == K_SYS_READ) {
+        if (k_fs_live(m) && a >= 3) {
+            return k_file_syscall(m, pcb, num, a, b, c);
+        }
         ret = k_con_io(m, num, a, b, c);
         m->r[0] = (uint32_t)ret;
         pcb->r[0] = m->r[0];
         return 0;
+    }
+    if (num >= K_SYS_OPEN && num <= K_SYS_MKDIR) {
+        return k_file_syscall(m, pcb, num, a, b, c);
     }
     if (num >= K_SYS_SEM_CREATE && num <= K_SYS_SEM_FREE) {
         return k_sem_syscall(m, pcb, num, a);

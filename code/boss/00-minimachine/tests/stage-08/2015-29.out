@@ -1,0 +1,2 @@
+level=direct logical=1 data-reads=1 addr-reads=0
+level=double logical=300 data-reads=3 addr-reads=2

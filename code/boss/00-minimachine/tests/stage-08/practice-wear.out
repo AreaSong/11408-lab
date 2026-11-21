@@ -1,0 +1,2 @@
+policy=none host=8 flash=8 erase=2,0
+policy=dynamic host=8 flash=8 erase=1,1

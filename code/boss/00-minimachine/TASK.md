@@ -135,3 +135,11 @@
 | `vsplit` / `vpte` | 07 | 按给定页大小拆地址，或算页表项地址。输出格式同 2024 年第 45 题的核对结果 |
 | `exam` / `vclaim` / `origin` | 07 | 选择题字母、判断句、页从文件区还是对换区调入 |
 | `demand on` / `off` | 07 | 打开请求分页。要先 `proc on`。真机上按固定分配、局部置换，算法不能选 OPT |
+| `arm` | 08 | 磁盘调度。不叫 `sched`，那个词是阶段 05 的进程调度。`move` 含走到端点和跳回的空跑 |
+| `time` / `chs` | 08 | 寻道、旋转、传输；簇号换成柱面、磁头、扇区 |
+| `inode` / `bitmap` / `group` / `phys` | 08 | 混合索引、位示图、成组链接、连续和链接分配的访盘次数 |
+| `wear` / `raid` | 08 | 固态盘擦除次数；RAID 0/1/5 的块布局（选开） |
+| `fs on` / `off` | 08 | 装上或卸下文件系统。默认关，关时 `read`/`write` 仍只认控制台 |
+| `fs mkdir` / `create` / `link` / `symlink` / `unlink` / `open` / `read` | 08 | 目录、两种链接、两级打开文件表。`open` 之后按 fd 读不再查目录 |
+| `fs mount` / `kind` / `index` / `save` | 08 | 把 FAT 卷挂到 `/mnt`，B+ 树索引，把磁盘镜像写到宿主文件 |
+| `fclaim` | 08 | 打开文件、位图、硬链接能不能跨卷，回答 true 或 false |

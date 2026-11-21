@@ -1,0 +1,10 @@
+fs on
+create path=/F1 ino=1 nlink=1 text=data
+symlink path=/F2 text=/F1 result=ok ino=2 nlink=1
+link path=/F3 old=/F1 result=ok ino=1 nlink=2
+unlink path=/F1 result=ok nlink=1 kept=1
+lstat path=/F2 result=ok kind=3 nlink=1 text=/F1
+stat path=/F2 result=dangling kind=0 nlink=0 text=
+stat path=/F3 result=ok kind=2 nlink=1 text=data
+symlink path=/loop text=/loop result=ok ino=3 nlink=1
+stat path=/loop result=loop kind=0 nlink=0 text=

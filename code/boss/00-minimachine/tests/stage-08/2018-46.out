@@ -1,0 +1,3 @@
+bytes=4402345705472 blocks=1074791432 expr=32KB+4MB+4GB+4TB
+blocks=2 level=direct indirect=none data-reads=1
+blocks=10 level=single indirect=1 data-reads=2

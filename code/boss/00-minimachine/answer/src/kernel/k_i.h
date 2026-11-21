@@ -107,6 +107,7 @@ int k_as_copy(MmMachine *m, KPcb *dst, const KPcb *src);
 int k_as_plant(MmMachine *m, KPcb *pcb, uint32_t va, uint32_t pa, int shared, int demand, int seq);
 void k_demand_copied(MmMachine *m, uint32_t pa);
 int k_vm_syscall(MmMachine *m, KPcb *pcb, uint32_t num, uint32_t a, uint32_t b);
+int k_file_syscall(MmMachine *m, KPcb *pcb, uint32_t num, uint32_t a, uint32_t b, uint32_t c);
 int k_as_exec(MmMachine *m, KPcb *pcb, const KImage *image);
 int k_timer_push(KWorld *w, uint32_t when, int pid);
 int k_timer_due(KWorld *w, uint32_t now, int *pid);

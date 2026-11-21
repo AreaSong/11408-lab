@@ -1,4 +1,5 @@
 #include "kernel/k_demand_i.h"
+#include "kernel/k_file.h"
 #include "kernel/k_vm.h"
 
 #include "cpu/cpu_intr.h"
@@ -80,6 +81,9 @@ int k_vm_syscall(MmMachine *m, KPcb *pcb, uint32_t num, uint32_t a, uint32_t b) 
         }
         cpu_event(m, "服务 执行者=操作系统 调用=sbrk 旧=%08X 新=%08X", ret, pcb->brk);
     } else if (num == K_SYS_MMAP) {
+        if (a != 0xffffffffu) {
+            k_fs_fill_slot(m, (int)a);
+        }
         if (do_mmap(d, pcb, a, b, &ret) != 0) {
             m->r[0] = (uint32_t)-1;
             pcb->r[0] = m->r[0];

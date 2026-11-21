@@ -1,0 +1,2 @@
+algo=clook order=120 30 50 90 move=170
+seek-ms=170.000 rot-ms=20.000 xfer-ms=0.400 ctrl-ms=0.000 total-ms=190.400 round1=190.4

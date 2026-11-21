@@ -1,0 +1,14 @@
+fs on
+fs mkdir /a
+fs mkdir /a/b
+fs create /a/b/c hi
+fs open 0 /a/b/c r
+fs read 0 0
+fs cd /a/b
+fs open 0 c r
+fs create /F x
+fs open 0 /F r
+fs open 1 /F w
+fs read 1 0
+fs close 0 2
+fs close 1 0

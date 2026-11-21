@@ -22,8 +22,8 @@
 | `src/cpu/` | ALU、译码、节拍模式、中断隐指令、流水线 | 00、01、02 | co/02、co/03、co/09、co/10、co/11 |
 | `src/mem/` | 主存扩展、多体交叉、指令 Cache 与数据 Cache | 03 | co/05、co/06 |
 | `src/mmu/` | TLB、两级页表 | 04 | co/07、os/10 |
-| `src/kernel/` | trap 与系统调用、进程调度、同步与死锁、请求分页 | 01、05、06、07 | os/00、os/02~12 |
-| `src/fs/` | 磁盘模型、inode 与 FAT、VFS、固态盘 | 08 | os/13、os/14、os/16 |
+| `src/kernel/` | trap 与系统调用、进程调度、同步与死锁、请求分页、文件调用 | 01、05、06、07、08 | os/00、os/02~14 |
+| `src/fs/` | 磁盘模型、inode 与 FAT、VFS、固态盘、RAID | 08 | os/13、os/14、os/16 |
 | `src/dev/` | 总线、DMA、控制台、磁盘控制器、网卡、SPOOLing | 09、10 | co/13、os/15 |
 | `src/net/` | 链路与交换机、IP/ARP/NAT/路由、UDP/TCP/DNS/HTTP/SMTP | 10、11、12 | net/00~14 |
 | `src/user/` | MM32 运行库与 shell、宿主用户程序 grep/sort/zip | 13 | lib/06、lib/09、lib/19 |
@@ -40,7 +40,8 @@
 | 05 | [stages/05-process/ANSWER.md](stages/05-process/ANSWER.md) | `boss-stage-05` |
 | 06 | [stages/06-sync/ANSWER.md](stages/06-sync/ANSWER.md) | `boss-stage-06` |
 | 07 | [stages/07-vm/ANSWER.md](stages/07-vm/ANSWER.md) | `boss-stage-07` |
-| 08~13 | 待写 | `boss-stage-NN` |
+| 08 | [stages/08-fs-disk/ANSWER.md](stages/08-fs-disk/ANSWER.md) | `boss-stage-08` |
+| 09~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

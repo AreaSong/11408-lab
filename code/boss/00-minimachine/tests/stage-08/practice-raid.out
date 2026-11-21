@@ -1,0 +1,10 @@
+raid level=0 disks=3 stripes=2 usable=6 parity=0 tolerate=0
+row0 D0 D1 D2
+row1 D3 D4 D5
+raid level=1 disks=2 stripes=2 usable=2 parity=0 tolerate=1
+row0 D0 D0
+row1 D1 D1
+raid level=5 disks=3 stripes=3 usable=6 parity=3 tolerate=1
+row0 D0 D1 P
+row1 D2 P D3
+row2 P D4 D5

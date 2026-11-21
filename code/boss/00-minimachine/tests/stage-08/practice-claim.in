@@ -1,0 +1,6 @@
+fclaim open-lookup
+fclaim read-lookup
+fclaim bitmap-shrink
+fclaim hard-cross
+fclaim soft-cross
+fclaim fat-free

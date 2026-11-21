@@ -1,0 +1,31 @@
+fs on
+mkdir path=/a result=ok ino=1 nlink=2
+mkdir path=/a/b result=ok ino=2 nlink=2
+create path=/a/b/c ino=3 nlink=1 text=hi
+step read-dir / a block=0
+step read-inode /a
+step read-dir /a b block=0
+step read-inode /a/b
+step read-dir /a/b c block=0
+step read-inode /a/b/c
+open pid=0 path=/a/b/c result=ok fd=0 reads=6 count=1
+step read-data ino=3 block=0
+read pid=0 fd=0 result=ok reads=1 offset=1 text=hi
+step read-dir / a block=0
+step read-inode /a
+step read-dir /a b block=0
+step read-inode /a/b
+cd path=/a/b result=ok reads=4
+step read-dir /a/b c block=0
+step read-inode /a/b/c
+open pid=0 path=c result=ok fd=1 reads=2 count=2
+create path=/F ino=4 nlink=1 text=x
+step read-dir / F block=0
+step read-inode /F
+open pid=0 path=/F result=ok fd=2 reads=2 count=1
+step read-dir / F block=0
+step read-inode /F
+open pid=1 path=/F result=ok fd=0 reads=2 count=2
+read pid=1 fd=0 result=eacces reads=0 offset=0 text=
+close pid=0 fd=2 result=ok count=1 kept=1 nlink=1
+close pid=1 fd=0 result=ok count=0 kept=0 nlink=1

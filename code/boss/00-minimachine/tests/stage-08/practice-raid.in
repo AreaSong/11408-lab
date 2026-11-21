@@ -1,0 +1,3 @@
+raid 0 3 2
+raid 1 2 2
+raid 5 3 3

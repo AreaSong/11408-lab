@@ -1,0 +1,6 @@
+fclaim open-lookup value=true
+fclaim read-lookup value=false
+fclaim bitmap-shrink value=false
+fclaim hard-cross value=false
+fclaim soft-cross value=true
+fclaim fat-free value=true

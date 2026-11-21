@@ -1,0 +1,7 @@
+fs on
+mount result=ok ino=1
+create path=/mnt/a ino=1 nlink=1 text=hi
+kind path=/mnt/a fs=fat
+create path=/b ino=2 nlink=1 text=no
+kind path=/b fs=inode
+link path=/h old=/mnt/a result=bad ino=-1 nlink=0

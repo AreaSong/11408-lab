@@ -1,0 +1,14 @@
+fs on
+mkdir path=/d result=ok ino=1 nlink=2
+create path=/d/a0 ino=2 nlink=1 text=z
+create path=/d/a1 ino=3 nlink=1 text=z
+create path=/d/a2 ino=4 nlink=1 text=z
+create path=/d/a3 ino=5 nlink=1 text=z
+create path=/d/a4 ino=6 nlink=1 text=z
+create path=/d/a5 ino=7 nlink=1 text=z
+index path=/d keys=6 height=2
+step read-dir / d block=0
+step read-inode /d
+step read-dir /d a5 block=1 index=bp
+step read-inode /d/a5
+open pid=0 path=/d/a5 result=ok fd=0 reads=4 count=1

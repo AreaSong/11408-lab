@@ -142,6 +142,15 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int fs = mm_shell_fs(s, out, machine, *mem_bytes, opt);
+        if (fs != 0) {
+            if (fs > 0 && *machine != NULL) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return fs < 0 ? -1 : 0;
+        }
+    }
+    {
         int sync = mm_shell_sync(s, in, out, machine);
         if (sync != 0) {
             if (sync > 0 && *machine != NULL) {

@@ -63,6 +63,7 @@ typedef struct {
     int demand;
     int demand_frames;
     char demand_algo[8];
+    int fs;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -93,5 +94,8 @@ int mm_shell_sync(char *line, FILE *in, FILE *out, MmMachine **machine);
 
 /* 阶段 07 的置换、伙伴系统、缺页和 sbrk/mmap。返回值同 mm_shell_stage。 */
 int mm_shell_vm(char *line, FILE *out, MmMachine **machine, MmShellOpt *opt);
+
+/* 阶段 08 的磁盘、文件系统命令。返回值同 mm_shell_stage。 */
+int mm_shell_fs(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
 
 #endif

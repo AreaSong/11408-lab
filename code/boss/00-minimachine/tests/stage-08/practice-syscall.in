@@ -1,0 +1,25 @@
+fs on
+fs create /a hi
+proc on
+asm
+        .text
+        la    r1, path
+        ld    r0, #14
+        ld    r2, #1
+        syscall
+        mov   r6, r0
+        ld    r0, #2
+        mov   r1, r6
+        la    r2, buf
+        ld    r3, #2
+        syscall
+        ld    r4, [r2]
+        mov   r1, r4
+        ld    r0, #0
+        syscall
+        .data
+buf:    .space 4
+path:   .asciz "/a"
+end
+load
+run 8000

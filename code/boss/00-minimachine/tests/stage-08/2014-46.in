@@ -1,0 +1,5 @@
+phys insert cont 200 30
+phys insert link 200 30
+phys linkmax 1024 4
+phys visit link 31
+phys visit fat 8

@@ -1,0 +1,10 @@
+fs on
+fs create /F1 data
+fs symlink /F2 /F1
+fs link /F3 /F1
+fs unlink /F1
+fs lstat /F2
+fs stat /F2
+fs stat /F3
+fs symlink /loop /loop
+fs stat /loop

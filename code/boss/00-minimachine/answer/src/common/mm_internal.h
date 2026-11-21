@@ -6,6 +6,7 @@
 #include "cpu/cpu_intr.h"
 
 struct KWorld;
+struct FsNs;
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -141,6 +142,8 @@ struct MmMachine {
     int mmu_stall;
     /* 阶段 07。缺页打开后，翻译成功时用来更新 LRU。默认是空的。 */
     void (*demand_touch)(struct MmMachine *m, uint32_t va, int writing);
+    /* 阶段 08。NULL 时没有文件系统，read/write 仍只认控制台。 */
+    struct FsNs *fsworld;
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

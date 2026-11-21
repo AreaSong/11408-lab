@@ -1,0 +1,5 @@
+insert cont move=29 dir=head reads=59
+insert link reads=31
+linkmax bytes=4380866641920 gb=4080
+visit link k=31 reads=31 next=1
+visit fat k=8 reads=1 next=1
