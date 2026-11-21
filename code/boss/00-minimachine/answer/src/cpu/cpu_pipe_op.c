@@ -2,6 +2,7 @@
 
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_intr.h"
+#include "mmu/mmu_walk.h"
 
 #include <string.h>
 
@@ -221,14 +222,14 @@ static int touch(MmMachine *m, PipeSlot *s, uint32_t addr, int size, int writing
         s->taken = 0;
         return -1;
     }
-    /* 页表要到阶段 04 才接上。PG=1 时数据访问先记成缺页，取指仍走物理地址。 */
-    if ((m->psw & MM_PSW_PG) != 0) {
+    /* 只置了 PG、还没装 MMU 时，保持阶段 02：数据访问直接缺页，取指仍走物理地址。 */
+    if ((m->psw & MM_PSW_PG) != 0 && m->mmu == NULL) {
         s->fault = MM_EX_PAGE;
         s->badva = addr;
         s->taken = 0;
         return -1;
     }
-    vec = writing ? mm_write(m, addr, size, *data) : mm_read(m, addr, size, data);
+    vec = writing ? mmu_mem_write(m, addr, size, *data) : mmu_mem_read(m, addr, size, data);
     if (vec != 0) {
         s->fault = vec;
         s->badva = addr;
@@ -341,5 +342,8 @@ void pipe_work_wb(MmMachine *m, const PipeSlot *s) {
     }
     if (s->in.op == MM_OP_MTSR) {
         mm_set_sr(m, (int)s->in.imm, s->result);
+    }
+    if (s->in.op == MM_OP_TLBFLUSH) {
+        mmu_flush(m);
     }
 }

@@ -1,0 +1,5 @@
+pg on
+l1 on
+map 2000H 3000H rw user
+xlate 读 2000H
+xlate 读 2000H

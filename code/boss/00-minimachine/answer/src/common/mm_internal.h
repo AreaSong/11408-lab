@@ -132,6 +132,9 @@ struct MmMachine {
     int pend_i;
     int pend_d;
     int mem_stall;
+    /* 阶段 04。mmu 为 NULL 时，PG=1 仍按阶段 02：流水线数据访问直接缺页。 */
+    struct Mmu *mmu;
+    int mmu_stall;
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

@@ -3,6 +3,7 @@
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_exec.h"
 #include "mem/mem_cache.h"
+#include "mmu/mmu_walk.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -11,7 +12,7 @@ void cpu_emit_tick(MmMachine *m) {
     int drivers = cpu_bus_drivers(m->t_sig);
     m->t_index++;
     /* 命中就这一拍。缺失的主存周期加在后面，不另起微操作行。 */
-    m->cycles += 1u + (uint32_t)mem_cache_take_stall(m);
+    m->cycles += 1u + (uint32_t)mem_cache_take_stall(m) + (uint32_t)mmu_take_stall(m);
     if (drivers > 1) {
         m->bus_bad++;
     }
@@ -353,9 +354,11 @@ static int tick_ctl(MmMachine *m, int kind) {
         return TK_OK;
     }
     if (kind == K_TLB) {
+        mmu_flush(m);
         set_sig(m, "无");
         set_func(m, "清空TLB");
-        set_det(m, "阶段00无TLB");
+        /* 没装 MMU 时保持阶段 00 的原文，已经发布的 trace 不变。 */
+        set_det(m, mmu_on(m) ? "TLB已清空" : "阶段00无TLB");
         return TK_OK;
     }
     return tick_trap(m);

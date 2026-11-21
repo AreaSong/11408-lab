@@ -37,6 +37,28 @@ typedef struct {
     int l1_mem_cycles;
     int l1_split;
     uint32_t l1_seed;
+    int pg;
+    int tlb_entries;
+    int tlb_ways;
+    int tlb_repl;
+    int walk_cycles;
+    uint32_t ptbr;
+    int map_n;
+    uint32_t map_va[16];
+    uint32_t map_pa[16];
+    uint8_t map_w[16];
+    uint8_t map_u[16];
+    int plant_n;
+    uint8_t plant_set[8];
+    uint8_t plant_way[8];
+    uint8_t plant_valid[8];
+    uint32_t plant_tag[8];
+    uint32_t plant_frame[8];
+    uint8_t plant_w[8];
+    uint8_t plant_u[8];
+    int fix_on;
+    uint32_t fix_va;
+    uint32_t fix_pa;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -52,5 +74,10 @@ int mm_shell_pipe(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes
 /* 阶段 03 的主存和 Cache 命令。返回值同 mm_shell_stage。 */
 int mm_shell_mem(char *line, FILE *out, MmMachine **machine, MmShellOpt *opt);
 void mm_shell_mem_apply(MmMachine *m, const MmShellOpt *opt);
+
+/* 阶段 04 的页表和 TLB 命令。返回值同 mm_shell_stage。 */
+int mm_shell_calc(const char *line, FILE *out);
+int mm_shell_mmu(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
+void mm_shell_mmu_apply(MmMachine *m, const MmShellOpt *opt);
 
 #endif

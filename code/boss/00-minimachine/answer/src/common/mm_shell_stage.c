@@ -5,6 +5,7 @@
 #include "cpu/cpu_pipe.h"
 #include "kernel/k_trap.h"
 #include "mem/mem_cache.h"
+#include "mmu/mmu_walk.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -44,6 +45,11 @@ void mm_shell_opt_init(MmShellOpt *opt) {
     opt->l1_mem_cycles = 4;
     opt->l1_split = 1;
     opt->l1_seed = 1;
+    opt->tlb_entries = 16;
+    opt->tlb_ways = 16;
+    opt->tlb_repl = MMU_REPL_LRU;
+    opt->walk_cycles = 1;
+    opt->ptbr = 0x00080000u;
 }
 
 void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
@@ -95,6 +101,7 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
         cpu_pipe_set(m, &pipe, opt->pipe);
     }
     mm_shell_mem_apply(m, opt);
+    mm_shell_mmu_apply(m, opt);
 }
 
 void mm_shell_bind(MmMachine *m, FILE *out, const MmShellOpt *opt, int trace_on) {

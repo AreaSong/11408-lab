@@ -1,0 +1,15 @@
+kernel on
+pg on
+user on
+map 1000H 1000H rw user
+map 2000H 2000H ro user
+asm
+st r1, [r2]
+hlt
+end
+load
+set r1 1
+set r2 2000H
+run
+sr epc
+sr badva

@@ -1,0 +1,13 @@
+pg on
+map 1000H 1000H rw user
+map 2000H 3000H rw user
+asm
+ld r1, [r2]
+ld r3, [r2]
+hlt
+end
+load
+setw 3000H 11111111H
+set r2 2000H
+run
+regs

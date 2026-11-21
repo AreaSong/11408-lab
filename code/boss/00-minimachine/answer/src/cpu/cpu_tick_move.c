@@ -1,5 +1,7 @@
 #include "cpu/cpu_tick.h"
 
+#include "mmu/mmu_walk.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
@@ -50,7 +52,7 @@ int cpu_tick_fetch(MmMachine *m, int kind) {
         set_sig(m, "取指", "MemR MDRinE PC+4");
         set_func(m, "M(MAR)->MDR PC+4->PC");
         m->mem_if = 1;
-        vec = mm_read(m, m->mar, 4, &data);
+        vec = mmu_mem_read(m, m->mar, 4, &data);
         m->mem_if = 0;
         if (vec != 0) {
             set_det(m, "MAR=%08X 失败", m->mar);
@@ -264,7 +266,7 @@ int cpu_tick_mem(MmMachine *m, int kind) {
     if (size == 1 && !writing) {
         set_func(m, "M(MAR)->MDR 字节");
     }
-    vec = writing ? mm_write(m, m->mar, size, data) : mm_read(m, m->mar, size, &data);
+    vec = writing ? mmu_mem_write(m, m->mar, size, data) : mmu_mem_read(m, m->mar, size, &data);
     if (vec != 0) {
         set_det(m, "MAR=%08X 失败", m->mar);
         return mark_fault(m, vec, m->mar);

@@ -1,0 +1,13 @@
+kernel on
+pg on
+map 1000H 1000H rw user
+fix 2000H 3000H
+asm
+ld r1, [r2]
+hlt
+end
+load
+setw 3000H 2AH
+set r2 2000H
+run
+regs

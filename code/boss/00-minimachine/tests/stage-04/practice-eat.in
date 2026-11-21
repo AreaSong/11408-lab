@@ -1,0 +1,5 @@
+eat tlb-hit 10 100
+eat pt-hit 10 100 2
+eat fault 10 100 2 100000000
+eat avg 9 10 20 100 2
+eat avg 1 3 10 100 1

@@ -3,12 +3,14 @@
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
 #include "mem/mem_cache.h"
+#include "mmu/mmu_walk.h"
 
 #include <stdlib.h>
 #include <string.h>
 
 static void clear_arch(MmMachine *m) {
     mem_cache_drop(m);
+    mmu_drop(m);
     memset(m->r, 0, sizeof m->r);
     memset(m->sr, 0, sizeof m->sr);
     m->pc = 0x00001000u;
@@ -64,6 +66,7 @@ void mm_destroy(MmMachine *m) {
         return;
     }
     mem_cache_drop(m);
+    mmu_drop(m);
     free(m->mem);
     free(m->port);
     free(m);

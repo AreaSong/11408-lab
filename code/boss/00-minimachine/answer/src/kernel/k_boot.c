@@ -3,6 +3,7 @@
 
 #include "common/mm_internal.h"
 #include "cpu/cpu_intr.h"
+#include "mmu/mmu_walk.h"
 
 #include <string.h>
 
@@ -21,7 +22,12 @@ static int k_dispatch(MmMachine *m, int vec) {
         return 0;
     }
     if (vec == MM_EX_PAGE) {
-        cpu_event(m, "服务 执行者=操作系统 调用=缺页 结果=本阶段不能修复");
+        /* 阶段 04 先把要用的页装好。没装的页只有登记过 fix 才能补上并重执行。 */
+        if (mmu_repair(m) == 0) {
+            cpu_event(m, "服务 执行者=操作系统 调用=缺页 结果=装入后重新执行");
+            return 0;
+        }
+        cpu_event(m, "服务 执行者=操作系统 调用=缺页 结果=结束进程");
         return 1;
     }
     cpu_event(m, "服务 执行者=操作系统 调用=%s 结果=结束进程", mm_cause_name(vec));

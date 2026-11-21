@@ -4,6 +4,7 @@
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe_i.h"
 #include "mem/mem_cache.h"
+#include "mmu/mmu_walk.h"
 
 #include <string.h>
 
@@ -86,7 +87,7 @@ static void fetch(MmMachine *m, PipeSlot *s) {
         return;
     }
     m->mem_if = 1;
-    vec = mm_read(m, s->pc, 4, &word);
+    vec = mmu_mem_read(m, s->pc, 4, &word);
     m->mem_if = 0;
     if (vec != 0) {
         s->fault = vec;
@@ -409,7 +410,7 @@ static int one_cycle(MmMachine *m, int *committed) {
         flow(m, next);
     }
     {
-        int extra = mem_cache_take_stall(m);
+        int extra = mem_cache_take_stall(m) + mmu_take_stall(m);
         m->cycles += (uint32_t)extra;
         m->pipe_cycles += extra;
     }

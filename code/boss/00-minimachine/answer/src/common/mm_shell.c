@@ -4,6 +4,7 @@
 #include "common/mm_internal.h"
 #include "common/mm_shell_stage.h"
 #include "mem/mem_cache.h"
+#include "mmu/mmu_walk.h"
 #include "cpu/cpu_exec.h"
 #include "cpu/cpu_pipe.h"
 #include "kernel/k_trap.h"
@@ -141,6 +142,15 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int mmu = mm_shell_mmu(s, out, machine, *mem_bytes, opt);
+        if (mmu != 0) {
+            if (mmu > 0 && *machine != NULL) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return mmu < 0 ? -1 : 0;
+        }
+    }
+    {
         int mem = mm_shell_mem(s, out, machine, opt);
         if (mem != 0) {
             if (mem > 0 && *machine != NULL) {
@@ -241,6 +251,7 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         if (mem_cache_on(m)) {
             mem_cache_report(m, out);
         }
+        mmu_report(m, out);
         return 0;
     }
     if (strcmp(s, "step") == 0) {
@@ -260,6 +271,7 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         if (mem_cache_on(m)) {
             mem_cache_report(m, out);
         }
+        mmu_report(m, out);
         return 0;
     }
     if (starts(s, "dmem")) {

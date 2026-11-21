@@ -1,0 +1,5 @@
+geom 32 4096 4
+slot 200000H 8
+slot 200000H 9
+join 900H 0
+join 901H 0
