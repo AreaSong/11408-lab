@@ -154,6 +154,8 @@ struct MmMachine {
     void (*net_kick)(struct MmMachine *m, uint32_t port);
     void (*net_mem)(struct MmMachine *m);
     void (*net_bind)(struct MmMachine *m);
+    /* 阶段 12。NULL 时调用号 19～22 仍按未知调用返回。 */
+    struct AppNs *app;
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

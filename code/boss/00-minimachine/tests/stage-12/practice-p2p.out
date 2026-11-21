@@ -1,0 +1,5 @@
+p2p 1 cs=30 p2p=30
+p2p 10 cs=100 p2p=50
+p2p 1000 cs=10000 p2p=10000/101
+p2p noupload cs=100 p2p=100
+p2p slow cs=7500 p2p=7500

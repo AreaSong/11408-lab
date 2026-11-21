@@ -1,0 +1,15 @@
+app on
+udp sum=e083
+open c=SYN_SENT s=LISTEN seq=1000
+open c=SYN_SENT s=SYN_RCVD seq=5000 ack=1001
+open c=ESTABLISHED s=ESTABLISHED seq=1001 ack=5001
+close c=TIME_WAIT s=CLOSED
+cwnd=1,2,4,8,9 thresh=8
+fast cwnd=8 thresh=8
+dns host=1 local=1 total=8
+page rtt=4 ms=40
+smtp HELO=250 DATA=354 dot=..
+b64=5L2g5aW9
+pop3 RETR=+OK
+sock echo=hi
+app off

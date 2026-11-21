@@ -1,4 +1,6 @@
 #include "common/mm_shell_stage.h"
+
+#include "kernel/k_sock.h"
 #include "net/net_nic.h"
 
 #include "common/mm_internal.h"
@@ -121,6 +123,9 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     }
     if (opt->link_on) {
         net_on(m);
+    }
+    if (opt->app_on) {
+        k_app_on(m);
     }
 }
 

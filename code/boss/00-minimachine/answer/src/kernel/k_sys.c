@@ -3,6 +3,7 @@
 #include "cpu/cpu_intr.h"
 #include "kernel/k_trap.h"
 #include "kernel/k_file.h"
+#include "kernel/k_sock.h"
 #include "kernel/k_vm.h"
 #include "mmu/mmu_walk.h"
 
@@ -235,6 +236,12 @@ int k_proc_syscall(MmMachine *m) {
     }
     if (num == K_SYS_SBRK || num == K_SYS_MMAP) {
         return k_vm_syscall(m, pcb, num, a, b);
+    }
+    /* 没打开传输层时，19～22 仍走下面的未知调用，早期事件行不变。 */
+    if (num >= K_SYS_SOCKET && num <= K_SYS_CONNECT && m->app != NULL &&
+        k_sock_syscall(m, num, a, b, c) == 0) {
+        pcb->r[0] = m->r[0];
+        return 0;
     }
     cpu_event(m, "服务 执行者=操作系统 调用=未知 号=%u 返回=-1", num);
     return fail_code(m, pcb);
