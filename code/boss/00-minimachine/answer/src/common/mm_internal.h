@@ -126,6 +126,12 @@ struct MmMachine {
     char pipe_log_text[MM_PIPE_LOG][48];
     char pipe_cell[MM_PIPE_LOG][MM_PIPE_CYC];
     PipeSlot pipe_st[5];
+    /* 阶段 03。cache 为 NULL 时访存直通主存，周期与阶段 02 相同。 */
+    struct MemCache *cache;
+    int mem_if;
+    int pend_i;
+    int pend_d;
+    int mem_stall;
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

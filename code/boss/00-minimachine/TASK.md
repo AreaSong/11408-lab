@@ -97,3 +97,11 @@
 | `diagram on` / `off` | 02 | 流水线时空图，默认关 |
 | `freq 数` | 02 | 主频，单位 MHz，用来算执行时间和 MIPS |
 | `compare` | 02 | 同一程序用两种模式各跑一遍，比最终状态并算加速比 |
+| `chip` / `locate` | 03 | 用存储芯片拼主存，打印芯片数、片选和地址范围 |
+| `bank` / `seq` | 03 | 低位交叉的模块号和冲突；连续访问的低位、高位时间 |
+| `field` / `cap` / `map` | 03 | Cache 地址字段、总容量、某个地址落在哪一组 |
+| `walk` | 03 | 二维数组按行、按列的命中率，各从空 Cache 开始 |
+| `l1 on` / `off` | 03 | 装上或卸下指令 Cache 和数据 Cache，默认关 |
+| `l1 lines` / `ways` / `block` / `mem` / `seed` | 03 | 行数、路数、块字节、主存周期、随机种子 |
+| `l1 replace` / `write` / `alloc` | 03 | LRU、FIFO 或随机；写回或写直达；写分配 |
+| `l1 split` / `unified` | 03 | 指令和数据各一块 Cache，或共用一块 |

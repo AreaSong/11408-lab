@@ -27,6 +27,16 @@ typedef struct {
     int unified;
     int diagram;
     uint32_t freq_mhz;
+    int l1_on;
+    int l1_lines;
+    int l1_ways;
+    int l1_block;
+    int l1_replace;
+    int l1_wb;
+    int l1_alloc;
+    int l1_mem_cycles;
+    int l1_split;
+    uint32_t l1_seed;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -38,5 +48,9 @@ int mm_shell_stage(char *line, FILE *out, MmMachine **machine, uint32_t mem_byte
 /* 阶段 02 的流水线命令。返回值同 mm_shell_stage。 */
 int mm_shell_pipe(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt,
                   AsmImage *image);
+
+/* 阶段 03 的主存和 Cache 命令。返回值同 mm_shell_stage。 */
+int mm_shell_mem(char *line, FILE *out, MmMachine **machine, MmShellOpt *opt);
+void mm_shell_mem_apply(MmMachine *m, const MmShellOpt *opt);
 
 #endif

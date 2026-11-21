@@ -20,7 +20,7 @@
 | `src/common/` | 模拟时钟、trace、配置、机器结构体与函数指针表 | 00 | — |
 | `src/asm/` | 汇编器、反汇编器、列表文件 | 00 | co/08、co/09 |
 | `src/cpu/` | ALU、译码、节拍模式、中断隐指令、流水线 | 00、01、02 | co/02、co/03、co/09、co/10、co/11 |
-| `src/mem/` | 主存、多体交叉、Cache | 03 | co/05、co/06 |
+| `src/mem/` | 主存扩展、多体交叉、指令 Cache 与数据 Cache | 03 | co/05、co/06 |
 | `src/mmu/` | TLB、两级页表 | 04 | co/07、os/10 |
 | `src/kernel/` | trap 与系统调用、进程调度、同步与死锁、请求分页 | 01、05、06、07 | os/00、os/02~12 |
 | `src/fs/` | 磁盘模型、inode 与 FAT、VFS、固态盘 | 08 | os/13、os/14、os/16 |
@@ -35,7 +35,8 @@
 | 00 | [stages/00-isa-asm/ANSWER.md](stages/00-isa-asm/ANSWER.md) | `boss-stage-00` |
 | 01 | [stages/01-interrupt/ANSWER.md](stages/01-interrupt/ANSWER.md) | `boss-stage-01` |
 | 02 | [stages/02-pipeline/ANSWER.md](stages/02-pipeline/ANSWER.md) | `boss-stage-02` |
-| 03~13 | 待写 | `boss-stage-NN` |
+| 03 | [stages/03-memory/ANSWER.md](stages/03-memory/ANSWER.md) | `boss-stage-03` |
+| 04~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

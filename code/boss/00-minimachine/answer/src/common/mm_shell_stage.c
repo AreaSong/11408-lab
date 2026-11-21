@@ -4,6 +4,7 @@
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
 #include "kernel/k_trap.h"
+#include "mem/mem_cache.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +35,15 @@ static int parse_u32(const char *text, uint32_t *out) {
 void mm_shell_opt_init(MmShellOpt *opt) {
     memset(opt, 0, sizeof *opt);
     opt->forward = 1;
+    opt->l1_lines = 8;
+    opt->l1_ways = 1;
+    opt->l1_block = 16;
+    opt->l1_replace = MEM_REPL_LRU;
+    opt->l1_wb = 1;
+    opt->l1_alloc = 1;
+    opt->l1_mem_cycles = 4;
+    opt->l1_split = 1;
+    opt->l1_seed = 1;
 }
 
 void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
@@ -84,6 +94,7 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
         pipe.freq_mhz = opt->freq_mhz;
         cpu_pipe_set(m, &pipe, opt->pipe);
     }
+    mm_shell_mem_apply(m, opt);
 }
 
 void mm_shell_bind(MmMachine *m, FILE *out, const MmShellOpt *opt, int trace_on) {

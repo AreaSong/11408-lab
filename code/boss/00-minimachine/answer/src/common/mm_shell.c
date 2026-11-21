@@ -3,6 +3,7 @@
 #include "asm/asm_asm.h"
 #include "common/mm_internal.h"
 #include "common/mm_shell_stage.h"
+#include "mem/mem_cache.h"
 #include "cpu/cpu_exec.h"
 #include "cpu/cpu_pipe.h"
 #include "kernel/k_trap.h"
@@ -140,6 +141,15 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int mem = mm_shell_mem(s, out, machine, opt);
+        if (mem != 0) {
+            if (mem > 0 && *machine != NULL) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return mem < 0 ? -1 : 0;
+        }
+    }
+    {
         int pipe = mm_shell_pipe(s, out, machine, *mem_bytes, opt, *image);
         if (pipe != 0) {
             if (pipe > 0) {
@@ -228,6 +238,9 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         if (cpu_pipe_enabled(m)) {
             cpu_pipe_report(m, out);
         }
+        if (mem_cache_on(m)) {
+            mem_cache_report(m, out);
+        }
         return 0;
     }
     if (strcmp(s, "step") == 0) {
@@ -243,6 +256,9 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         mm_print_stats(m, out);
         if (cpu_pipe_enabled(m)) {
             cpu_pipe_report(m, out);
+        }
+        if (mem_cache_on(m)) {
+            mem_cache_report(m, out);
         }
         return 0;
     }

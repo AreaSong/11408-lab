@@ -200,6 +200,9 @@ void cpu_pipe_report(const MmMachine *m, FILE *fp) {
     print_diagram(m, fp);
     fprintf(fp, "结果：阻塞 %d 拍，共 %d 个时钟周期\n", st.extra, st.cycles);
     fprintf(fp, "数据 %d 拍，控制 %d 拍，结构 %d 拍\n", st.data_stall, st.ctrl_stall, st.struct_stall);
+    if (m->mem_stall > 0) {
+        fprintf(fp, "Cache 缺失阻塞 %d 拍，已算进上面的实际周期\n", m->mem_stall);
+    }
     print_time(m, fp, st.cycles, st.committed);
     if (st.committed > 0 && st.cycles > 0) {
         fprintf(fp, "吞吐率 TP = %d 条 / %d 个时钟周期\n", st.committed, st.cycles);

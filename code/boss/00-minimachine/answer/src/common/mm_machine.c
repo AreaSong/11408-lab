@@ -2,11 +2,13 @@
 #include "asm/asm_image.h"
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
+#include "mem/mem_cache.h"
 
 #include <stdlib.h>
 #include <string.h>
 
 static void clear_arch(MmMachine *m) {
+    mem_cache_drop(m);
     memset(m->r, 0, sizeof m->r);
     memset(m->sr, 0, sizeof m->sr);
     m->pc = 0x00001000u;
@@ -61,6 +63,7 @@ void mm_destroy(MmMachine *m) {
     if (m == NULL) {
         return;
     }
+    mem_cache_drop(m);
     free(m->mem);
     free(m->port);
     free(m);
@@ -141,6 +144,9 @@ int mm_read(MmMachine *m, uint32_t addr, int size, uint32_t *data) {
     if (m->hook_read != NULL) {
         return m->hook_read(m, addr, size, data);
     }
+    if (m->cache != NULL) {
+        return mem_cpu_read(m, addr, size, data);
+    }
     return mm_raw_read(m, addr, size, data);
 }
 
@@ -151,6 +157,9 @@ int mm_write(MmMachine *m, uint32_t addr, int size, uint32_t data) {
     }
     if (m->hook_write != NULL) {
         return m->hook_write(m, addr, size, &data);
+    }
+    if (m->cache != NULL) {
+        return mem_cpu_write(m, addr, size, data);
     }
     return mm_raw_write(m, addr, size, data);
 }

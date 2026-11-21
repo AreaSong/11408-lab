@@ -3,6 +3,7 @@
 #include "cpu/cpu_decode.h"
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe_i.h"
+#include "mem/mem_cache.h"
 
 #include <string.h>
 
@@ -84,7 +85,9 @@ static void fetch(MmMachine *m, PipeSlot *s) {
         remember(m, s);
         return;
     }
+    m->mem_if = 1;
     vec = mm_read(m, s->pc, 4, &word);
+    m->mem_if = 0;
     if (vec != 0) {
         s->fault = vec;
         s->badva = s->pc;
@@ -404,6 +407,11 @@ static int one_cycle(MmMachine *m, int *committed) {
             pipe_work_ex(m, &st[P_EX], &st[P_MEM]);
         }
         flow(m, next);
+    }
+    {
+        int extra = mem_cache_take_stall(m);
+        m->cycles += (uint32_t)extra;
+        m->pipe_cycles += extra;
     }
     memcpy(st, next, sizeof next);
     return m->halted;

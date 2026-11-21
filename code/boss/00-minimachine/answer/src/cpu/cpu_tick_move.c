@@ -49,7 +49,9 @@ int cpu_tick_fetch(MmMachine *m, int kind) {
     if (kind == K_FETCH_MEM) {
         set_sig(m, "取指", "MemR MDRinE PC+4");
         set_func(m, "M(MAR)->MDR PC+4->PC");
+        m->mem_if = 1;
         vec = mm_read(m, m->mar, 4, &data);
+        m->mem_if = 0;
         if (vec != 0) {
             set_det(m, "MAR=%08X 失败", m->mar);
             return mark_fault(m, vec, m->mar);

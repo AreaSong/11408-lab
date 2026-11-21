@@ -1,0 +1,16 @@
+l1 lines 4
+l1 ways 1
+l1 block 16
+l1 mem 5
+l1 write through
+l1 alloc off
+l1 on
+asm
+.text
+ld r1, [r2]
+ld r1, [r2]
+add r3, r1, r0
+hlt
+end
+load
+run

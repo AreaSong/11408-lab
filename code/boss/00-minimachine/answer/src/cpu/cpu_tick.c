@@ -2,6 +2,7 @@
 
 #include "cpu/cpu_alu.h"
 #include "cpu/cpu_exec.h"
+#include "mem/mem_cache.h"
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -9,7 +10,8 @@
 void cpu_emit_tick(MmMachine *m) {
     int drivers = cpu_bus_drivers(m->t_sig);
     m->t_index++;
-    m->cycles++;
+    /* 命中就这一拍。缺失的主存周期加在后面，不另起微操作行。 */
+    m->cycles += 1u + (uint32_t)mem_cache_take_stall(m);
     if (drivers > 1) {
         m->bus_bad++;
     }
