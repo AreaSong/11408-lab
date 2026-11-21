@@ -33,6 +33,25 @@ static int remember(KPcb *pcb, uint32_t va, uint32_t pa) {
     return 0;
 }
 
+static void set_heap(KPcb *pcb) {
+    uint32_t top = 0x2000u;
+    int i;
+    for (i = 0; i < pcb->nmap; i++) {
+        uint32_t next;
+        if (pcb->map[i].va >= 0x40000000u) {
+            continue;
+        }
+        next = pcb->map[i].va + MMU_PAGE_BYTES;
+        if (next > top) {
+            top = next;
+        }
+    }
+    pcb->heap = top;
+    pcb->brk = top;
+    pcb->mmap_next = 0x40000000u;
+    pcb->nvma = 0;
+}
+
 /* 临时改页目录基址，建完别人的页表再改回来。TLB 里没有进程号，所以调用方切换时要刷。 */
 static int map_at(MmMachine *m, uint32_t pd, uint32_t va, uint32_t pa) {
     uint32_t saved;
@@ -121,6 +140,7 @@ static int make_init(MmMachine *m, KWorld *w) {
     m->r[7] = K_STACK_SP;
     m->psw = K_USER_PSW;
     m->sr[MM_SR_PTBR] = pcb->ptbr;
+    set_heap(pcb);
     return 0;
 }
 
@@ -166,7 +186,50 @@ int k_as_copy(MmMachine *m, KPcb *dst, const KPcb *src) {
             return -1;
         }
         dst->map[dst->nmap - 1].shared = src->map[i].shared;
+        if (src->map[i].shared && src->map[i].demand) {
+            dst->map[dst->nmap - 1].demand = 1;
+            dst->map[dst->nmap - 1].resident = 1;
+            dst->map[dst->nmap - 1].slot = src->map[i].slot;
+            dst->map[dst->nmap - 1].seq = src->map[i].seq;
+            k_demand_copied(m, pa);
+        }
     }
+    dst->heap = src->heap;
+    dst->brk = src->brk;
+    dst->mmap_next = src->mmap_next;
+    dst->nvma = src->nvma;
+    if (src->nvma > 0) {
+        memcpy(dst->vma, src->vma, sizeof(KVma) * (size_t)src->nvma);
+    }
+    return 0;
+}
+
+int k_as_plant(MmMachine *m, KPcb *pcb, uint32_t va, uint32_t pa, int shared, int demand, int seq) {
+    int i;
+    if (map_at(m, pcb->ptbr, va, pa) != 0) {
+        return -1;
+    }
+    for (i = 0; i < pcb->nmap; i++) {
+        if (pcb->map[i].va != va) {
+            continue;
+        }
+        pcb->map[i].pa = pa;
+        pcb->map[i].shared = shared;
+        pcb->map[i].demand = demand;
+        pcb->map[i].resident = 1;
+        pcb->map[i].in_swap = 0;
+        pcb->map[i].seq = seq;
+        return 0;
+    }
+    if (remember(pcb, va, pa) != 0) {
+        return -1;
+    }
+    pcb->map[pcb->nmap - 1].shared = shared;
+    pcb->map[pcb->nmap - 1].demand = demand;
+    pcb->map[pcb->nmap - 1].resident = 1;
+    pcb->map[pcb->nmap - 1].in_swap = 0;
+    pcb->map[pcb->nmap - 1].slot = -1;
+    pcb->map[pcb->nmap - 1].seq = seq;
     return 0;
 }
 
@@ -229,6 +292,7 @@ int k_as_exec(MmMachine *m, KPcb *pcb, const KImage *image) {
     pcb->r[7] = K_STACK_SP;
     pcb->pc = image->entry;
     pcb->psw = K_USER_PSW;
+    set_heap(pcb);
     return 0;
 }
 

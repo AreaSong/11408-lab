@@ -2,6 +2,7 @@
 
 #include "cpu/cpu_intr.h"
 #include "kernel/k_trap.h"
+#include "kernel/k_vm.h"
 #include "mmu/mmu_i.h"
 #include "mmu/mmu_walk.h"
 
@@ -372,7 +373,11 @@ void k_proc_drop(MmMachine *m) {
     KWorld *w;
     int i;
     int j;
-    if (m == NULL || m->kworld == NULL) {
+    if (m == NULL) {
+        return;
+    }
+    k_demand_off(m);
+    if (m->kworld == NULL) {
         return;
     }
     w = m->kworld;

@@ -1,0 +1,21 @@
+proc on
+demand on 1 fifo
+asm
+        .text
+        ld    r0, #12
+        ld    r1, #8192
+        syscall
+        mov   r2, r0
+        ld    r3, #11
+        st    r3, [r2]
+        addi  r2, r2, #4096
+        ld    r3, #22
+        st    r3, [r2]
+        subi  r2, r2, #4096
+        ld    r4, [r2]
+        mov   r1, r4
+        ld    r0, #0
+        syscall
+end
+load
+run 8000

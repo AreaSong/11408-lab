@@ -1,0 +1,13 @@
+search alphabet=1..5 len=8..12 frames=3,4 order=lex
+found len=12 refs=1 2 3 4 1 2 5 1 2 3 4 5
+fifo frames=3 faults=9
+fifo frames=4 faults=10
+lru frames=3 faults=10
+lru frames=4 faults=8
+opt frames=3 faults=7
+opt frames=4 faults=6
+clock frames=3 faults=9
+clock frames=4 faults=10
+clock2 frames=3 faults=9
+clock2 frames=4 faults=10
+note=fifo-up lru-down opt-down clock-up clock2=up

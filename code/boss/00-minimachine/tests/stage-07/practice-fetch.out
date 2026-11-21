@@ -1,0 +1,4 @@
+fetch mode=demand frames=4 ahead=0 space=6 faults=4 prefetched=0
+fetch mode=prep frames=4 ahead=1 space=6 faults=2 prefetched=2
+fetch mode=demand frames=2 ahead=0 space=6 faults=2 prefetched=0
+fetch mode=prep frames=2 ahead=1 space=6 faults=3 prefetched=1

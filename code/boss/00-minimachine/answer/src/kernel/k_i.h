@@ -16,11 +16,26 @@
 #define K_STACK_SP 0x7FFFF000u
 #define K_USER_PSW (MM_PSW_U | MM_PSW_IF | MM_PSW_PG)
 
+struct KDemand;
+
+typedef struct {
+    uint32_t start;
+    uint32_t end;
+    int share;
+} KVma;
+
 typedef struct {
     uint32_t va;
     uint32_t pa;
     int shared;
+    int demand;
+    int resident;
+    int in_swap;
+    int slot;
+    int seq;
 } KMap;
+
+#define K_VMA_MAX 4
 
 typedef struct {
     int used;
@@ -49,6 +64,11 @@ typedef struct {
     int remain;
     KMap map[K_PAGE_MAX];
     int nmap;
+    uint32_t heap;
+    uint32_t brk;
+    uint32_t mmap_next;
+    int nvma;
+    KVma vma[K_VMA_MAX];
 } KPcb;
 
 typedef struct {
@@ -77,12 +97,16 @@ struct KWorld {
     KImage image[K_IMAGE_MAX];
     int nimage;
     KSemSlot sem[K_SEM_SLOTS];
+    struct KDemand *demand;
 };
 
 int k_sem_syscall(MmMachine *m, KPcb *pcb, uint32_t num, uint32_t arg);
 
 int k_as_setup(MmMachine *m, KWorld *w);
 int k_as_copy(MmMachine *m, KPcb *dst, const KPcb *src);
+int k_as_plant(MmMachine *m, KPcb *pcb, uint32_t va, uint32_t pa, int shared, int demand, int seq);
+void k_demand_copied(MmMachine *m, uint32_t pa);
+int k_vm_syscall(MmMachine *m, KPcb *pcb, uint32_t num, uint32_t a, uint32_t b);
 int k_as_exec(MmMachine *m, KPcb *pcb, const KImage *image);
 int k_timer_push(KWorld *w, uint32_t when, int pid);
 int k_timer_due(KWorld *w, uint32_t now, int *pid);

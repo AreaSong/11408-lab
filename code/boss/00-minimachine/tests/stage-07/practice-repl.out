@@ -1,0 +1,8 @@
+repl algo=fifo frames=3 faults=15 replaces=12 rate=15/20 last=2
+repl algo=lru frames=4 faults=9 replaces=5 rate=9/12 last=5
+repl algo=lru frames=4 faults=8 replaces=4 rate=8/14 last=2
+repl algo=lru frames=3 faults=6 replaces=6 rate=6/13 last=-1
+set=0 2 3 6
+size=4
+hand algo=clock victim=1 passes=0 hand=2 abit0=0
+hand algo=clock2 victim=1 passes=1 hand=2 abit0=1

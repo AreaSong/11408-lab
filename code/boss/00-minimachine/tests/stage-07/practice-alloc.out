@@ -1,0 +1,39 @@
+alloc policy=fixed-local frames=5 nproc=2 pool=1
+ref pid=1 page=7 result=fault cap=2 pool=1 grew=no victim=- from=- faults=1 replaces=0
+ref pid=1 page=8 result=fault cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+ref pid=0 page=1 result=fault cap=2 pool=1 grew=no victim=- from=- faults=1 replaces=0
+ref pid=0 page=2 result=fault cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+ref pid=0 page=3 result=fault cap=2 pool=1 grew=no victim=1 from=0 faults=3 replaces=1
+ref pid=0 page=1 result=fault cap=2 pool=1 grew=no victim=2 from=0 faults=4 replaces=2
+ref pid=0 page=4 result=fault cap=2 pool=1 grew=no victim=3 from=0 faults=5 replaces=3
+ref pid=1 page=7 result=hit cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+summary policy=fixed-local frames=5 pool=1
+proc pid=0 faults=5 replaces=3 cap=2
+proc pid=1 faults=2 replaces=0 cap=2
+total-faults=7 total-replaces=3
+alloc policy=var-global frames=5 nproc=2 pool=1
+ref pid=1 page=7 result=fault cap=2 pool=1 grew=no victim=- from=- faults=1 replaces=0
+ref pid=1 page=8 result=fault cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+ref pid=0 page=1 result=fault cap=2 pool=1 grew=no victim=- from=- faults=1 replaces=0
+ref pid=0 page=2 result=fault cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+ref pid=0 page=3 result=fault cap=3 pool=0 grew=yes victim=- from=- faults=3 replaces=0
+ref pid=0 page=1 result=hit cap=3 pool=0 grew=no victim=- from=- faults=3 replaces=0
+ref pid=0 page=4 result=fault cap=4 pool=0 grew=no victim=7 from=1 faults=4 replaces=1
+ref pid=1 page=7 result=fault cap=1 pool=0 grew=no victim=8 from=1 faults=3 replaces=1
+summary policy=var-global frames=5 pool=0
+proc pid=0 faults=4 replaces=1 cap=4
+proc pid=1 faults=3 replaces=1 cap=1
+total-faults=7 total-replaces=2
+alloc policy=var-local frames=5 nproc=2 pool=1
+ref pid=1 page=7 result=fault cap=2 pool=1 grew=no victim=- from=- faults=1 replaces=0
+ref pid=1 page=8 result=fault cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+ref pid=0 page=1 result=fault cap=2 pool=1 grew=no victim=- from=- faults=1 replaces=0
+ref pid=0 page=2 result=fault cap=2 pool=1 grew=no victim=- from=- faults=2 replaces=0
+ref pid=0 page=3 result=fault cap=3 pool=0 grew=yes victim=- from=- faults=3 replaces=0
+ref pid=0 page=1 result=hit cap=3 pool=0 grew=no victim=- from=- faults=3 replaces=0
+ref pid=0 page=4 result=fault cap=3 pool=0 grew=no victim=1 from=0 faults=4 replaces=1
+ref pid=1 page=7 result=hit cap=2 pool=0 grew=no victim=- from=- faults=2 replaces=0
+summary policy=var-local frames=5 pool=0
+proc pid=0 faults=4 replaces=1 cap=3
+proc pid=1 faults=2 replaces=0 cap=2
+total-faults=6 total-replaces=1

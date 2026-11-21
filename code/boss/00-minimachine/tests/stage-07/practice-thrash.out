@@ -1,0 +1,8 @@
+thrash algo=lru refs=24
+frames=6 faults=6 rate=6/24
+frames=5 faults=6 rate=6/24
+frames=4 faults=6 rate=6/24
+frames=3 faults=6 rate=6/24
+frames=2 faults=24 rate=24/24
+frames=1 faults=24 rate=24/24
+jump-below=3

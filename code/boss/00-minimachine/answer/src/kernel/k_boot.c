@@ -1,6 +1,7 @@
 #include "kernel/k_irq.h"
 #include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
+#include "kernel/k_vm.h"
 
 #include "common/mm_internal.h"
 #include "cpu/cpu_intr.h"
@@ -17,6 +18,10 @@ static int k_dispatch(MmMachine *m, int vec) {
     }
     if (vec >= 16) {
         return k_irq(m, vec);
+    }
+    if (vec == MM_EX_PAGE && k_demand_active(m) && k_demand_fault(m) == 0) {
+        cpu_event(m, "服务 执行者=操作系统 调用=缺页 结果=装入后重新执行");
+        return 0;
     }
     if (k_proc_live(m)) {
         return k_proc_fault(m, vec);

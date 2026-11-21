@@ -60,6 +60,9 @@ typedef struct {
     uint32_t fix_va;
     uint32_t fix_pa;
     int proc;
+    int demand;
+    int demand_frames;
+    char demand_algo[8];
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -87,5 +90,8 @@ int mm_shell_proc(char *line, FILE *in, FILE *out, MmMachine **machine, uint32_t
 
 /* 阶段 06 的信号量、银行家和死锁命令。banker、reduce、recover、sem 会继续读 in，直到 end。 */
 int mm_shell_sync(char *line, FILE *in, FILE *out, MmMachine **machine);
+
+/* 阶段 07 的置换、伙伴系统、缺页和 sbrk/mmap。返回值同 mm_shell_stage。 */
+int mm_shell_vm(char *line, FILE *out, MmMachine **machine, MmShellOpt *opt);
 
 #endif

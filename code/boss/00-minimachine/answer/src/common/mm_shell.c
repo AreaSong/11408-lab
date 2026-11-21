@@ -151,6 +151,15 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         }
     }
     {
+        int vm = mm_shell_vm(s, out, machine, opt);
+        if (vm != 0) {
+            if (vm > 0 && *machine != NULL) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return vm < 0 ? -1 : 0;
+        }
+    }
+    {
         int proc = mm_shell_proc(s, in, out, machine, *mem_bytes, opt, image);
         if (proc != 0) {
             if (proc > 0 && *machine != NULL) {

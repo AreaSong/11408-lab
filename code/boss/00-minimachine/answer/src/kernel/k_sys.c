@@ -2,6 +2,7 @@
 
 #include "cpu/cpu_intr.h"
 #include "kernel/k_trap.h"
+#include "kernel/k_vm.h"
 #include "mmu/mmu_walk.h"
 
 #include <string.h>
@@ -224,6 +225,9 @@ int k_proc_syscall(MmMachine *m) {
     }
     if (num >= K_SYS_SEM_CREATE && num <= K_SYS_SEM_FREE) {
         return k_sem_syscall(m, pcb, num, a);
+    }
+    if (num == K_SYS_SBRK || num == K_SYS_MMAP) {
+        return k_vm_syscall(m, pcb, num, a, b);
     }
     cpu_event(m, "服务 执行者=操作系统 调用=未知 号=%u 返回=-1", num);
     return fail_code(m, pcb);

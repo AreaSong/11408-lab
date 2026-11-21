@@ -5,6 +5,7 @@
 #include "cpu/cpu_pipe.h"
 #include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
+#include "kernel/k_vm.h"
 #include "mem/mem_cache.h"
 #include "mmu/mmu_walk.h"
 
@@ -105,6 +106,9 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     mm_shell_mmu_apply(m, opt);
     if (opt->proc) {
         k_proc_on(m);
+        if (opt->demand && k_proc_live(m)) {
+            k_demand_on(m, opt->demand_frames, opt->demand_algo);
+        }
     }
 }
 

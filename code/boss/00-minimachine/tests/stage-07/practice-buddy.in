@@ -1,0 +1,13 @@
+buddy 16
+balloc A 3
+bfree A
+bshow
+buddy 16
+balloc A 4
+balloc B 4
+balloc C 4
+balloc D 4
+bfree B
+bfree C
+bshow
+balloc Z 100

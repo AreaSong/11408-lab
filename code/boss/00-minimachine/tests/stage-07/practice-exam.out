@@ -1,0 +1,20 @@
+exam 2014-30 answer=A note=only-fifo
+exam 2016-26 answer=A note=order-00-01-10-11
+exam 2019-14 answer=D
+exam 2012-25 answer=B
+exam 2015-30 answer=C
+exam 2025-30 answer=A note=ii-disputed
+exam 2024-27 answer=A
+exam 2011-30 answer=B note=compile-module
+vclaim fault-restart value=this-instr
+vclaim fault-next value=false
+vclaim mmap-page-disk value=disputed
+combo fixed-global legal=no
+combo fixed-local legal=yes
+origin mode=rich kind=dirty from=swap evict=swap
+origin mode=unix kind=fresh from=file evict=discard
+fields P=存在 W=可写 U=用户 A=访问 D=修改 P0=外存地址
+pfault op=read page=1 result=fault frame=0 victim=- writeback=0 restart=this
+pfault op=write page=2 result=fault frame=1 victim=- writeback=0 restart=this
+pfault op=read page=3 result=fault frame=0 victim=1 writeback=0 restart=this
+pfault op=write page=1 result=fault frame=1 victim=2 writeback=1 restart=this

@@ -139,6 +139,8 @@ struct MmMachine {
     /* 阶段 04。mmu 为 NULL 时，PG=1 仍按阶段 02：流水线数据访问直接缺页。 */
     struct Mmu *mmu;
     int mmu_stall;
+    /* 阶段 07。缺页打开后，翻译成功时用来更新 LRU。默认是空的。 */
+    void (*demand_touch)(struct MmMachine *m, uint32_t va, int writing);
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

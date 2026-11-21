@@ -320,6 +320,9 @@ static int finish(MmMachine *m, Mmu *u, MmuLine *ln, int writing, int user, MmuS
         u->pt_hits++;
     }
     write_ad(m, ln, writing);
+    if (m->demand_touch != NULL) {
+        m->demand_touch(m, out->va, writing);
+    }
     out->frame = ln->frame;
     out->pa = mmu_join(ln->frame, out->offset);
     if (ln->pte_addr != 0 && read_u32(m, ln->pte_addr, &out->pte) == 0) {
