@@ -59,6 +59,7 @@ typedef struct {
     int fix_on;
     uint32_t fix_va;
     uint32_t fix_pa;
+    int proc;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -79,5 +80,9 @@ void mm_shell_mem_apply(MmMachine *m, const MmShellOpt *opt);
 int mm_shell_calc(const char *line, FILE *out);
 int mm_shell_mmu(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
 void mm_shell_mmu_apply(MmMachine *m, const MmShellOpt *opt);
+
+/* 阶段 05 的进程和调度命令。返回值同 mm_shell_stage。sched 会继续读 in，直到 end。 */
+int mm_shell_proc(char *line, FILE *in, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt,
+                  struct AsmImage **image);
 
 #endif

@@ -1,4 +1,5 @@
 #include "kernel/k_frame.h"
+#include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
 
 #include "cpu/cpu_intr.h"
@@ -53,6 +54,9 @@ static void run_body(MmMachine *m, int irq) {
 int k_irq(MmMachine *m, int vec) {
     int irq = vec - 16;
     uint32_t epc = mm_sr(m, MM_SR_EPC);
+    if (irq == 0 && k_proc_live(m) && !m->pipe_on) {
+        return k_proc_timer(m);
+    }
     uint32_t epsw = mm_sr(m, MM_SR_EPSW);
     uint32_t imr = cpu_imr(m);
     uint32_t saved_epc = 0;

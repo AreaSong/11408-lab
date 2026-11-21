@@ -3,6 +3,7 @@
 #include "common/mm_internal.h"
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
+#include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
 #include "mem/mem_cache.h"
 #include "mmu/mmu_walk.h"
@@ -102,6 +103,9 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     }
     mm_shell_mem_apply(m, opt);
     mm_shell_mmu_apply(m, opt);
+    if (opt->proc) {
+        k_proc_on(m);
+    }
 }
 
 void mm_shell_bind(MmMachine *m, FILE *out, const MmShellOpt *opt, int trace_on) {

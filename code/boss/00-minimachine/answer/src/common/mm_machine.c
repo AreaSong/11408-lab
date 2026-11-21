@@ -2,6 +2,7 @@
 #include "asm/asm_image.h"
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
+#include "kernel/k_proc.h"
 #include "mem/mem_cache.h"
 #include "mmu/mmu_walk.h"
 
@@ -9,6 +10,7 @@
 #include <string.h>
 
 static void clear_arch(MmMachine *m) {
+    k_proc_drop(m);
     mem_cache_drop(m);
     mmu_drop(m);
     memset(m->r, 0, sizeof m->r);
@@ -65,6 +67,7 @@ void mm_destroy(MmMachine *m) {
     if (m == NULL) {
         return;
     }
+    k_proc_drop(m);
     mem_cache_drop(m);
     mmu_drop(m);
     free(m->mem);

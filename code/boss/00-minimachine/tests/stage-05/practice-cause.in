@@ -1,0 +1,8 @@
+trans running blocked
+trans ready blocked
+trans blocked running
+trans new ready
+cause rr slice
+cause fcfs slice
+cause srtn arrive
+ctx

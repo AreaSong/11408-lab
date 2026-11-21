@@ -1,4 +1,5 @@
 #include "kernel/k_irq.h"
+#include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
 
 #include "common/mm_internal.h"
@@ -16,6 +17,9 @@ static int k_dispatch(MmMachine *m, int vec) {
     }
     if (vec >= 16) {
         return k_irq(m, vec);
+    }
+    if (k_proc_live(m)) {
+        return k_proc_fault(m, vec);
     }
     if (vec == MM_EX_BREAK || vec == MM_EX_OVF) {
         cpu_event(m, "服务 执行者=操作系统 调用=%s 结果=返回下一条", mm_cause_name(vec));

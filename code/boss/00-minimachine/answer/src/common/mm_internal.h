@@ -5,6 +5,8 @@
 #include "cpu/cpu_decode.h"
 #include "cpu/cpu_intr.h"
 
+struct KWorld;
+
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -79,6 +81,8 @@ struct MmMachine {
     MmMemHook hook_write;
     CpuHandler handler[32];
     MmQuietFn after_intr;
+    MmQuietFn k_step;
+    struct KWorld *kworld;
     FILE *event;
     uint16_t irq_pending;
     uint16_t irq_service;

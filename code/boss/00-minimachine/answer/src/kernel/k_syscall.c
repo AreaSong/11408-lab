@@ -1,7 +1,23 @@
 #include "kernel/k_frame.h"
+#include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
 
 #include "cpu/cpu_intr.h"
+#include "mmu/mmu_walk.h"
+
+static int load_byte(MmMachine *m, uint32_t addr, uint32_t *byte) {
+    if (k_proc_live(m)) {
+        return mmu_mem_read(m, addr, 1, byte);
+    }
+    return mm_read(m, addr, 1, byte);
+}
+
+static int store_byte(MmMachine *m, uint32_t addr, uint32_t byte) {
+    if (k_proc_live(m)) {
+        return mmu_mem_write(m, addr, 1, byte);
+    }
+    return mm_write(m, addr, 1, byte);
+}
 
 static int copy_out(MmMachine *m, uint32_t addr, int n) {
     int i;
@@ -10,7 +26,7 @@ static int copy_out(MmMachine *m, uint32_t addr, int n) {
     }
     for (i = 0; i < n; i++) {
         uint32_t byte = 0;
-        if (mm_read(m, addr + (uint32_t)i, 1, &byte) != 0) {
+        if (load_byte(m, addr + (uint32_t)i, &byte) != 0) {
             return -1;
         }
         m->con_out[m->con_len++] = (char)byte;
@@ -33,7 +49,7 @@ static int copy_in(MmMachine *m, uint32_t addr, int n) {
         n = have;
     }
     for (i = 0; i < n; i++) {
-        if (mm_write(m, addr + (uint32_t)i, 1, (uint8_t)m->con_in[m->con_in_pos++]) != 0) {
+        if (store_byte(m, addr + (uint32_t)i, (uint8_t)m->con_in[m->con_in_pos++]) != 0) {
             return -1;
         }
     }
@@ -87,10 +103,36 @@ static void restore_regs(MmMachine *m, uint32_t ret) {
     m->r[0] = ret;
 }
 
+int k_con_io(MmMachine *m, uint32_t num, uint32_t fd, uint32_t addr, uint32_t len) {
+    uint32_t saved[4];
+    int ret;
+    int i;
+    for (i = 0; i < 4; i++) {
+        saved[i] = m->r[i];
+    }
+    m->r[1] = fd;
+    m->r[2] = addr;
+    m->r[3] = len;
+    if (num == K_SYS_WRITE) {
+        ret = do_write(m);
+    } else if (num == K_SYS_READ) {
+        ret = do_read(m);
+    } else {
+        ret = -1;
+    }
+    for (i = 0; i < 4; i++) {
+        m->r[i] = saved[i];
+    }
+    return ret;
+}
+
 int k_syscall(MmMachine *m) {
     uint32_t saved[8];
     uint32_t num;
     int ret = -1;
+    if (k_proc_live(m)) {
+        return k_proc_syscall(m);
+    }
     if (save_regs(m, saved) != 0) {
         m->r[0] = (uint32_t)-1;
         return 1;

@@ -167,6 +167,9 @@ int cpu_step(MmMachine *m) {
     }
     had = execute_insn(m, &trap);
     settle(m, had, trap);
+    if (m->k_step != NULL && !m->halted && m->irq_depth == 0 && m->deliver_depth == 0) {
+        m->k_step(m);
+    }
     return (m->halted && !m->asleep) ? 1 : 0;
 }
 
