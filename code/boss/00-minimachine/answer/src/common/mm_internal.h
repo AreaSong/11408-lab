@@ -149,6 +149,11 @@ struct MmMachine {
     struct DevCtl *dev;
     void (*after_mem)(struct MmMachine *m);
     void (*after_out)(struct MmMachine *m, uint32_t port);
+    /* 阶段 10。NULL 时 50H 仍是普通端口，不偷周期，也不挂 IRQ2。 */
+    struct NetCtl *net;
+    void (*net_kick)(struct MmMachine *m, uint32_t port);
+    void (*net_mem)(struct MmMachine *m);
+    void (*net_bind)(struct MmMachine *m);
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

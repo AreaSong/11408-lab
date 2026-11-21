@@ -1,0 +1,3 @@
+stp keep=1-2,2-3 drop=1-3
+stp order=1-2,2-3 drop=1-3
+flood 0,1,2,3

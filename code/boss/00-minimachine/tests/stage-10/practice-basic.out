@@ -1,0 +1,3 @@
+delay tx=0.80 ms prop=5 ms total=5.80 ms rtt=10 ms bdp=50000 bit
+util 40%
+goodput 98 Mbps

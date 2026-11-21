@@ -54,6 +54,10 @@ void dev_drop(MmMachine *m) {
     m->dev = NULL;
     m->after_mem = NULL;
     m->after_out = NULL;
+    /* 磁盘卸下之后，网卡还在的话要把钩子还给它。 */
+    if (m->net_bind != NULL) {
+        m->net_bind(m);
+    }
 }
 
 void dev_after_reset(MmMachine *m) {
@@ -210,7 +214,13 @@ int dev_mmio(MmMachine *m, uint32_t addr, int size, uint32_t *data, int writing)
     return 0;
 }
 
-static void hook_mem(MmMachine *m) { (void)dev_after_mem(m); }
+static void hook_mem(MmMachine *m) {
+    (void)dev_after_mem(m);
+    /* 网卡和磁盘可以同时在偷周期。没装网卡时这个指针是空的。 */
+    if (m->net_mem != NULL) {
+        m->net_mem(m);
+    }
+}
 
 static void hook_out(MmMachine *m, uint32_t port) {
     if (port == DEV_DISK_CMD) {
@@ -223,5 +233,8 @@ static void hook_out(MmMachine *m, uint32_t port) {
     }
     if (port == DEV_PRINT_DATA) {
         (void)dev_print_byte(m, m->port[DEV_PRINT_DATA]);
+    }
+    if (m->net_kick != NULL) {
+        m->net_kick(m, port);
     }
 }

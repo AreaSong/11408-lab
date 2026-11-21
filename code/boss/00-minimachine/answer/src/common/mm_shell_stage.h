@@ -65,6 +65,7 @@ typedef struct {
     char demand_algo[8];
     int fs;
     int io_on;
+    int link_on;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -102,5 +103,8 @@ int mm_shell_fs(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, 
 /* 阶段 09 的总线计算和 I/O 命令。返回值同 mm_shell_stage。 */
 int mm_shell_bus(char *line, FILE *out);
 int mm_shell_io(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
+
+/* 阶段 10 的链路、滑动窗口、交换机和网卡。返回值同 mm_shell_stage。 */
+int mm_shell_link(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
 
 #endif

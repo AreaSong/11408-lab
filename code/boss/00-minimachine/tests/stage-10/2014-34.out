@@ -1,0 +1,2 @@
+sw data fwd=2,3 got=b1,c1
+sw ack fwd=1 got=a1

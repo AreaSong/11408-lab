@@ -3,6 +3,7 @@
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
 #include "dev/dev_port.h"
+#include "net/net_nic.h"
 #include "kernel/k_file.h"
 #include "kernel/k_proc.h"
 #include "mem/mem_cache.h"
@@ -45,6 +46,7 @@ static void clear_arch(MmMachine *m) {
     cpu_intr_reset(m);
     cpu_pipe_reset(m);
     dev_after_reset(m);
+    net_after_reset(m);
 }
 
 MmMachine *mm_create(uint32_t mem_bytes) {
@@ -72,6 +74,7 @@ void mm_destroy(MmMachine *m) {
         return;
     }
     dev_drop(m);
+    net_drop(m);
     k_proc_drop(m);
     k_fs_drop(m);
     mem_cache_drop(m);

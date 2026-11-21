@@ -1,0 +1,5 @@
+link on
+nic put ok
+nic tx ok
+nic pump ok
+nic left=0 irq2=1 crc=ok stat=6

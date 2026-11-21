@@ -1,0 +1,1 @@
+lan tx=0.80 ms prop=5 ms rtt=10 ms bdp=50000 bit util=40% fwd=2,3 got=b1,c1

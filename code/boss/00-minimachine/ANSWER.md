@@ -24,8 +24,8 @@
 | `src/mmu/` | TLB、两级页表 | 04 | co/07、os/10 |
 | `src/kernel/` | trap 与系统调用、进程调度、同步与死锁、请求分页、文件调用 | 01、05、06、07、08 | os/00、os/02~14 |
 | `src/fs/` | 磁盘模型、inode 与 FAT、VFS、固态盘、RAID | 08 | os/13、os/14、os/16 |
-| `src/dev/` | 总线、DMA、控制台、磁盘控制器、网卡、SPOOLing | 09、10 | co/13、os/15 |
-| `src/net/` | 链路与交换机、IP/ARP/NAT/路由、UDP/TCP/DNS/HTTP/SMTP | 10、11、12 | net/00~14 |
+| `src/dev/` | 总线、DMA、控制台、磁盘控制器、SPOOLing | 09 | co/13、os/15 |
+| `src/net/` | 网卡、链路与交换机、IP/ARP/NAT/路由、UDP/TCP/DNS/HTTP/SMTP | 10、11、12 | net/00~14 |
 | `src/user/` | MM32 运行库与 shell、宿主用户程序 grep/sort/zip | 13 | lib/06、lib/09、lib/19 |
 
 ## 各阶段讲解
@@ -42,7 +42,8 @@
 | 07 | [stages/07-vm/ANSWER.md](stages/07-vm/ANSWER.md) | `boss-stage-07` |
 | 08 | [stages/08-fs-disk/ANSWER.md](stages/08-fs-disk/ANSWER.md) | `boss-stage-08` |
 | 09 | [stages/09-io/ANSWER.md](stages/09-io/ANSWER.md) | `boss-stage-09` |
-| 10~13 | 待写 | `boss-stage-NN` |
+| 10 | [stages/10-link/ANSWER.md](stages/10-link/ANSWER.md) | `boss-stage-10` |
+| 11~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

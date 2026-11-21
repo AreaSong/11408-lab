@@ -23,8 +23,8 @@
 
 # 阶段 05 用于就绪队列、多级反馈队列各级（牺牲一格的循环队列，只存 PID）；阶段 10 的链路层发送窗口也用它。
 lib/04-queue cycq.h cycq.c
-# 阶段 05 用于 sleep 的定时器（小根堆，按到期时刻排）；阶段 13 的 zip 用同一关的哈夫曼编码。
-lib/09-heap-huffman-ufset heap.h heap.c huff.h huff.c
+# 阶段 05 用于 sleep 的定时器（小根堆，按到期时刻排）；阶段 10 的生成树用并查集；阶段 13 的 zip 用哈夫曼编码。
+lib/09-heap-huffman-ufset heap.h heap.c huff.h huff.c ufset.h ufset.c
 # 阶段 07 用于伙伴系统的空闲块链、LRU 的使用顺序（双链表）。
 lib/02-linked-list dlist.h dlist.c
 # 阶段 07 用于 LRU 判断页在不在（拉链散列表）。hash.c 里的 hash_insert 会调用 open_insert，要把 open.c 带上。

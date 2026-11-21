@@ -1,0 +1,6 @@
+link on
+nic put 4096 11 22 33 44
+nic bad
+nic tx 4096 4
+nic pump
+nic show

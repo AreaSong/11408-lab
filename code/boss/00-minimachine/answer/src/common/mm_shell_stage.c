@@ -1,4 +1,5 @@
 #include "common/mm_shell_stage.h"
+#include "net/net_nic.h"
 
 #include "common/mm_internal.h"
 #include "cpu/cpu_intr.h"
@@ -117,6 +118,9 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     }
     if (opt->io_on) {
         dev_on(m);
+    }
+    if (opt->link_on) {
+        net_on(m);
     }
 }
 
