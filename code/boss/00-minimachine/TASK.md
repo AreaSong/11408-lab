@@ -143,3 +143,13 @@
 | `fs mkdir` / `create` / `link` / `symlink` / `unlink` / `open` / `read` | 08 | 目录、两种链接、两级打开文件表。`open` 之后按 fd 读不再查目录 |
 | `fs mount` / `kind` / `index` / `save` | 08 | 把 FAT 卷挂到 `/mnt`，B+ 树索引，把磁盘镜像写到宿主文件 |
 | `fclaim` | 08 | 打开文件、位图、硬链接能不能跨卷，回答 true 或 false |
+| `bw` / `txn` | 09 | 总线带宽，以及一次事务的时间。带宽只算数据阶段 |
+| `wire` | 09 | 同步定时，以及异步全互锁、半互锁、不互锁的握手 |
+| `daisy` | 09 | 链式查询。下标 0 离仲裁器最近 |
+| `share` / `steal` / `serial` / `task` | 09 | 查询、中断、DMA 占 CPU 的比例，以及 DMA 请求次数 |
+| `buf` / `ring` / `pool` | 09 | 单缓冲、双缓冲、循环缓冲、缓冲池 |
+| `dev` / `spool` / `layer` | 09 | 四张分配表、输出井、一次 read 穿过的四层 |
+| `iexam` / `iclaim` | 09 | 总线和 I/O 的选择题、判断句。不叫 `exam`，那个词是阶段 07 的 |
+| `io on` / `off` | 09 | 接上磁盘、打印机和控制台的映射地址。默认关 |
+| `disk` / `dma` / `print` / `mmio` | 09 | 填磁盘块、启动周期挪用、打印机、写控制台映射地址 |
+| `chan demo` | 09 | 选开：通道程序自己搬完，最后才发一次中断 |

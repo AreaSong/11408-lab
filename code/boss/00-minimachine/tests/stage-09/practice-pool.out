@@ -1,0 +1,5 @@
+pool cap=2 free=2
+pool get id=0 free=1
+pool get id=1 free=0
+result=empty
+pool put id=0 free=1

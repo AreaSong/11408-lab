@@ -1,0 +1,11 @@
+iexam 2009-20 answer=B
+iexam 2012-26 answer=A
+iexam 2016-31 answer=D
+iexam 2017-32 answer=B
+iexam 2017-32 order=2,3,1,4
+iexam 2024-22 answer=C
+iexam 2025-20 answer=A
+iclaim spool-needs-disk value=true
+iclaim spool-user-moves value=false
+iclaim dma-before-cpu value=true
+iclaim logic-name value=true

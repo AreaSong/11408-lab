@@ -1,0 +1,1 @@
+txn mode=burst time=50 ns avg=320 MB/s peak=400 MB/s

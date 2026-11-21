@@ -1,0 +1,2 @@
+serial bits=10 per_s=2000
+task total=25070000 cpu=90000

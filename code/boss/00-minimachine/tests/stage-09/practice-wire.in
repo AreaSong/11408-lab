@@ -1,0 +1,4 @@
+wire sync
+wire full
+wire half
+wire loose

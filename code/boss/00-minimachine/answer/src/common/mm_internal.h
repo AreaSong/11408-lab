@@ -7,6 +7,7 @@
 
 struct KWorld;
 struct FsNs;
+struct DevCtl;
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -144,6 +145,10 @@ struct MmMachine {
     void (*demand_touch)(struct MmMachine *m, uint32_t va, int writing);
     /* 阶段 08。NULL 时没有文件系统，read/write 仍只认控制台。 */
     struct FsNs *fsworld;
+    /* 阶段 09。NULL 时端口只是数组，访存周期也不做周期挪用。 */
+    struct DevCtl *dev;
+    void (*after_mem)(struct MmMachine *m);
+    void (*after_out)(struct MmMachine *m, uint32_t port);
 };
 
 void mm_err(char *err, size_t cap, const char *fmt, ...);

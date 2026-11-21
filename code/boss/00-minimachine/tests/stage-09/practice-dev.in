@@ -1,0 +1,13 @@
+dev add block d0 c0 ch0
+dev add block d1 c0 ch0
+dev proc A
+dev proc B
+dev proc C
+dev map A disk d0
+dev map B disk d1
+dev map C disk d0
+dev ask A disk
+dev ask B disk
+dev ask C disk
+dev done A
+dev show

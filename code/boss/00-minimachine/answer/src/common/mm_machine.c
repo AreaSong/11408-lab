@@ -2,6 +2,7 @@
 #include "asm/asm_image.h"
 #include "cpu/cpu_intr.h"
 #include "cpu/cpu_pipe.h"
+#include "dev/dev_port.h"
 #include "kernel/k_file.h"
 #include "kernel/k_proc.h"
 #include "mem/mem_cache.h"
@@ -43,6 +44,7 @@ static void clear_arch(MmMachine *m) {
     }
     cpu_intr_reset(m);
     cpu_pipe_reset(m);
+    dev_after_reset(m);
 }
 
 MmMachine *mm_create(uint32_t mem_bytes) {
@@ -69,6 +71,7 @@ void mm_destroy(MmMachine *m) {
     if (m == NULL) {
         return;
     }
+    dev_drop(m);
     k_proc_drop(m);
     k_fs_drop(m);
     mem_cache_drop(m);
@@ -114,13 +117,20 @@ static int bad_size(int size) {
 int mm_raw_read(MmMachine *m, uint32_t addr, int size, uint32_t *data) {
     uint32_t value = 0;
     int i;
-    if (bad_size(size) || addr > m->mem_size || size > (int)(m->mem_size - addr)) {
+    if (bad_size(size)) {
         m->badva = addr;
         return MM_EX_MCHK;
     }
     if (size == 4 && (addr & 3u) != 0) {
         m->badva = addr;
         return MM_EX_ALIGN;
+    }
+    if (m->dev != NULL && dev_mmio(m, addr, size, data, 0) == 0) {
+        return 0;
+    }
+    if (addr > m->mem_size || size > (int)(m->mem_size - addr)) {
+        m->badva = addr;
+        return MM_EX_MCHK;
     }
     for (i = 0; i < size; i++) {
         value |= (uint32_t)m->mem[addr + (uint32_t)i] << (8 * i);
@@ -131,13 +141,20 @@ int mm_raw_read(MmMachine *m, uint32_t addr, int size, uint32_t *data) {
 
 int mm_raw_write(MmMachine *m, uint32_t addr, int size, uint32_t data) {
     int i;
-    if (bad_size(size) || addr > m->mem_size || size > (int)(m->mem_size - addr)) {
+    if (bad_size(size)) {
         m->badva = addr;
         return MM_EX_MCHK;
     }
     if (size == 4 && (addr & 3u) != 0) {
         m->badva = addr;
         return MM_EX_ALIGN;
+    }
+    if (m->dev != NULL && dev_mmio(m, addr, size, &data, 1) == 0) {
+        return 0;
+    }
+    if (addr > m->mem_size || size > (int)(m->mem_size - addr)) {
+        m->badva = addr;
+        return MM_EX_MCHK;
     }
     for (i = 0; i < size; i++) {
         m->mem[addr + (uint32_t)i] = (uint8_t)((data >> (8 * i)) & 0xffu);

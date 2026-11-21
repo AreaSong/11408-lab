@@ -7,22 +7,31 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
+
+static int mem_cycle(const MmMachine *m) {
+    return strstr(m->t_sig, "MemR") != NULL || strstr(m->t_sig, "MemW") != NULL;
+}
 
 void cpu_emit_tick(MmMachine *m) {
     int drivers = cpu_bus_drivers(m->t_sig);
+    int memory = mem_cycle(m);
     m->t_index++;
     /* 命中就这一拍。缺失的主存周期加在后面，不另起微操作行。 */
     m->cycles += 1u + (uint32_t)mem_cache_take_stall(m) + (uint32_t)mmu_take_stall(m);
     if (drivers > 1) {
         m->bus_bad++;
     }
-    if (m->trace == NULL) {
-        return;
+    if (m->trace != NULL) {
+        fprintf(m->trace, "%s T%d %s | %s | %s | 内总线驱动 %d 个\n", m->t_stage, m->t_index, m->t_func,
+                m->t_detail, m->t_sig, drivers);
+        if (drivers > 1) {
+            fprintf(m->trace, "冲突：同一时钟周期只允许一个部件向内总线输出\n");
+        }
     }
-    fprintf(m->trace, "%s T%d %s | %s | %s | 内总线驱动 %d 个\n", m->t_stage, m->t_index, m->t_func,
-            m->t_detail, m->t_sig, drivers);
-    if (drivers > 1) {
-        fprintf(m->trace, "冲突：同一时钟周期只允许一个部件向内总线输出\n");
+    /* 周期挪用发生在这个存取周期结束之后。没装 DMA 时指针是空的，trace 不变。 */
+    if (memory && m->after_mem != NULL) {
+        m->after_mem(m);
     }
 }
 
@@ -347,6 +356,9 @@ static int tick_ctl(MmMachine *m, int kind) {
         m->port[in->imm] = m->r[in->rs];
         if (in->imm == 0x70) {
             cpu_eoi(m, (int)m->r[in->rs]);
+        }
+        if (m->after_out != NULL) {
+            m->after_out(m, in->imm);
         }
         set_sig(m, "RSout IOin");
         set_func(m, "r%d->端口%u", in->rs, in->imm);

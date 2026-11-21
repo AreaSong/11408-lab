@@ -95,6 +95,9 @@ static void fetch(MmMachine *m, PipeSlot *s) {
         remember(m, s);
         return;
     }
+    if (m->after_mem != NULL) {
+        m->after_mem(m);
+    }
     cpu_decode(word, &s->in);
     pipe_classify(s);
     if (s->fault < 0 && cpu_is_privileged(s->in.op) && (m->psw & MM_PSW_U) != 0) {

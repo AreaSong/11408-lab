@@ -41,7 +41,8 @@
 | 06 | [stages/06-sync/ANSWER.md](stages/06-sync/ANSWER.md) | `boss-stage-06` |
 | 07 | [stages/07-vm/ANSWER.md](stages/07-vm/ANSWER.md) | `boss-stage-07` |
 | 08 | [stages/08-fs-disk/ANSWER.md](stages/08-fs-disk/ANSWER.md) | `boss-stage-08` |
-| 09~13 | 待写 | `boss-stage-NN` |
+| 09 | [stages/09-io/ANSWER.md](stages/09-io/ANSWER.md) | `boss-stage-09` |
+| 10~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

@@ -1,0 +1,38 @@
+add device=d0 type=block ctrl=c0 chan=ch0
+add device=d1 type=block ctrl=c0 chan=ch0
+proc name=A
+proc name=B
+proc name=C
+map p=A logic=disk phys=d0
+map p=B logic=disk phys=d1
+map p=C logic=disk phys=d0
+ask p=A logic=disk phys=d0
+grant p=A device=d0
+grant p=A controller=c0
+grant p=A channel=ch0
+state p=A stage=io
+ask p=B logic=disk phys=d1
+grant p=B device=d1
+block p=B level=controller queue=c0
+ask p=C logic=disk phys=d0
+block p=C level=device queue=d0
+done p=A
+free p=A channel=ch0
+free p=A controller=c0
+free p=A device=d0
+grant p=B controller=c0
+grant p=B channel=ch0
+state p=B stage=io
+grant p=C device=d0
+block p=C level=controller queue=c0
+sdt devices=2 controllers=1 channels=1 procs=3
+dct name=d0 type=block ctrl=c0 owner=C stage=wait-ctrl wait=-
+dct name=d1 type=block ctrl=c0 owner=B stage=io wait=-
+coct name=c0 chan=ch0 owner=B stage=io wait=C
+chct name=ch0 owner=B stage=io wait=-
+proc name=A stage=free device=- ctrl=- chan=-
+lut p=A logic=disk phys=d0
+proc name=B stage=io device=d1 ctrl=c0 chan=ch0
+lut p=B logic=disk phys=d1
+proc name=C stage=wait-ctrl device=d0 ctrl=c0 chan=ch0
+lut p=C logic=disk phys=d0

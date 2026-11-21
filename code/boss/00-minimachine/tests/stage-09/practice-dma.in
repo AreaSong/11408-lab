@@ -1,0 +1,14 @@
+asm
+.text
+main:   nop
+        nop
+        hlt
+end
+load
+io on
+disk fill 0 17 34 51 68 85 102 119 136
+dma arm 0 8192 8 to
+trace on
+run 2
+dma show
+dmem 8192 2

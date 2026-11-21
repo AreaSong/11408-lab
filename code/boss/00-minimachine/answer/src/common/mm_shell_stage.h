@@ -64,6 +64,7 @@ typedef struct {
     int demand_frames;
     char demand_algo[8];
     int fs;
+    int io_on;
 } MmShellOpt;
 
 void mm_shell_opt_init(MmShellOpt *opt);
@@ -97,5 +98,9 @@ int mm_shell_vm(char *line, FILE *out, MmMachine **machine, MmShellOpt *opt);
 
 /* 阶段 08 的磁盘、文件系统命令。返回值同 mm_shell_stage。 */
 int mm_shell_fs(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
+
+/* 阶段 09 的总线计算和 I/O 命令。返回值同 mm_shell_stage。 */
+int mm_shell_bus(char *line, FILE *out);
+int mm_shell_io(char *line, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt);
 
 #endif

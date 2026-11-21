@@ -5,6 +5,7 @@
 #include "cpu/cpu_pipe.h"
 #include "kernel/k_proc.h"
 #include "kernel/k_trap.h"
+#include "dev/dev_port.h"
 #include "kernel/k_file.h"
 #include "kernel/k_vm.h"
 #include "mem/mem_cache.h"
@@ -113,6 +114,9 @@ void mm_shell_apply(MmMachine *m, const MmShellOpt *opt) {
     }
     if (opt->fs) {
         k_fs_on(m);
+    }
+    if (opt->io_on) {
+        dev_on(m);
     }
 }
 

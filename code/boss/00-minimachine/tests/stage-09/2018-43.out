@@ -1,0 +1,3 @@
+share kind=query pct=4% gap=2 us
+share kind=fit result=不能 pct=800%
+share kind=dma pct=4%

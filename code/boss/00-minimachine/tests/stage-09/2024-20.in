@@ -1,0 +1,2 @@
+bw 420 MHz 1 2 64 1 1
+txn burst 420 MHz 1 2 4 0 ns 64 64

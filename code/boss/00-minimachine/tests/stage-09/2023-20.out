@@ -1,0 +1,1 @@
+txn mode=each time=32 ns avg=1 GB/s peak=8 GB/s

@@ -142,6 +142,21 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int bus = mm_shell_bus(s, out);
+        if (bus != 0) {
+            return bus < 0 ? -1 : 0;
+        }
+    }
+    {
+        int io = mm_shell_io(s, out, machine, *mem_bytes, opt);
+        if (io != 0) {
+            if (io > 0 && *machine != NULL) {
+                mm_shell_bind(*machine, out, opt, *trace_on);
+            }
+            return io < 0 ? -1 : 0;
+        }
+    }
+    {
         int fs = mm_shell_fs(s, out, machine, *mem_bytes, opt);
         if (fs != 0) {
             if (fs > 0 && *machine != NULL) {

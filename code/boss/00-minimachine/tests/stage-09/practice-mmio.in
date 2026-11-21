@@ -1,0 +1,7 @@
+io on
+mmio A
+mmio 66
+conout
+print byte 65
+print done
+print byte 66

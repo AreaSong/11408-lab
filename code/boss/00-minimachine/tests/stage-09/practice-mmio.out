@@ -1,0 +1,7 @@
+io on
+mmio byte=65
+mmio byte=66
+控制台 AB
+print byte=65 ready=0
+print done irq4=1
+print byte=66 ready=0

@@ -1,0 +1,4 @@
+layer n=1 name=user duty=read logic=disk
+layer n=2 name=independent duty=map phys=d0 buffer=system
+layer n=3 name=driver duty=device-command chs=driver
+layer n=4 name=interrupt duty=wake eoi=cpu-to-controller

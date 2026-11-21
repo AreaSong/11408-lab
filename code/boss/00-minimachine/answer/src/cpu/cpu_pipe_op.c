@@ -316,6 +316,9 @@ void pipe_work_mem(MmMachine *m, PipeSlot *s) {
         if (s->in.imm == 0x70u) {
             cpu_eoi(m, (int)m->r[s->memr]);
         }
+        if (m->after_out != NULL) {
+            m->after_out(m, s->in.imm);
+        }
         return;
     }
     if (!s->uses_mem) {
@@ -323,9 +326,12 @@ void pipe_work_mem(MmMachine *m, PipeSlot *s) {
     }
     if (s->in.op == MM_OP_ST || s->in.op == MM_OP_STB || s->in.op == MM_OP_XCHG || s->in.op == MM_OP_TSL) {
         mem_store(m, s);
-        return;
+    } else {
+        mem_load(m, s);
     }
-    mem_load(m, s);
+    if (s->fault < 0 && m->after_mem != NULL) {
+        m->after_mem(m);
+    }
 }
 
 void pipe_work_wb(MmMachine *m, const PipeSlot *s) {

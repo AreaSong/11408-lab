@@ -1,0 +1,3 @@
+single avg=14 total=34 sim=34
+block=1 buf=0 in=0-10 move=10-14 cpu=14-20
+block=2 buf=0 in=14-24 move=24-28 cpu=28-34
