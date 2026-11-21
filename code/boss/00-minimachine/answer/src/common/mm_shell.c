@@ -142,6 +142,12 @@ static int one_command(char *line, FILE *in, FILE *out, MmMachine **machine, Asm
         return 0;
     }
     {
+        int show = mm_shell_show(s, out, machine, *mem_bytes, opt);
+        if (show != 0) {
+            return show < 0 ? -1 : 0;
+        }
+    }
+    {
         int app = mm_shell_app(s, out, machine, opt);
         if (app != 0) {
             return app < 0 ? -1 : 0;

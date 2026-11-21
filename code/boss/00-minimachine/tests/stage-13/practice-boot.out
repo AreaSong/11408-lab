@@ -1,0 +1,1 @@
+boot magic=MMFS kernel=1 root=/ init=1 idle=0 shell=1

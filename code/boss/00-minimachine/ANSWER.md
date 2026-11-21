@@ -45,7 +45,7 @@
 | 10 | [stages/10-link/ANSWER.md](stages/10-link/ANSWER.md) | `boss-stage-10` |
 | 11 | [stages/11-ip/ANSWER.md](stages/11-ip/ANSWER.md) | `boss-stage-11` |
 | 12 | [stages/12-transport-app/ANSWER.md](stages/12-transport-app/ANSWER.md) | `boss-stage-12` |
-| 13 | 待写 | `boss-stage-13` |
+| 13 | [stages/13-showcase/ANSWER.md](stages/13-showcase/ANSWER.md) | `boss-stage-13` |
 
 ## 回归变更记录
 

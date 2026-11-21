@@ -1,0 +1,20 @@
+shell on
+ok
+hi
+ok
+a b
+hi
+ok
+blocks=23 inodes=29
+abaabaabcabaabc
+host=grep kmp pos=3 compares=10
+sh jobs cmd=2 pipe=1 redir=1 fork=2 exec=2 wait=2
+aba
+1 14 15 29 30 38 39 46 49 51 61
+host=sort runs=3 first=4 passes=1 gen=22 io=22 files=3
+39 46 49 51
+host=zip wpl=3 round=ok bits=101
+who=10.0.0.2 same=1
+rtt=2 mode=nonpersist
+a=SMTP b=SMTP c=POP3 letter=D
+shell off

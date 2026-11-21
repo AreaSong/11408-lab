@@ -1,0 +1,20 @@
+shell on
+sh mkdir /d
+sh echo hi > /d/a
+sh cat /d/a
+sh ln /d/a /d/b
+sh ls /d
+sh cat /d/b
+sh rm /d/b
+sh df
+sh echo abaabaabcabaabc | grep abaabc
+sh jobs cat /d/a | grep a > /d/c
+sh echo aba > /d/c
+sh cat /d/c
+sh echo 51 49 39 46 38 29 14 61 15 30 1 | sort 3
+sh cat /s/r0
+sh echo aba | zip
+sh ping
+sh curl
+sh mail
+shell off
