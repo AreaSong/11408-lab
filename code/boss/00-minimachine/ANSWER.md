@@ -38,7 +38,8 @@
 | 03 | [stages/03-memory/ANSWER.md](stages/03-memory/ANSWER.md) | `boss-stage-03` |
 | 04 | [stages/04-mmu/ANSWER.md](stages/04-mmu/ANSWER.md) | `boss-stage-04` |
 | 05 | [stages/05-process/ANSWER.md](stages/05-process/ANSWER.md) | `boss-stage-05` |
-| 06~13 | 待写 | `boss-stage-NN` |
+| 06 | [stages/06-sync/ANSWER.md](stages/06-sync/ANSWER.md) | `boss-stage-06` |
+| 07~13 | 待写 | `boss-stage-NN` |
 
 ## 回归变更记录
 

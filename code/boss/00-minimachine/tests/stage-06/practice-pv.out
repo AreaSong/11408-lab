@@ -1,0 +1,21 @@
+kind=pc
+empty=1 full=0 mutex=1
+producer=P(empty) P(mutex) put V(mutex) V(full)
+consumer=P(full) P(mutex) get V(mutex) V(empty)
+result=ok produced=2 consumed=2
+kind=pc-wrong
+empty=1 full=0 mutex=1
+producer=P(mutex) P(empty) put V(empty) V(mutex)
+consumer=P(mutex) P(full) get V(full) V(mutex)
+result=deadlock cycle=yes
+kind=read
+mutex=1 write=1
+reader=P(mutex) rc++ P(write-if-first) V(mutex) read
+writer=P(write) write V(write)
+result=ok max-read=2
+kind=phi
+fork=1
+result=deadlock cycle=yes
+kind=phi-room
+room=4 fork=1
+result=ok meals=5

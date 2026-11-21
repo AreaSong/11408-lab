@@ -1,0 +1,4 @@
+value=1 wait=0
+P pid=1 value=0 wait=0
+P pid=2 value=-1 wait=1
+V pid=3 value=0 wait=0 woke=2

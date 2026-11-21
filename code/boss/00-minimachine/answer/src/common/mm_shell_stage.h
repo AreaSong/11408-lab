@@ -85,4 +85,7 @@ void mm_shell_mmu_apply(MmMachine *m, const MmShellOpt *opt);
 int mm_shell_proc(char *line, FILE *in, FILE *out, MmMachine **machine, uint32_t mem_bytes, MmShellOpt *opt,
                   struct AsmImage **image);
 
+/* 阶段 06 的信号量、银行家和死锁命令。banker、reduce、recover、sem 会继续读 in，直到 end。 */
+int mm_shell_sync(char *line, FILE *in, FILE *out, MmMachine **machine);
+
 #endif

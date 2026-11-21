@@ -6,6 +6,7 @@
 #include "heap.h"
 #include "kernel/k_proc.h"
 #include "kernel/k_sched.h"
+#include "kernel/k_sync.h"
 
 #define K_MAX 8
 #define K_PAGE_MAX 8
@@ -18,7 +19,14 @@
 typedef struct {
     uint32_t va;
     uint32_t pa;
+    int shared;
 } KMap;
+
+typedef struct {
+    int used;
+    int value;
+    CycQ wait;
+} KSemSlot;
 
 typedef struct {
     int used;
@@ -68,7 +76,10 @@ struct KWorld {
     Heap sleepers;
     KImage image[K_IMAGE_MAX];
     int nimage;
+    KSemSlot sem[K_SEM_SLOTS];
 };
+
+int k_sem_syscall(MmMachine *m, KPcb *pcb, uint32_t num, uint32_t arg);
 
 int k_as_setup(MmMachine *m, KWorld *w);
 int k_as_copy(MmMachine *m, KPcb *dst, const KPcb *src);

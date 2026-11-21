@@ -1,0 +1,4 @@
+algo=bank safe=no count=0
+order=P3
+P3 work=1 need=1 alloc=0 next=1 finish=yes
+stuck=1

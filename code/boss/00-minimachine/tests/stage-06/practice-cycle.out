@@ -1,0 +1,8 @@
+algo=reduce deadlock=no cycle=yes
+isolated=-
+P2 work=0,0 request=0,0 alloc=1,0 next=1,0
+P1 work=1,0 request=1,0 alloc=0,1 next=1,1
+P0 work=1,1 request=0,1 alloc=1,0 next=2,1
+cycle=P0 P1
+removed=P2 P1 P0
+left=-

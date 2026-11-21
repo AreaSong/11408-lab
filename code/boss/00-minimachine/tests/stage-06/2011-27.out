@@ -1,0 +1,5 @@
+algo=bank safe=no count=0
+order=P1 P4
+P1 work=0,2,1 need=0,0,1 alloc=2,0,0 next=2,2,1 finish=yes
+P4 work=2,2,1 need=2,0,0 alloc=0,0,1 next=2,2,2 finish=yes
+stuck=2,2,2

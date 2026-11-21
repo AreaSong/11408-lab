@@ -1,0 +1,11 @@
+algo=bank safe=yes count=16
+order=P1 P3 P0 P2 P4
+P1 work=3,3,2 need=1,2,2 alloc=2,0,0 next=5,3,2 finish=yes
+P3 work=5,3,2 need=0,1,1 alloc=2,1,1 next=7,4,3 finish=yes
+P0 work=7,4,3 need=7,4,3 alloc=0,1,0 next=7,5,3 finish=yes
+P2 work=7,5,3 need=6,0,0 alloc=3,0,2 next=10,5,5 finish=yes
+P4 work=10,5,5 need=4,3,1 alloc=0,0,2 next=10,5,7 finish=yes
+request who=P1 req=1,0,2 result=grant order=P1 P3 P0 P2 P4
+request who=P4 req=3,3,0 result=unsafe
+request who=P0 req=0,4,0 result=wait
+request who=P1 req=2,0,0 result=exceed

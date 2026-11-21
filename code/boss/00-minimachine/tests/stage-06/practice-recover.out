@@ -1,0 +1,4 @@
+algo=recover recovered=yes
+abort=P1 cost=1 avail=0,1,0
+algo=recover recovered=yes
+abort=P1 cost=100 avail=1

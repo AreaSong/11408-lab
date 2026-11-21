@@ -222,6 +222,9 @@ int k_proc_syscall(MmMachine *m) {
         pcb->r[0] = m->r[0];
         return 0;
     }
+    if (num >= K_SYS_SEM_CREATE && num <= K_SYS_SEM_FREE) {
+        return k_sem_syscall(m, pcb, num, a);
+    }
     cpu_event(m, "服务 执行者=操作系统 调用=未知 号=%u 返回=-1", num);
     return fail_code(m, pcb);
 }

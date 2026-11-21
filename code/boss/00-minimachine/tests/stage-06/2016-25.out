@@ -1,0 +1,6 @@
+algo=reduce deadlock=yes cycle=yes
+isolated=P4
+stuck=0,0,0
+cycle=P1 P2 P3
+removed=-
+left=P1 P2 P3

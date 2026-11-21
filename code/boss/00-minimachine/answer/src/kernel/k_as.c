@@ -154,14 +154,50 @@ int k_as_copy(MmMachine *m, KPcb *dst, const KPcb *src) {
     dst->nmap = 0;
     for (i = 0; i < src->nmap; i++) {
         uint32_t pa = 0;
-        if (alloc_page(m, &pa) != 0) {
+        /* 共享页不复制。父子改的是同一个计数器，竞态和自旋锁才看得到对方。 */
+        if (src->map[i].shared) {
+            pa = src->map[i].pa;
+        } else if (alloc_page(m, &pa) != 0) {
             return -1;
+        } else {
+            memcpy(m->mem + pa, m->mem + src->map[i].pa, MMU_PAGE_BYTES);
         }
-        memcpy(m->mem + pa, m->mem + src->map[i].pa, MMU_PAGE_BYTES);
         if (map_at(m, pd, src->map[i].va, pa) != 0 || remember(dst, src->map[i].va, pa) != 0) {
             return -1;
         }
+        dst->map[dst->nmap - 1].shared = src->map[i].shared;
     }
+    return 0;
+}
+
+int k_share(MmMachine *m, uint32_t va) {
+    KWorld *w;
+    KPcb *pcb;
+    uint32_t page;
+    uint32_t pa = 0;
+    int i;
+    if (!k_proc_live(m)) {
+        return -1;
+    }
+    w = m->kworld;
+    if (w->current <= 0) {
+        return -1;
+    }
+    page = va & ~(MMU_PAGE_BYTES - 1u);
+    if (page < 0x1000u || page >= 0x80000000u) {
+        return -1;
+    }
+    pcb = &w->pcb[w->current];
+    for (i = 0; i < pcb->nmap; i++) {
+        if (pcb->map[i].va == page) {
+            pcb->map[i].shared = 1;
+            return 0;
+        }
+    }
+    if (alloc_page(m, &pa) != 0 || map_at(m, pcb->ptbr, page, pa) != 0 || remember(pcb, page, pa) != 0) {
+        return -1;
+    }
+    pcb->map[pcb->nmap - 1].shared = 1;
     return 0;
 }
 

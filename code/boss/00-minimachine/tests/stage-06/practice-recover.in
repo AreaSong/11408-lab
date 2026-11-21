@@ -1,0 +1,13 @@
+recover 0
+cost 4 1 9
+avail 0 0 0
+0 1 0 0 0 1 0
+1 0 1 0 0 0 1
+2 0 0 1 1 0 0
+end
+recover 0
+cost 1 100
+avail 0
+0 0 1
+1 1 1
+end

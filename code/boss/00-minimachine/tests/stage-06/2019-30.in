@@ -1,0 +1,4 @@
+claim deprive-recover
+claim prevent-ensures
+claim banker-detects
+claim deadlock-two-block

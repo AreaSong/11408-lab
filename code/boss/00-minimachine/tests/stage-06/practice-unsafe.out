@@ -1,0 +1,10 @@
+algo=bank safe=no count=0
+order=
+stuck=0
+algo=reduce deadlock=no cycle=no
+isolated=-
+P0 work=0 request=0 alloc=1 next=1
+P1 work=1 request=0 alloc=1 next=2
+P2 work=2 request=0 alloc=1 next=3
+removed=P0 P1 P2
+left=-
