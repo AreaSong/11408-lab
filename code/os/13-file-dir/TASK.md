@@ -166,6 +166,8 @@ open pid=0 path=/a fd=0 reads=2
 
 `claim` 的名字：`fcb-acl`、`fat-acl`、`close-nlink`、`close-always-drop`、`sys-one`、`user-same`、`hard-cross`、`soft-cross`、`hard-alive`、`soft-dangling`、`cwd-io`、`open-name`、`read-name`、`delete-parent`、`root-bypass`。
 
+目录结构和目录实现再加这些名字，每句对不对仍看 value：`single-dup`（单级允许重名）、`single-multiuser`（单级适合多用户）、`two-cross-name`（两级里不同用户可以同名）、`two-same-name`（两级里同一用户可以重名）、`two-share`（两级便于共享）、`tree-cross-name`（树形里不同目录可以同名）、`tree-share`（树形便于共享）、`tree-cycle`（树形允许环）、`dag-share`（无环图便于共享）、`dag-cycle`（无环图允许环）、`dag-count`（无环图要等共享计数到 0 才真正删除）、`linear-scan`（线性表按名字顺序找）、`hash-fast`（哈希表平均更快）、`hash-no-clash`（哈希表不会冲突）。口径按王道：共享只在无环图里成立，线性表和哈希表是两种查目录的办法。
+
 `card` 和 `exam` 的整行以 `tests/` 里的同名输出为准。`exam` 的题号：`2009-30`、`2009-31`、`2010-31`、`2013-23`、`2020-23`、`2022-45`、`2023-31`、`2024-29`。
 
 | 用例 | 在看什么 |
@@ -178,6 +180,7 @@ open pid=0 path=/a fd=0 reads=2
 | `practice-span` | 目录项在第 1 块时，第 0 块也要读，读到就停 |
 | `practice-busy` | 打开着就删掉最后一个名字，关闭时才释放 |
 | `practice-card` | 概念卡片，以及硬链接、软链接能不能跨文件系统 |
+| `practice-dir` | 单级、两级、树形、无环图，以及线性表和哈希表 |
 | `2009-30` | 访问控制信息放在哪 |
 | `2009-31` | 软链接、硬链接、再删掉 F1 之后的链接计数 |
 | `2010-31` | 当前目录加快的是检索 |

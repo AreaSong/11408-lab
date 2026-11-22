@@ -7,7 +7,7 @@ include_directories(src deps)
 
 file(GLOB DEPS_SRC CONFIGURE_DEPENDS deps/*.c)
 
-set(SRC src/tree.c src/prop.c src/seq.c src/walk.c src/build.c src/wpl.c src/expr.c src/exam.c)
+set(SRC src/tree.c src/prop.c src/seq.c src/walk.c src/build.c src/wpl.c src/expr.c src/exam.c src/bst0.c)
 
 add_executable(binary_tree_answer main.c ${SRC} ${DEPS_SRC})
 add_executable(binary_tree_answer_test test.c ${SRC} ${DEPS_SRC})

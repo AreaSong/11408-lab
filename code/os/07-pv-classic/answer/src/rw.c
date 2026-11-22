@@ -226,6 +226,10 @@ int scene_rw(const char *kind, Scene *out) {
     if (strcmp(kind, "readers") == 0) {
         return scene_readers(out);
     }
+    /* 公平法单独放 rw_fair.c，避免和前两种的相位搅在一起。 */
+    if (strcmp(kind, "fair-cut") == 0 || strcmp(kind, "fair-readers") == 0) {
+        return scene_fair(kind, out);
+    }
     printf("%s unknown\n", kind);
     return -1;
 }

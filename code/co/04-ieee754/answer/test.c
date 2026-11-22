@@ -1,4 +1,5 @@
 #include "fp.h"
+#include "nfp.h"
 #include "test.h"
 
 #include <stdio.h>
@@ -141,10 +142,44 @@ static void test_exam_values(void) {
     CHECK(c_float_bits("12.1") == 0x4141999Au);
 }
 
+static void test_2009_13(void) {
+    NfpNum x;
+    NfpNum y;
+    NfpAdd a;
+    CHECK(nfp_from_fraction(&x, 5, 7, 7, 29, 32) == 0);
+    CHECK_EQ(x.frac, 29);
+    CHECK(nfp_from_fraction(&y, 5, 7, 5, 5, 8) == 0);
+    CHECK_EQ(y.frac, 20);
+    CHECK(nfp_add(&a, &x, &y) == 0);
+    CHECK_EQ(a.diff, 2);
+    CHECK_EQ(a.aligned_frac, 5);
+    CHECK_EQ(a.sum_frac, 34);
+    CHECK_EQ(a.norm_dir, 1);
+    CHECK_EQ(a.result_frac, 17);
+    CHECK_EQ(a.result_exp, 8);
+    CHECK_EQ(a.overflow, 1);
+    CHECK_EQ(nfp_shape(0x10, 7), NFP_NORM);
+    CHECK_EQ(nfp_shape(0x08, 7), NFP_LEFT);
+    CHECK_EQ(nfp_shape(0x7f, 7), NFP_LEFT);
+    CHECK_EQ(nfp_shape(0x22, 7), NFP_RIGHT);
+    CHECK_EQ(nfp_shape(0x40, 7), NFP_RIGHT);
+    CHECK_EQ(nfp_shape(0x60, 7), NFP_NORM);
+    CHECK(nfp_from_fraction(&x, 5, 7, 4, 1, 2) == 0);
+    CHECK_EQ(x.frac, 16);
+    CHECK(nfp_from_fraction(&y, 5, 7, 4, -1, 4) == 0);
+    CHECK_EQ(y.frac, -8);
+    CHECK(nfp_add(&a, &x, &y) == 0);
+    CHECK_EQ(a.norm_dir, -1);
+    CHECK_EQ(a.result_exp, 3);
+    CHECK_EQ(a.result_frac, 16);
+    CHECK_EQ(a.overflow, 0);
+}
+
 int main(void) {
     test_encode_samples();
     test_random_decimal();
     test_add_pairs();
     test_exam_values();
+    test_2009_13();
     return TEST_SUMMARY();
 }

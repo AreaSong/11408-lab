@@ -1,0 +1,11 @@
+new U 4
+edge 0 1
+edge 1 2
+edge 0 2
+bfs-dist 0
+bfs-dist 3
+new D 4
+edge 0 1
+edge 1 2
+edge 3 2
+bfs-dist 0

@@ -1,0 +1,14 @@
+claim single-dup
+claim single-multiuser
+claim two-cross-name
+claim two-same-name
+claim two-share
+claim tree-cross-name
+claim tree-share
+claim tree-cycle
+claim dag-share
+claim dag-cycle
+claim dag-count
+claim linear-scan
+claim hash-fast
+claim hash-no-clash

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "missmin.h"
 #include "prompt.h"
 #include "seqlist.h"
 
@@ -56,6 +57,70 @@ static int handle_find(SeqList *L) {
     return 1;
 }
 
+static int handle_reverse(SeqList *L) {
+    seqlist_reverse(L);
+    printf("ok reverse ");
+    print_tail(L);
+    return 1;
+}
+
+static int handle_unique(SeqList *L) {
+    int removed = seqlist_unique_ordered(L);
+    printf("ok unique removed=%d ", removed);
+    print_tail(L);
+    return 1;
+}
+
+static int handle_merge(SeqList *L) {
+    int n = 0;
+    SeqList extra;
+    SeqList merged;
+    if (scanf("%d", &n) != 1 || n < 0 || n > 100000) {
+        return 0;
+    }
+    if (!seqlist_init(&extra)) {
+        fprintf(stderr, "内存不足\n");
+        return 0;
+    }
+    if (!seqlist_init(&merged)) {
+        fprintf(stderr, "内存不足\n");
+        seqlist_destroy(&extra);
+        return 0;
+    }
+    for (int i = 0; i < n; i++) {
+        int value = 0;
+        if (scanf("%d", &value) != 1 || !seqlist_insert(&extra, extra.length + 1, value, NULL)) {
+            seqlist_destroy(&extra);
+            seqlist_destroy(&merged);
+            return 0;
+        }
+    }
+    /* 合并进新表：不能边读边写回 L，否则会盖掉还没取走的元素。 */
+    merged.trace = L->trace;
+    if (!seqlist_merge_ordered(L, &extra, &merged)) {
+        fprintf(stderr, "内存不足\n");
+        seqlist_destroy(&extra);
+        seqlist_destroy(&merged);
+        return 0;
+    }
+    seqlist_destroy(&extra);
+    seqlist_destroy(L);
+    *L = merged;
+    printf("ok merge extra=%d ", n);
+    print_tail(L);
+    return 1;
+}
+
+static int handle_missmin(SeqList *L) {
+    int value = find_miss_min(L->data, L->length);
+    if (value < 0) {
+        fprintf(stderr, "内存不足\n");
+        return 0;
+    }
+    printf("ok missmin value=%d\n", value);
+    return 1;
+}
+
 static int handle_get(SeqList *L) {
     int i = 0;
     if (scanf("%d", &i) != 1) {
@@ -80,7 +145,8 @@ int main(void) {
     list.trace = stdout;
     char op[16];
     for (;;) {
-        prompt("请输入命令（insert i e / delete i / find e / get i，Ctrl+D 结束）：");
+        prompt("请输入命令（insert i e / delete i / find e / get i / reverse / unique / "
+               "merge n e… / missmin，Ctrl+D 结束）：");
         if (scanf("%15s", op) != 1) {
             break;
         }
@@ -93,6 +159,14 @@ int main(void) {
             ok = handle_find(&list);
         } else if (strcmp(op, "get") == 0) {
             ok = handle_get(&list);
+        } else if (strcmp(op, "reverse") == 0) {
+            ok = handle_reverse(&list);
+        } else if (strcmp(op, "unique") == 0) {
+            ok = handle_unique(&list);
+        } else if (strcmp(op, "merge") == 0) {
+            ok = handle_merge(&list);
+        } else if (strcmp(op, "missmin") == 0) {
+            ok = handle_missmin(&list);
         } else {
             printf("fail unknown %s\n", op);
         }

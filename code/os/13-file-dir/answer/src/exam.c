@@ -40,6 +40,27 @@ static const ClaimItem CLAIMS[] = {
     {"read-name", "false"},
     {"delete-parent", "false"},
     {"root-bypass", "false"},
+    /*
+     * 考纲：目录结构。王道从单级收到无环图。
+     * 单级不许重名，也不适合多用户。两级只让不同用户重名，同一用户仍不能，而且不便于共享。
+     * 树形不同目录可以同名，一个结点只有一个父目录，所以不便于共享，也不能有环。
+     * 无环图允许多个目录项指向同一结点；删除只减共享计数，到 0 才真正删，仍然不许成环。
+     */
+    {"single-dup", "false"},
+    {"single-multiuser", "false"},
+    {"two-cross-name", "true"},
+    {"two-same-name", "false"},
+    {"two-share", "false"},
+    {"tree-cross-name", "true"},
+    {"tree-share", "false"},
+    {"tree-cycle", "false"},
+    {"dag-share", "true"},
+    {"dag-cycle", "false"},
+    {"dag-count", "true"},
+    /* 考纲：目录实现。线性表要按名字逐项比；哈希表按名字定位，平均更快，冲突还在。 */
+    {"linear-scan", "true"},
+    {"hash-fast", "true"},
+    {"hash-no-clash", "false"},
 };
 
 int exam_print(const char *id) {

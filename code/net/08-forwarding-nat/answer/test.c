@@ -1,6 +1,7 @@
 #include "addr.h"
 #include "arp.h"
 #include "cksum.h"
+#include "dhcp.h"
 #include "ipv6.h"
 #include "nat.h"
 #include "pkt.h"
@@ -133,11 +134,38 @@ static void check_ipv6(void) {
     CHECK(!ipv6_parse("2001:db8", group));
 }
 
+static void check_dhcp(void) {
+    DhcpStep step[DHCP_STEPS];
+
+    CHECK(dhcp_initial(0xc0a80002u, 0xc0a80003u, step));
+    CHECK_STR(step[0].name, "DISCOVER");
+    CHECK_STR(step[0].how, "广播");
+    CHECK_STR(step[0].src, "0.0.0.0");
+    CHECK_STR(step[0].dst, "255.255.255.255");
+    CHECK_EQ(step[0].sport, 68);
+    CHECK_EQ(step[0].dport, 67);
+    CHECK_STR(step[1].name, "OFFER");
+    CHECK_STR(step[1].src, "192.168.0.2");
+    CHECK_EQ(step[1].sport, 67);
+    CHECK_EQ(step[1].dport, 68);
+    CHECK_STR(step[2].src, "0.0.0.0");
+    CHECK_EQ(step[2].sport, 68);
+    CHECK_STR(step[3].name, "ACK");
+    CHECK_STR(step[3].dst, "255.255.255.255");
+    CHECK_STR(step[3].client, "已绑定，这时才能使用 192.168.0.3");
+    CHECK(!dhcp_initial(0, 0xc0a80003u, step));
+    CHECK(!dhcp_initial(0xffffffffu, 0xc0a80003u, step));
+    CHECK(!dhcp_initial(0xc0a80002u, 0xc0a80002u, step));
+    CHECK(dhcp_same_lan_hears_discover(1));
+    CHECK(!dhcp_same_lan_hears_discover(0));
+}
+
 int main(void) {
     check_checksum();
     check_trie();
     check_nat();
     check_arp();
     check_ipv6();
+    check_dhcp();
     return TEST_SUMMARY();
 }

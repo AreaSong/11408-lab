@@ -1,0 +1,5 @@
+one 1 1 0
+one 1 1
+non 1 0 0 0 wait 2
+p 1 0 0 0 draw 0 1
+p 0 1 0 draw 0 1

@@ -1,0 +1,17 @@
+trans ready suspend-ready
+trans suspend-ready ready
+trans blocked suspend-blocked
+trans suspend-blocked blocked
+trans suspend-blocked suspend-ready
+trans running suspend-ready
+trans new suspend-ready
+trans suspend-ready terminated
+trans suspend-blocked terminated
+trans suspend-ready running
+trans suspend-blocked ready
+trans running suspend-blocked
+trans blocked suspend-ready
+trans ready suspend-blocked
+trans suspend-ready blocked
+trans suspend-blocked running
+trans running ready

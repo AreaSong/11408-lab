@@ -1,0 +1,2 @@
+dag (a*b)+(b*a)
+dag (a+b)*(a+b)

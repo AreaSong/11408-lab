@@ -1,0 +1,4 @@
+copy str1=ing str2=ing len1=3 len2=3 gap=0 start=- suffix=-
+share str1=being str2=loading len1=5 len2=7 gap=2 start=i suffix=ing
+share str1=aa str2=aa len1=2 len2=2 gap=0 start=a suffix=aa
+share str1=ab str2=cd len1=2 len2=2 gap=0 start=- suffix=-

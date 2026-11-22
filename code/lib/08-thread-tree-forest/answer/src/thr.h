@@ -66,4 +66,15 @@ int thr_two_child_ok(const ThrTree *t);
 /* 后序线索的右线索。out_ch 为 0 表示空。树必须已 thr_from_pre 且尚未线索化。 */
 int thr_post_right(ThrTree *t, char ask, char *out_ch);
 
+/* 先序线索化，带头结点，规则和中序同一套 ltag/rtag。 */
+int thr_thread_pre(ThrTree *t);
+
+/* 先序后继：有左孩子就是左孩子，否则右指针（孩子或线索）。 */
+int thr_pre_succ(const ThrTree *t, int id);
+
+/* ltag 为 1 时左线索就是前驱；ltag 为 0 时必须用双亲，线索里没有前驱。 */
+int thr_pre_pred(const ThrTree *t, int id);
+
+int thr_show_pre(FILE *out, const char *pre, int ask);
+
 #endif

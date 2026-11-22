@@ -20,4 +20,8 @@ int topo_run(const Graph *g, TopoInfo *out, FILE *trace);
 int topo_all(const Graph *g, int *count, FILE *trace);
 int topo_check(const Graph *g, const int *seq, int n);
 
+/* 考纲：DFS 求拓扑序。rev 是逆拓扑序（按结束时刻），topo 是把它倒过来。
+ * 有环时 *n 为 0、*cycle 为 1。无向图返回 G_KIND。 */
+int topo_dfs(const Graph *g, int *topo, int *rev, int *n, int *cycle, FILE *trace);
+
 #endif

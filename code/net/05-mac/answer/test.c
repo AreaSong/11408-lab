@@ -1,6 +1,9 @@
+#include "aloha.h"
 #include "bus.h"
 #include "cdma.h"
+#include "csmaca.h"
 #include "limit.h"
+#include "persist.h"
 #include "qty.h"
 #include "test.h"
 
@@ -193,11 +196,91 @@ static void test_bus(void) {
     }
 }
 
+static void test_aloha(void) {
+    char text[16];
+    char pure_pct[8];
+    char slot_pct[8];
+    char pure_s[16];
+    char slot_s[16];
+    int at_max = 0;
+
+    CHECK(aloha_s(0, 0.5, text, &at_max));
+    CHECK_STR(text, "0.1839");
+    CHECK(at_max);
+    CHECK(aloha_s(0, 1.0, text, &at_max));
+    CHECK_STR(text, "0.1353");
+    CHECK(!at_max);
+    CHECK(aloha_s(0, 2.0, text, &at_max));
+    CHECK_STR(text, "0.0366");
+    CHECK(aloha_s(1, 1.0, text, &at_max));
+    CHECK_STR(text, "0.3679");
+    CHECK(at_max);
+    CHECK(aloha_s(1, 0.5, text, &at_max));
+    CHECK_STR(text, "0.3033");
+    CHECK(!at_max);
+    CHECK(!aloha_s(0, -1.0, text, &at_max));
+    aloha_peak(pure_pct, slot_pct, pure_s, slot_s);
+    CHECK_STR(pure_pct, "18.4%");
+    CHECK_STR(slot_pct, "36.8%");
+    CHECK_STR(pure_s, "0.1839");
+    CHECK_STR(slot_s, "0.3679");
+}
+
+static void test_persist(void) {
+    int busy[] = {1, 1, 0};
+    int idle_gap[] = {1, 0, 0, 0};
+    int only_busy[] = {1, 1};
+    int defer[] = {0, 1, 0};
+    int draw[] = {0, 1};
+    PersistTrace tr;
+
+    CHECK_EQ(persist_run(PERSIST_ONE, busy, 3, 0, NULL, 0, &tr), 1);
+    CHECK_EQ(tr.send_slot, 2);
+    CHECK_EQ(persist_run(PERSIST_ONE, only_busy, 2, 0, NULL, 0, &tr), 1);
+    CHECK_EQ(tr.send_slot, -1);
+    CHECK_EQ(persist_run(PERSIST_NON, idle_gap, 4, 2, NULL, 0, &tr), 1);
+    CHECK_EQ(tr.send_slot, 3);
+    CHECK_EQ(tr.step[1].action, ACT_BLIND);
+    CHECK_EQ(persist_run(PERSIST_NON, busy, 3, 2, NULL, 0, &tr), -1);
+    CHECK_EQ(persist_run(PERSIST_P, idle_gap, 4, 0, draw, 2, &tr), 1);
+    CHECK_EQ(tr.send_slot, 2);
+    CHECK_EQ(persist_run(PERSIST_P, defer, 3, 0, draw, 2, &tr), 1);
+    CHECK_EQ(tr.send_slot, 2);
+    CHECK_EQ(tr.step[1].action, ACT_LISTEN);
+}
+
+static void test_ca(void) {
+    CaSpec in;
+    CaTime got;
+    long long nav = 0;
+
+    CHECK(ca_nav(28000, 296000, 2000, &nav));
+    CHECK_EQ(nav, 354000);
+    memset(&in, 0, sizeof in);
+    in.difs_ns = 50000;
+    in.sifs_ns = 10000;
+    in.slot_ns = 9000;
+    in.backoff = 2;
+    in.rts_ns = 5000;
+    in.cts_ns = 4000;
+    in.data_ns = 100000;
+    in.ack_ns = 4000;
+    CHECK(ca_time(&in, &got));
+    CHECK_EQ(got.backoff_ns, 18000);
+    CHECK_EQ(got.nav_cts_ns, 124000);
+    CHECK_EQ(got.total_ns, 211000);
+    in.difs_ns = 10000;
+    CHECK(!ca_time(&in, &got));
+}
+
 int main(void) {
     test_units();
     test_cdma();
     test_span();
     test_backoff();
     test_bus();
+    test_aloha();
+    test_persist();
+    test_ca();
     return TEST_SUMMARY();
 }

@@ -8,15 +8,16 @@
 
 | 下拉框里的运行目标 | 来自 | 作用 |
 |---|---|---|
-| `seqlist_answer` | `answer/main.c` | 按提示输入 `insert` / `delete` / `find` / `get`，打印每次搬家和表的状态。会等键盘输入 |
+| `seqlist_answer` | `answer/main.c` | 按提示输入 `insert` / `delete` / `find` / `get` / `reverse` / `unique` / `merge` / `missmin`，打印每次搬家和表的状态。会等键盘输入 |
 | `seqlist_answer_test` | `answer/test.c` | 单元测试，全部通过时退出码为 0 |
 | `seqlist_answer_moves` | `answer/moves.c` | 按提示输入表长 n，打印插入、删除的平均移动次数。会等键盘输入 |
 | `seqlist_answer_median` | `answer/median.c` | 2011-42，打印折半过程并输出中位数。会等键盘输入 |
 | `seqlist_answer_majority` | `answer/majority.c` | 2013-41，打印候选抵消过程并输出主元素。会等键盘输入 |
+| `seqlist_answer_missmin` | `answer/missmin.c` | 2018-41，按组输出未出现的最小正整数。会等键盘输入 |
 
 你的尝试同理，把名字里的 `answer` 换成尝试说明，例如 `seqlist_first`。
 
-跑全部测试：右上角下拉框选「All CTest」，点运行。`tests/` 喂给主程序，`tests/moves/`、`tests/median/`、`tests/majority/` 分别喂给另外三个程序。
+跑全部测试：右上角下拉框选「All CTest」，点运行。`tests/` 喂给主程序，`tests/moves/`、`tests/median/`、`tests/majority/`、`tests/missmin/` 分别喂给另外四个程序。
 
 ## 文件一览
 
@@ -27,6 +28,7 @@
 | `moves.c` | 枚举全部插入、删除位置，和 n/2、(n−1)/2 对照 | ③ |
 | `src/two_median.h` `src/two_median.c` `median.c` | 2011-42 折半求中位数 | ④ |
 | `src/majority_element.h` `src/majority_element.c` `majority.c` | 2013-41 候选计数求主元素 | ④ |
+| `src/missmin.h` `src/missmin.c` `missmin.c` | 2018-41 标记数组找未出现的最小正整数 | ④ |
 | `test.c` | 用 `test.h` 检查基本操作、平均次数和两道题的返回值 | ①–④ |
 
 `trace` 字段只为打印过程，算法本身不依赖它。卷面代码不写打印，见下面的三段式。
@@ -193,3 +195,46 @@ int majority(int A[], int n) {
 ### 卡片二：插入、删除的平均移动次数
 
 见上面的对照表。插入平均 n/2，删除平均 (n−1)/2，都是 O(n)。按位读取是 O(1)，按值查找是 O(n)。这组数字是顺序表和后面链表对比的那一半：顺序表读得快，改结构要搬元素。
+
+### 逆置、有序合并、有序去重
+
+逆置只交换 `data[i]` 和 `data[length-1-i]`，i 走到中点为止。再往下会把刚换好的一对换回去。时间 O(n)，额外空间 O(1)。
+
+有序合并用两个下标：谁小取谁，相等时先取第一张表。两张表都非递减时，结果也非递减。合并写进第三张表，不能边合并边覆盖其中一张，否则还没取走的元素会被盖掉。时间 O(n+m)，结果表的空间 O(n+m)。
+
+有序去重只和前一个留下来的值比。非递减时相等的元素一定挨在一起，所以不用再回头扫。读指针往前走，写指针只在值变化时前进。时间 O(n)，原地完成。
+
+### 2018-41 三段式
+
+**1. 设计思想**
+
+n 个数里未出现的最小正整数只可能是 1 到 n+1。开一个长度 n 的标记数组，`mark[i]` 表示正整数 i+1 是否出现。扫一遍数组，只标记落在 1..n 里的值；小于等于 0 或大于 n 的数不可能是这个范围内的答案，直接跳过。再从 `mark[0]` 往后找第一个 0，下标加 1 就是答案。如果 1..n 全都出现过，答案是 n+1。
+
+**2. 代码**
+
+```c
+int findMissMin(int A[], int n) {
+    int *B = calloc((size_t)n, sizeof(int)); /* B[i] 对应正整数 i+1 */
+    int i, ans = n + 1;
+    for (i = 0; i < n; i++)
+        if (A[i] > 0 && A[i] <= n)
+            B[A[i] - 1] = 1;
+    for (i = 0; i < n; i++)
+        if (B[i] == 0) { ans = i + 1; break; }
+    free(B);
+    return ans;
+}
+```
+
+**3. 复杂度**
+
+时间 O(n)，两遍扫描。空间 O(n)，就是那张标记数组。这是用空间换时间的保底写法，卷面按这个给最优性分。
+
+### 卡片三：有序表上的三件套
+
+| 操作 | 为什么能这么做 | 复杂度 |
+|---|---|---|
+| 逆置 | 顺序存储按下标交换，不用额外的表 | 时间 O(n)，空间 O(1) |
+| 合并 | 两表都有序，每次只比较队头 | 时间 O(n+m)，空间 O(n+m) |
+| 去重 | 有序后重复值相邻，写指针压缩即可 | 时间 O(n)，空间 O(1) |
+

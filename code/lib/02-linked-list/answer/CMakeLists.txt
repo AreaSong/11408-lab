@@ -7,10 +7,13 @@ include_directories(src deps)
 
 add_executable(linked_list_answer main.c src/slist.c)
 add_executable(linked_list_answer_test test.c
-        src/slist.c src/clist.c src/dlist.c src/staticlist.c src/kth.c src/rearrange.c)
+        src/slist.c src/clist.c src/dlist.c src/staticlist.c src/kth.c src/rearrange.c
+        src/suffix.c src/absuniq.c)
 add_executable(linked_list_answer_variant variant.c src/clist.c src/dlist.c)
 add_executable(linked_list_answer_staticlist staticlist.c src/staticlist.c)
 add_executable(linked_list_answer_kth kth.c src/slist.c src/kth.c)
 add_executable(linked_list_answer_rearrange rearrange.c src/slist.c src/rearrange.c)
+add_executable(linked_list_answer_suffix suffix.c src/suffix.c)
+add_executable(linked_list_answer_absuniq absuniq.c src/slist.c src/absuniq.c)
 
 include(../tests/check.cmake OPTIONAL)

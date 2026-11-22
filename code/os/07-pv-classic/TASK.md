@@ -11,7 +11,7 @@
   - `live.c` 用真线程跑正确版本，并观察一次错误顺序造成的互相等待
 - **小步骤**：
   ① `pc`：一个生产者、一个消费者，先 P 同步信号量，再 P 互斥信号量
-  ② `rw reader-cut`、`rw readers` 是读者优先；`rw writer-cut` 是写者优先
+  ② `rw reader-cut`、`rw readers` 是读者优先；`rw writer-cut` 是写者优先；`rw fair-cut`、`rw fair-readers` 是读写公平
   ③ `phi dead` 先让每个人拿起左边，再让每个人拿右边；`phi limit`、`phi odd`、`phi both` 是三种不会在这一轮里死锁的改法
   ④ `order wrong`、`order wrong-full`、`order plant` 把互斥 P 放在同步 P 前面；`order right` 是放对的对照
   ⑤ `smoke` 按「一份组合」同步；`smoke-split` 按「每种原料一把信号量」并排成会拆开的交错
@@ -56,6 +56,8 @@ wait who=<名> sem=<名> holder=<名或->
 | `rw reader-cut` | `R0`，`W0`，`R1` | 读者优先。见下方脚本 |
 | `rw writer-cut` | `R0`，`W0`，`R1` | 写者优先。见下方脚本 |
 | `rw readers` | `R0`，`R1` | 读者优先，没有写者。见下方脚本 |
+| `rw fair-cut` | `R0`，`W0`，`R1` | 读写公平。见下方脚本 |
+| `rw fair-readers` | `R0`，`R1` | 读写公平，没有写者。见下方脚本 |
 | `phi <dead\|limit\|odd\|both> <n>` | `P0`… | n 是 2..6。每人吃一顿 |
 | `smoke <k>…` | `agent`，`glue`，`paper`，`tobacco` | 1..6 个代号，每个是 1、2 或 3 |
 | `smoke-split` | 同上四名 | 固定交错，见下方 |
@@ -87,6 +89,8 @@ summary produced=<put 的次数> consumed=<get 的次数> deadlock=<yes|no>
 
 写者优先再加 `file=1`（文件）和 `r=1`（挡住新读者的门）。`wmutex` 只保护写者计数。第一个写者 `P(r)`，最后一个写者 `V(r)`。读者进入时先 `P(r)`，登记之后、读之前 `V(r)`。写者计数打 `note=writecount`。
 
+读写公平沿用读者优先的 `rmutex=1`、`wmutex=1`，再加 `w=1`。读者和写者申请前都要 `P(w)`。读者登记完、真正读之前就 `V(w)`。写者写完才 `V(w)`。`w` 的等待队列按到达顺序，后来的人不能插到已经排在 `w` 上的人前面。没有写者排队时，读者之间仍然可以同时读。
+
 脚本不按最小编号一路走：
 
 | 命令 | 强迫的次序 |
@@ -94,6 +98,8 @@ summary produced=<put 的次数> consumed=<get 的次数> deadlock=<yes|no>
 | `rw reader-cut` | 读者 0 走到开始读（含 `note=read`），写者走一条，读者 1 走到开始读，然后依次收尾：读者 0、读者 1、写者 |
 | `rw writer-cut` | 读者 0 走到开始读，写者走到阻塞为止，读者 1 走一条，然后依次收尾：读者 0、写者、读者 1 |
 | `rw readers` | 两位读者都走到开始读，再依次收尾：读者 0、读者 1 |
+| `rw fair-cut` | 读者 0 走到开始读，写者走到阻塞为止，读者 1 走一条，然后依次收尾：读者 0、写者、读者 1 |
+| `rw fair-readers` | 两位读者都走到开始读，再依次收尾：读者 0、读者 1 |
 
 summary：
 
@@ -101,7 +107,7 @@ summary：
 summary second=<enter|block> max_read=<同时在读的最大人数> deadlock=<yes|no>
 ```
 
-`reader-cut` 和 `readers` 的 `second` 是 `enter`。`writer-cut` 的 `second` 是 `block`。
+`reader-cut`、`readers` 和 `fair-readers` 的 `second` 是 `enter`。`writer-cut` 和 `fair-cut` 的 `second` 是 `block`。
 
 ### 哲学家
 

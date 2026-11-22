@@ -1,0 +1,7 @@
+expr=(x+y)*((x+y)/x)
+sub x
+sub y
+sub +(x,y)
+sub /(+(x,y),x)
+sub *(+(x,y),/(+(x,y),x))
+vertices=5

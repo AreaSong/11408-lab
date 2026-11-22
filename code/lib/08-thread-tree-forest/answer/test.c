@@ -159,6 +159,29 @@ static void check_orders(void) {
     CHECK_EQ(1 + 3 * 20 + 2 * 10 + 1 * 1, 82);
 }
 
+static void check_preorder(void) {
+    ThrTree tree;
+    int id;
+    CHECK_EQ(thr_from_pre(&tree, "ABD##E##C##"), THR_OK);
+    CHECK_EQ(thr_thread_pre(&tree), THR_OK);
+    id = thr_find(&tree, 'D');
+    CHECK_EQ(tree.node[thr_pre_succ(&tree, id)].data, 'E');
+    CHECK_EQ(tree.node[thr_pre_pred(&tree, id)].data, 'B');
+    CHECK_EQ(tree.node[id].ltag, 1);
+    id = thr_find(&tree, 'B');
+    CHECK_EQ(tree.node[thr_pre_succ(&tree, id)].data, 'D');
+    CHECK_EQ(thr_pre_pred(&tree, id), thr_find(&tree, 'A'));
+    CHECK_EQ(tree.node[id].ltag, 0);
+    id = thr_find(&tree, 'A');
+    CHECK_EQ(thr_pre_pred(&tree, id), tree.head);
+    CHECK_EQ(thr_from_pre(&tree, "AB##CD###"), THR_OK);
+    CHECK_EQ(thr_thread_pre(&tree), THR_OK);
+    id = thr_find(&tree, 'C');
+    CHECK_EQ(tree.node[id].ltag, 0);
+    CHECK_EQ(thr_pre_pred(&tree, id), thr_find(&tree, 'B'));
+    CHECK_EQ(tree.node[thr_pre_succ(&tree, id)].data, 'D');
+}
+
 int main(void) {
     check_in_threads("abde###x##c##", 'x', 'b', 'a', 1, 1);
     check_in_threads("abde###x##c##", 'e', '^', 'd', 1, 1);
@@ -172,5 +195,6 @@ int main(void) {
     check_walk("#", "");
     check_built();
     check_orders();
+    check_preorder();
     return TEST_SUMMARY();
 }

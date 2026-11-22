@@ -1,0 +1,7 @@
+【CSMA/CA 的 NAV】
+数据帧 15984 bit = 1998 B，带宽 54000000 bps = 54 Mbps（M = 10^6）。
+发送时延 = 15984 bit / 54000000 bps = 296 us。
+隐藏站收到 CTS 时，CTS 已经发完。后面还要占用一个 SIFS、数据帧、再一个 SIFS 和 ACK。
+NAV = 28 us + 296 us + 28 us + 2 us = 354 us。
+DIFS 120 us、RTS 3 us、CTS 2 us 都在这个起点之前，不加进去。
+结果：354 us

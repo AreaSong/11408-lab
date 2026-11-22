@@ -3,6 +3,7 @@
 #include "micro.h"
 #include "prompt.h"
 #include "sim.h"
+#include "vec.h"
 #include "wire.h"
 
 #include <stdio.h>
@@ -46,6 +47,8 @@ static int dispatch(char *line) {
     if (starts(line, "next ", &rest)) return cmd_next(stdout, rest);
     if (starts(line, "rom ", &rest)) return cmd_rom(stdout, rest);
     if (starts(line, "class ", &rest)) return cmd_class(stdout, rest);
+    if (strcmp(line, "vec") == 0) return cmd_vec(stdout, "");
+    if (starts(line, "vec ", &rest)) return cmd_vec(stdout, rest);
     fprintf(stderr, "未知命令：%s\n", line);
     return -1;
 }

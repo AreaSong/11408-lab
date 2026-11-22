@@ -6,7 +6,7 @@
 
 ## 一、本关任务
 
-- **产出**：邻接矩阵、邻接表，以及二者按编号重排后的相互对照；有向图的十字链表；无向图的邻接多重表；BFS、递归 DFS、与递归同序的非递归 DFS；生成树和生成森林；无向图的连通分量，有向图的强连通和弱连通；度、边数和「保证连通」这一类计数
+- **产出**：邻接矩阵、邻接表，以及二者按编号重排后的相互对照；有向图的十字链表；无向图的邻接多重表；BFS、递归 DFS、与递归同序的非递归 DFS；用 BFS 的 `dist[]` 求无权图单源最短路；生成树和生成森林；无向图的连通分量，有向图的强连通和弱连通；度、边数和「保证连通」这一类计数
 - **小步骤**：
   ① 邻接矩阵和邻接表。尾插，边结点次序等于输入次序。`canon` 按终点编号从小到大重排邻接表，矩阵不变
   ② 十字链表只用于有向图，邻接多重表只用于无向图。建好后把链打出来
@@ -39,7 +39,7 @@
 
 每次读取前用 `prompt(...)` 打印提示（`prompt` 在 `deps/prompt.h`，跑测试时不打印）：
 
-`请输入命令（new / edge / show / canon / deg / space / cross / multi / bfs / bfs-all / dfs / dfs-all / dfs-stack / dfs-flip / reach / enum-dfs / bound / bound-check / enum / least，一行一条，Ctrl+D 结束）：`
+`请输入命令（new / edge / show / canon / deg / space / cross / multi / bfs / bfs-dist / bfs-all / dfs / dfs-all / dfs-stack / dfs-flip / reach / enum-dfs / bound / bound-check / enum / least，一行一条，Ctrl+D 结束）：`
 
 读到输入结束就退出，退出码 0。空行跳过。参数不对：往标准输出打一行失败，继续读下一条。失败时这条命令不再打别的内容。还没有 `new` 成功过就执行需要图的命令，打 `fail empty`。
 
@@ -153,7 +153,7 @@ marked-once=4
 
 ### 遍历
 
-`bfs s`、`dfs s`、`dfs-stack s`、`dfs-flip s` 只从 s 出发的那一个连通块（有向图则是沿弧能到达的部分）。`bfs-all`、`dfs-all` 按编号从小到大，跳过已经访问的顶点再启动。
+`bfs s`、`bfs-dist s`、`dfs s`、`dfs-stack s`、`dfs-flip s` 只从 s 出发的那一个连通块（有向图则是沿弧能到达的部分）。`bfs-all`、`dfs-all` 按编号从小到大，跳过已经访问的顶点再启动。
 
 BFS 一个顶点的过程：
 
@@ -173,6 +173,15 @@ scans=2
 ```
 
 `queue=` 后面是队头到队尾的顶点，不打印牺牲掉的那一格。`scan` 里 `new` 表示这次才发现，`seen` 表示已经标记过。`scans` 是看过的邻接表结点个数。
+
+`bfs-dist s` 在同一次 BFS 上多记 `dist[]`。边权都看成 1，第一次入队就是最少边数。到不了的顶点记 `-1`。它不打印 `bfs` 那套 `enq` / `scan`，避免和原来的遍历输出混在一起。
+
+```text
+bfs-dist 0
+visit 0 dist=0
+visit 1 dist=1
+dist 0 1 -1
+```
 
 递归 DFS：
 

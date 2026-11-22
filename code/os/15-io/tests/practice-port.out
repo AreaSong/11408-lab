@@ -1,0 +1,13 @@
+claim port-is-reg value=true
+claim port-is-device value=false
+claim unified-mem-insn value=true
+claim unified-io-insn value=false
+claim unified-occupy-mem value=true
+claim indep-io-insn value=true
+claim indep-occupy-mem value=false
+claim indep-need-flag value=true
+claim char-random value=false
+claim block-random value=true
+claim net-packet value=true
+claim net-is-char value=false
+claim net-is-block value=false

@@ -15,6 +15,8 @@ set(SRC
     src/show_dec.c
     src/show_add.c
     src/show_misc.c
+    src/nfp.c
+    src/show_nfp.c
 )
 
 add_executable(ieee754_answer main.c ${SRC})

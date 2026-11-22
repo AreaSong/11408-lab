@@ -121,6 +121,26 @@ static void cmd_thread(int argc, char **argv) {
     }
 }
 
+static void cmd_pre(int argc, char **argv) {
+    int ask = 0;
+    int err;
+    if (argc < 2 || argc > 3) {
+        fail("format");
+        return;
+    }
+    if (argc == 3) {
+        ask = one_char(argv[2]);
+        if (ask == 0) {
+            fail("format");
+            return;
+        }
+    }
+    err = thr_show_pre(stdout, argv[1], ask);
+    if (err != THR_OK) {
+        say(err);
+    }
+}
+
 static void cmd_post(int argc, char **argv) {
     int ask;
     int err;
@@ -268,6 +288,8 @@ static void cmd_exam(int argc, char **argv) {
 static void dispatch(int argc, char **argv) {
     if (strcmp(argv[0], "thread") == 0) {
         cmd_thread(argc, argv);
+    } else if (strcmp(argv[0], "pre") == 0) {
+        cmd_pre(argc, argv);
     } else if (strcmp(argv[0], "post") == 0) {
         cmd_post(argc, argv);
     } else if (strcmp(argv[0], "degree") == 0) {
@@ -293,7 +315,7 @@ static void dispatch(int argc, char **argv) {
 
 int main(void) {
     char line[512];
-    prompt("请输入命令（thread / post / degree / edges / noright / height / forest / bin / pair / exam，"
+    prompt("请输入命令（thread / pre / post / degree / edges / noright / height / forest / bin / pair / exam，"
            "一行一条，Ctrl+D 结束）：\n");
     while (fgets(line, (int)sizeof line, stdin) != NULL) {
         size_t len = strlen(line);

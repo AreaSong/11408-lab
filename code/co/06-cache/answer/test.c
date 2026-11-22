@@ -1,3 +1,4 @@
+#include "amat.h"
 #include "cache.h"
 #include "fields.h"
 #include "test.h"
@@ -186,6 +187,29 @@ static void expect_write(int write_back, int write_alloc, int hits, int misses, 
     cache_close(cache);
 }
 
+static void test_amat(void) {
+    Amat a;
+    CHECK(amat_make(&a, 10, 100, 100, 5) == 0);
+    CHECK_EQ(a.seq_num, 15);
+    CHECK_EQ(a.seq_den, 1);
+    CHECK_EQ(a.par_num, 29);
+    CHECK_EQ(a.par_den, 2);
+    CHECK_EQ(a.seq_e_num, 2);
+    CHECK_EQ(a.seq_e_den, 3);
+    CHECK_EQ(a.par_e_num, 20);
+    CHECK_EQ(a.par_e_den, 29);
+    CHECK(amat_make(&a, 50, 250, 2000, 100) == 0);
+    CHECK_EQ(a.seq_num, 125);
+    CHECK_EQ(a.seq_den, 2);
+    CHECK_EQ(a.par_num, 60);
+    CHECK_EQ(a.par_den, 1);
+    CHECK_EQ(a.seq_e_num, 4);
+    CHECK_EQ(a.seq_e_den, 5);
+    CHECK_EQ(a.par_e_num, 5);
+    CHECK_EQ(a.par_e_den, 6);
+    CHECK(amat_make(&a, 0, 10, 10, 1) != 0);
+}
+
 static void test_write(void) {
     expect_write(1, 1, 2, 2, 1, 0);
     expect_write(0, 0, 1, 3, 0, 2);
@@ -201,5 +225,6 @@ int main(void) {
     test_updates();
     test_replace();
     test_write();
+    test_amat();
     return TEST_SUMMARY();
 }

@@ -125,6 +125,8 @@ static void test_exam(void) {
     CHECK_EQ(exam_print("2022-45"), 0);
     CHECK_EQ(exam_print("nope"), -1);
     CHECK_EQ(claim_print("close-nlink"), 0);
+    CHECK_EQ(claim_print("dag-share"), 0);
+    CHECK_EQ(claim_print("hash-no-clash"), 0);
     CHECK_EQ(claim_print("missing"), -1);
 }
 

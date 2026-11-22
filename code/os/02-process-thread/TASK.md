@@ -44,7 +44,9 @@
 
 `entity` 的 `schedule` 按「已经引入线程」来填：这时谁是处理机调度的基本单位，谁就写 `yes`。
 
-`trans` 的 `how` 用 `admit` `dispatch` `preempt-or-yield` `block` `wakeup` `exit-or-revoke` `revoke`。不合法时 `how=-`。两个状态名都必须是上面那五个；有一个不认识，就只打印那个名字的 `unknown`。
+`trans` 的五态 `how` 仍是 `admit` `dispatch` `preempt-or-yield` `block` `wakeup` `exit-or-revoke` `revoke`。七态再加两个名字：`suspend-ready`（挂起就绪）、`suspend-blocked`（挂起阻塞）。新的 `how` 还有 `suspend`、`activate`、`no-mem`。不合法时 `how=-`。名字不在这七个里，就只打印那个名字的 `unknown`。
+
+挂起把活动就绪或活动阻塞换出内存，激活换回来。挂起阻塞等到事件后仍在外存，去挂起就绪，`how` 仍是 `wakeup`。正在运行的进程被挂起时去挂起就绪。内存不够的创建直接去挂起就绪，`how=no-mem`。挂起的进程也可以被撤销。五态之间原来的箭头和 `how` 不变。
 
 `fields` 不带参数。
 
@@ -55,7 +57,7 @@
 - `model`：`many-one` `one-one` `many-many`
 - `entity`：`program` `process` `thread`
 - `claim`：`klt-os-schedule` `ult-each-tcb` `ult-switch-faster` `ult-without-klt` `kill-children` `free-device` `free-pcb` `free-memory`
-- `trans` 的状态：`new` `ready` `running` `blocked` `terminated`
+- `trans` 的状态：`new` `ready` `running` `blocked` `terminated` `suspend-ready` `suspend-blocked`
 
 `claim`、`event`、`share` 和真题句子的对应关系写在第四节。
 

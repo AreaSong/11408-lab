@@ -1,0 +1,13 @@
+claim port-is-reg
+claim port-is-device
+claim unified-mem-insn
+claim unified-io-insn
+claim unified-occupy-mem
+claim indep-io-insn
+claim indep-occupy-mem
+claim indep-need-flag
+claim char-random
+claim block-random
+claim net-packet
+claim net-is-char
+claim net-is-block

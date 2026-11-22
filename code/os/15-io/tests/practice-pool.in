@@ -1,0 +1,10 @@
+claim pool-queues
+claim pool-hin
+claim pool-hin-full
+claim pool-sin
+claim pool-sin-done
+claim pool-hout
+claim pool-hout-full
+claim pool-sout
+claim pool-sout-done
+claim pool-work-queued

@@ -1,4 +1,5 @@
 #include "majority_element.h"
+#include "missmin.h"
 #include "seqlist.h"
 #include "test.h"
 #include "two_median.h"
@@ -220,6 +221,70 @@ static void test_majority(void) {
     CHECK_EQ(majority_element(one, 0, NULL), -1);
 }
 
+static void fill_end(SeqList *L, const int *a, int n) {
+    for (int i = 0; i < n; i++) {
+        CHECK(seqlist_insert(L, L->length + 1, a[i], NULL));
+    }
+}
+
+static void test_reverse_unique_merge(void) {
+    SeqList list;
+    SeqList extra;
+    SeqList merged;
+    const int asc[] = {1, 2, 2, 3};
+    const int other[] = {2, 4};
+    CHECK(seqlist_init(&list));
+    seqlist_reverse(&list);
+    CHECK_EQ(list.length, 0);
+    fill_end(&list, asc, 4);
+    seqlist_reverse(&list);
+    expect_at(&list, 1, 3);
+    expect_at(&list, 2, 2);
+    expect_at(&list, 3, 2);
+    expect_at(&list, 4, 1);
+    CHECK_EQ(seqlist_unique_ordered(&list), 1);
+    expect_at(&list, 1, 3);
+    expect_at(&list, 2, 2);
+    expect_at(&list, 3, 1);
+    CHECK_EQ(list.length, 3);
+    seqlist_reverse(&list);
+    expect_at(&list, 1, 1);
+    expect_at(&list, 3, 3);
+
+    CHECK(seqlist_init(&extra));
+    CHECK(seqlist_init(&merged));
+    fill_end(&extra, other, 2);
+    CHECK(seqlist_merge_ordered(&list, &extra, &merged));
+    CHECK_EQ(merged.length, 5);
+    expect_at(&merged, 1, 1);
+    expect_at(&merged, 2, 2);
+    expect_at(&merged, 3, 2);
+    expect_at(&merged, 4, 3);
+    expect_at(&merged, 5, 4);
+    CHECK_EQ(seqlist_unique_ordered(&merged), 1);
+    expect_at(&merged, 3, 3);
+    CHECK_EQ(merged.length, 4);
+    CHECK(!seqlist_merge_ordered(&list, &extra, &list));
+    seqlist_destroy(&merged);
+    seqlist_destroy(&extra);
+    seqlist_destroy(&list);
+}
+
+static void test_missmin(void) {
+    const int sample[] = {-5, 3, 2, 3};
+    const int full[] = {1, 2, 3};
+    const int hole[] = {1, 2, 4};
+    const int dup[] = {1, 1, 1, 1};
+    const int zero[] = {0};
+    CHECK_EQ(find_miss_min(sample, 4), 1);
+    CHECK_EQ(find_miss_min(full, 3), 4);
+    CHECK_EQ(find_miss_min(hole, 3), 3);
+    CHECK_EQ(find_miss_min(dup, 4), 2);
+    CHECK_EQ(find_miss_min(zero, 1), 1);
+    CHECK_EQ(find_miss_min(full, 0), 1);
+    CHECK_EQ(find_miss_min(NULL, 3), -1);
+}
+
 int main(void) {
     test_empty_and_reject();
     test_insert_delete_moves();
@@ -228,5 +293,7 @@ int main(void) {
     test_average_moves();
     test_median();
     test_majority();
+    test_reverse_unique_merge();
+    test_missmin();
     return TEST_SUMMARY();
 }

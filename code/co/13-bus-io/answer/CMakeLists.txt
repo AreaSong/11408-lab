@@ -12,6 +12,7 @@ set(SRC
     src/nest.c
     src/flow.c
     src/wire.c
+    src/card.c
 )
 
 add_executable(bus_io_answer main.c ${SRC})

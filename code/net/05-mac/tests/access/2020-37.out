@@ -1,0 +1,9 @@
+【CSMA/CA 帧间间隔】
+SIFS 最短，用来接上一次传输，CTS、数据帧、ACK 都用它。
+DIFS 更长，新发起一次传输才用，RTS 前面是它。PIFS 介于两者之间，点协调才用，这条时间线上没有。
+IFS1：DIFS，在 RTS 之前。预约信道是新发起的传输。
+IFS2：SIFS，在 CTS 之前。
+IFS3：SIFS，在数据帧之前。
+IFS4：SIFS，在 ACK 之前。
+DIFS 比 SIFS 长，所以四个间隔里最长的是 IFS1。
+结果：IFS1

@@ -323,6 +323,25 @@ static void test_enum_cap(void) {
     graph_clear(&g);
 }
 
+static void test_bfs_dist(void) {
+    Graph g;
+    char buf[512];
+    FILE *fp;
+    zero(&g);
+    graph_init(&g, G_U, 4);
+    CHECK(graph_add(&g, 0, 1) == ADD_OK);
+    CHECK(graph_add(&g, 1, 2) == ADD_OK);
+    CHECK(graph_add(&g, 0, 2) == ADD_OK);
+    fp = tmpfile();
+    CHECK(walk_bfs_dist(&g, 0, fp) == 0);
+    CHECK(capture(fp, buf, (int)sizeof buf));
+    fclose(fp);
+    CHECK(has_line(buf, "visit 1 dist=1"));
+    CHECK(has_line(buf, "visit 2 dist=1"));
+    CHECK(has_line(buf, "dist 0 1 1 -1"));
+    graph_clear(&g);
+}
+
 static void test_directed_deg(void) {
     Graph g;
     char buf[512];
@@ -361,5 +380,6 @@ int main(void) {
     test_facts();
     test_enum_cap();
     test_directed_deg();
+    test_bfs_dist();
     return TEST_SUMMARY();
 }

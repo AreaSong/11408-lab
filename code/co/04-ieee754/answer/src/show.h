@@ -10,5 +10,6 @@ int show_fields(FILE *out);
 int show_fit(FILE *out, int ka, int kb);
 int show_cast(FILE *out, const char *text);
 int show_sum(FILE *out, unsigned n);
+int show_nfp_cmd(FILE *out, char **av, int n);
 
 #endif

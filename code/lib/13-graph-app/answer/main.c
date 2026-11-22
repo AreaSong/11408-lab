@@ -40,7 +40,7 @@ static int split_words(char *line, char **word, int cap) {
 int main(void) {
     char line[LINE_MAX];
     prompt("请输入命令（new / edge / show / prim / kruskal / dijkstra / floyd / "
-           "topo / topo-all / topo-check / aoe，一行一条，Ctrl+D 结束）：\n");
+           "topo / topo-all / topo-check / topo-dfs / dag / aoe，一行一条，Ctrl+D 结束）：\n");
     while (fgets(line, (int)sizeof line, stdin) != NULL) {
         size_t len = strlen(line);
         char *word[WORD_MAX];

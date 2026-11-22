@@ -1,0 +1,11 @@
+new D 4
+edge 0 1 1
+edge 0 2 1
+edge 1 3 1
+edge 2 3 1
+topo-dfs
+new D 3
+edge 0 1 1
+edge 1 2 1
+edge 2 0 1
+topo-dfs

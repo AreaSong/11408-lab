@@ -222,6 +222,13 @@ static void cmd_dfs_flip(int argc, char **argv) {
     }
 }
 
+static void cmd_bfs_dist(int argc, char **argv) {
+    int src = 0;
+    if (parse_src(argc, argv, &src) && walk_bfs_dist(&g, src, stdout) != 0) {
+        fail("range");
+    }
+}
+
 static void cmd_reach(int argc, char **argv) {
     (void)argv;
     if (exact_args(argc, 1) && need_graph()) {
@@ -331,6 +338,8 @@ void cli_dispatch(int argc, char **argv) {
         cmd_multi(argc, argv);
     } else if (strcmp(cmd, "bfs") == 0) {
         cmd_bfs(argc, argv);
+    } else if (strcmp(cmd, "bfs-dist") == 0) {
+        cmd_bfs_dist(argc, argv);
     } else if (strcmp(cmd, "bfs-all") == 0) {
         cmd_bfs_all(argc, argv);
     } else if (strcmp(cmd, "dfs") == 0) {

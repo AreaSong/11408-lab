@@ -1,3 +1,4 @@
+#include "bst0.h"
 #include "build.h"
 #include "expr.h"
 #include "prop.h"
@@ -290,6 +291,30 @@ static void check_algo(void) {
     check_expr(second, 17, "(a*b)+(-(c-d))");
 }
 
+static void test_bst0(void) {
+    const int t1[] = {40, 25, 60, -1, 30, -1, 80, -1, -1, 27};
+    const int t2[] = {40, 50, 60, -1, 30, -1, -1, -1, -1, -1, 35};
+    const int eq[] = {2, 2, 3};
+    const int one[] = {7};
+    const int hole[] = {-1};
+    int seq[BST0_MAX];
+    int sn = 0;
+    CHECK_EQ(bst0_is(t1, 10), 1);
+    CHECK_EQ(bst0_inorder(t1, 10, seq, &sn), 0);
+    CHECK_EQ(sn, 6);
+    CHECK_EQ(seq[0], 25);
+    CHECK_EQ(seq[1], 27);
+    CHECK_EQ(seq[5], 80);
+    CHECK_EQ(bst0_is(t2, 11), 0);
+    CHECK_EQ(bst0_inorder(t2, 11, seq, &sn), 0);
+    CHECK_EQ(sn, 5);
+    CHECK_EQ(seq[0], 50);
+    CHECK_EQ(seq[1], 30);
+    CHECK_EQ(bst0_is(eq, 3), 0);
+    CHECK_EQ(bst0_is(one, 1), 1);
+    CHECK_EQ(bst0_is(hole, 1), 0);
+}
+
 int main(void) {
     check_known();
     check_flags();
@@ -301,5 +326,6 @@ int main(void) {
     check_numbers();
     check_rebuild();
     check_algo();
+    test_bst0();
     return TEST_SUMMARY();
 }

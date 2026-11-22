@@ -41,4 +41,15 @@ bool seqlist_get(const SeqList *L, int i, int *out);
 /* 打印成 [1 2 3]，空表是 []。 */
 void seqlist_print(const SeqList *L, FILE *out);
 
+/* 考纲：顺序表逆置。首尾交换，只搬 length/2 对，不另开表。 */
+void seqlist_reverse(SeqList *L);
+
+/* 考纲：两个非递减有序表合并。C 必须已初始化，且不能是 A 或 B。
+ * 结果写进 C，按值升序。空间不够就加倍。 */
+bool seqlist_merge_ordered(const SeqList *A, const SeqList *B, SeqList *C);
+
+/* 考纲：有序表去重。非递减时相等元素一定相邻，只和前一个保留值比。
+ * 返回删掉的个数。 */
+int seqlist_unique_ordered(SeqList *L);
+
 #endif

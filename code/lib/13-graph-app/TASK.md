@@ -6,7 +6,7 @@
 
 ## 一、本关任务
 
-- **产出**：Prim、Kruskal（Kruskal 用第 09 关的小根堆和并查集）；Dijkstra，按轮打印 `dist` 和 `path`；Floyd，打印每一轮的矩阵；拓扑排序，并判断序列是否唯一；关键路径，输出 `ve`、`vl`、每个活动的 `e`、`l`、`slack`，以及关键活动
+- **产出**：Prim、Kruskal（Kruskal 用第 09 关的小根堆和并查集）；Dijkstra，按轮打印 `dist` 和 `path`；Floyd，打印每一轮的矩阵；拓扑排序，并判断序列是否唯一；DFS 求拓扑序和逆拓扑序；用有向无环图统计表达式的最少顶点数；关键路径，输出 `ve`、`vl`、每个活动的 `e`、`l`、`slack`，以及关键活动
 - **小步骤**：
   ① 最小生成树。Prim 用 `low` / `from` 扫描，不写堆优化版。Kruskal 把边放进小根堆，再用并查集判断会不会成环
   ② Dijkstra。每一轮从未确定的顶点里选一个，再松弛。`dist` 要保留每一轮结束时的样子
@@ -35,7 +35,7 @@
 
 每次读取前用 `prompt(...)` 打印提示（`prompt` 在 `deps/prompt.h`，跑测试时不打印）：
 
-`请输入命令（new / edge / show / prim / kruskal / dijkstra / floyd / topo / topo-all / topo-check / aoe，一行一条，Ctrl+D 结束）：`
+`请输入命令（new / edge / show / prim / kruskal / dijkstra / floyd / topo / topo-all / topo-check / topo-dfs / dag / aoe，一行一条，Ctrl+D 结束）：`
 
 读到输入结束就退出，退出码 0。空行跳过。参数不对：往标准输出打一行失败，继续读下一条。失败时这条命令不再打别的内容。还没有 `new` 成功过就执行需要图的命令，打 `fail empty`。失败的 `edge` 不会改掉已经加上的边。
 
@@ -179,6 +179,25 @@ cycle no
 
 `topo-check` 后面跟 n 个顶点。是一条拓扑序列打 `yes`，否则打 `no`。个数不对，或某个词不是整数，打 `fail format`。
 
+`topo-dfs` 用 DFS 求一条拓扑序，不改 `topo` 的 Kahn 输出。从编号小的顶点启动，邻接点也按编号从小到大。顶点结束时记下它，这列是逆拓扑序 `rev`；倒过来是拓扑序 `topo`。碰到指向灰色顶点的边就是环，这时两条序列都打 `-`。
+
+```text
+dfs-topo
+enter 0
+finish 0
+cycle no
+rev 0
+topo 0
+```
+
+### `dag <表达式>`
+
+表达式只用字母、括号和 `+ - * /`。相同的操作数只留一个顶点；运算符、左孩子、右孩子都相同的子表达式也合并。`a*b` 和 `b*a` 不合并。
+
+输出每个互不相同的子表达式，最后一行 `vertices=<个数>`。
+
+2019-6：`(x+y)*((x+y)/x)` 的顶点是 `x`、`y`、`+(x,y)`、`/(+(x,y),x)` 和整式，一共 5 个，选项 A。
+
 ### `aoe`
 
 ```text
@@ -225,6 +244,14 @@ span no
 ## 三、真题题面
 
 顶点平移都写在对应的 `.in` 旁边，这里只说明对照。程序要算的是过程，不是选项字母。
+
+### 2019-6
+
+用有向无环图描述表达式 `(x+y)*((x+y)/x)`，需要的顶点个数至少是（ ）。
+
+A. 5　B. 6　C. 8　D. 9
+
+公共子表达式 `(x+y)` 只留一个顶点。互不相同的子表达式是 `x`、`y`、`(x+y)`、`((x+y)/x)` 和整个表达式，共 5 个，选 A。`tests/2019-6.in` 跑 `dag`，核对 `vertices=5`。
 
 ### 2010-8
 

@@ -1,10 +1,14 @@
+#include "absuniq.h"
 #include "clist.h"
 #include "dlist.h"
 #include "kth.h"
 #include "rearrange.h"
 #include "slist.h"
 #include "staticlist.h"
+#include "suffix.h"
 #include "test.h"
+
+#include <stdlib.h>
 
 static void expect_slist(const SList *L, const int *a, int n) {
     CHECK_EQ(slist_length(L), n);
@@ -328,6 +332,75 @@ static void test_rearrange(void) {
     check_rearrange(seven, 7);
 }
 
+static SNode *raw_node(int data, SNode *next) {
+    SNode *s = malloc(sizeof(*s));
+    CHECK(s != NULL);
+    if (s == NULL) {
+        return NULL;
+    }
+    s->data = data;
+    s->next = next;
+    return s;
+}
+
+static void test_common_suffix(void) {
+    SNode *share = raw_node('i', raw_node('n', raw_node('g', NULL)));
+    SNode *a = raw_node(0, raw_node('l', raw_node('o', raw_node('a', raw_node('d', share)))));
+    SNode *b = raw_node(0, raw_node('b', raw_node('e', share)));
+    SNode *alone = raw_node(0, raw_node('i', raw_node('n', raw_node('g', NULL))));
+    SNode *start = list_common_suffix(a, b);
+    CHECK(start == share);
+    CHECK_EQ(start->data, 'i');
+    CHECK(list_common_suffix(a, alone) == NULL);
+    CHECK(list_common_suffix(a, a) == a->next);
+    free(alone->next->next->next);
+    free(alone->next->next);
+    free(alone->next);
+    free(alone);
+    free(b->next->next);
+    free(b->next);
+    free(b);
+    free(a->next->next->next->next);
+    free(a->next->next->next);
+    free(a->next->next);
+    free(a->next);
+    free(a);
+    free(share->next->next);
+    free(share->next);
+    free(share);
+}
+
+static void repair_tail(SList *L) {
+    SNode *p = L->head;
+    while (p->next != NULL) {
+        p = p->next;
+    }
+    L->tail = p;
+}
+
+static void test_abs_unique(void) {
+    const int sample[] = {21, -15, -15, -7, 15};
+    const int run[] = {-2, 2, -2};
+    SList list;
+    CHECK(slist_init(&list));
+    for (int i = 0; i < 5; i++) {
+        CHECK(slist_tail_insert(&list, sample[i]));
+    }
+    CHECK_EQ(list_abs_unique(list.head, 21), 2);
+    repair_tail(&list);
+    expect_slist(&list, (const int[]){21, -15, -7}, 3);
+    slist_destroy(&list);
+    CHECK(slist_init(&list));
+    for (int i = 0; i < 3; i++) {
+        CHECK(slist_tail_insert(&list, run[i]));
+    }
+    CHECK_EQ(list_abs_unique(list.head, 3), 2);
+    repair_tail(&list);
+    expect_slist(&list, (const int[]){-2}, 1);
+    slist_destroy(&list);
+    CHECK_EQ(list_abs_unique(NULL, 1), -1);
+}
+
 int main(void) {
     test_build_and_reject();
     test_reverse_then_tail();
@@ -337,5 +410,7 @@ int main(void) {
     test_static_reuse_and_full();
     test_kth();
     test_rearrange();
+    test_common_suffix();
+    test_abs_unique();
     return TEST_SUMMARY();
 }

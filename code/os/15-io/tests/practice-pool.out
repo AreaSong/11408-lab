@@ -1,0 +1,10 @@
+claim pool-queues value=empty,input,output
+claim pool-hin value=from-empty
+claim pool-hin-full value=to-input
+claim pool-sin value=from-input
+claim pool-sin-done value=to-empty
+claim pool-hout value=from-empty
+claim pool-hout-full value=to-output
+claim pool-sout value=from-output
+claim pool-sout-done value=to-empty
+claim pool-work-queued value=false

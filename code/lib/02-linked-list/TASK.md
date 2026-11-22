@@ -16,7 +16,7 @@
 - **通过标准**：单元测试通过；两道真题的过程和结果与标准答案一致
 - **概念卡片**（写进 `NOTES.md`）：顺序表 vs 链表（存取方式、存储密度、插入删除代价）；带头结点 vs 不带头结点
 
-每个项目有六个程序：`main.c` 编出的主程序（与项目同名，如 `linked_list_first`）、`test.c` 编出的单元测试（`linked_list_first_test`）、`variant.c`（`linked_list_first_variant`）、`staticlist.c`（`linked_list_first_staticlist`）、`kth.c`（`linked_list_first_kth`）、`rearrange.c`（`linked_list_first_rearrange`）。
+每个项目有八个程序：`main.c` 编出的主程序（与项目同名，如 `linked_list_first`）、`test.c` 编出的单元测试（`linked_list_first_test`）、`variant.c`（`linked_list_first_variant`）、`staticlist.c`（`linked_list_first_staticlist`）、`kth.c`（`linked_list_first_kth`）、`rearrange.c`（`linked_list_first_rearrange`）、`suffix.c`（`linked_list_first_suffix`）、`absuniq.c`（`linked_list_first_absuniq`）。
 
 约定：
 
@@ -305,3 +305,42 @@ typedef struct node {
 1. 给出算法的基本设计思想。
 2. 根据设计思想，采用 C 或 C++ 语言描述算法，关键之处给出注释。
 3. 说明你所设计算法的时间复杂度。
+
+## 八、公共后缀（`suffix.c`）
+
+每行三个词：`share` 或 `copy`，再跟两个只含字母的单词。`share` 把最长公共字符后缀接成同一段结点；`copy` 即使字符相同也各存一份。
+
+输出一行：
+
+`share|copy str1=<词> str2=<词> len1=<长> len2=<长> gap=<长度差> start=<起点字符或-> suffix=<后缀或->`
+
+`gap` 是较长表先走的步数。`start` 比较的是结点地址。没有公共结点时 `start=- suffix=-`。
+
+`loading` 和 `being` 共享 `ing`，起点是 `i`。`tests/suffix/` 喂给这个程序。
+
+## 九、按绝对值去重（`absuniq.c`）
+
+每组先读上界 n 和结点个数 m，再读 m 个整数，要求绝对值不超过 n。只保留每个绝对值第一次出现的结点。
+
+输出：`case n=<n> m=<m> removed=<删掉的个数> [<剩下的值>]`
+
+题面例子 `21 -15 -15 -7 15`（n = 21）剩下 `[21 -15 -7]`。`tests/absuniq/` 喂给这个程序。
+
+### 2012-42（13 分）
+
+假定采用带头结点的单链表保存单词，当两个单词有相同的后缀时，则可共享相同的后缀存储空间。例如，`loading` 和 `being` 共享后缀 `ing`，共同后缀的起始位置是字符 `i` 所在结点。设 str1 和 str2 分别指向两个单词所在单链表的头结点，链表结点结构为 `data | next`。请设计一个时间上尽可能高效的算法，找出由 str1 和 str2 所指向两个链表共同后缀的起始位置。要求：
+
+1. 给出算法的基本设计思想。
+2. 根据设计思想，采用 C 或 C++ 或 Java 语言描述算法，关键之处给出注释。
+3. 说明你所设计算法的时间复杂度。
+
+### 2015-41（15 分）
+
+用单链表保存 m 个整数，结点的结构为 `data | link`，且 |data| ≤ n（n 为正整数）。现要求设计一个时间复杂度尽可能高效的算法，对于链表中 data 的绝对值相等的结点，仅保留第一次出现的结点而删除其余绝对值相等的结点。例如，若给定的单链表为 `21 → -15 → -15 → -7 → 15`，删除后为 `21 → -15 → -7`。要求：
+
+1. 给出算法的基本设计思想。
+2. 使用 C 或 C++ 语言，给出单链表结点的数据类型定义。
+3. 根据设计思想，采用 C 或 C++ 语言描述算法，关键之处给出注释。
+4. 说明你所设计算法的时间复杂度和空间复杂度。
+
+本关结点字段沿用 `next`。题面写的是 `link`，含义相同。

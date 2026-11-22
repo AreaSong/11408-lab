@@ -1,0 +1,13 @@
+expr=(a*b)+(b*a)
+sub a
+sub b
+sub *(a,b)
+sub *(b,a)
+sub +(*(a,b),*(b,a))
+vertices=5
+expr=(a+b)*(a+b)
+sub a
+sub b
+sub +(a,b)
+sub *(+(a,b),+(a,b))
+vertices=4

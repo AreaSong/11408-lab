@@ -1,0 +1,15 @@
+kind=U n=4 e=0
+bfs-dist 0
+visit 0 dist=0
+visit 1 dist=1
+visit 2 dist=1
+dist 0 1 1 -1
+bfs-dist 3
+visit 3 dist=0
+dist -1 -1 -1 0
+kind=D n=4 e=0
+bfs-dist 0
+visit 0 dist=0
+visit 1 dist=1
+visit 2 dist=2
+dist 0 1 2 -1

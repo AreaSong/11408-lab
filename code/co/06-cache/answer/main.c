@@ -1,6 +1,7 @@
 /*
  * Cache 模拟器的入口。地址划分、容量和访问过程在 src/ 里打印，这里只拆命令。
  */
+#include "amat.h"
 #include "cache.h"
 #include "fields.h"
 #include "prompt.h"
@@ -230,6 +231,19 @@ static int run_trace(void) {
     return rc;
 }
 
+static int run_amat(void) {
+    long long tc = 0;
+    long long tm = 0;
+    long long accesses = 0;
+    long long misses = 0;
+    prompt("请输入「tc的纳秒  tm的纳秒  访存次数  缺失次数」，例如 10 100 100 5：");
+    if (scanf("%lld %lld %lld %lld", &tc, &tm, &accesses, &misses) != 4) {
+        fprintf(stderr, "amat 需要：tc 的纳秒、tm 的纳秒、访存次数、缺失次数\n");
+        return 1;
+    }
+    return show_amat(stdout, tc, tm, accesses, misses);
+}
+
 static int run_loop(void) {
     char order_text[32];
     char op_text[32];
@@ -278,7 +292,7 @@ int main(void) {
     char cmd[32];
     for (;;) {
         int rc;
-        prompt("请输入命令（split / map / cap / rate / trace / loop，Ctrl+D 结束）：");
+        prompt("请输入命令（split / map / cap / rate / amat / trace / loop，Ctrl+D 结束）：");
         if (!read_token(cmd)) {
             break;
         }
@@ -290,6 +304,8 @@ int main(void) {
             rc = run_cap();
         } else if (strcmp(cmd, "rate") == 0) {
             rc = run_rate();
+        } else if (strcmp(cmd, "amat") == 0) {
+            rc = run_amat();
         } else if (strcmp(cmd, "trace") == 0) {
             rc = run_trace();
         } else if (strcmp(cmd, "loop") == 0) {

@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "bus.h"
+#include "card.h"
 #include "flow.h"
 #include "io.h"
 #include "nest.h"
@@ -17,7 +18,7 @@ int main(void) {
     for (;;) {
         int rc;
         prompt("请输入命令（bw / txn / poll / query / intr / fit / dma / serial / task / "
-               "steal / mask / nest / flow / wire，Ctrl+D 结束）：");
+               "steal / mask / nest / flow / wire / card，Ctrl+D 结束）：");
         if (scanf("%15s", cmd) != 1) {
             break;
         }
@@ -33,6 +34,9 @@ int main(void) {
         }
         if (rc == -1) {
             rc = wire_command(cmd);
+        }
+        if (rc == -1) {
+            rc = card_command(cmd);
         }
         if (rc == -1) {
             fprintf(stderr, "未知命令：%s\n", cmd);

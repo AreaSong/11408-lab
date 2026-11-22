@@ -12,6 +12,7 @@ set(MODEL
     src/pc.c
     src/rw.c
     src/rw_wp.c
+    src/rw_fair.c
     src/phi.c
     src/smoke.c
     src/exam.c

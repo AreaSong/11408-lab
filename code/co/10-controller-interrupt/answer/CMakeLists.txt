@@ -12,6 +12,7 @@ set(SRC
     src/calc.c
     src/exam.c
     src/sim.c
+    src/vec.c
 )
 
 add_executable(controller_interrupt_answer main.c ${SRC})

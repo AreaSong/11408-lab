@@ -1,0 +1,2 @@
+bst0 elem=10 result=yes inorder=25 27 30 40 60 80
+bst0 elem=11 result=no inorder=50 30 35 40 60

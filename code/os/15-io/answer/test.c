@@ -1,5 +1,6 @@
 #include "alloc.h"
 #include "buf.h"
+#include "fact.h"
 #include "ring.h"
 #include "spool.h"
 #include "test.h"
@@ -221,6 +222,12 @@ static void test_spool(void) {
     CHECK_STR(s.cur.job, "j2");
 }
 
+static void test_iface(void) {
+    CHECK_EQ(claim_print("port-is-reg"), 0);
+    CHECK_EQ(claim_print("pool-work-queued"), 0);
+    CHECK_EQ(claim_print("no-such"), -1);
+}
+
 int main(void) {
     test_buf();
     test_fcfs();
@@ -229,5 +236,6 @@ int main(void) {
     test_logic();
     test_ring();
     test_spool();
+    test_iface();
     return TEST_SUMMARY();
 }

@@ -7,7 +7,7 @@ include_directories(src deps)
 
 file(GLOB DEPS_SRC CONFIGURE_DEPENDS deps/*.c)
 
-set(SRC src/graph.c src/mst.c src/path.c src/topo.c src/aoe.c)
+set(SRC src/graph.c src/mst.c src/path.c src/topo.c src/topo_dfs.c src/dag.c src/aoe.c)
 
 add_executable(graph_app_answer main.c src/cli.c ${SRC} ${DEPS_SRC})
 add_executable(graph_app_answer_test test.c ${SRC} ${DEPS_SRC})

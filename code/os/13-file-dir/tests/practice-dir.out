@@ -1,0 +1,14 @@
+claim single-dup value=false
+claim single-multiuser value=false
+claim two-cross-name value=true
+claim two-same-name value=false
+claim two-share value=false
+claim tree-cross-name value=true
+claim tree-share value=false
+claim tree-cycle value=false
+claim dag-share value=true
+claim dag-cycle value=false
+claim dag-count value=true
+claim linear-scan value=true
+claim hash-fast value=true
+claim hash-no-clash value=false

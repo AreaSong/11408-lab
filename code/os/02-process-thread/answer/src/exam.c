@@ -83,7 +83,13 @@ typedef struct {
     const char *how;
 } Arrow;
 
-/* 撤销可以从就绪、阻塞、运行收走进程。阻塞直接进运行、就绪直接进阻塞，都不在表里。 */
+/*
+ * 五态的箭头不变。七态再把就绪、阻塞按在不在内存拆开（考纲：进程的状态与转换）。
+ * 挂起把活动进程换出外存，激活换回来。挂起阻塞等到的事件只解除等待，
+ * 进程还在外存，所以进挂起就绪，不是活动就绪。正在运行的进程被挂起时并没有在等事件，
+ * 进挂起就绪。创建时内存不够也可以直接落到挂起就绪，这条不叫 admit，因为没有进内存。
+ * 撤销和五态一样，可以把挂起的 PCB 收走。
+ */
 static const Arrow LEGAL_ARROWS[] = {
     {"new", "ready", "admit"},
     {"new", "terminated", "revoke"},
@@ -94,12 +100,23 @@ static const Arrow LEGAL_ARROWS[] = {
     {"running", "terminated", "exit-or-revoke"},
     {"blocked", "ready", "wakeup"},
     {"blocked", "terminated", "revoke"},
+    {"ready", "suspend-ready", "suspend"},
+    {"suspend-ready", "ready", "activate"},
+    {"blocked", "suspend-blocked", "suspend"},
+    {"suspend-blocked", "blocked", "activate"},
+    {"suspend-blocked", "suspend-ready", "wakeup"},
+    {"running", "suspend-ready", "suspend"},
+    {"new", "suspend-ready", "no-mem"},
+    {"suspend-ready", "terminated", "revoke"},
+    {"suspend-blocked", "terminated", "revoke"},
 };
 
 static const char *FIELDS =
     "id=pid,uid cpu=pc,regs,psw,sp schedule=state,priority,event control=code,data,files,links";
 
-static const char *STATE_NAMES[] = {"new", "ready", "running", "blocked", "terminated"};
+static const char *STATE_NAMES[] = {
+    "new", "ready", "running", "blocked", "terminated", "suspend-ready", "suspend-blocked",
+};
 
 bool exam_state_name(const char *name) {
     size_t i;

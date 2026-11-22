@@ -42,6 +42,45 @@ static const Claim CLAIMS[] = {
     {"keyboard-by-isr", "true"},
     {"cylinder-by-driver", "true"},
     {"safe-alloc-blocks", "true"},
+    /*
+     * 考纲：I/O 接口与 I/O 端口。口径与计组 co/13 卡片三相同。
+     * 端口是接口里 CPU 能直接访问的寄存器，不是设备本身。
+     * 统一编址用访存指令，端口占掉一部分主存地址；
+     * 独立编址用专用输入/输出指令，不占主存，但要另有一根信号区分访存和 I/O。
+     */
+    {"port-is-reg", "true"},
+    {"port-is-device", "false"},
+    {"unified-mem-insn", "true"},
+    {"unified-io-insn", "false"},
+    {"unified-occupy-mem", "true"},
+    {"indep-io-insn", "true"},
+    {"indep-occupy-mem", "false"},
+    {"indep-need-flag", "true"},
+    /*
+     * 考纲：字符设备接口、块设备接口、网络设备接口。
+     * 字符接口按 get/put，不能按块号寻址；块接口可以；
+     * 网络接口按报文收发，既不是字符流，也不是可寻址的块。
+     */
+    {"char-random", "false"},
+    {"block-random", "true"},
+    {"net-packet", "true"},
+    {"net-is-char", "false"},
+    {"net-is-block", "false"},
+    /*
+     * 考纲：缓冲池。空缓冲、输入、输出三个队列公用缓冲区。
+     * hin 从空队列取出，装满挂到输入队列；sin 从输入队列取出，用完归还空队列。
+     * hout、sout 对输出队列做同样的事。四个工作缓冲正在用时不挂在队列上。
+     */
+    {"pool-queues", "empty,input,output"},
+    {"pool-hin", "from-empty"},
+    {"pool-hin-full", "to-input"},
+    {"pool-sin", "from-input"},
+    {"pool-sin-done", "to-empty"},
+    {"pool-hout", "from-empty"},
+    {"pool-hout-full", "to-output"},
+    {"pool-sout", "from-output"},
+    {"pool-sout-done", "to-empty"},
+    {"pool-work-queued", "false"},
 };
 
 int ctrl_print(const char *name) {

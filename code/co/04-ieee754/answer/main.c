@@ -14,7 +14,7 @@ static int fail(const char *msg) {
 }
 
 static int read_line(char *buf, int n) {
-    prompt("请输入命令（enc、dec、add、sub、fields、fit、cast、sum）：");
+    prompt("请输入命令（enc、dec、add、sub、fields、fit、cast、sum、nfp）：");
     if (fgets(buf, n, stdin) == NULL) {
         return 0;
     }
@@ -103,7 +103,10 @@ static int run_line(char **av, int n) {
         }
         return show_sum(stdout, k);
     }
-    return fail("命令是 enc、dec、add、sub、fields、fit、cast、sum");
+    if (strcmp(av[0], "nfp") == 0) {
+        return show_nfp_cmd(stdout, av, n);
+    }
+    return fail("命令是 enc、dec、add、sub、fields、fit、cast、sum、nfp");
 }
 
 int main(void) {

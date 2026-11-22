@@ -10,6 +10,7 @@ set(SRC
     src/cache.c
     src/trace.c
     src/walk.c
+    src/amat.c
 )
 
 add_executable(cache_answer main.c ${SRC})

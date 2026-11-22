@@ -1,0 +1,59 @@
+prethread n=5 preorder=ABDEC
+step 1 visit=A pre=^ ltag=0 left=B fix=head
+step 2 visit=B pre=A ltag=0 left=D fix=A child
+step 3 visit=D pre=B ltag=1 left=B fix=B child
+step 4 visit=E pre=D ltag=1 left=D fix=D>E
+step 5 visit=C pre=E ltag=1 left=E fix=E>C
+close last=C right=^
+node A ltag=0 left=B rtag=0 right=C pre_pred=- pre_succ=B pred_via=parent
+node B ltag=0 left=D rtag=0 right=E pre_pred=A pre_succ=D pred_via=parent
+node D ltag=1 left=B rtag=1 right=E pre_pred=B pre_succ=E pred_via=thread
+node E ltag=1 left=D rtag=1 right=C pre_pred=D pre_succ=C pred_via=thread
+node C ltag=1 left=E rtag=1 right=^ pre_pred=E pre_succ=- pred_via=thread
+head ltag=0 left=A rtag=1 right=C
+walk=ABDEC
+check=ok
+pred_rule=ltag1-uses-left-thread; ltag0-needs-parent
+prethread n=5 preorder=ABDEC
+step 1 visit=A pre=^ ltag=0 left=B fix=head
+step 2 visit=B pre=A ltag=0 left=D fix=A child
+step 3 visit=D pre=B ltag=1 left=B fix=B child
+step 4 visit=E pre=D ltag=1 left=D fix=D>E
+step 5 visit=C pre=E ltag=1 left=E fix=E>C
+close last=C right=^
+node A ltag=0 left=B rtag=0 right=C pre_pred=- pre_succ=B pred_via=parent
+node B ltag=0 left=D rtag=0 right=E pre_pred=A pre_succ=D pred_via=parent
+node D ltag=1 left=B rtag=1 right=E pre_pred=B pre_succ=E pred_via=thread
+node E ltag=1 left=D rtag=1 right=C pre_pred=D pre_succ=C pred_via=thread
+node C ltag=1 left=E rtag=1 right=^ pre_pred=E pre_succ=- pred_via=thread
+head ltag=0 left=A rtag=1 right=C
+walk=ABDEC
+check=ok
+pred_rule=ltag1-uses-left-thread; ltag0-needs-parent
+ask B pred=A succ=D pred_via=parent
+prethread n=0 preorder=-
+head ltag=0 left=^ rtag=1 right=^
+pred_rule=ltag1-uses-left-thread; ltag0-needs-parent
+prethread n=4 preorder=ABCD
+step 1 visit=A pre=^ ltag=0 left=B fix=head
+step 2 visit=B pre=A ltag=1 left=A fix=A child
+step 3 visit=C pre=B ltag=0 left=D fix=B>C
+step 4 visit=D pre=C ltag=1 left=C fix=C>D
+close last=D right=^
+node A ltag=0 left=B rtag=0 right=C pre_pred=- pre_succ=B pred_via=parent
+node B ltag=1 left=A rtag=1 right=C pre_pred=A pre_succ=C pred_via=thread
+node C ltag=0 left=D rtag=1 right=D pre_pred=B pre_succ=D pred_via=parent
+node D ltag=1 left=C rtag=1 right=^ pre_pred=C pre_succ=- pred_via=thread
+head ltag=0 left=A rtag=1 right=D
+walk=ABCD
+check=ok
+pred_rule=ltag1-uses-left-thread; ltag0-needs-parent
+ask C pred=B succ=D pred_via=parent
+prethread n=1 preorder=A
+step 1 visit=A pre=^ ltag=1 left=^ fix=head
+close last=A right=^
+node A ltag=1 left=^ rtag=1 right=^ pre_pred=- pre_succ=- pred_via=thread
+head ltag=0 left=A rtag=1 right=A
+walk=A
+check=ok
+pred_rule=ltag1-uses-left-thread; ltag0-needs-parent

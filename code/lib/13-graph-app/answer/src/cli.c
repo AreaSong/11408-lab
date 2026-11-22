@@ -1,6 +1,7 @@
 #include "cli.h"
 
 #include "aoe.h"
+#include "dag.h"
 #include "graph.h"
 #include "mst.h"
 #include "path.h"
@@ -206,6 +207,43 @@ static void cmd_check(int argc, char **argv) {
     printf("%s\n", topo_check(&cur, seq, cur.n) ? "yes" : "no");
 }
 
+static void cmd_topo_dfs(int argc) {
+    int topo[G_NMAX];
+    int rev[G_NMAX];
+    int n = 0;
+    int cycle = 0;
+    if (!need_graph()) {
+        return;
+    }
+    if (argc != 1) {
+        fail("format");
+        return;
+    }
+    say(topo_dfs(&cur, topo, rev, &n, &cycle, stdout));
+}
+
+static void cmd_dag(int argc, char **argv) {
+    char buf[256];
+    int n = 0;
+    if (argc < 2) {
+        fail("format");
+        return;
+    }
+    for (int i = 1; i < argc; i++) {
+        for (const char *p = argv[i]; *p != '\0'; p++) {
+            if (n + 1 >= (int)sizeof buf) {
+                fail("format");
+                return;
+            }
+            buf[n++] = *p;
+        }
+    }
+    buf[n] = '\0';
+    if (dag_show(buf, stdout) != 0) {
+        fail("format");
+    }
+}
+
 static void cmd_aoe(int argc) {
     Aoe net;
     if (!need_graph()) {
@@ -240,6 +278,10 @@ void cli_dispatch(int argc, char **argv) {
         cmd_topo_all(argc);
     } else if (strcmp(cmd, "topo-check") == 0) {
         cmd_check(argc, argv);
+    } else if (strcmp(cmd, "topo-dfs") == 0) {
+        cmd_topo_dfs(argc);
+    } else if (strcmp(cmd, "dag") == 0) {
+        cmd_dag(argc, argv);
     } else if (strcmp(cmd, "aoe") == 0) {
         cmd_aoe(argc);
     } else {

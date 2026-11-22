@@ -40,7 +40,7 @@ static int split_words(char *line, char **word, int cap) {
 int main(void) {
     char line[LINE_MAX];
     prompt("请输入命令（new / edge / show / canon / deg / space / cross / multi / "
-           "bfs / bfs-all / dfs / dfs-all / dfs-stack / dfs-flip / reach / enum-dfs / "
+           "bfs / bfs-dist / bfs-all / dfs / dfs-all / dfs-stack / dfs-flip / reach / enum-dfs / "
            "bound / bound-check / enum / least，一行一条，Ctrl+D 结束）：\n");
     while (fgets(line, (int)sizeof line, stdin) != NULL) {
         size_t len = strlen(line);

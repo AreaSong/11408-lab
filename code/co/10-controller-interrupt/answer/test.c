@@ -3,6 +3,7 @@
 #include "micro.h"
 #include "sim.h"
 #include "test.h"
+#include "vec.h"
 #include "wire.h"
 
 #include <stdio.h>
@@ -110,10 +111,24 @@ static void test_scenes(void) {
     CHECK_EQ(nmi.pc, 2);
 }
 
+static void test_vec(void) {
+    unsigned addr = 0;
+    int req[] = {1, 0, 1, 0};
+    int pri[] = {3, 2, 1, 0};
+    int winner = -1;
+    CHECK(vec_address(0x1000u, 4, 8, &addr) == 0);
+    CHECK_EQ(addr, 0x1020u);
+    CHECK(vec_pick(req, pri, 4, &winner) == 0);
+    CHECK_EQ(winner, 2);
+    CHECK(vec_address(0x1000u, 4, (unsigned)winner, &addr) == 0);
+    CHECK_EQ(addr, 0x1008u);
+}
+
 int main(void) {
     test_width();
     test_wire();
     test_micro();
     test_scenes();
+    test_vec();
     return TEST_SUMMARY();
 }

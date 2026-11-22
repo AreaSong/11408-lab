@@ -1,3 +1,4 @@
+#include "bst0.h"
 #include "build.h"
 #include "exam.h"
 #include "expr.h"
@@ -269,6 +270,33 @@ static void cmd_wpl(int argc, char **argv) {
     }
 }
 
+static void cmd_bst0(int argc, char **argv) {
+    int n = 0;
+    int a[BST0_MAX];
+    int seq[BST0_MAX];
+    int sn = 0;
+    if (argc < 2 || !read_num(argv[1], &n) || n < 1 || n > BST0_MAX || argc != n + 2) {
+        fail("format");
+        return;
+    }
+    for (int i = 0; i < n; i++) {
+        if (!read_maybe(argv[i + 2], &a[i])) {
+            fail("format");
+            return;
+        }
+    }
+    bst0_inorder(a, n, seq, &sn);
+    printf("bst0 elem=%d result=%s inorder=", n, bst0_is(a, n) ? "yes" : "no");
+    if (sn == 0) {
+        fputs("-\n", stdout);
+        return;
+    }
+    for (int i = 0; i < sn; i++) {
+        printf("%s%d", i == 0 ? "" : " ", seq[i]);
+    }
+    fputc('\n', stdout);
+}
+
 static void cmd_infix(int argc, char **argv) {
     char buf[256];
     if (argc < 2) {
@@ -318,6 +346,8 @@ static void dispatch(int argc, char **argv) {
         cmd_wpl(argc, argv);
     } else if (strcmp(argv[0], "infix") == 0) {
         cmd_infix(argc, argv);
+    } else if (strcmp(argv[0], "bst0") == 0) {
+        cmd_bst0(argc, argv);
     } else if (strcmp(argv[0], "exam") == 0) {
         if (argc != 2) {
             fail("format");
@@ -333,7 +363,7 @@ int main(void) {
     char line[512];
     drop_tree();
     prompt("请输入命令（prop / range / full / cbt / most / seq / link / shape / walk / prein / postin / "
-           "prepost / wpl / infix / exam，一行一条，Ctrl+D 结束）：\n");
+           "prepost / wpl / infix / bst0 / exam，一行一条，Ctrl+D 结束）：\n");
     while (fgets(line, (int)sizeof line, stdin) != NULL) {
         size_t len = strlen(line);
         if (len + 1 == sizeof line && line[len - 1] != '\n') {

@@ -6,7 +6,7 @@
 
 ## 一、本关任务
 
-- **产出**：中序线索二叉树；树的双亲表示、孩子表示、孩子兄弟表示；树、森林和二叉树互相转换
+- **产出**：中序线索二叉树和先序线索二叉树；树的双亲表示、孩子表示、孩子兄弟表示；树、森林和二叉树互相转换
 - **小步骤**：
   ① 中序线索化。`ltag`、`rtag` 为 0 表示指针是孩子，为 1 表示是线索。能找出任意结点的中序前驱和后继，并只靠线索做中序遍历
   ② 同一棵树同时打出双亲表示、孩子链表、孩子兄弟表示
@@ -36,7 +36,7 @@
 
 每次读取前用 `prompt(...)` 打印提示（`prompt` 在 `deps/prompt.h`，跑测试时不打印）：
 
-`请输入命令（thread / post / degree / edges / noright / height / forest / bin / pair / exam，一行一条，Ctrl+D 结束）：`
+`请输入命令（thread / pre / post / degree / edges / noright / height / forest / bin / pair / exam，一行一条，Ctrl+D 结束）：`
 
 读到输入结束就退出，退出码 0。参数不对，或该是整数的词不是整数：往标准输出打 `fail format`，继续读下一条。失败时整条命令不再打别的内容。
 
@@ -106,6 +106,22 @@ plain_null=2
 ```
 
 `ABD##E##C##` 里结点 B 的左右都是孩子，`ask B` 的前驱后继见 `tests/practice-thread.in`。
+
+### `pre <先序串> [结点]`
+
+先序线索化，带头结点，`ltag` / `rtag` 的约定和 `thread` 相同。先打 `prethread n=<结点数> preorder=<先序>`。
+
+非空时每个结点一行 `step`。先序是先访问再下钻，所以空的左孩子立刻改成前驱线索；右孩子要等左子树走完，才知道它是不是已经被后继改成线索。`fix` 的三种写法和中序一样。
+
+然后每个结点一行：
+
+`node <字符> ltag= left= rtag= right= pre_pred= pre_succ= pred_via=thread|parent`
+
+`walk=` 只沿先序后继走：有左孩子就进左孩子，否则走右指针。`check=ok` 表示走出来的序列和先序相同。最后一行固定是
+
+`pred_rule=ltag1-uses-left-thread; ltag0-needs-parent`
+
+给出结点时再打 `ask <结点> pred= succ= pred_via=`。`pred_via=parent` 表示这个结点有左孩子，左指针不是前驱，前驱要靠双亲才能找到。
 
 ### `post <先序串> <结点>`
 

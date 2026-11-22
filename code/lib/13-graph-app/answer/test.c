@@ -1,4 +1,5 @@
 #include "aoe.h"
+#include "dag.h"
 #include "graph.h"
 #include "mst.h"
 #include "path.h"
@@ -312,6 +313,38 @@ static void test_cycle(void) {
     CHECK_EQ(info.cycle, 0);
 }
 
+static void test_dfs_and_dag(void) {
+    Graph g;
+    int topo[G_NMAX];
+    int rev[G_NMAX];
+    int n = 0;
+    int cycle = 1;
+    graph_init(&g, G_D, 4);
+    arc(&g, 0, 1, 1);
+    arc(&g, 0, 2, 1);
+    arc(&g, 1, 3, 1);
+    arc(&g, 2, 3, 1);
+    CHECK(topo_dfs(&g, topo, rev, &n, &cycle, NULL) == G_OK);
+    CHECK_EQ(cycle, 0);
+    CHECK_EQ(n, 4);
+    CHECK(topo_check(&g, topo, n));
+    CHECK_EQ(rev[0], topo[n - 1]);
+    graph_init(&g, G_D, 3);
+    arc(&g, 0, 1, 1);
+    arc(&g, 1, 2, 1);
+    arc(&g, 2, 0, 1);
+    CHECK(topo_dfs(&g, topo, rev, &n, &cycle, NULL) == G_OK);
+    CHECK_EQ(cycle, 1);
+    CHECK_EQ(n, 0);
+    graph_init(&g, G_U, 2);
+    CHECK(topo_dfs(&g, topo, rev, &n, &cycle, NULL) == G_KIND);
+    CHECK_EQ(dag_vertices("(x+y)*((x+y)/x)"), 5);
+    CHECK_EQ(dag_vertices("(a*b)+(b*a)"), 5);
+    CHECK_EQ(dag_vertices("(a+b)*(a+b)"), 4);
+    CHECK_EQ(dag_vertices("a*b"), 3);
+    CHECK_EQ(dag_vertices(""), -1);
+}
+
 int main(void) {
     test_reject();
     test_2021();
@@ -323,5 +356,6 @@ int main(void) {
     test_tie_and_unit();
     test_floyd_step();
     test_cycle();
+    test_dfs_and_dag();
     return TEST_SUMMARY();
 }

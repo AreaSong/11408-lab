@@ -61,6 +61,7 @@
 | `nest` | 个数 服务时间；每个源一行「名字 响应优先级 屏蔽字」；若干「时刻 名字」；最后一行 `.` | 完成次序 |
 | `flow` | `multi`、`single` 或 `dma` | 过程的最后一句结论 |
 | `wire` | `sync`、`full`、`half` 或 `loose` | 定时方式的名字 |
+| `card` | 无 | DMA 控制器的六件组成 |
 
 `nest` 的时间单位自定，程序只比较先后和长短。屏蔽字从左到右对应上面各源的输入顺序，`1` 表示屏蔽。响应优先级的数字越小越先响应。请求一直保持到被响应。服务时间要是正数，请求时刻不能倒退。
 
@@ -111,6 +112,10 @@ bw 66 MHz 1 2 32 1 1
 | `practice-mask` | `mask` | 自编：由处理次序 D > A > C > B 写出屏蔽字 |
 | `practice-flow` | `flow` | 自编：单重、多重、DMA 三段 |
 | `practice-wire` | `wire` | 自编：同步、全互锁、半互锁、不互锁 |
+| `practice-full` | `wire full` | 自编：只看异步全互锁 |
+| `practice-half` | `wire half` | 自编：只看异步半互锁 |
+| `practice-loose` | `wire loose` | 自编：只看异步不互锁 |
+| `practice-card` | `card` | 自编：DMA 控制器的六件组成 |
 
 `practice-nest` 的屏蔽字（位序 A B C D，1 为屏蔽）是 A=`1111`、D=`0111`、C=`0110`、B=`0100`。`practice-reorder` 是 A=`1110`、D=`1111`、C=`0110`、B=`0100`。`practice-stagger` 是 A=`1111`、B=`0111`、C=`0011`、D=`0001`，每个服务 10 个时间单位。
 

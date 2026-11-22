@@ -15,6 +15,9 @@ int walk_dfs_stack(const Graph *g, int src, FILE *out);
 
 int walk_dfs_flip(const Graph *g, int src, FILE *out);
 
+/* 考纲：无权图单源最短路。在 BFS 上记 dist[]，第一次入队就是最短边数。 */
+int walk_bfs_dist(const Graph *g, int src, FILE *out);
+
 void walk_reach(const Graph *g, FILE *out);
 
 /* 从每个未访问顶点启动一次。无向图里这个次数就是连通分量个数。 */

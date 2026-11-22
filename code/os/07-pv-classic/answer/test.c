@@ -46,6 +46,14 @@ static void test_rw(void) {
     CHECK_EQ(scene_rw("readers", &s), 0);
     CHECK_EQ(s.cut, 1);
     CHECK_EQ(s.max_read, 2);
+    CHECK_EQ(scene_rw("fair-cut", &s), 0);
+    CHECK_EQ(s.cut, 2);
+    CHECK_EQ(s.max_read, 1);
+    CHECK_EQ(s.deadlock, 0);
+    CHECK_EQ(scene_rw("fair-readers", &s), 0);
+    CHECK_EQ(s.cut, 1);
+    CHECK_EQ(s.max_read, 2);
+    CHECK_EQ(s.deadlock, 0);
 }
 
 static void test_phi(void) {

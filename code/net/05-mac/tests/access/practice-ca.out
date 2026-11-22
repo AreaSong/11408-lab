@@ -1,0 +1,10 @@
+【CSMA/CA 时间线】
+无线上听不见冲突，所以避免碰撞，不用 CSMA/CD。SIFS 比 DIFS 短，CTS 和 ACK 才能先发出去。
+1. 等待 DIFS 50 us。新发起传输，RTS 前面用它。
+2. 退避 2 个时隙，2 × 9 us = 18 us。DIFS 之后才倒数；信道再忙就把剩余值冻住。这里按一直空闲。
+3. 发送 RTS 5 us。
+4. 等待 SIFS 10 us，接收方回 CTS 4 us。隐藏站听到 CTS 就设置 NAV。
+5. 等待 SIFS 10 us，发送数据帧 100 us。
+6. 等待 SIFS 10 us，接收方回 ACK 4 us。没收到 ACK 就加大争用窗口再退避。
+隐藏站在 CTS 结束时的 NAV = SIFS + 数据帧 + SIFS + ACK = 124 us。不含已经结束的 CTS，也不含更早的 DIFS 和 RTS。
+结果：211 us

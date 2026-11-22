@@ -133,6 +133,10 @@ dev reset
 
 `claim` 的名字：`block-yields`、`nonblock-is-async`、`async-returns-before-data`、`duplex-needs-two`、`double-always-faster`、`alloc-creates-process`、`spool-user-moves`、`spool-needs-disk`、`spool-needs-multi`、`logic-name`、`rewrite-on-replace`、`driver-ignores-method`、`buffer-cuts-io`、`buffer-for-seek`、`pc-by-os`、`mask-by-os`、`keyboard-by-isr`、`cylinder-by-driver`、`safe-alloc-blocks`。
 
+接口、端口和设备接口再加这些名字：`port-is-reg`、`port-is-device`、`unified-mem-insn`、`unified-io-insn`、`unified-occupy-mem`、`indep-io-insn`、`indep-occupy-mem`、`indep-need-flag`、`char-random`、`block-random`、`net-packet`、`net-is-char`、`net-is-block`。统一编址、独立编址的判断与计组 `co/13` 同一口径：谁和主存共用地址、用不用访存指令、占不占主存、要不要一根信号把访存和 I/O 分开。字符接口问能不能按块号寻址，块接口问能不能，网络接口问是不是按报文、是不是字符流或块。
+
+缓冲池再加：`pool-queues`、`pool-hin`、`pool-hin-full`、`pool-sin`、`pool-sin-done`、`pool-hout`、`pool-hout-full`、`pool-sout`、`pool-sout-done`、`pool-work-queued`。前九个的 value 不是 true/false，是队列名或走向（空缓冲、输入、输出，以及从哪来、挂到哪）。`pool-work-queued` 仍是 true/false，问四个工作缓冲正在用时还在不在这三个队列上。`card` 原有的行不变。
+
 ### 样例
 
 输入：

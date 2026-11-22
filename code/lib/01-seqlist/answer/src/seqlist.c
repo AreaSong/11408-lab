@@ -119,6 +119,78 @@ bool seqlist_get(const SeqList *L, int i, int *out) {
     return true;
 }
 
+void seqlist_reverse(SeqList *L) {
+    if (L == NULL || L->data == NULL) {
+        return;
+    }
+    /* 只交换到中点：再往下会把刚换好的一对换回去。 */
+    for (int i = 0; i < L->length / 2; i++) {
+        int j = L->length - 1 - i;
+        int tmp = L->data[i];
+        if (L->trace != NULL) {
+            fprintf(L->trace, "swap data[%d] <-> data[%d]\n", i, j);
+        }
+        L->data[i] = L->data[j];
+        L->data[j] = tmp;
+    }
+}
+
+bool seqlist_merge_ordered(const SeqList *A, const SeqList *B, SeqList *C) {
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    int need;
+    if (A == NULL || B == NULL || C == NULL || C->data == NULL || C == A || C == B) {
+        return false;
+    }
+    if (A->length > INT_MAX - B->length) {
+        return false;
+    }
+    need = A->length + B->length;
+    while (C->capacity < need) {
+        if (!seqlist_grow(C)) {
+            return false;
+        }
+    }
+    /* 谁小取谁。相等时先取 A，两个有序表都不会漏。 */
+    while (i < A->length && j < B->length) {
+        if (A->data[i] <= B->data[j]) {
+            C->data[k++] = A->data[i++];
+        } else {
+            C->data[k++] = B->data[j++];
+        }
+    }
+    while (i < A->length) {
+        C->data[k++] = A->data[i++];
+    }
+    while (j < B->length) {
+        C->data[k++] = B->data[j++];
+    }
+    C->length = k;
+    return true;
+}
+
+int seqlist_unique_ordered(SeqList *L) {
+    int write;
+    int removed = 0;
+    if (L == NULL || L->data == NULL || L->length <= 1) {
+        return 0;
+    }
+    write = 1;
+    for (int read = 1; read < L->length; read++) {
+        if (L->data[read] == L->data[write - 1]) {
+            removed++;
+            if (L->trace != NULL) {
+                fprintf(L->trace, "drop value=%d\n", L->data[read]);
+            }
+        } else {
+            L->data[write++] = L->data[read];
+        }
+    }
+    L->length = write;
+    return removed;
+}
+
 void seqlist_print(const SeqList *L, FILE *out) {
     if (L == NULL || out == NULL) {
         return;

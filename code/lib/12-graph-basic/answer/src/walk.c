@@ -420,3 +420,47 @@ int walk_dfs_flip(const Graph *g, int src, FILE *out) {
     finish_one(&t, 0, out);
     return 0;
 }
+
+int walk_bfs_dist(const Graph *g, int src, FILE *out) {
+    int mark[G_MAX] = {0};
+    int dist[G_MAX];
+    CycQ q;
+    if (g == NULL || out == NULL || src < 0 || src >= g->n) {
+        return -1;
+    }
+    for (int i = 0; i < g->n; i++) {
+        dist[i] = -1;
+    }
+    /* 队容量是 n+1：循环队列要空出一格，最多仍能放下全部顶点。 */
+    if (!cyc_init(&q, g->n + 1)) {
+        return -1;
+    }
+    mark[src] = 1;
+    dist[src] = 0;
+    if (!cyc_enq(&q, src)) {
+        return -1;
+    }
+    fprintf(out, "bfs-dist %d\nvisit %d dist=0\n", src, src);
+    while (!cyc_empty(&q)) {
+        int u = 0;
+        cyc_deq(&q, &u);
+        for (int i = 0; i < g->len[u]; i++) {
+            int v = g->adj[u][i];
+            if (mark[v]) {
+                continue;
+            }
+            mark[v] = 1;
+            dist[v] = dist[u] + 1;
+            fprintf(out, "visit %d dist=%d\n", v, dist[v]);
+            if (!cyc_enq(&q, v)) {
+                return -1;
+            }
+        }
+    }
+    fputs("dist", out);
+    for (int i = 0; i < g->n; i++) {
+        fprintf(out, " %d", dist[i]);
+    }
+    fputc('\n', out);
+    return 0;
+}
