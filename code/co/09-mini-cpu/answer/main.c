@@ -1,5 +1,6 @@
 #include "asm.h"
 #include "exam.h"
+#include "pathcmp.h"
 #include "prompt.h"
 #include "run.h"
 
@@ -130,6 +131,9 @@ static int dispatch(const char *cmd) {
     }
     if (strcmp(cmd, "cycle") == 0) {
         return show_cycle(stdout);
+    }
+    if (strcmp(cmd, "path") == 0) {
+        return show_path(stdout);
     }
     return show_pick(stdout, cmd);
 }

@@ -16,6 +16,7 @@ set(MODEL
     src/phi.c
     src/smoke.c
     src/exam.c
+    src/prec.c
     src/card.c
 )
 

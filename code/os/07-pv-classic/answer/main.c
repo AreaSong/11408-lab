@@ -2,6 +2,7 @@
 #include "exam.h"
 #include "pc.h"
 #include "phi.h"
+#include "prec.h"
 #include "prompt.h"
 #include "rw.h"
 #include "smoke.h"
@@ -106,6 +107,74 @@ static int cmd_smoke(char **tok, int ntok) {
     return scene_smoke(code, ntok - 1, &out);
 }
 
+/* 边写成 u-v，u 是前驱，v 是后继。返回 0 成功，-1 格式不对，-2 越界或自环。 */
+static int parse_edge(const char *text, int n, int *u, int *v) {
+    char *end = NULL;
+    char *stop = NULL;
+    long from = strtol(text, &end, 10);
+    long to;
+    if (end == text || *end != '-') {
+        return -1;
+    }
+    to = strtol(end + 1, &stop, 10);
+    if (stop == end + 1 || *stop != '\0') {
+        return -1;
+    }
+    if (from < 0 || from >= n || to < 0 || to >= n || from == to) {
+        return -2;
+    }
+    *u = (int)from;
+    *v = (int)to;
+    return 0;
+}
+
+static int cmd_prec(char **tok, int ntok) {
+    Scene out;
+    int u[PV_MAX_SEM];
+    int v[PV_MAX_SEM];
+    int n;
+    int m;
+    int i;
+    int j;
+    int rc;
+    if (ntok < 2) {
+        printf("bad-command\n");
+        return -1;
+    }
+    if (parse_int(tok[1], 2, 6, &n) != 0) {
+        printf("bad-range\n");
+        return -1;
+    }
+    m = ntok - 2;
+    if (m > PV_MAX_SEM) {
+        printf("bad-range\n");
+        return -1;
+    }
+    for (i = 0; i < m; i++) {
+        rc = parse_edge(tok[i + 2], n, &u[i], &v[i]);
+        if (rc == -1) {
+            printf("bad-command\n");
+            return -1;
+        }
+        if (rc == -2) {
+            printf("bad-range\n");
+            return -1;
+        }
+        for (j = 0; j < i; j++) {
+            if (u[j] == u[i] && v[j] == v[i]) {
+                printf("bad-range\n");
+                return -1;
+            }
+        }
+    }
+    rc = scene_prec(n, u, v, m, &out);
+    if (rc == -2) {
+        printf("bad-range\n");
+        return -1;
+    }
+    return rc;
+}
+
 static int cmd_exam(char **tok, int ntok) {
     Scene out;
     int n;
@@ -114,6 +183,9 @@ static int cmd_exam(char **tok, int ntok) {
     if (ntok < 2) {
         printf("bad-command\n");
         return -1;
+    }
+    if (strcmp(tok[1], "2020") == 0) {
+        return need(ntok, 2) != 0 ? -1 : scene_2020(&out);
     }
     if (strcmp(tok[1], "2019") == 0) {
         if (need(ntok, 4) != 0 || parse_int(tok[2], 3, 6, &n) != 0 ||
@@ -149,6 +221,9 @@ static int dispatch(char **tok, int ntok) {
     if (strcmp(tok[0], "pc") == 0) {
         return cmd_pc(tok, ntok);
     }
+    if (strcmp(tok[0], "prec") == 0) {
+        return cmd_prec(tok, ntok);
+    }
     if (strcmp(tok[0], "order") == 0) {
         return need(ntok, 2) != 0 ? -1 : scene_order(tok[1], &out);
     }
@@ -181,7 +256,7 @@ static int dispatch(char **tok, int ntok) {
 int main(void) {
     char line[256];
     for (;;) {
-        char *tok[8];
+        char *tok[16];
         int ntok;
         prompt("%s", "请输入命令，Ctrl+D 结束：");
         if (fgets(line, sizeof line, stdin) == NULL) {
@@ -191,7 +266,7 @@ int main(void) {
         if (blank(line)) {
             continue;
         }
-        ntok = split(line, tok, 8);
+        ntok = split(line, tok, 16);
         if (ntok == 0) {
             continue;
         }

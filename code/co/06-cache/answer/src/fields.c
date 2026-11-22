@@ -124,8 +124,11 @@ int capacity_make(Capacity *out, const Fields *f, int write_back, int replace) {
     out->tag_bits = f->tag_bits;
     out->valid_bits = 1;
     out->dirty_bits = write_back ? 1 : 0;
-    /* 直接映射的那一行是唯一去处，计数器没有信息量。 */
-    out->replace_bits = (replace != REPLACE_NONE && f->n_ways > 1) ? log2_pow2(f->n_ways) : 0;
+    /* LRU、FIFO 用计数器法，每行 log2(路数) 位。随机不存使用记录。LFU 的计数器宽度题目另给。 */
+    out->replace_bits = 0;
+    if ((replace == REPLACE_LRU || replace == REPLACE_FIFO) && f->n_ways > 1) {
+        out->replace_bits = log2_pow2(f->n_ways);
+    }
     meta = out->tag_bits + out->valid_bits + out->dirty_bits + out->replace_bits;
     out->meta_bits = (long long)f->n_lines * meta;
     out->data_bits = (long long)f->n_lines * f->block_units * 8;
@@ -198,6 +201,14 @@ int show_map(FILE *out, const Fields *f, uint64_t addr) {
 static void show_replace_bits(FILE *out, const Fields *f, int replace, int bits) {
     if (f->n_ways == 1) {
         fprintf(out, "直接映射只有 1 路，没有另一行可换，替换位 = 0\n");
+        return;
+    }
+    if (replace == REPLACE_RAND) {
+        fprintf(out, "随机替换不记录每行的使用情况，替换位 = 0\n");
+        return;
+    }
+    if (replace == REPLACE_LFU) {
+        fprintf(out, "LFU 每行一个计数器，位数由题目给定，这里不计入总容量\n");
         return;
     }
     if (replace == REPLACE_NONE || bits == 0) {

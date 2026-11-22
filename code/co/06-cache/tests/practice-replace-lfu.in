@@ -1,0 +1,14 @@
+trace byte 8 1 2 2 lfu back alloc
+5
+R 0
+R 1
+R 1
+R 0
+R 2
+trace byte 8 1 2 2 lru back alloc
+5
+R 0
+R 1
+R 1
+R 0
+R 2

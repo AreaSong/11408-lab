@@ -1,0 +1,45 @@
+problem=prec n=4 edges=4
+edge P0-P1 sem=e0_1
+edge P0-P2 sem=e0_2
+edge P1-P3 sem=e1_3
+edge P2-P3 sem=e2_3
+sem e0_1=0
+sem e0_2=0
+sem e1_3=0
+sem e2_3=0
+step=1 who=P0 op=work sem=- value=- state=run wake=- note=P0
+step=2 who=P0 op=V sem=e0_1 value=1 state=inc wake=- note=-
+step=3 who=P0 op=V sem=e0_2 value=1 state=inc wake=- note=-
+step=4 who=P1 op=P sem=e0_1 value=0 state=run wake=- note=-
+step=5 who=P1 op=work sem=- value=- state=run wake=- note=P1
+step=6 who=P1 op=V sem=e1_3 value=1 state=inc wake=- note=-
+step=7 who=P2 op=P sem=e0_2 value=0 state=run wake=- note=-
+step=8 who=P2 op=work sem=- value=- state=run wake=- note=P2
+step=9 who=P2 op=V sem=e2_3 value=1 state=inc wake=- note=-
+step=10 who=P3 op=P sem=e1_3 value=0 state=run wake=- note=-
+step=11 who=P3 op=P sem=e2_3 value=0 state=run wake=- note=-
+step=12 who=P3 op=work sem=- value=- state=run wake=- note=P3
+summary done=4 order=P0,P1,P2,P3 check=yes deadlock=no
+problem=prec n=3 edges=1
+edge P2-P0 sem=e2_0
+sem e2_0=0
+step=1 who=P0 op=P sem=e2_0 value=-1 state=block wake=- note=-
+step=2 who=P1 op=work sem=- value=- state=run wake=- note=P1
+step=3 who=P2 op=work sem=- value=- state=run wake=- note=P2
+step=4 who=P2 op=V sem=e2_0 value=0 state=wake wake=P0 note=-
+step=5 who=P0 op=work sem=- value=- state=run wake=- note=P0
+summary done=3 order=P1,P2,P0 check=yes deadlock=no
+problem=prec n=3 edges=3
+edge P0-P1 sem=e0_1
+edge P1-P2 sem=e1_2
+edge P2-P0 sem=e2_0
+sem e0_1=0
+sem e1_2=0
+sem e2_0=0
+step=1 who=P0 op=P sem=e2_0 value=-1 state=block wake=- note=-
+step=2 who=P1 op=P sem=e0_1 value=-1 state=block wake=- note=-
+step=3 who=P2 op=P sem=e1_2 value=-1 state=block wake=- note=-
+summary done=0 order=- check=no deadlock=yes
+wait who=P0 sem=e2_0 holder=-
+wait who=P1 sem=e0_1 holder=-
+wait who=P2 sem=e1_2 holder=-

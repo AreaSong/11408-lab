@@ -14,6 +14,7 @@ set(SRC
     src/exam15.c
     src/exam22.c
     src/pick.c
+    src/pathcmp.c
 )
 
 add_executable(mini_cpu_answer main.c ${SRC})

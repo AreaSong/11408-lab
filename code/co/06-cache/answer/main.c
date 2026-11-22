@@ -67,6 +67,14 @@ static int parse_replace(const char *text, int *replace, int allow_none) {
         *replace = REPLACE_FIFO;
         return 1;
     }
+    if (strcmp(text, "rand") == 0) {
+        *replace = REPLACE_RAND;
+        return 1;
+    }
+    if (strcmp(text, "lfu") == 0) {
+        *replace = REPLACE_LFU;
+        return 1;
+    }
     if (allow_none && strcmp(text, "none") == 0) {
         *replace = REPLACE_NONE;
         return 1;
@@ -143,10 +151,10 @@ static int run_cap(void) {
     int write_back = 0;
     int replace = 0;
     Fields fields;
-    prompt("请输入「地址位数  行数  块字节  路数  back 或 through  lru、fifo 或 none」，例如 28 8 64 1 through lru：");
+    prompt("请输入「地址位数  行数  块字节  路数  back 或 through  lru、fifo、rand、lfu 或 none」，例如 28 8 64 1 through lru：");
     if (scanf("%d %d %d %d", &addr_bits, &lines, &block, &ways) != 4 || !read_token(hit) || !read_token(repl) ||
         (strcmp(hit, "back") != 0 && strcmp(hit, "through") != 0) || !parse_replace(repl, &replace, 1)) {
-        fprintf(stderr, "cap 需要：地址位数、行数、块字节、路数、back 或 through、lru 或 fifo 或 none\n");
+        fprintf(stderr, "cap 需要：地址位数、行数、块字节、路数、back 或 through、lru、fifo、rand、lfu 或 none\n");
         return 1;
     }
     write_back = strcmp(hit, "back") == 0;
@@ -206,12 +214,12 @@ static int run_trace(void) {
     int rc;
     Fields fields;
     Cache *cache = NULL;
-    prompt("请输入「byte 或 word  地址位数  块大小  行数  路数  lru 或 fifo  back 或 through  alloc 或 noalloc」，"
+    prompt("请输入「byte 或 word  地址位数  块大小  行数  路数  lru、fifo、rand 或 lfu  back 或 through  alloc 或 noalloc」，"
            "下一行是访问次数，接着每行「R 或 W  地址」：");
     if (!read_token(mode) || !parse_word_mode(mode, &word) ||
         scanf("%d %d %d %d", &addr_bits, &block, &lines, &ways) != 4 || !read_token(repl) || !read_token(hit) ||
         !read_token(miss) || !parse_replace(repl, &replace, 0) || !parse_write(hit, miss, &write_back, &write_alloc)) {
-        fprintf(stderr, "trace 的参数是：byte 或 word、地址位数、块大小、行数、路数、lru 或 fifo、back 或 through、alloc 或 noalloc\n");
+        fprintf(stderr, "trace 的参数是：byte 或 word、地址位数、块大小、行数、路数、lru、fifo、rand 或 lfu、back 或 through、alloc 或 noalloc\n");
         return 1;
     }
     if (scanf("%d", &count) != 1 || count < 1 || count > TRACE_MAX) {
@@ -255,7 +263,7 @@ static int run_loop(void) {
     int which = WALK_ROW;
     memset(&in, 0, sizeof in);
     prompt("请输入「row、col 或 both  read 或 update  地址位数  行数  列数  元素字节  首地址  块字节  "
-           "Cache行数  路数  lru 或 fifo  back 或 through  alloc 或 noalloc」：");
+           "Cache行数  路数  lru、fifo、rand 或 lfu  back 或 through  alloc 或 noalloc」：");
     if (!read_token(order_text) || !read_token(op_text) || scanf("%d %d %d %d", &in.addr_bits, &in.rows, &in.cols, &in.elem_bytes) != 4 ||
         !read_token(base_text) || !parse_u64(base_text, &in.base) ||
         scanf("%d %d %d", &in.block_bytes, &in.n_lines, &in.n_ways) != 3 || !read_token(repl) || !read_token(hit) ||
@@ -282,7 +290,7 @@ static int run_loop(void) {
         return 1;
     }
     if (!parse_replace(repl, &in.replace, 0) || !parse_write(hit, miss, &in.write_back, &in.write_alloc)) {
-        fprintf(stderr, "替换用 lru 或 fifo，写策略用 back 或 through，以及 alloc 或 noalloc\n");
+        fprintf(stderr, "替换用 lru、fifo、rand 或 lfu，写策略用 back 或 through，以及 alloc 或 noalloc\n");
         return 1;
     }
     return show_walk(stdout, &in, which);

@@ -1,6 +1,7 @@
 #include "asm.h"
 #include "beat.h"
 #include "exam.h"
+#include "pathcmp.h"
 #include "psw.h"
 #include "run.h"
 #include "test.h"
@@ -153,6 +154,8 @@ static void test_exam(void) {
     CHECK_EQ(addr_bits((1ULL << 32) / 4), 30);
     CHECK_EQ(addr_bits(1ULL << 32), 32);
     CHECK_EQ(min_machine_cycles(), 2);
+    CHECK_EQ(path_single_beats(), 8);
+    CHECK_EQ(path_triple_beats(), 5);
     CHECK_EQ(reg_visible("pc"), 1);
     CHECK_EQ(reg_visible("mar"), 0);
     CHECK_EQ(reg_visible("ir"), 0);

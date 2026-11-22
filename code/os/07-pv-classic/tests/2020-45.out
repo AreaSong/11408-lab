@@ -1,0 +1,23 @@
+problem=exam year=2020
+edge A-C sem=AC
+edge B-C sem=BC
+edge C-E sem=CE
+edge D-E sem=DE
+sem AC=0
+sem BC=0
+sem CE=0
+sem DE=0
+step=1 who=A op=work sem=- value=- state=run wake=- note=A
+step=2 who=A op=V sem=AC value=1 state=inc wake=- note=-
+step=3 who=B op=work sem=- value=- state=run wake=- note=B
+step=4 who=B op=V sem=BC value=1 state=inc wake=- note=-
+step=5 who=C op=P sem=AC value=0 state=run wake=- note=-
+step=6 who=C op=P sem=BC value=0 state=run wake=- note=-
+step=7 who=C op=work sem=- value=- state=run wake=- note=C
+step=8 who=C op=V sem=CE value=1 state=inc wake=- note=-
+step=9 who=D op=work sem=- value=- state=run wake=- note=D
+step=10 who=D op=V sem=DE value=1 state=inc wake=- note=-
+step=11 who=E op=P sem=CE value=0 state=run wake=- note=-
+step=12 who=E op=P sem=DE value=0 state=run wake=- note=-
+step=13 who=E op=work sem=- value=- state=run wake=- note=E
+summary done=5 order=A,B,C,D,E check=yes deadlock=no

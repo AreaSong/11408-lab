@@ -31,6 +31,10 @@ int trace_show_header(FILE *out, const Fields *f, int replace, int write_back, i
             f->tag_bits);
     if (replace == REPLACE_LRU) {
         fprintf(out, "LRU：命中或刚装入的行是最新的，替换最久没碰的那一行\n");
+    } else if (replace == REPLACE_RAND) {
+        fprintf(out, "随机：组满后按固定种子选一路，同一序列每次结果相同\n");
+    } else if (replace == REPLACE_LFU) {
+        fprintf(out, "LFU：装入记 1 次，命中再加 1，替换次数最少的；次数相同选路号小的\n");
     } else {
         fprintf(out, "FIFO：按装入次序替换，命中不改变次序\n");
     }

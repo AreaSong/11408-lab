@@ -152,10 +152,17 @@ static void play(Cache *c, const char *ops, const uint64_t *addr, int n) {
 static void test_replace(void) {
     Cache *lru = NULL;
     Cache *fifo = NULL;
+    Cache *lfu = NULL;
+    Cache *again = NULL;
+    Cache *rnd = NULL;
+    Cache *rnd2 = NULL;
+    Fields f;
+    Capacity cap;
     int valid = 0;
     int dirty = 0;
     uint64_t block = 0;
     static const uint64_t seq[] = {0, 1, 0, 2};
+    static const uint64_t tie[] = {0, 1, 1, 0, 2};
     CHECK(open_ready(&lru, 0, 8, 1, 2, 2, REPLACE_LRU, 1, 1) == 0);
     CHECK(open_ready(&fifo, 0, 8, 1, 2, 2, REPLACE_FIFO, 1, 1) == 0);
     play(lru, "RRRR", seq, 4);
@@ -169,8 +176,41 @@ static void test_replace(void) {
     CHECK_EQ(block, 2);
     CHECK(cache_peek(fifo, 0, 1, &valid, &dirty, &block) == 0);
     CHECK_EQ(block, 1);
+    CHECK(open_ready(&lfu, 0, 8, 1, 2, 2, REPLACE_LFU, 1, 1) == 0);
+    CHECK(open_ready(&again, 0, 8, 1, 2, 2, REPLACE_LRU, 1, 1) == 0);
+    play(lfu, "RRRRR", tie, 5);
+    play(again, "RRRRR", tie, 5);
+    CHECK(cache_peek(lfu, 0, 0, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 2);
+    CHECK(cache_peek(lfu, 0, 1, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 1);
+    CHECK(cache_peek(again, 0, 0, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 0);
+    CHECK(cache_peek(again, 0, 1, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 2);
+    CHECK(open_ready(&rnd, 0, 8, 1, 2, 2, REPLACE_RAND, 1, 1) == 0);
+    CHECK(open_ready(&rnd2, 0, 8, 1, 2, 2, REPLACE_RAND, 1, 1) == 0);
+    play(rnd, "RRRR", seq, 4);
+    play(rnd2, "RRRR", seq, 4);
+    CHECK(cache_peek(rnd, 0, 0, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 2);
+    CHECK(cache_peek(rnd2, 0, 0, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 2);
+    CHECK(cache_peek(rnd, 0, 1, &valid, &dirty, &block) == 0);
+    CHECK_EQ(block, 1);
+    CHECK(fields_make(&f, 0, 16, 8, 8, 2) == 0);
+    CHECK(capacity_make(&cap, &f, 1, REPLACE_RAND) == 0);
+    CHECK_EQ(cap.replace_bits, 0);
+    CHECK(capacity_make(&cap, &f, 1, REPLACE_LFU) == 0);
+    CHECK_EQ(cap.replace_bits, 0);
+    CHECK(capacity_make(&cap, &f, 1, REPLACE_LRU) == 0);
+    CHECK_EQ(cap.replace_bits, 1);
     cache_close(lru);
     cache_close(fifo);
+    cache_close(lfu);
+    cache_close(again);
+    cache_close(rnd);
+    cache_close(rnd2);
 }
 
 static void expect_write(int write_back, int write_alloc, int hits, int misses, int writebacks, int mem_writes) {

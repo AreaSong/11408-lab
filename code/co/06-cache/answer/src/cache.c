@@ -6,6 +6,7 @@
 typedef struct {
     int valid;
     int dirty;
+    int freq;
     uint64_t tag;
     uint64_t stamp;
 } Line;
@@ -21,6 +22,7 @@ struct Cache {
     int write_back;
     int write_alloc;
     uint64_t clock;
+    uint32_t rng;
     CacheStat stat;
 };
 
@@ -30,8 +32,9 @@ static Line *line_at(Cache *c, int set, int way) {
 
 int cache_open(Cache **out, const Fields *f, int replace, int write_back, int write_alloc) {
     Cache *c;
-    if (f->tag_bits < 0 || (replace != REPLACE_LRU && replace != REPLACE_FIFO)) {
-        fprintf(stderr, "模拟访问需要主存地址位数，替换用 lru 或 fifo\n");
+    if (f->tag_bits < 0 || (replace != REPLACE_LRU && replace != REPLACE_FIFO && replace != REPLACE_RAND &&
+                            replace != REPLACE_LFU)) {
+        fprintf(stderr, "模拟访问需要主存地址位数，替换用 lru、fifo、rand 或 lfu\n");
         return 1;
     }
     c = calloc(1, sizeof(*c));
@@ -51,6 +54,7 @@ int cache_open(Cache **out, const Fields *f, int replace, int write_back, int wr
     c->replace = replace;
     c->write_back = write_back ? 1 : 0;
     c->write_alloc = write_alloc ? 1 : 0;
+    c->rng = 1; /* 固定种子，同一访问序列的随机替换可以复现 */
     *out = c;
     return 0;
 }
@@ -99,7 +103,12 @@ static void touch(Cache *c, int set, int way) {
     line_at(c, set, way)->stamp = ++c->clock;
 }
 
-/* 空行优先，否则选 stamp 最小的。stamp 只在装入时增加就是 FIFO，命中也增加就是 LRU。 */
+static uint32_t next_rand(Cache *c) {
+    c->rng = c->rng * 1103515245u + 12345u;
+    return (c->rng >> 16) & 0x7fffu;
+}
+
+/* 空行优先。满了以后：LRU/FIFO 选 stamp 最小；LFU 选 freq 最小，相同则路号小的；随机按固定种子。 */
 static int victim_way(Cache *c, int set, int *was_valid, int *dirty, uint64_t *old_block) {
     int way;
     int oldest = 0;
@@ -111,9 +120,19 @@ static int victim_way(Cache *c, int set, int *was_valid, int *dirty, uint64_t *o
             return way;
         }
     }
-    for (way = 1; way < c->n_ways; way++) {
-        if (line_at(c, set, way)->stamp < line_at(c, set, oldest)->stamp) {
-            oldest = way;
+    if (c->replace == REPLACE_RAND) {
+        oldest = (int)(next_rand(c) % (uint32_t)c->n_ways);
+    } else if (c->replace == REPLACE_LFU) {
+        for (way = 1; way < c->n_ways; way++) {
+            if (line_at(c, set, way)->freq < line_at(c, set, oldest)->freq) {
+                oldest = way;
+            }
+        }
+    } else {
+        for (way = 1; way < c->n_ways; way++) {
+            if (line_at(c, set, way)->stamp < line_at(c, set, oldest)->stamp) {
+                oldest = way;
+            }
         }
     }
     *was_valid = 1;
@@ -127,6 +146,7 @@ static void install(Cache *c, int set, int way, uint64_t tag) {
     ln->valid = 1;
     ln->dirty = 0;
     ln->tag = tag;
+    ln->freq = 1;
     ln->stamp = ++c->clock;
 }
 
@@ -188,6 +208,8 @@ int cache_access(Cache *c, int is_write, uint64_t addr, AccessInfo *info) {
         info->way = way;
         if (c->replace == REPLACE_LRU) {
             touch(c, info->set, way);
+        } else if (c->replace == REPLACE_LFU) {
+            line_at(c, info->set, way)->freq++;
         }
         if (is_write) {
             note_write(c, info->set, way, info);

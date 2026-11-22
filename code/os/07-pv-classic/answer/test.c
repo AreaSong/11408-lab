@@ -1,6 +1,7 @@
 #include "exam.h"
 #include "pc.h"
 #include "phi.h"
+#include "prec.h"
 #include "rw.h"
 #include "smoke.h"
 #include "test.h"
@@ -110,6 +111,35 @@ static void test_exam_model(void) {
     CHECK(s.max_open >= 1 && s.max_open <= 3);
 }
 
+static void test_prec(void) {
+    Scene s;
+    int u4[] = {0, 0, 1, 2};
+    int v4[] = {1, 2, 3, 3};
+    int u3[] = {2};
+    int v3[] = {0};
+    int uc[] = {0, 1, 2};
+    int vc[] = {1, 2, 0};
+    int bad_u[] = {0};
+    int bad_v[] = {0};
+    CHECK_EQ(scene_prec(4, u4, v4, 4, &s), 0);
+    CHECK_EQ(s.produced, 4);
+    CHECK_EQ(s.deadlock, 0);
+    CHECK_EQ(s.check, 1);
+    CHECK_EQ(scene_prec(3, u3, v3, 1, &s), 0);
+    CHECK_EQ(s.produced, 3);
+    CHECK_EQ(s.check, 1);
+    CHECK_EQ(s.deadlock, 0);
+    CHECK_EQ(scene_prec(3, uc, vc, 3, &s), 0);
+    CHECK_EQ(s.deadlock, 1);
+    CHECK_EQ(s.check, 0);
+    CHECK_EQ(s.produced, 0);
+    CHECK_EQ(scene_prec(3, bad_u, bad_v, 1, &s), -2);
+    CHECK_EQ(scene_2020(&s), 0);
+    CHECK_EQ(s.produced, 5);
+    CHECK_EQ(s.check, 1);
+    CHECK_EQ(s.deadlock, 0);
+}
+
 static void test_threads(void) {
     ThreadPc pc;
     ThreadRw rw;
@@ -157,6 +187,7 @@ int main(void) {
     test_rw();
     test_phi();
     test_exam_model();
+    test_prec();
     test_threads();
     return TEST_SUMMARY();
 }

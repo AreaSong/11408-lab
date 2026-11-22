@@ -3,6 +3,7 @@
 #include "cdma.h"
 #include "csmaca.h"
 #include "limit.h"
+#include "mux.h"
 #include "persist.h"
 #include "qty.h"
 #include "test.h"
@@ -273,6 +274,28 @@ static void test_ca(void) {
     CHECK(!ca_time(&in, &got));
 }
 
+static void test_mux(void) {
+    MuxUse tdm;
+    MuxUse stdm;
+
+    CHECK(!mux_range(0, 0, 8, 2));
+    CHECK(!mux_range(4, 5, 8, 2));
+    CHECK(mux_range(4, 1, 8, 2));
+    mux_tdm(4, 1, 8, &tdm);
+    mux_stdm(1, 8, 2, &stdm);
+    CHECK_EQ(tdm.useful, 8);
+    CHECK_EQ(tdm.total, 32);
+    CHECK_EQ(stdm.useful, 8);
+    CHECK_EQ(stdm.total, 10);
+    CHECK_EQ(mux_cmp(&tdm, &stdm), 1);
+    mux_tdm(4, 4, 8, &tdm);
+    mux_stdm(4, 8, 2, &stdm);
+    CHECK_EQ(mux_cmp(&tdm, &stdm), -1);
+    mux_tdm(2, 1, 2, &tdm);
+    mux_stdm(1, 2, 2, &stdm);
+    CHECK_EQ(mux_cmp(&tdm, &stdm), 0);
+}
+
 int main(void) {
     test_units();
     test_cdma();
@@ -282,5 +305,6 @@ int main(void) {
     test_aloha();
     test_persist();
     test_ca();
+    test_mux();
     return TEST_SUMMARY();
 }

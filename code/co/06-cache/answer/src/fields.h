@@ -8,7 +8,9 @@
 enum {
     REPLACE_NONE = 0,
     REPLACE_LRU = 1,
-    REPLACE_FIFO = 2
+    REPLACE_FIFO = 2,
+    REPLACE_RAND = 3,
+    REPLACE_LFU = 4
 };
 
 typedef struct {
