@@ -17,6 +17,7 @@
 - **概念卡片**（写进 `NOTES.md`）：
   1. FCB 和 inode。文件名放在哪，权限、地址、链接计数放在哪
   2. 文件保护的三种做法：口令、密码（加密）、访问控制
+  3. 逻辑结构：无结构（流式）和有结构（记录式）；顺序文件的串结构与顺序结构；索引文件、索引顺序文件、散列文件各怎么查一条记录
 
 每个项目有五个程序：`main.c` 编出的主程序（与项目同名，如 `file_dir_first`）、`test.c` 编出的单元测试（`file_dir_first_test`）、`io.c`（`file_dir_first_io`）、`link.c`（`file_dir_first_link`）、`perm.c`（`file_dir_first_perm`）。三个本机程序都不读键盘。它们只打印稳定的结论，不打印 inode 号；某一次运行的 inode 号在 `EXPERIMENTS.md`。
 

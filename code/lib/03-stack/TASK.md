@@ -15,7 +15,7 @@
   ⑤ 中缀转后缀并求值，每一步都打印运算符栈
   ⑥ 用自己的栈把递归阶乘改成非递归，打印栈深度
 - **通过标准**：单元测试通过；出栈序列是否合法、共享栈栈满、中缀转后缀某一步的栈，都和真题答案一致
-- **概念卡片**（写进 `NOTES.md`）：栈的典型应用（递归、表达式、括号匹配、函数调用）
+- **概念卡片**（写进 `NOTES.md`）：栈的典型应用（递归、表达式、括号匹配、函数调用）；中缀转前缀：先反转并调换括号，再套用中缀转后缀，最后把结果反转
 
 每个项目有七个程序：`main.c` 编出的主程序（与项目同名，如 `stack_first`）、`test.c` 编出的单元测试（`stack_first_test`）、`share.c`（`stack_first_share`）、`popseq.c`（`stack_first_popseq`）、`bracket.c`（`stack_first_bracket`）、`expr.c`（`stack_first_expr`）、`recur.c`（`stack_first_recur`）。
 

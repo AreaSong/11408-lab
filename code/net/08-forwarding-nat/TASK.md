@@ -16,7 +16,7 @@
   ⑥ IPv6 地址的零压缩和展开
   ⑦ DHCP 四步：每一步是广播还是单播，源 IP、目的 IP、UDP 端口，以及客户机和服务器这时处于什么状态
 - **通过标准**：给定目的地址得到下一跳；NAT 之后的地址和端口与真题一致；转发后说得清首部哪些字段变了；DHCP 四步的地址、端口和状态与教材一致
-- **概念卡片**（写进 `NOTES.md`）：网络层的功能（异构网络互连、路由与转发、拥塞控制）；DHCP 的四步；ICMP 报文类型；IPv6 的主要特点与首部（对照 IPv4）；路由器的组成、路由表和转发表
+- **概念卡片**（写进 `NOTES.md`）：网络层的功能（异构网络互连、路由与转发、拥塞控制的开环与闭环）；DHCP 的四步；ICMP 报文类型，以及哪些情况不发送 ICMP 差错报告；IPv6 的主要特点、首部，以及单播、多播、任播；路由器的组成、路由表和转发表
 
 每个项目有六个程序：`main.c`（如 `forwarding_nat_first`）、`test.c`（`forwarding_nat_first_test`）、`nat.c`（`forwarding_nat_first_nat`）、`arp.c`（`forwarding_nat_first_arp`）、`ipv6.c`（`forwarding_nat_first_ipv6`）、`dhcp.c`（`forwarding_nat_first_dhcp`）。
 

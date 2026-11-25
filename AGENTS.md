@@ -31,7 +31,7 @@
 7. 关卡代码一律用**纯 C（C11）**，不用 C++ 和 STL；王道书上的 `&` 引用写法改写为指针。
 
 ## 当前状态
-- 仓库已完成两区重构；四门课的关卡任务已全部建好（数据结构 20 关、计组 14 关、OS 17 关、计网 15 关），已逐条对照 2027 年 408 大纲补全，每关不超过 6 个小步骤，概念尽量改成动手实验；尚未开始任何关卡。
-- `code/` 是 CMake 项目（用 CLion 打开 `code/`、某一关或某一个项目都行）：66 个关卡目录已建好，每关 = 关卡层的 `TASK.md`/`ANSWER.md`/`NOTES.md`/`tests/` + 独立的 CLion 项目 `answer/`、`mine/<日期-说明>/`；`./lab.sh` 管理尝试（新建带模板、查看、改名、删除、标记完成、同步依赖）；**各关 `answer/` 正在编写**。构建与目录约定见 `code/AGENTS.md`，结构样板是 `code/example/00-rotate/`。
+- 四门课的关卡已经建好（数据结构 20 关、计组 14 关、操作系统 17 关、计网 15 关）。学习进度以 `code/ROADMAP.md` 为准：当前是 Wave 1，已通 `lib/00`、`lib/01`。
+- `code/` 是 CMake 项目（用 CLion 打开 `code/`、某一关或某一个项目都行）：66 个关卡目录已建好，每关 = 关卡层的 `TASK.md`/`ANSWER.md`/`NOTES.md`/`tests/` + 独立的 CLion 项目 `answer/`、`mine/<日期-说明>/`；`./lab.sh` 管理尝试（新建带模板、查看、改名、删除、标记完成、同步依赖）。各关 `answer/` 的标准答案已经写完。构建与目录约定见 `code/AGENTS.md`，结构样板是 `code/example/00-rotate/`。
 - 用户说「继续写标准答案，负责<科目>（answers-<科目>.md）」时：读 `.cursor/plans/answers.md` 与对应的进度文件，严格按其中的流程完成该科目的**一关**并同步进度，不做第二关。
 - 每门课：`AGENTS.md` 放进度表与易错点（自动加载），`LEVELS.md` 放各关详情（按需读取）。`lib/EXAMS.md`、`co/EXAMS.md`、`os/EXAMS.md`、`net/EXAMS.md` 把 2009–2026 年 846 道真题按题目内容登记到关卡，一行一题。收录状态分「有用例」「题面在 TASK」「仅索引」。刷题时按 `code/ROADMAP.md` 节点上的题单去查。
